@@ -1,0 +1,571 @@
+<div ng-controller="postbackController" ng-init="loadData();">
+    <div class="cardForConversions">
+        <div class="row form-group" id="formBlock">
+            <div class="col-md-9">
+                <div class="row">
+                    <form class="form-inline">
+                        <div class="form-group" id="size">
+                            <select class="form-control" data-ng-model="selectedSize"
+                                    data-ng-options="v as k for (k, v) in sizeOptions"
+                                    style="margin-left: 20px;margin-bottom: 14px;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" data-ng-model="selectedDate"
+                                    data-ng-options="v as k for (k, v) in dateOptions"
+                                    style="margin-bottom: 14px;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6" style="width: 225px">
+                                    <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
+                                        <div class="input-group">
+                                            <input class="form-control" data-ng-model="dpFromDate"
+                                                   ng-disabled="selectedDate !== 'custom'" placeholder="From"/>
+                                            <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+                                        </div>
+                                    </datepicker>
+                                </div>
+                                <div class="col-md-6" style="width:225px; margin-left: 10px">
+                                    <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
+                                        <div class="input-group">
+                                            <input class="form-control" data-ng-model="dpToDate"
+                                                   ng-disabled="selectedDate !== 'custom'" placeholder="To"/>
+                                            <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+                                        </div>
+                                    </datepicker>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
+                                ng-click="getData();">Apply
+                        </button>
+                        <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit"
+                            ng-click="showData();">Export
+                        </button>
+                        <button class="btn btn-primary btn-md" id="postBtn" name="postback" type="submit">Postback
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <form class="form-inline">
+                    <div class="row">
+                        <div class="col-md-2" style="width: 9%; margin-top:2px;">
+
+                            <div class="row">
+                                <div class="col-md-12" style="width:130%;"
+                                     ng-init="initBuyerNames();">
+                                    <select class="selectpicker" multiple
+                                            data-style="btn-info btn-fill btn-block"
+                                            data-size="5"
+                                            title="Buyer"
+                                            data-header="Buyers"
+                                            ng-model="selectedBuyerNames"
+                                            style="width: 130%;margin-left: 5px; margin-top: 7px;">
+                                        <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
+                                                data-last="{{$last}}" value="{{b.id}}">{{b.name}}
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" style="width: 10%;margin-top:2px;">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12" style="width:94%; margin-left: 10px;"
+                                         ng-init="initAdvNames();">
+                                        <select class="selectpicker" multiple
+                                                data-style="btn-info btn-fill btn-block"
+                                                data-size="5"
+                                                data-header="Advertisers"
+                                                selected-header="options selected"
+                                                title="Advertiser"
+                                                ng-model="selectedAdvertiserNames"
+                                                style=" width: 120%;  margin-top: 7px;">
+                                            <option class="small-font" ng-repeat="a in advertiserNames" data-select-watcher
+                                                    data-last="{{$last}}" value="{{a.id}}">{{a.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" style="width: 9%;margin-top:2px;">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12" style="width:140%;">
+                                        <select class="selectpicker" multiple
+                                                data-style="btn-info btn-fill btn-block"
+                                                data-header="Statuses"
+                                                selected-header="options selected"
+                                                title="Status"
+                                                ng-model="selectedStatusValue"
+                                                style=" width: 120%;  margin-top: 7px;">
+                                            <option class="small-font" ng-repeat="s in statusValues"
+                                                    data-select-watcher
+                                                    data-last="{{$last}}" value="{{s.id}}">{{s.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-1" style="width: 10%;">
+                            <div class="form-group">
+                                <input type="text" placeholder="AfId" class="form-control"
+                                       ng-model="selectedAfIdValue"
+                                       style=" width: 124px;"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1" style="width: 9%;">
+                            <div class="form-group">
+                                <input type="text" placeholder="Prefix" class="form-control"
+                                       ng-model="selectedPrefixValue"
+                                       style=" width: 110px;"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1" style="width: 10%;">
+                            <div class="form-group">
+                                <input type="text" placeholder="Offer Name" class="form-control"
+                                       ng-model="selectedOfferNameValue"
+                                       style=" width: 123px;"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1" style="width: 9%;">
+                            <div class="form-group">
+                                <input type="text" placeholder="Click Id" class="form-control"
+                                       ng-model="selectedClickIdValue"
+                                       style=" width: 110px;"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1" style="width: 9%;">
+                            <div class="form-group">
+                                <input type="text" placeholder="Status" class="form-control"
+                                       ng-model="selectedStatusFromOfferNameValue"
+                                       style=" width: 110px;"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1" style="width: 9%;">
+                            <div class="form-group">
+                                <input type="text" placeholder="Duplicate" class="form-control"
+                                       ng-model="selectedDuplicateValue"
+                                       style=" width: 110px;"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--<div class="col-md-1"></div>-->
+        </div>
+
+        <div class="row testimonial-group" style="margin-left: 15px; margin-right: 15px; ">
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="table" class="table table-hover table-sm" ng-style="tableStyle">
+                        <thead class="thead-default">
+                        <tr style="text-align: center; vertical-align: middle">
+                            <th style="text-align: center; vertical-align: middle"><a href="">#</a></th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'POSTBACK_ID'; getSorted();">
+                                    <span ng-show="sortType == 'POSTBACK_ID' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'POSTBACK_ID' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'POSTBACK_ID' && sortReverse == ''"></span>
+                                    ID
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'PREFIX'; getSorted();">
+                    <span ng-show="sortType == 'PREFIX' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'PREFIX' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'PREFIX' && sortReverse == ''"></span>
+                                    Prefix
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'AF_ID'; getSorted();">
+                                    <span ng-show="sortType == 'AF_ID' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'AF_ID' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'AF_ID' && sortReverse == ''"></span>
+                                    AfID
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'BUYER'; getSorted();">
+                    <span ng-show="sortType == 'BUYER' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'BUYER' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'BUYER' && sortReverse == ''"></span>
+                                    Buyer
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'DATA'; getSorted();">
+                    <span ng-show="sortType == 'DATA' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'DATA' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'DATA' && sortReverse == ''"></span>
+                                    Date
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TIME'; getSorted();">
+                    <span ng-show="sortType == 'TIME' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TIME' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TIME' && sortReverse == ''"></span>
+                                    Time
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'PAYOUT'; getSorted();">
+                                    <span ng-show="sortType == 'PAYOUT' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'PAYOUT' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'PAYOUT' && sortReverse == ''"></span>
+                                    Payout
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'CURRENCY'; getSorted();">
+                                    <span ng-show="sortType == 'CURRENCY' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'CURRENCY' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'CURRENCY' && sortReverse == ''"></span>
+                                    Currency
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'STATUS'; getSorted();">
+                    <span ng-show="sortType == 'STATUS' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'STATUS' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'STATUS' && sortReverse == ''"></span>
+                                    Status
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'AFF_NET'; getSorted();">
+                    <span ng-show="sortType == 'AFF_NET' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'AFF_NET' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'AFF_NET' && sortReverse == ''"></span>
+                                    AffNet
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'OFFER_ID'; getSorted();">
+                                    <span ng-show="sortType == 'OFFER_ID' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'OFFER_ID' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'OFFER_ID' && sortReverse == ''"></span>
+                                    OfferID
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'OFFER_NAME'; getSorted();">
+                                    <span ng-show="sortType == 'OFFER_NAME' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'OFFER_NAME' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'OFFER_NAME' && sortReverse == ''"></span>
+                                    Offer Name
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'COM_ID'; getSorted();">
+                                    <span ng-show="sortType == 'COM_ID' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'COM_ID' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'COM_ID' && sortReverse == ''"></span>
+                                    ComID
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'OID'; getSorted();">
+                    <span ng-show="sortType == 'OID' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'OID' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'OID' && sortReverse == ''"></span>
+                                    OID
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_1'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_1' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_1' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_1' && sortReverse == ''"></span>
+                                    Token T1
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_2'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_2' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_2' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_2' && sortReverse == ''"></span>
+                                    Token T2
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_3'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_1' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_3' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_3' && sortReverse == ''"></span>
+                                    Token T3
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_4'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_4' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_4' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_4' && sortReverse == ''"></span>
+                                    Token T4
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_5'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_5' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_5' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_5' && sortReverse == ''"></span>
+                                    Token T5
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_6'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == ''"></span>
+                                    Token T6
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_6'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == ''"></span>
+                                    Token T6
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_6'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == ''"></span>
+                                    Token T6
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_7'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_7' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_7' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_7' && sortReverse == ''"></span>
+                                    Token T7
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_8'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_8' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_8' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_8' && sortReverse == ''"></span>
+                                    Token T8
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_9'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_9' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_9' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_9' && sortReverse == ''"></span>
+                                    Token T9
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TOKEN_10'; getSorted();">
+                    <span ng-show="sortType == 'TOKEN_10' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TOKEN_10' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TOKEN_10' && sortReverse == ''"></span>
+                                    Token T10
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'CLICK_ID'; getSorted();">
+                    <span ng-show="sortType == 'CLICK_ID' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'CLICK_ID' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'CLICK_ID' && sortReverse == ''"></span>
+                                    ClickID
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'TRANSACTION_ID'; getSorted();">
+                    <span ng-show="sortType == 'TRANSACTION_ID' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'TRANSACTION_ID' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'TRANSACTION_ID' && sortReverse == ''"></span>
+                                    Transaction ID
+                                </a>
+                            </th>
+
+                            <th style="text-align: center; vertical-align: middle">
+                                <a href="" ng-click="sortType = 'DUPLICATE'; getSorted();">
+                    <span ng-show="sortType == 'DUPLICATE' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                    <span ng-show="sortType == 'DUPLICATE' && sortReverse == 'DESC'"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'DUPLICATE' && sortReverse == ''"></span>
+                                    Duplicate
+                                </a>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr style="text-align: center; vertical-align: middle" ng-show="postbacks.length != 0"
+                            ng-repeat="item in postbacks">
+                            <td style="text-align: center; vertical-align: middle">{{$index+1}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.id}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.prefix}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.afid}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.buyer}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.date}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.time}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.sum}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.currency}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.status}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.advname}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.offerid}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.offername}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.idc}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.ido}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.t1}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.t2}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.t3}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.t4}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.t5}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.t6}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.t7}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.t8}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.t9}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.t10}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.clickId}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.transactionid}}</td>
+                            <td style="text-align: center; vertical-align: middle">{{item.duplicate}}</td>
+                        </tr>
+                        <tr ng-show="postbacks.length == 0">
+                            <td colspan="22">
+                                <div class="loader"
+                                     style="text-align: center;">
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel-footer">
+                    <div class="text-center">
+                        <uib-pagination total-items="totalPagination" max-size="5"
+                                        ng-model="selectedPage" items-per-page="selectedSize"
+                                        ng-click="initDataOnPagination();"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

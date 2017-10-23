@@ -1,0 +1,135 @@
+<div ng-controller="advertiserController" ng-init="loadData();">
+    <div class="row" style="margin-top: 50px">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-primary" ng-click="applyClick();"
+                                    style="cursor:pointer; width: 47%;">Apply
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                                    style="cursor:pointer; width: 47%;">Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row" style="margin-right: -15px; margin-left: -15px">
+                <div class="col-md-3" style="margin-left: 10px">
+                    <div class="cardForAdvertisers">
+                        <h4 class="title">Advertisers</h4>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a class="btn btn-info btn-sm" ng-click="addAdvertiser();"
+                                   style="cursor:pointer; width: 47%;">Add</a>
+                                <a class="btn btn-info btn-sm" ng-click="cancelAdvertisersData();"
+                                   style="cursor:pointer; width: 47%;">Cancel</a>
+                            </div>
+                        </div>
+                        <div>
+                            <br/>
+                            <select multiple class="form-control" id="selectAdvertisers">
+                                <option ng-repeat="a in advertisers"
+                                        ng-click="onAdvertiserClick(a, $index);"
+                                        style="cursor:pointer;">{{a.advname}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5" style="margin-left: -10px">
+                    <div class="cardForAdvertisersData">
+                        <div class="row">
+                            <h4 class="title">Advertiser Data</h4>
+                            <div class="col-md-12">
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="advertiserName">Advertiser name</label>
+                                        <input type="text" class="form-control" id="advertiserName"
+                                               ng-model="advertiserName"
+                                               ng-change="updateAdvertiserName();"
+                                               ng-disabled="selectedAdvertiserIndex === -1"/>
+                                    </div>
+                                    <div class="form-inline form-group">
+                                        <label for="advertiserShortName">Advertiser short name</label>
+                                        <input type="text" class="form-control" id="advertiserShortName"
+                                               ng-model="advertiserShortName"
+                                               ng-disabled="selectedAdvertiserIndex === -1"
+                                               ng-change="updateAdvertiserShortName();"/>
+                                    </div>
+                                    <div class="form-inline form-group">
+                                        <label for="advertiserSecretName">Advertiser secret name</label>
+                                        <input type="text" class="form-control" id="advertiserSecretName"
+                                               ng-model="advertiserSecretName"
+                                               ng-disabled="selectedAdvertiserIndex === -1"
+                                               ng-change="updateAdvertiserSecretName();"/>
+                                    </div>
+                                    <div class="form-inline form-group">
+                                        <label for="risk">RISK</label>
+                                        <input type="text" class="form-control" id="risk"
+                                               ng-model="advertiserRisk" ng-disabled="selectedAdvertiserIndex === -1"
+                                               ng-change="updateAdvertiserRisk();"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="advertiserUrl">Advertiser Url</label>
+                                        <input type="text" class="form-control" id="advertiserUrl"
+                                               ng-model="advertiserUrl" ng-disabled="selectedAdvertiserIndex === -1"
+                                               ng-change="updateAdvertiserUrl();"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" style="margin-left: -10px">
+                    <div class="cardForAdvertisersStatus">
+                        <div class="row">
+                            <h4 class="title">Advertiser Status</h4>
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-info btn-sm"
+                                        ng-disabled="selectedAdvertiserIndex === -1"
+                                        ng-click="addStatusClick();"
+                                        style="cursor:pointer; width: 49%;">Add
+                                </button>
+                                <button type="button" class="btn btn-info btn-sm"
+                                        ng-click="removeStatus();" ng-disabled="selectedAdvertiserIndex === -1"
+                                        style="cursor:pointer; width:49%;">Delete
+                                </button>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row" style="height: 280px;overflow-y: auto;">
+                            <div class="col-md-12" ng-repeat="status in advertiserStatuses track by $index">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label>
+                                            <input type="checkbox" name="selected"
+                                                   ng-click="isSelected($index);"
+                                                   style="width:7%;"/>
+                                            <input type="text" class="form-control" id="statusName"
+                                                   ng-model="status.name" placeholder="Name"
+                                                   style="width:30%;"/>
+                                            <input type="text" class="form-control" id="realStatus"
+                                                   ng-model="status.realStatus" placeholder="Real Status"
+                                                   style="width:34%;"/>
+                                            <input type="text" class="form-control" id="statusType"
+                                                   ng-model="status.type" placeholder="Type"
+                                                   style="width:25%;"/>
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

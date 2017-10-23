@@ -1,0 +1,297 @@
+<div ng-controller="contentController" ng-init="loadData();">
+    <div class="cardForConversions">
+        <div class="row form-group" id="formBlock">
+            <div class="col-md-9">
+                <div class="row">
+                    <form class="form-inline">
+                        <div class="form-group" id="size">
+                            <select class="form-control" data-ng-model="selectedSize"
+                                    data-ng-options="v as k for (k, v) in sizeOptions"
+                                    style="margin-left: 20px;margin-bottom: 14px;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" data-ng-model="selectedDate"
+                                    data-ng-options="v as k for (k, v) in dateOptions"
+                                    style="margin-bottom: 14px;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6" style="width: 225px">
+                                    <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
+                                        <div class="input-group">
+                                            <input class="form-control" data-ng-model="dpFromDate"
+                                                   ng-disabled="selectedDate !== 'custom'" placeholder="From"/>
+                                            <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+                                        </div>
+                                    </datepicker>
+                                </div>
+                                <div class="col-md-6" style="width:225px; margin-left: 10px">
+                                    <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
+                                        <div class="input-group">
+                                            <input class="form-control" data-ng-model="dpToDate"
+                                                   ng-disabled="selectedDate !== 'custom'" placeholder="To"/>
+                                            <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+                                        </div>
+                                    </datepicker>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
+                                ng-click="getData()">Apply
+                        </button>
+                        <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit">Export
+                        </button>
+                        <button class="btn btn-primary btn-md" id="postBtn" name="postback" type="submit">Postback
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 form-group">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <input type="text" placeholder="Buyer" class="form-control" ng-model="selectedBuyerValue"
+                               style=" width: 150px;margin-left: 5px;"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="AfId" class="form-control" ng-model="selectedAfIdValue"
+                               style=" width: 150px;"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Aff.network" class="form-control"
+                               ng-model="selectedAffNetworkValue"
+                               style=" width: 150px;"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Status" class="form-control" ng-model="selectedStatusValue"
+                               style=" width: 150px;"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Prefix" class="form-control" ng-model="selectedPrefixValue"
+                               style=" width: 150px;"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Offer Name" class="form-control"
+                               ng-model="selectedOfferNameValue"
+                               style=" width: 150px;"/>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table id="table" class="table table-hover table-sm" ng-style="tableStyle">
+                    <thead class="thead-default">
+                    <tr style="text-align: center; vertical-align: middle">
+                        <th style="text-align: center; vertical-align: middle"><a href="">#</a></th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'CONVERSION_ID'; getSorted()">
+                                    <span ng-show="sortType == 'CONVERSION_ID' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'CONVERSION_ID' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'CONVERSION_ID' && sortReverse == ''"></span>
+                                ID
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'CONVERSION_PREFIX'; getSorted()">
+                    <span ng-show="sortType == 'CONVERSION_PREFIX' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'CONVERSION_PREFIX' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'CONVERSION_PREFIX' && sortReverse == ''"></span>
+                                Prefix
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'CONVERSION_AFID'; getSorted()">
+                                    <span ng-show="sortType == 'CONVERSION_AFID' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'CONVERSION_AFID' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'CONVERSION_AFID' && sortReverse == ''"></span>
+                                AfID
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'AFFILIATES_AFNAME'; getSorted()">
+                    <span ng-show="sortType == 'AFFILIATES_AFNAME' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'AFFILIATES_AFNAME' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'AFFILIATES_AFNAME' && sortReverse == ''"></span>
+                                Buyer
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'CONVERSION_DATA_CREATION'; getSorted()">
+                    <span ng-show="sortType == 'CONVERSION_DATA_CREATION' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'CONVERSION_DATA_CREATION' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'CONVERSION_DATA_CREATION' && sortReverse == ''"></span>
+                                Date
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'CONVERSION_SUM'; getSorted()">
+                                    <span ng-show="sortType == 'CONVERSION_SUM' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'CONVERSION_SUM' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'CONVERSION_SUM' && sortReverse == ''"></span>
+                                Payout
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'CURRENCY_CODE'; getSorted()">
+                                    <span ng-show="sortType == 'CURRENCY_CODE' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'CURRENCY_CODE' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'CURRENCY_CODE' && sortReverse == ''"></span>
+                                Currency
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'ADV_STATUS_REAL_STATUS'; getSorted()">
+                    <span ng-show="sortType == 'ADV_STATUS_REAL_STATUS' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'ADV_STATUS_REAL_STATUS' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'ADV_STATUS_REAL_STATUS' && sortReverse == ''"></span>
+                                Status
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'ADVERTS_SHORT_NAME'; getSorted()">
+                    <span ng-show="sortType == 'ADVERTS_SHORT_NAME' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'ADVERTS_SHORT_NAME' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'ADVERTS_SHORT_NAME' && sortReverse == ''"></span>
+                                Advert
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'OFFERS_ADV_NAME'; getSorted()">
+                                    <span ng-show="sortType == 'OFFERS_ADV_NAME' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'OFFERS_ADV_NAME' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'OFFERS_ADV_NAME' && sortReverse == ''"></span>
+                                OfferID
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'SOURCES_NAME'; getSorted()">
+                                    <span ng-show="sortType == 'SOURCES_NAME' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'SOURCES_NAME' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'SOURCES_NAME' && sortReverse == ''"></span>
+                                Traffic Source
+                            </a>
+                        </th>
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'EXCHANGE_RATE'; getSorted()">
+                                    <span ng-show="sortType == 'EXCHANGE_RATE' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'EXCHANGE_RATE' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'EXCHANGE_RATE' && sortReverse == ''"></span>
+                                Rate
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'CONVERSION_DATE_CHANGE'; getSorted()">
+                    <span ng-show="sortType == 'CONVERSION_DATE_CHANGE' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'CONVERSION_DATE_CHANGE' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'CONVERSION_DATE_CHANGE' && sortReverse == ''"></span>
+                                Data Change
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = 'CONVERSION_CLICK_ID'; getSorted()">
+                    <span ng-show="sortType == 'CONVERSION_CLICK_ID' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'CONVERSION_CLICK_ID' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'CONVERSION_CLICK_ID' && sortReverse == ''"></span>
+                                ClickID
+                            </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr style="text-align: center; vertical-align: middle" ng-show="cities.length != 0"
+                        ng-repeat="item in cities">
+                        <td style="text-align: center; vertical-align: middle">{{$index+1}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.conversionId}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.prefix}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.afId}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.buyer}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.date}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.payout}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.code}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.status}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.advert}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.offerId}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.trafficSource}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.rate}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.change}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.clickId}}</td>
+                    </tr>
+                    <tr ng-show="cities.length == 0">
+                        <td colspan="15">
+                            <div class="loader"
+                                 style="text-align: center;"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="panel-footer">
+                    <div class="text-center">
+                        <uib-pagination total-items="totalPagination" max-size="5"
+                                        ng-model="selectedPage" items-per-page="selectedSize"
+                                        ng-click="initDataOnPagination();"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

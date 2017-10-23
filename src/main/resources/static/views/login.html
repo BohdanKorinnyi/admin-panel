@@ -1,0 +1,11 @@
+<div class="container" ng-controller="loginController">
+    <form class="form-signin">
+        <h2 class="form-signin-heading"></h2>
+        <label for="inputEmail" class="sr-only">Логин</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="Логин" ng-model="user.login" required autofocus>
+        <label for="inputPassword" class="sr-only">Пароль</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" ng-model="user.password" required>
+        <a href="forgot-password.html">Забыли пароль?</a>
+        <button  class="btn btn-md btn-primary btn-block" type="submit" ng-click="login();">Войти</button>
+    </form>
+</div>

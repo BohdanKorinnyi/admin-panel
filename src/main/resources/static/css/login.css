@@ -1,0 +1,310 @@
+body {
+    padding-bottom: 40px;
+    background-color: #eee;
+}
+
+#formBlock {
+    margin-top: 10px;
+}
+
+#navbar {
+    margin-top: -10px;
+    color: white;
+}
+
+#applyBtn, #exportBtn, #postBtn {
+    width: 84px;
+    height: 33px;
+}
+
+.nav > li > a, .nav > li > a {
+    padding-bottom: 5px !important;
+    cursor: pointer;
+}
+
+.nav li a, .nav li a {
+    cursor: pointer;
+}
+
+.nav li a:focus, .nav li a:hover {
+    background: none !important;
+}
+
+.navbar-nav > li > .dropdown-menu a {
+    color: white;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    background: linear-gradient(154deg, #008fe2 0, #00b29c 100%);
+}
+
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+    background: none !important;
+}
+
+#pagination {
+    margin-top: 200px;
+}
+
+#navbarCustom {
+    min-height: 30px;
+    height: 30px;
+    background: linear-gradient(154deg, #008fe2 0, #00b29c 100%);
+    margin-bottom: 30px;
+}
+
+#enter-login-btn, #forgot-password-btn {
+    background: linear-gradient(154deg, #008fe2 0, #00b29c 100%);
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+tr {
+    vertical-align: middle;
+    text-align: center;
+}
+
+td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+#advertiserName {
+    width: 99%;
+}
+
+#advertiserShortName {
+    width: 70%;
+}
+
+#advertiserSecretName {
+    width: 69%;
+}
+
+#risk {
+    width: 92%;
+}
+
+#advertiserUrl {
+    width: 99%;
+}
+
+.editStatus {
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 20px;
+}
+
+.editStatus:hover {
+    color: cornflowerblue;
+    transition: 0.1s linear all;
+}
+
+p:hover {
+    background-color: lightgrey !important;
+}
+
+p:focus {
+    background-color: lightgrey !important;
+}
+
+.cardForAdvertisers, .cardForAdvertisersData, .cardForAdvertisersStatus, .cardForConversions {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.cardForConversions {
+    margin: 55px 25px 25px;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-clip: padding-box;
+    background: white;
+}
+
+.cardForAdvertisers {
+    margin-top: 20px;
+    height: 400px;
+    padding-top: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-clip: padding-box;
+    background: white;
+}
+
+.cardForAdvertisersData {
+    margin-top: 20px;
+    height: 400px;
+    padding-top: 1px;
+    padding-left: 25px;
+    padding-right: 25px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-clip: padding-box;
+    background: white;
+}
+
+.cardForAdvertisersStatus {
+    margin-top: 20px;
+    padding-top: 1px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 400px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-clip: padding-box;
+    background: white;
+}
+
+.navbar .navbar-nav li a {
+    margin: 5px 0px !important;
+}
+
+.navbar .navbar-nav > li > a.btn.btn-sm, .btn-sm {
+    border-radius: 0px !important;
+}
+
+.btn, .navbar .navbar-nav > li > a.btn {
+    border-radius: 0px !important;
+    padding: 6px 10px !important;
+}
+
+#navForLogout {
+    margin-top: -10px;
+}
+
+.navbar .navbar-nav > li > a.btn.btn-info.disabled, .navbar .navbar-nav > li > a.btn.btn-info.disabled:hover,
+.navbar .navbar-nav > li > a.btn.btn-info.disabled:focus, .navbar .navbar-nav > li > a.btn.btn-info.disabled.focus,
+.navbar .navbar-nav > li > a.btn.btn-info.disabled:active, .navbar .navbar-nav > li > a.btn.btn-info.disabled.active,
+.navbar .navbar-nav > li > a.btn.btn-info:disabled, .navbar .navbar-nav > li > a.btn.btn-info:disabled:hover, .navbar
+.navbar-nav > li > a.btn.btn-info:disabled:focus, .navbar .navbar-nav > li > a.btn.btn-info:disabled.focus,
+.navbar .navbar-nav > li > a.btn.btn-info:disabled:active, .navbar .navbar-nav > li > a.btn.btn-info:disabled.active,
+.navbar .navbar-nav > li > a.btn.btn-info[disabled], .navbar .navbar-nav > li > a.btn.btn-info[disabled]:hover,
+.navbar .navbar-nav > li > a.btn.btn-info[disabled]:focus, .navbar .navbar-nav > li > a.btn.btn-info[disabled].focus,
+.navbar .navbar-nav > li > a.btn.btn-info[disabled]:active, .navbar .navbar-nav > li > a.btn.btn-info[disabled].active,
+fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-info, fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-info:hover,
+fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-info:focus, fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-info.focus,
+fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-info:active, fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-info.active,
+.btn-info.disabled, .btn-info.disabled:hover, .btn-info.disabled:focus, .btn-info.disabled.focus, .btn-info.disabled:active,
+.btn-info.disabled.active, .btn-info:disabled, .btn-info:disabled:hover, .btn-info:disabled:focus, .btn-info:disabled.focus,
+.btn-info:disabled:active, .btn-info:disabled.active, .btn-info[disabled], .btn-info[disabled]:hover, .btn-info[disabled]:focus,
+.btn-info[disabled].focus, .btn-info[disabled]:active, .btn-info[disabled].active, fieldset[disabled] .btn-info,
+fieldset[disabled] .btn-info:hover, fieldset[disabled] .btn-info:focus,
+fieldset[disabled] .btn-info.focus, fieldset[disabled] .btn-info:active, fieldset[disabled] .btn-info.active {
+    border-color: #68B3C8;
+    color: #68B3C8;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th,
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 12px 2px !important;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
+    margin: 10px 0 15px !important;
+}
+
+#selectAdvertisers {
+    height: 275px;
+    width: 100%;
+}
+
+.dropdown-menu::before,
+.dropdown-menu::after {
+    border: none !important;
+    content: none !important;
+}
+
+.testimonial-group > .row {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.testimonial-group > .row > .col-md-12 > table {
+    display: inline-block;
+    float: none;
+}
+
+/*.testimonial-group > .row > .col-xs-4 {*/
+/*display: inline-block;*/
+/*float: none;*/
+/*}*/
+.loader {
+    margin: auto;
+    border: 4px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 30px;
+    height: 30px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.bootstrap-select > .dropdown-toggle{
+    width: 110px!important;
+}
