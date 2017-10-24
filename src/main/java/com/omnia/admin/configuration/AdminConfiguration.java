@@ -1,5 +1,8 @@
 package com.omnia.admin.configuration;
 
+import io.swagger.annotations.Contact;
+import io.swagger.annotations.Info;
+import io.swagger.annotations.SwaggerDefinition;
 import lombok.extern.log4j.Log4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +24,7 @@ import static com.omnia.admin.AdminApplication.configurationFile;
 @Log4j
 @Configuration
 @EnableSwagger2
+@SwaggerDefinition(info = @Info(description = "Conversion panel API", version = "1.0", title = "REST API of conversions server", contact = @Contact(name = "Bohdan Korinnyi", email = "bohdan.korinnyi@gmail.com")))
 public class AdminConfiguration {
     public static final String WRITE_PREFIX = "write_";
     public static final String DB_NAME_KEY = "db_name";
