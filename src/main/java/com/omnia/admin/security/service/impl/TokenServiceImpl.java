@@ -73,7 +73,8 @@ public class TokenServiceImpl implements TokenService {
     }
 
     private String getUniqueKeyFromToken(String token) {
-        String[] tokenParameters = token.split(COLON);
+        String decodedToken = getDecodedToken(token);
+        String[] tokenParameters = decodedToken.split(COLON);
         if (tokenParameters.length != 2) {
             log.info("Request refused for token token=" + token);
             throw new BadCredentialsException();
@@ -83,13 +84,17 @@ public class TokenServiceImpl implements TokenService {
 
     private String getUsernameFromToken(String token) {
         try {
-            byte[] decodeTokenBytes = Base64.getDecoder().decode(token);
-            String decodeToken = new String(decodeTokenBytes);
+            String decodeToken = getDecodedToken(token);
             return decodeToken.split(COLON)[0];
         } catch (Exception e) {
             log.error("Error occurred during getting username from token=" + token, e);
             throw new BadCredentialsException();
         }
+    }
+
+    private String getDecodedToken(String token) {
+        byte[] decodeTokenBytes = Base64.getDecoder().decode(token);
+        return new String(decodeTokenBytes);
     }
 
     private String toBase64(String value) {
