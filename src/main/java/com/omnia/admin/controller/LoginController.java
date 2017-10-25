@@ -1,6 +1,5 @@
 package com.omnia.admin.controller;
 
-import com.omnia.admin.dao.UserDao;
 import com.omnia.admin.dto.LoginDto;
 import com.omnia.admin.security.service.LoginService;
 import lombok.AllArgsConstructor;
@@ -17,10 +16,8 @@ public class LoginController {
 
     private final LoginService loginService;
 
-    private final UserDao userDao;
-
     @PostMapping("login")
     public ResponseEntity login(HttpServletResponse response, @RequestBody LoginDto loginDto) {
-        return ResponseEntity.ok().body(userDao.getUserByName(loginDto.getUsername()));
+        return ResponseEntity.ok().body(loginService.authenticate(response, loginDto));
     }
 }

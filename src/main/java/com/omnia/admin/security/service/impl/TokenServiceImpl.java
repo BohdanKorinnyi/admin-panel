@@ -5,6 +5,7 @@ import com.omnia.admin.exception.Md5EncodeException;
 import com.omnia.admin.security.service.TokenService;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.Base64;
 
@@ -25,7 +26,7 @@ public class TokenServiceImpl implements TokenService {
         try {
             String key = loginDto.getUsername() + COLUMN + loginDto.getPassword() + COLUMN + TOKEN_GENERATE_KEY;
             MessageDigest md = MessageDigest.getInstance(MD5);
-            return new String(md.digest(key.getBytes()));
+            return new String(md.digest(key.getBytes()), Charset.forName("UTF-8"));
         } catch (Exception e) {
             throw new Md5EncodeException("Token creation failed for username=" + loginDto.getUsername());
         }
