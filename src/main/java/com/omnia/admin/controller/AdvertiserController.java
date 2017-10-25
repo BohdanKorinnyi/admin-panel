@@ -39,7 +39,8 @@ public class AdvertiserController {
     @PutMapping(path = "update")
     @ApiOperation(value = "Update advertisers")
     @RequiredRole(roles = {Role.ADMIN, Role.DIRECTOR, Role.CFO, Role.CBO})
-    public void update(@ApiParam(value = "Updated advertisers, statuses with empty 'id' will be created, with id will be updated")
+    public void update(HttpServletRequest request,
+                       @ApiParam(value = "Updated advertisers, statuses with empty 'id' will be created, with id will be updated")
                        @RequestBody List<AdvertiserDto> advertisers) {
         advertiserService.update(advertisers);
     }
