@@ -21,7 +21,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
-    private static final String COOKIE_TOKEN_NAME = "token";
+    public static final String COOKIE_TOKEN_NAME = "token";
 
     private final UserService userService;
     private final TokenService tokenService;

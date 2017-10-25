@@ -4,4 +4,6 @@ import com.omnia.admin.dto.LoginDto;
 
 public interface TokenService {
     String generate(LoginDto loginDto);
+
+    String getUsernameFromToken(String token);
 }
