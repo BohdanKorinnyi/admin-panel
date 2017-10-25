@@ -3,7 +3,6 @@ package com.omnia.admin.controller;
 import com.omnia.admin.dto.AdvertiserDto;
 import com.omnia.admin.model.Advertiser;
 import com.omnia.admin.model.Role;
-import com.omnia.admin.model.User;
 import com.omnia.admin.security.annotation.RequiredRole;
 import com.omnia.admin.security.service.TokenService;
 import com.omnia.admin.service.AdvertiserService;
@@ -27,7 +26,6 @@ public class AdvertiserController {
 
     @GetMapping(path = "all")
     @ApiOperation(value = "Returns list of all advertisers")
-    @RequiredRole(roles = {Role.USER})
     public List<Advertiser> getAllAdvertisers(HttpServletRequest request) {
         return advertiserService.getAllAdvertisers();
     }
@@ -40,6 +38,7 @@ public class AdvertiserController {
 
     @PutMapping(path = "update")
     @ApiOperation(value = "Update advertisers")
+    @RequiredRole(roles = {Role.ADMIN, Role.DIRECTOR, Role.CFO, Role.CBO})
     public void update(@ApiParam(value = "Updated advertisers, statuses with empty 'id' will be created, with id will be updated")
                        @RequestBody List<AdvertiserDto> advertisers) {
         advertiserService.update(advertisers);

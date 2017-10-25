@@ -1,12 +1,19 @@
 package com.omnia.admin.model;
 
+import com.omnia.admin.exception.UnknownRoleException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public enum Role {
-    USER(1), ADMIN(2);
+    BUYER(1),
+    TEAM_LEADER(2),
+    CBO(3),//Media Buyer Director
+    MENTOR(4),
+    CFO(5),//Chief Finance Office
+    DIRECTOR(6),
+    ADMIN(7);
 
     private int value;
 
@@ -16,6 +23,6 @@ public enum Role {
                 return role;
             }
         }
-        return Role.USER;
+        throw new UnknownRoleException();
     }
 }

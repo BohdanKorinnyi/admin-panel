@@ -8,6 +8,7 @@ import com.omnia.admin.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.ArrayUtils;
 
 import javax.servlet.http.Cookie;
 import java.nio.charset.Charset;
@@ -23,6 +24,7 @@ import static com.omnia.admin.security.service.impl.LoginServiceImpl.COOKIE_TOKE
 @AllArgsConstructor
 public class TokenServiceImpl implements TokenService {
 
+    private static final Cookie[] EMPTY_COOKIE_ARRAY = new Cookie[0];
     private static final String TOKEN_GENERATE_KEY = "368a16b5874f63cfd14e938cc7b9d0bf";
     private static final String COLON = ":";
     private static final String MD5 = "MD5";
@@ -66,7 +68,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     private String getTokenFromCookies(Cookie[] cookies) {
-        return Arrays.stream(cookies)
+        return Arrays.stream(ArrayUtils.isEmpty(cookies) ? EMPTY_COOKIE_ARRAY : cookies)
                 .filter(cookie -> COOKIE_TOKEN_NAME.equals(cookie.getName()))
                 .map(Cookie::getValue).findFirst()
                 .orElseThrow(BadCredentialsException::new);

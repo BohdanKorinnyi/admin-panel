@@ -48,7 +48,6 @@ public class AuthenticationFilter implements Filter {
             servletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
             return;
         }
-        log.info(servletRequest.getRequestURI() + " skip auth");
         chain.doFilter(servletRequest, response);
     }
 
