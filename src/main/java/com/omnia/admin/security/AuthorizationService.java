@@ -30,9 +30,7 @@ public class AuthorizationService {
 
     @Before(value = "@annotation(com.omnia.admin.security.annotation.RequiredRole)")
     public void checkRole(JoinPoint joinPoint) {
-        Object[] args = joinPoint.getArgs();
-        HttpServletRequest request = (HttpServletRequest) args[0];
-
+        HttpServletRequest request = (HttpServletRequest) joinPoint.getArgs()[0];
         long start = System.currentTimeMillis();
         Role[] requiredRoles = getRequiredRoles(joinPoint);
         String username = tokenService.getUsernameFromCookies(request.getCookies());

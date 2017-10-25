@@ -2,6 +2,10 @@ package com.omnia.admin.controller;
 
 import com.omnia.admin.dto.AdvertiserDto;
 import com.omnia.admin.model.Advertiser;
+import com.omnia.admin.model.Role;
+import com.omnia.admin.model.User;
+import com.omnia.admin.security.annotation.RequiredRole;
+import com.omnia.admin.security.service.TokenService;
 import com.omnia.admin.service.AdvertiserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,6 +13,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Api(description = "Operations about advertiser")
@@ -18,10 +23,12 @@ import java.util.List;
 public class AdvertiserController {
 
     private final AdvertiserService advertiserService;
+    private final TokenService tokenService;
 
     @GetMapping(path = "all")
     @ApiOperation(value = "Returns list of all advertisers")
-    public List<Advertiser> getAllAdvertisers() {
+    @RequiredRole(roles = {Role.USER})
+    public List<Advertiser> getAllAdvertisers(HttpServletRequest request) {
         return advertiserService.getAllAdvertisers();
     }
 

@@ -2,6 +2,6 @@ package com.omnia.admin.exception;
 
 public class ForbiddenResourceException extends RuntimeException {
     public ForbiddenResourceException() {
-        super("You don't have access to this resources");
+        super("You don't have an access to this resource");
     }
 }
