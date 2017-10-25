@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 @Log4j
 @Component
 @AllArgsConstructor
-public class CustomSecurityRequestFilter implements Filter {
+public class AuthenticationFilter implements Filter {
 
     private final TokenService tokenService;
 

@@ -23,7 +23,7 @@ import java.util.Optional;
 @Aspect
 @Component
 @AllArgsConstructor
-public class SecurityAspect {
+public class AuthorizationService {
 
     private final UserService userService;
     private final TokenService tokenService;
