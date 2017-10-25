@@ -1,9 +1,12 @@
 package com.omnia.admin.security.service;
 
-import com.omnia.admin.dto.LoginDto;
+import javax.servlet.http.Cookie;
 
 public interface TokenService {
-    String generate(LoginDto loginDto);
 
-    String getUsernameFromToken(String token);
+    boolean validate(Cookie[] token);
+
+    String generate(String username, String passwordEncoded);
+
+    String getUsernameFromCookies(Cookie[] cookies);
 }

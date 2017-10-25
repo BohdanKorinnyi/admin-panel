@@ -32,7 +32,7 @@ public class LoginServiceImpl implements LoginService {
         if (user.isPresent()) {
             log.info("User " + loginDto.getUsername() + " has been found");
             if (BCrypt.checkpw(loginDto.getPassword(), user.get().getPassword())) {
-                response.addCookie(new Cookie(COOKIE_TOKEN_NAME, tokenService.generate(loginDto)));
+                response.addCookie(new Cookie(COOKIE_TOKEN_NAME, tokenService.generate(, loginDto, )));
                 return user.get();
             }
             throw new BadCredentialsException();
