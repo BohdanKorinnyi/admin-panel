@@ -1,10 +1,8 @@
 "use strict";
 
 Application.controller("postbackController", function ($scope, $http, dateFactory) {
-
     $scope.postbacks = [];
     $scope.sortingDetails = {};
-
     $scope.selectedPage = 1;
     $scope.totalPagination = 1;
     $scope.noOfPages = 1;
@@ -56,6 +54,7 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
     $scope.selectedSize = 50;
 
     $scope.dateOptions = {
+        "Select Date": "no-date",
         "Today": "today",
         "Yesterday": "yesterday",
         "Last 7 days": "lastWeek",
@@ -63,26 +62,7 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
         "Last Month": "lastMonth",
         "Custom Range": "custom"
     };
-    $scope.selectedDate = "today";
-
-    function formatDate(date) {
-        var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
-
-        return [year, month, day].join('-');
-    }
-
-    $scope.showData = function () {
-        console.log($scope.selectedBuyerNames);
-        console.log($scope.selectedStatusValue);
-        console.log($scope.selectedAdvertiserNames);
-    };
-
+    $scope.selectedDate = "no-date";
     $scope.changeOrder = function () {
         if ($scope.sortReverse === "") {
             $scope.sortReverse = "ASC";
@@ -94,11 +74,6 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
             $scope.sortReverse = "";
         }
     };
-
-    $scope.loadData = function () {
-        $scope.initData();
-    };
-
     $scope.initAdvNames = function () {
         var url = "/advertiser/names";
         $http.get(url).then(function successCallback(response) {
@@ -110,7 +85,6 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
             }
         });
     };
-
     $scope.initBuyerNames = function () {
         var url = "/buyer/names";
         $http.get(url).then(function successCallback(response) {
@@ -123,142 +97,74 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
         });
     };
 
-    $scope.initData = function () {
-        var url = "grid/postback/get";
-        var parameters = {};
-
-        parameters.page = $scope.selectedPage;
-        parameters.size = $scope.selectedSize;
-        parameters['filter'] = {};
-        parameters['sortingDetails'] = {};
-
-        var parameter = JSON.stringify(parameters);
-
-        var queryHeaders = new Headers();
-        queryHeaders.append('Content-Type', 'application/json');
-
-        $http.post(url, parameter, {headers: queryHeaders}).then(function successCallback(r) {
-            $scope.postbacks = r.data.postbacks;
-            $scope.totalPagination = r.data.size;
-            $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
-        }, function errorCallback(resp) {
-        });
-    };
-
-    $scope.getData = function () {
-        var url = "grid/postback/get";
-        var parameters = {};
-
-        parameters.page = $scope.selectedPage;
-        parameters.size = $scope.selectedSize;
-        parameters['filter'] = {};
-
-        if ($scope.selectedDate === "custom") {
-            parameters.filter["from"] = $scope.dpFromDate;
-            parameters.filter["to"] = $scope.dpToDate;
-        }
-        else {
-            parameters.filter["from"] = formatDate(dateFactory.pickDate($scope.selectedDate));
-            parameters.filter["to"] = formatDate(new Date());
-        }
-
-        //$scope.buyerNames[i].id
-        for (var i = 0; i < $scope.selectedAdvertiserNames.length; i++) {
-            for (var j = 0; j < $scope.advertiserNames.length; j++) {
-                if ($scope.selectedAdvertiserNames[i] == $scope.advertiserNames[j].id) {
-                    $scope.selectedAdvertiserValue.push($scope.advertiserNames[j].name);
-                }
-            }
-        }
-
-        for (var i = 0; i < $scope.selectedBuyerNames.length; i++) {
-            for (var j = 0; j < $scope.buyerNames.length; j++) {
-                if ($scope.selectedBuyerNames[i] == $scope.buyerNames[j].id) {
-                    $scope.selectedBuyerValue.push($scope.buyerNames[j].name);
-                }
-            }
-        }
-
-        for (var i = 0; i < $scope.selectedStatusValue.length; i++) {
-            for (var j = 0; j < $scope.statusValues.length; j++) {
-                if ($scope.selectedStatusValue[i] == $scope.statusValues[j].id) {
-                    $scope.selectedStatusForPostValue.push($scope.statusValues[j].name);
-                }
-            }
-        }
-
-        parameters.filter["buyer"] = $scope.selectedBuyerValue.join();
-        parameters.filter["advertiser"] = $scope.selectedAdvertiserValue.join();
-        parameters.filter["status"] = $scope.selectedStatusForPostValue.join();
-        parameters.filter["afid"] = $scope.selectedAfIdValue;
-        parameters.filter["prefix"] = $scope.selectedPrefixValue;
-        parameters.filter["offerName"] = $scope.selectedOfferNameValue;
-        parameters.filter["clickId"] = $scope.selectedClickIdValue;
-        parameters.filter["statusFromOfferName"] = $scope.selectedStatusFromOfferNameValue;
-        parameters.filter["duplicate"] = $scope.selectedDuplicateValue;
-        parameters['sortingDetails'] = {};
-
-
-        var parameter = JSON.stringify(parameters);
-        $http.post(url, parameter).then(function successCallback(r) {
-            $scope.totalItems = r.data.size;
-            $scope.postbacks = r.data.conversions;
-            $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
-        }, function errorCallback(resp) {
-            console.error("Error!" + resp);
-        });
-    };
-
-    $scope.initDataOnPagination = function () {
-        var url = "grid/postback/get";
-        var parameters = {};
-
+    $scope.loadPostbacks = function () {
         $scope.postbacks = [];
-        $scope.postbacks.length = 0;
-        parameters.page = $scope.selectedPage;
-        parameters.size = $scope.selectedSize;
-        parameters['filter'] = {};
-        parameters['sortingDetails'] = {};
-
-        var parameter = JSON.stringify(parameters);
-        $http.post(url, parameter).then(function successCallback(r) {
-            $scope.postbacks = r.data.postbacks;
-            $scope.totalPagination = r.data.size;
-            $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
-        }, function errorCallback(resp) {
-            console.error("Error!" + resp);
-        });
+        $http.post('grid/postback/get', $scope.getFilterParameters())
+            .then(function successCallback(response) {
+                $scope.postbacks = response.data.postbacks;
+                $scope.totalPagination = response.data.size;
+                $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
+            }, function errorCallback(response) {
+                console.log('error', response);
+            });
     };
 
-    $scope.getSorted = function () {
-        var url = "grid/postback/get";
+    $scope.getFilterParameters = function () {
         var parameters = {};
-
-        $scope.changeOrder();
-
-        $scope.postbacks = [];
-        $scope.postbacks.length = 0;
         parameters.page = $scope.selectedPage;
         parameters.size = $scope.selectedSize;
         parameters['filter'] = {};
-        parameters['sortingDetails'] = {};
 
-        if ($scope.sortReverse !== "") {
+        if ($scope.selectedDate !== 'no-date') {
+            if ($scope.selectedDate === "custom") {
+                parameters.filter["from"] = $scope.dpFromDate;
+                parameters.filter["to"] = $scope.dpToDate;
+            }
+            else {
+                parameters.filter["from"] = formatDate(dateFactory.pickDate($scope.selectedDate));
+                parameters.filter["to"] = formatDate(new Date());
+            }
+        }
+        $scope.selectedAdvertiserValue = getSelectedValues($scope.selectedAdvertiserNames, $scope.advertiserNames);
+        $scope.selectedBuyerValue = getSelectedValues($scope.selectedBuyerNames, $scope.buyerNames);
+        $scope.selectedStatusForPostValue = getSelectedValues($scope.selectedStatusValue, $scope.statusValues);
+        if ($scope.selectedBuyerValue.join() !== '') {
+            parameters.filter["buyer"] = $scope.selectedBuyerValue.join();
+        }
+        if ($scope.selectedAdvertiserValue.join() !== '') {
+            parameters.filter["advertiser"] = $scope.selectedAdvertiserValue.join();
+        }
+        if ($scope.selectedStatusForPostValue.join() !== '') {
+            parameters.filter["status"] = $scope.selectedStatusForPostValue.join();
+        }
+        if ($scope.selectedAfIdValue !== '') {
+            parameters.filter["afid"] = $scope.selectedAfIdValue;
+        }
+        if ($scope.selectedAfIdValue !== '') {
+            parameters.filter["afid"] = $scope.selectedAfIdValue;
+        }
+        if ($scope.selectedPrefixValue !== '') {
+            parameters.filter["prefix"] = $scope.selectedPrefixValue;
+        }
+        if ($scope.selectedOfferNameValue !== '') {
+            parameters.filter["offerName"] = $scope.selectedOfferNameValue;
+        }
+        if ($scope.selectedClickIdValue !== '') {
+            parameters.filter["clickId"] = $scope.selectedClickIdValue;
+        }
+        if ($scope.selectedStatusFromOfferNameValue !== '') {
+            parameters.filter["statusFromOfferName"] = $scope.selectedStatusFromOfferNameValue;
+        }
+        if ($scope.selectedDuplicateValue !== '') {
+            parameters.filter["duplicate"] = $scope.selectedDuplicateValue;
+        }
+        if ($scope.sortReverse !== '') {
+            parameters['sortingDetails'] = {};
             parameters.sortingDetails["column"] = $scope.sortType;
             parameters.sortingDetails["order"] = $scope.sortReverse;
         }
-
-        var parameter = JSON.stringify(parameters);
-        $http.post(url, parameter).then(function successCallback(r) {
-            $scope.postbacks = r.data.postbacks;
-            $scope.totalPagination = r.data.size;
-            $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
-        }, function errorCallback(resp) {
-            console.error("Error!" + resp);
-        });
+        return parameters;
     };
-
-
 });
 
 Application.directive('selectWatcher', function ($timeout) {
@@ -274,3 +180,27 @@ Application.directive('selectWatcher', function ($timeout) {
         }
     };
 });
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+function getSelectedValues(selected, allValues) {
+    var returnType = [];
+    for (var i = 0; i < selected.length; i++) {
+        for (var j = 0; j < allValues.length; j++) {
+            if (selected[i] == allValues[j].id) {
+                returnType.push(allValues[j].name);
+            }
+        }
+    }
+    return returnType;
+}
