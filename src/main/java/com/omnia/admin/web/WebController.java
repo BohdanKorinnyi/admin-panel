@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WebController {
     //TODO: server works without UI
-//    @GetMapping(path = "/")
+    @GetMapping(path = "/")
     public String index() {
         return "index";
     }
@@ -16,7 +16,7 @@ public class WebController {
         return "index-2";
     }
 
-//    @GetMapping(path = "/advertiser")
+    @GetMapping(path = "/advertiser")
     public String advertiser() {
         return "advertiser";
     }

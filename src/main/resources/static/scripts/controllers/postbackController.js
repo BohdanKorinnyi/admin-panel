@@ -124,7 +124,7 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
     };
 
     $scope.initData = function () {
-        var url = "postback/get";
+        var url = "grid/postback/get";
         var parameters = {};
 
         parameters.page = $scope.selectedPage;
@@ -146,7 +146,7 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
     };
 
     $scope.getData = function () {
-        var url = "postback/get";
+        var url = "grid/postback/get";
         var parameters = {};
 
         parameters.page = $scope.selectedPage;
@@ -210,7 +210,7 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
     };
 
     $scope.initDataOnPagination = function () {
-        var url = "postback/get";
+        var url = "grid/postback/get";
         var parameters = {};
 
         $scope.postbacks = [];
@@ -231,7 +231,7 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
     };
 
     $scope.getSorted = function () {
-        var url = "postback/get";
+        var url = "grid/postback/get";
         var parameters = {};
 
         $scope.changeOrder();

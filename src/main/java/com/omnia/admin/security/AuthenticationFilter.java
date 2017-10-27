@@ -38,17 +38,18 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest servletRequest = (HttpServletRequest) request;
-        if (isSecured(servletRequest.getRequestURI())) {
-            if (tokenService.validate((servletRequest.getCookies()))) {
-                chain.doFilter(servletRequest, response);
-                return;
-            }
-            HttpServletResponse servletResponse = (HttpServletResponse) response;
-            servletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return;
-        }
-        chain.doFilter(servletRequest, response);
+//        HttpServletRequest servletRequest = (HttpServletRequest) request;
+//        if (isSecured(servletRequest.getRequestURI())) {
+//            if (tokenService.validate((servletRequest.getCookies()))) {
+//                chain.doFilter(servletRequest, response);
+//                return;
+//            }
+//            HttpServletResponse servletResponse = (HttpServletResponse) response;
+//            servletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+//            return;
+//        }
+//        chain.doFilter(servletRequest, response);
+        chain.doFilter(request, response);
     }
 
     @Override
