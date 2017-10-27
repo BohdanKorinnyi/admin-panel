@@ -1,6 +1,3 @@
-/**
- * Created by meser on 10/9/2017.
- */
 "use strict";
 
 Application.factory("dateFactory", function () {
