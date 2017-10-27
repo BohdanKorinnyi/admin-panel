@@ -499,9 +499,8 @@
                         </tr>
                         <tr ng-show="postbacks.length == 0">
                             <td colspan="28">
-                                <div class="loader"
-                                     style="text-align: center;">
-                                </div>
+                                <div class="loader" style="text-align: center;" ng-show="showLoader"></div>
+                                <div style="text-align: center;" ng-show="!showLoader">No Data</div>
                             </td>
                         </tr>
                         </tbody>

@@ -99,12 +99,15 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
 
     $scope.loadPostbacks = function () {
         $scope.postbacks = [];
+        $scope.showLoader = true;
         $http.post('grid/postback/get', $scope.getFilterParameters())
             .then(function successCallback(response) {
                 $scope.postbacks = response.data.postbacks;
+                $scope.showLoader = false;
                 $scope.totalPagination = response.data.size;
                 $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
             }, function errorCallback(response) {
+                $scope.showLoader = false;
                 console.log('error', response);
             });
     };
