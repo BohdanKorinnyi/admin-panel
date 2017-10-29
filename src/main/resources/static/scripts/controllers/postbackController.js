@@ -124,8 +124,8 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
                 parameters.filter["to"] = $scope.dpToDate;
             }
             else {
-                parameters.filter["from"] = formatDate(dateFactory.pickDate($scope.selectedDate));
-                parameters.filter["to"] = formatDate(new Date());
+                parameters.filter["from"] = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
+                parameters.filter["to"] = formatDate(dateFactory.pickDateTo($scope.selectedDate));
             }
         }
         $scope.selectedAdvertiserValue = getSelectedValues($scope.selectedAdvertiserNames, $scope.advertiserNames);

@@ -53,7 +53,7 @@
                                 ng-click="loadPostbacks();">Apply
                         </button>
                         <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit"
-                                ng-click="showData();">Export
+                                ng-click="">Export
                         </button>
                         <button class="btn btn-primary btn-md" id="postBtn" name="postback" type="submit">Postback
                         </button>
@@ -63,127 +63,93 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12 form-group">
+            <div class="col-md-11 form-group">
                 <form class="form-inline">
-                    <div class="row">
-                        <div class="col-md-2" style="width: 9%; margin-top:2px;">
+                    <div class="form-group" ng-init="initBuyerNames();"
+                         style="margin-top:10px;">
+                        <select class="selectpicker" multiple
+                                data-style="btn-info btn-fill btn-block"
+                                data-size="5"
+                                title="Buyer"
+                                data-header="Buyers"
+                                ng-model="selectedBuyerNames"
+                                style="width: 130%;margin-left: 5px;">
+                            <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
+                                    data-last="{{$last}}" value="{{b.id}}">{{b.name}}
+                            </option>
+                        </select>
+                    </div>
 
-                            <div class="row">
-                                <div class="col-md-12" style="width:130%;"
-                                     ng-init="initBuyerNames();">
-                                    <select class="selectpicker" multiple
-                                            data-style="btn-info btn-fill btn-block"
-                                            data-size="5"
-                                            title="Buyer"
-                                            data-header="Buyers"
-                                            ng-model="selectedBuyerNames"
-                                            style="width: 130%;margin-left: 5px; margin-top: 7px;">
-                                        <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
-                                                data-last="{{$last}}" value="{{b.id}}">{{b.name}}
-                                        </option>
-                                    </select>
-                                </div>
+                    <div class="form-group" ng-init="initAdvNames();"
+                        style="margin-top:10px;">
+                        <select class="selectpicker" multiple
+                                data-style="btn-info btn-fill btn-block"
+                                data-size="5"
+                                data-header="Advertisers"
+                                selected-header="options selected"
+                                title="Advertiser"
+                                ng-model="selectedAdvertiserNames"
+                                style="width: 120%;">
+                            <option class="small-font" ng-repeat="a in advertiserNames"
+                                    data-select-watcher
+                                    data-last="{{$last}}" value="{{a.id}}">{{a.name}}
+                            </option>
+                        </select>
+                    </div>
 
-                            </div>
-                        </div>
+                    <div class="form-group" style="margin-top:10px;">
+                        <select class="selectpicker" multiple
+                                data-style="btn-info btn-fill btn-block"
+                                data-header="Statuses"
+                                selected-header="options selected"
+                                title="Status"
+                                ng-model="selectedStatusValue"
+                                style=" width: 120%;">
+                            <option class="small-font" ng-repeat="s in statusValues"
+                                    data-select-watcher
+                                    data-last="{{$last}}" value="{{s.id}}">{{s.name}}
+                            </option>
+                        </select>
+                    </div>
 
-                        <div class="col-md-2" style="width: 10%;margin-top:2px;">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-12" style="width:94%; margin-left: 10px;"
-                                    <div class="col-md-12" style="width:94%; margin-left: 10px;"
-                                         ng-init="initAdvNames();">
-                                        <select class="selectpicker" multiple
-                                                data-style="btn-info btn-fill btn-block"
-                                                data-size="5"
-                                                data-header="Advertisers"
-                                                selected-header="options selected"
-                                                title="Advertiser"
-                                                ng-model="selectedAdvertiserNames"
-                                                style=" width: 120%;  margin-top: 7px;">
-                                            <option class="small-font" ng-repeat="a in advertiserNames"
-                                                    data-select-watcher
-                                                    data-last="{{$last}}" value="{{a.id}}">{{a.name}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="AfId" class="form-control"
+                               ng-model="selectedAfIdValue"
+                               style=" width: 124px;"/>
+                    </div>
 
-                        <div class="col-md-2" style="width: 9%;margin-top:2px;">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-12" style="width:140%;">
-                                        <select class="selectpicker" multiple
-                                                data-style="btn-info btn-fill btn-block"
-                                                data-header="Statuses"
-                                                selected-header="options selected"
-                                                title="Status"
-                                                ng-model="selectedStatusValue"
-                                                style=" width: 120%;  margin-top: 7px;">
-                                            <option class="small-font" ng-repeat="s in statusValues"
-                                                    data-select-watcher
-                                                    data-last="{{$last}}" value="{{s.id}}">{{s.name}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Prefix" class="form-control"
+                               ng-model="selectedPrefixValue"
+                               style=" width: 110px;"/>
+                    </div>
 
+                    <div class="form-group">
+                        <input type="text" placeholder="Offer Name" class="form-control"
+                               ng-model="selectedOfferNameValue"
+                               style=" width: 123px;"/>
+                    </div>
 
-                        <div class="col-md-1" style="width: 10%;">
-                            <div class="form-group">
-                                <input type="text" placeholder="AfId" class="form-control"
-                                       ng-model="selectedAfIdValue"
-                                       style=" width: 124px;"/>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Click Id" class="form-control"
+                               ng-model="selectedClickIdValue"
+                               style=" width: 110px;"/>
+                    </div>
 
-                        <div class="col-md-1" style="width: 9%;">
-                            <div class="form-group">
-                                <input type="text" placeholder="Prefix" class="form-control"
-                                       ng-model="selectedPrefixValue"
-                                       style=" width: 110px;"/>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Status" class="form-control"
+                               ng-model="selectedStatusFromOfferNameValue"
+                               style=" width: 110px;"/>
+                    </div>
 
-                        <div class="col-md-1" style="width: 10%;">
-                            <div class="form-group">
-                                <input type="text" placeholder="Offer Name" class="form-control"
-                                       ng-model="selectedOfferNameValue"
-                                       style=" width: 123px;"/>
-                            </div>
-                        </div>
-
-                        <div class="col-md-1" style="width: 9%;">
-                            <div class="form-group">
-                                <input type="text" placeholder="Click Id" class="form-control"
-                                       ng-model="selectedClickIdValue"
-                                       style=" width: 110px;"/>
-                            </div>
-                        </div>
-
-                        <div class="col-md-1" style="width: 9%;">
-                            <div class="form-group">
-                                <input type="text" placeholder="Status" class="form-control"
-                                       ng-model="selectedStatusFromOfferNameValue"
-                                       style=" width: 110px;"/>
-                            </div>
-                        </div>
-
-                        <div class="col-md-1" style="width: 9%;">
-                            <div class="form-group">
-                                <input type="text" placeholder="Duplicate" class="form-control"
-                                       ng-model="selectedDuplicateValue"
-                                       style=" width: 110px;"/>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Duplicate" class="form-control"
+                               ng-model="selectedDuplicateValue"
+                               style=" width: 110px;"/>
                     </div>
                 </form>
             </div>
-            <!--<div class="col-md-1"></div>-->
+            <div class="col-md-1"></div>
         </div>
 
         <div class="row testimonial-group" style="margin-left: 15px; margin-right: 15px; ">
@@ -334,102 +300,102 @@
                                 </a>
                             </th>
                             <th style="text-align: center; vertical-align: middle">
-                                <a href="" ng-click="sortType = 'TOKEN_1'; changeOrder();loadPostbacks();">
-                    <span ng-show="sortType == 'TOKEN_1' && sortReverse == 'ASC'"
+                                <a href="" ng-click="sortType = 'TOKEN_T1'; changeOrder();loadPostbacks();">
+                    <span ng-show="sortType == 'TOKEN_T1' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
-                                    <span ng-show="sortType == 'TOKEN_1' && sortReverse == 'DESC'"
+                                    <span ng-show="sortType == 'TOKEN_T1' && sortReverse == 'DESC'"
                                           class="fa fa-caret-down"></span>
-                                    <span ng-show="sortType == 'TOKEN_1' && sortReverse == ''"></span>
+                                    <span ng-show="sortType == 'TOKEN_T1' && sortReverse == ''"></span>
                                     Token T1
                                 </a>
                             </th>
                             <th style="text-align: center; vertical-align: middle">
-                                <a href="" ng-click="sortType = 'TOKEN_2'; changeOrder();loadPostbacks();">
-                    <span ng-show="sortType == 'TOKEN_2' && sortReverse == 'ASC'"
+                                <a href="" ng-click="sortType = 'TOKEN_T2'; changeOrder();loadPostbacks();">
+                    <span ng-show="sortType == 'TOKEN_T2' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
-                                    <span ng-show="sortType == 'TOKEN_2' && sortReverse == 'DESC'"
+                                    <span ng-show="sortType == 'TOKEN_T2' && sortReverse == 'DESC'"
                                           class="fa fa-caret-down"></span>
-                                    <span ng-show="sortType == 'TOKEN_2' && sortReverse == ''"></span>
+                                    <span ng-show="sortType == 'TOKEN_T2' && sortReverse == ''"></span>
                                     Token T2
                                 </a>
                             </th>
                             <th style="text-align: center; vertical-align: middle">
-                                <a href="" ng-click="sortType = 'TOKEN_3'; changeOrder();loadPostbacks();">
-                    <span ng-show="sortType == 'TOKEN_1' && sortReverse == 'ASC'"
+                                <a href="" ng-click="sortType = 'TOKEN_T3'; changeOrder();loadPostbacks();">
+                    <span ng-show="sortType == 'TOKEN_T3' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
-                                    <span ng-show="sortType == 'TOKEN_3' && sortReverse == 'DESC'"
+                                    <span ng-show="sortType == 'TOKEN_T3' && sortReverse == 'DESC'"
                                           class="fa fa-caret-down"></span>
-                                    <span ng-show="sortType == 'TOKEN_3' && sortReverse == ''"></span>
+                                    <span ng-show="sortType == 'TOKEN_T3' && sortReverse == ''"></span>
                                     Token T3
                                 </a>
                             </th>
                             <th style="text-align: center; vertical-align: middle">
-                                <a href="" ng-click="sortType = 'TOKEN_4'; changeOrder();loadPostbacks();">
-                    <span ng-show="sortType == 'TOKEN_4' && sortReverse == 'ASC'"
+                                <a href="" ng-click="sortType = 'TOKEN_T4'; changeOrder();loadPostbacks();">
+                    <span ng-show="sortType == 'TOKEN_T4' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
-                                    <span ng-show="sortType == 'TOKEN_4' && sortReverse == 'DESC'"
+                                    <span ng-show="sortType == 'TOKEN_T4' && sortReverse == 'DESC'"
                                           class="fa fa-caret-down"></span>
-                                    <span ng-show="sortType == 'TOKEN_4' && sortReverse == ''"></span>
+                                    <span ng-show="sortType == 'TOKEN_T4' && sortReverse == ''"></span>
                                     Token T4
                                 </a>
                             </th>
                             <th style="text-align: center; vertical-align: middle">
-                                <a href="" ng-click="sortType = 'TOKEN_5'; changeOrder();loadPostbacks();">
-                    <span ng-show="sortType == 'TOKEN_5' && sortReverse == 'ASC'"
+                                <a href="" ng-click="sortType = 'TOKEN_T5'; changeOrder();loadPostbacks();">
+                    <span ng-show="sortType == 'TOKEN_T5' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
-                                    <span ng-show="sortType == 'TOKEN_5' && sortReverse == 'DESC'"
+                                    <span ng-show="sortType == 'TOKEN_T5' && sortReverse == 'DESC'"
                                           class="fa fa-caret-down"></span>
-                                    <span ng-show="sortType == 'TOKEN_5' && sortReverse == ''"></span>
+                                    <span ng-show="sortType == 'TOKEN_T5' && sortReverse == ''"></span>
                                     Token T5
                                 </a>
                             </th>
                             <th style="text-align: center; vertical-align: middle">
-                                <a href="" ng-click="sortType = 'TOKEN_6'; changeOrder();loadPostbacks();">
-                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == 'ASC'"
+                                <a href="" ng-click="sortType = 'TOKEN_T6'; changeOrder();loadPostbacks();">
+                    <span ng-show="sortType == 'TOKEN_T6' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
-                                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == 'DESC'"
+                                    <span ng-show="sortType == 'TOKEN_T6' && sortReverse == 'DESC'"
                                           class="fa fa-caret-down"></span>
-                                    <span ng-show="sortType == 'TOKEN_6' && sortReverse == ''"></span>
+                                    <span ng-show="sortType == 'TOKEN_T6' && sortReverse == ''"></span>
                                     Token T6
                                 </a>
                             </th>
                             <th style="text-align: center; vertical-align: middle">
-                                <a href="" ng-click="sortType = 'TOKEN_7'; changeOrder();loadPostbacks();">
-                    <span ng-show="sortType == 'TOKEN_7' && sortReverse == 'ASC'"
+                                <a href="" ng-click="sortType = 'TOKEN_T7'; changeOrder();loadPostbacks();">
+                    <span ng-show="sortType == 'TOKEN_T7' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
-                                    <span ng-show="sortType == 'TOKEN_7' && sortReverse == 'DESC'"
+                                    <span ng-show="sortType == 'TOKEN_T7' && sortReverse == 'DESC'"
                                           class="fa fa-caret-down"></span>
-                                    <span ng-show="sortType == 'TOKEN_7' && sortReverse == ''"></span>
+                                    <span ng-show="sortType == 'TOKEN_T7' && sortReverse == ''"></span>
                                     Token T7
                                 </a>
                             </th>
                             <th style="text-align: center; vertical-align: middle">
-                                <a href="" ng-click="sortType = 'TOKEN_8'; changeOrder();loadPostbacks();">
-                    <span ng-show="sortType == 'TOKEN_8' && sortReverse == 'ASC'"
+                                <a href="" ng-click="sortType = 'TOKEN_T8'; changeOrder();loadPostbacks();">
+                    <span ng-show="sortType == 'TOKEN_T8' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
-                                    <span ng-show="sortType == 'TOKEN_8' && sortReverse == 'DESC'"
+                                    <span ng-show="sortType == 'TOKEN_T8' && sortReverse == 'DESC'"
                                           class="fa fa-caret-down"></span>
-                                    <span ng-show="sortType == 'TOKEN_8' && sortReverse == ''"></span>
+                                    <span ng-show="sortType == 'TOKEN_T8' && sortReverse == ''"></span>
                                     Token T8
                                 </a>
                             </th>
                             <th style="text-align: center; vertical-align: middle">
-                                <a href="" ng-click="sortType = 'TOKEN_9'; changeOrder();loadPostbacks();">
-                    <span ng-show="sortType == 'TOKEN_9' && sortReverse == 'ASC'"
+                                <a href="" ng-click="sortType = 'TOKEN_T9'; changeOrder();loadPostbacks();">
+                    <span ng-show="sortType == 'TOKEN_T9' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
-                                    <span ng-show="sortType == 'TOKEN_9' && sortReverse == 'DESC'"
+                                    <span ng-show="sortType == 'TOKEN_T9' && sortReverse == 'DESC'"
                                           class="fa fa-caret-down"></span>
-                                    <span ng-show="sortType == 'TOKEN_9' && sortReverse == ''"></span>
+                                    <span ng-show="sortType == 'TOKEN_T9' && sortReverse == ''"></span>
                                     Token T9
                                 </a>
                             </th>
                             <th style="text-align: center; vertical-align: middle">
-                                <a href="" ng-click="sortType = 'TOKEN_10'; changeOrder();loadPostbacks();">
-                    <span ng-show="sortType == 'TOKEN_10' && sortReverse == 'ASC'"
+                                <a href="" ng-click="sortType = 'TOKEN_T10'; changeOrder();loadPostbacks();">
+                    <span ng-show="sortType == 'TOKEN_T10' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
-                                    <span ng-show="sortType == 'TOKEN_10' && sortReverse == 'DESC'"
+                                    <span ng-show="sortType == 'TOKEN_T10' && sortReverse == 'DESC'"
                                           class="fa fa-caret-down"></span>
-                                    <span ng-show="sortType == 'TOKEN_10' && sortReverse == ''"></span>
+                                    <span ng-show="sortType == 'TOKEN_T10' && sortReverse == ''"></span>
                                     Token T10
                                 </a>
                             </th>
