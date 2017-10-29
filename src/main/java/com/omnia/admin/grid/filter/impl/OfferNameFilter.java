@@ -6,7 +6,7 @@ import org.springframework.util.StringUtils;
 import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 
 public class OfferNameFilter implements Filter {
-    private static final String COLUMN = "affiliates.afname";
+    private static final String COLUMN = "buyers.name";
 
     @Override
     public String getSql(String value) {

@@ -7,6 +7,7 @@ import com.omnia.admin.grid.dto.conversion.ConversionGridSortingDetails;
 import com.omnia.admin.grid.dto.conversion.ConversionList;
 import com.omnia.admin.grid.enums.conversion.ConversionGridColumn;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -19,6 +20,7 @@ import java.util.List;
 import static com.omnia.admin.grid.filter.FilterConstant.*;
 import static java.util.Objects.nonNull;
 
+@Log4j
 @Repository
 @AllArgsConstructor
 public class ConversionGridDaoImpl implements ConversionGridDao {
@@ -29,6 +31,7 @@ public class ConversionGridDaoImpl implements ConversionGridDao {
     private static final String SELECT_CONVERSIONS = "SELECT " + CONVERSION_COLUMNS +
             " FROM conversions" +
             "  LEFT JOIN affiliates ON affiliates.afid = conversions.afid" +
+            "  LEFT JOIN buyers ON affiliates.buyer_id = buyers.id " +
             "  LEFT JOIN currency ON currency.id = conversions.currency_id" +
             "  LEFT JOIN adv_status ON adv_status.id = conversions.status_id" +
             "  LEFT JOIN adverts ON adverts.id = adv_status.adv_id" +
@@ -40,6 +43,7 @@ public class ConversionGridDaoImpl implements ConversionGridDao {
     private static final String COUNT_CONVERSIONS = "SELECT COUNT(*)" +
             " FROM conversions" +
             "  LEFT JOIN affiliates ON affiliates.afid = conversions.afid" +
+            "  LEFT JOIN buyers ON affiliates.buyer_id = buyers.id " +
             "  LEFT JOIN currency ON currency.id = conversions.currency_id" +
             "  LEFT JOIN adv_status ON adv_status.id = conversions.status_id" +
             "  LEFT JOIN adverts ON adverts.id = adv_status.adv_id" +
@@ -56,9 +60,14 @@ public class ConversionGridDaoImpl implements ConversionGridDao {
             whereQuery = WHERE + whereQuery;
         }
         String whereWithSortQuery = whereQuery + getOrderBy(filterDetails.getSortingDetails());
-        List<ConversionDto> conversionDtos = jdbcTemplate.query(SELECT_CONVERSIONS + whereWithSortQuery + getLimit(filterDetails), new ConversionDtoRowMapper());
+        String sql = SELECT_CONVERSIONS + whereWithSortQuery + getLimit(filterDetails);
+        long start = System.currentTimeMillis();
+        List<ConversionDto> conversionDtos = jdbcTemplate.query(sql, new ConversionDtoRowMapper());
+        log.info("Select conversions executed in " + (System.currentTimeMillis() - start) + "ms, sql=" + sql);
         String sizeSql = COUNT_CONVERSIONS + whereWithSortQuery;
+        start = System.currentTimeMillis();
         Integer size = jdbcTemplate.queryForObject(sizeSql, Integer.class);
+        log.info("Select quantity of conversions executed in " + (System.currentTimeMillis() - start) + "ms, sql=" + sizeSql);
         return new ConversionList(size, conversionDtos);
     }
 
