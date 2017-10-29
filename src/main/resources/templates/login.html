@@ -1,0 +1,69 @@
+<html lang="en" class="perfect-scrollbar-off" xmlns:th="http://www.springframework.org/schema/jdbc">
+<head>
+    <title>Login Page</title>
+    <link href="http://demos.creative-tim.com/paper-dashboard-pro/assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://demos.creative-tim.com/paper-dashboard-pro/assets/css/paper-dashboard.css?v=1.2.1"
+          rel="stylesheet"/>
+
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,300" rel="stylesheet" type="text/css"/>
+    <link href="http://demos.creative-tim.com/paper-dashboard-pro/assets/css/themify-icons.css" rel="stylesheet"/>
+</head>
+
+<body>
+<nav class="navbar navbar-transparent navbar-absolute">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="wrapper wrapper-full-page">
+    <div class="login-page"
+         style="background: whitesmoke !important;.full-page:after: whitesmoke !important; height: 100%">
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+                        <form method="post" action="login">
+                            <div class="card" data-background="color" data-color="blue">
+                                <div class="card-header">
+                                    <h3 class="card-title">Login</h3>
+                                </div>
+                                <div class="card-content">
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input type="text" placeholder="Enter email" name="username" id="username"
+                                               class="form-control input-no-border" required=""
+                                               data-fv-notempty-message="The username is required"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="password" placeholder="Password" name="password" id="password"
+                                               class="form-control input-no-border" required=""/>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; color: red">
+                                    <label th:text="${error}"></label>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" class="btn btn-fill btn-wd ">Let's go</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="full-page-background"
+             style="background-color: #00b29c"></div>
+    </div>
+</div>
+</body>
+</html>
