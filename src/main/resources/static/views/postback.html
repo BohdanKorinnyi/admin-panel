@@ -155,7 +155,7 @@
         <div class="row testimonial-group" style="margin-left: 15px; margin-right: 15px; ">
             <div class="row">
                 <div class="col-md-12">
-                    <table id="table" class="table table-hover table-sm" ng-style="tableStyle">
+                    <table id="table" class="table table-hover table-sm">
                         <thead class="thead-default">
                         <tr style="text-align: center; vertical-align: middle">
                             <th style="text-align: center; vertical-align: middle"><a href="">#</a></th>
@@ -432,8 +432,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr style="text-align: center; vertical-align: middle" ng-show="postbacks.length != 0"
-                            ng-repeat="item in postbacks">
+                        <tr style="text-align: center; vertical-align: middle; cursor:pointer;"
+                            ng-show="postbacks.length != 0"
+                            ng-repeat="item in postbacks"
+                            ng-click="getPostbackId(item.id);">
                             <td style="text-align: center; vertical-align: middle">{{$index+1}}</td>
                             <td style="text-align: center; vertical-align: middle">{{item.id}}</td>
                             <td style="text-align: center; vertical-align: middle">{{item.prefix}}</td>
