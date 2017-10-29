@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
     public User getUserByName(String username) {
         long start = System.currentTimeMillis();
         User user = jdbcTemplate.queryForObject(SELECT_USER_BY_USERNAME, new BeanPropertyRowMapper<>(User.class), username);
-        log.info("#2 Getting user from db by username, execution " + (System.currentTimeMillis() - start) + " ms");
+        log.info("Select user by username executed in " + (System.currentTimeMillis() - start) + " ms, sql=" + SELECT_USER_BY_USERNAME);
         return user;
     }
 }

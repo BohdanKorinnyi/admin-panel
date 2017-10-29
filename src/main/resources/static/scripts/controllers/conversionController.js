@@ -1,6 +1,6 @@
 "use strict";
 
-Application.controller("contentController", function ($scope, $http, dateFactory) {
+Application.controller("conversionController", function ($scope, $http, dateFactory) {
 
         $scope.sizeOptions = {
             50: 50,
@@ -82,7 +82,7 @@ Application.controller("contentController", function ($scope, $http, dateFactory
 
 
         $scope.getData = function () {
-            var url = "conversions/get";
+            var url = "grid/conversions/get";
             var parameters = {};
 
             parameters.page = $scope.selectedPage;
@@ -121,7 +121,7 @@ Application.controller("contentController", function ($scope, $http, dateFactory
         };
 
         $scope.initData = function () {
-            var url = "conversions/get";
+            var url = "grid/conversions/get";
             var parameters = {};
 
             parameters.page = $scope.selectedPage;
@@ -140,7 +140,7 @@ Application.controller("contentController", function ($scope, $http, dateFactory
         };
 
         $scope.initDataOnPagination = function () {
-            var url = "conversions/get";
+            var url = "grid/conversions/get";
             var parameters = {};
 
             $scope.cities = [];
@@ -161,7 +161,7 @@ Application.controller("contentController", function ($scope, $http, dateFactory
         };
 
         $scope.getSorted = function () {
-            var url = "conversions/get";
+            var url = "grid/conversions/get";
             var parameters = {};
 
             $scope.changeOrder();

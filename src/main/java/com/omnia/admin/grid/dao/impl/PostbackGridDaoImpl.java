@@ -5,6 +5,7 @@ import com.omnia.admin.grid.dto.postback.PostbackGridFilterDetails;
 import com.omnia.admin.grid.dto.postback.PostbackGridSortingDetails;
 import com.omnia.admin.grid.dto.postback.PostbackList;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -15,18 +16,21 @@ import java.util.Map;
 import static com.omnia.admin.grid.filter.FilterConstant.*;
 import static java.util.Objects.nonNull;
 
+@Log4j
 @Repository
 @AllArgsConstructor
 public class PostbackGridDaoImpl implements PostbackGridDao {
     private static final String ORDER_BY = "ORDER BY %s %s";
     private static final String SELECT_POSTBACK = "SELECT " +
-            "  affiliates.afname AS buyer, " +
+            "  buyers.name AS buyer, " +
             "  postback.* " +
             "FROM postback " +
-            "  LEFT JOIN affiliates ON affiliates.afid = postback.afid ";
+            "  LEFT JOIN affiliates ON affiliates.afid = postback.afid " +
+            "  LEFT JOIN buyers ON affiliates.buyer_id = buyers.id ";
     private static final String SELECT_POSTBACK_COUNT = "SELECT COUNT(*) " +
             "FROM postback " +
-            "  LEFT JOIN affiliates ON affiliates.afid = postback.afid ";
+            "  LEFT JOIN affiliates ON affiliates.afid = postback.afid " +
+            "  LEFT JOIN buyers ON affiliates.buyer_id = buyers.id ";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -36,10 +40,11 @@ public class PostbackGridDaoImpl implements PostbackGridDao {
             whereQuery = WHERE + whereQuery;
         }
         String whereWithSortQuery = whereQuery + getOrderBy(filterDetails.getSortingDetails());
-        System.out.println(SELECT_POSTBACK + whereWithSortQuery + getLimit(filterDetails));
-        List<Map<String, Object>> postbacks = jdbcTemplate.queryForList(SELECT_POSTBACK + whereWithSortQuery + getLimit(filterDetails));
+        String sql = SELECT_POSTBACK + whereWithSortQuery + getLimit(filterDetails);
+        long start = System.currentTimeMillis();
+        List<Map<String, Object>> postbacks = jdbcTemplate.queryForList(sql);
+        log.info("Select postbacks executed in " + (System.currentTimeMillis() - start) + "ms, sql=" + sql);
         Integer count = jdbcTemplate.queryForObject(SELECT_POSTBACK_COUNT + whereWithSortQuery, Integer.class);
-
         return new PostbackList(count, postbacks);
     }
 

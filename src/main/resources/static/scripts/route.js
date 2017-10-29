@@ -9,8 +9,8 @@ Application.config(function($routeProvider) {
             controller  : "advertiserController"
         })
         .when('/conversions', {
-            templateUrl : "views/content.html",
-            controller  : "contentController"
+            templateUrl : "views/conversion.html",
+            controller  : "conversionController"
         })
         .when('/postback', {
             templateUrl : "views/postback.html",
