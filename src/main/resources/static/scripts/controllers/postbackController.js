@@ -63,6 +63,10 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
         "Custom Range": "custom"
     };
     $scope.selectedDate = "no-date";
+
+    $scope.getPostbackId = function (id) {
+        console.log(id);
+    };
     $scope.changeOrder = function () {
         if ($scope.sortReverse === "") {
             $scope.sortReverse = "ASC";
