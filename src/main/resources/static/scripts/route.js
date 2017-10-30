@@ -16,4 +16,8 @@ Application.config(function($routeProvider) {
             templateUrl : "views/postback.html",
             controller  : "postbackController"
         })
+        .when('/payroll', {
+            templateUrl : "views/payroll.html",
+            controller  : "payrollController"
+        })
 });
