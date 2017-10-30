@@ -1,4 +1,4 @@
-<div ng-controller="conversionController" ng-init="loadData();">
+<div ng-controller="conversionController" ng-init="loadConversions();">
     <div class="cardForConversions">
         <div class="row form-group" id="formBlock">
             <div class="col-md-9">
@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
-                                ng-click="getData()">Apply
+                                ng-click="loadConversions()">Apply
                         </button>
                         <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit">Export
                         </button>
@@ -103,7 +103,7 @@
                         <th style="text-align: center; vertical-align: middle"><a href="">#</a></th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'CONVERSION_ID'; getSorted()">
+                            <a href="" ng-click="sortType = 'CONVERSION_ID'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'CONVERSION_ID' && sortReverse == 'ASC'"
                                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'CONVERSION_ID' && sortReverse == 'DESC'"
@@ -114,7 +114,7 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'CONVERSION_PREFIX'; getSorted()">
+                            <a href="" ng-click="sortType = 'CONVERSION_PREFIX'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'CONVERSION_PREFIX' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'CONVERSION_PREFIX' && sortReverse == 'DESC'"
@@ -125,7 +125,7 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'CONVERSION_AFID'; getSorted()">
+                            <a href="" ng-click="sortType = 'CONVERSION_AFID'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'CONVERSION_AFID' && sortReverse == 'ASC'"
                                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'CONVERSION_AFID' && sortReverse == 'DESC'"
@@ -136,7 +136,7 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'AFFILIATES_AFNAME'; getSorted()">
+                            <a href="" ng-click="sortType = 'AFFILIATES_AFNAME'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'AFFILIATES_AFNAME' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'AFFILIATES_AFNAME' && sortReverse == 'DESC'"
@@ -147,7 +147,8 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'CONVERSION_DATA_CREATION'; getSorted()">
+                            <a href=""
+                               ng-click="sortType = 'CONVERSION_DATA_CREATION'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'CONVERSION_DATA_CREATION' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'CONVERSION_DATA_CREATION' && sortReverse == 'DESC'"
@@ -158,7 +159,7 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'CONVERSION_SUM'; getSorted()">
+                            <a href="" ng-click="sortType = 'CONVERSION_SUM'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'CONVERSION_SUM' && sortReverse == 'ASC'"
                                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'CONVERSION_SUM' && sortReverse == 'DESC'"
@@ -169,7 +170,7 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'CURRENCY_CODE'; getSorted()">
+                            <a href="" ng-click="sortType = 'CURRENCY_CODE'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'CURRENCY_CODE' && sortReverse == 'ASC'"
                                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'CURRENCY_CODE' && sortReverse == 'DESC'"
@@ -180,7 +181,7 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'ADV_STATUS_REAL_STATUS'; getSorted()">
+                            <a href="" ng-click="sortType = 'ADV_STATUS_REAL_STATUS'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'ADV_STATUS_REAL_STATUS' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'ADV_STATUS_REAL_STATUS' && sortReverse == 'DESC'"
@@ -191,7 +192,7 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'ADVERTS_SHORT_NAME'; getSorted()">
+                            <a href="" ng-click="sortType = 'ADVERTS_SHORT_NAME'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'ADVERTS_SHORT_NAME' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'ADVERTS_SHORT_NAME' && sortReverse == 'DESC'"
@@ -202,7 +203,7 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'OFFERS_ADV_NAME'; getSorted()">
+                            <a href="" ng-click="sortType = 'OFFERS_ADV_NAME'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'OFFERS_ADV_NAME' && sortReverse == 'ASC'"
                                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'OFFERS_ADV_NAME' && sortReverse == 'DESC'"
@@ -213,7 +214,7 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'SOURCES_NAME'; getSorted()">
+                            <a href="" ng-click="sortType = 'SOURCES_NAME'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'SOURCES_NAME' && sortReverse == 'ASC'"
                                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'SOURCES_NAME' && sortReverse == 'DESC'"
@@ -223,7 +224,7 @@
                             </a>
                         </th>
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'EXCHANGE_RATE'; getSorted()">
+                            <a href="" ng-click="sortType = 'EXCHANGE_RATE'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'EXCHANGE_RATE' && sortReverse == 'ASC'"
                                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'EXCHANGE_RATE' && sortReverse == 'DESC'"
@@ -234,7 +235,7 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'CONVERSION_DATE_CHANGE'; getSorted()">
+                            <a href="" ng-click="sortType = 'CONVERSION_DATE_CHANGE'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'CONVERSION_DATE_CHANGE' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'CONVERSION_DATE_CHANGE' && sortReverse == 'DESC'"
@@ -245,7 +246,7 @@
                         </th>
 
                         <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = 'CONVERSION_CLICK_ID'; getSorted()">
+                            <a href="" ng-click="sortType = 'CONVERSION_CLICK_ID'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'CONVERSION_CLICK_ID' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == 'CONVERSION_CLICK_ID' && sortReverse == 'DESC'"
@@ -257,8 +258,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr style="text-align: center; vertical-align: middle" ng-show="cities.length != 0"
-                        ng-repeat="item in cities">
+                    <tr style="text-align: center; vertical-align: middle" ng-show="conversions.length != 0"
+                        ng-repeat="item in conversions">
                         <td style="text-align: center; vertical-align: middle">{{$index+1}}</td>
                         <td style="text-align: center; vertical-align: middle">{{item.conversionId}}</td>
                         <td style="text-align: center; vertical-align: middle">{{item.prefix}}</td>
@@ -275,10 +276,10 @@
                         <td style="text-align: center; vertical-align: middle">{{item.change}}</td>
                         <td style="text-align: center; vertical-align: middle">{{item.clickId}}</td>
                     </tr>
-                    <tr ng-show="cities.length == 0">
+                    <tr ng-show="conversions.length == 0">
                         <td colspan="15">
-                            <div class="loader"
-                                 style="text-align: center;"></div>
+                            <div class="loader" style="text-align: center;" ng-show="showConversionLoader"></div>
+                            <div style="text-align: center;" ng-show="!showConversionLoader">No data</div>
                         </td>
                     </tr>
                     </tbody>
@@ -288,7 +289,7 @@
                     <div class="text-center">
                         <uib-pagination total-items="totalPagination" max-size="5"
                                         ng-model="selectedPage" items-per-page="selectedSize"
-                                        ng-click="initDataOnPagination();"></uib-pagination>
+                                        ng-click="loadConversions();"></uib-pagination>
                     </div>
                 </div>
             </div>

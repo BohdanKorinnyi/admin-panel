@@ -1,63 +1,51 @@
-"use strict";
+'use strict';
 
-Application.factory("dateFactory", function () {
-
-    var factory ={};
+Application.factory('dateFactory', function () {
+    var factory = {};
     var today = new Date();
-
     factory.pickDateFrom = function (date) {
         switch (date) {
             case 'today':
-                var todayDate = new Date();
-                return todayDate;
+                return new Date();
                 break;
             case 'yesterday':
                 var previousDay = new Date(today);
                 return previousDay.setDate(today.getDate() - 1);
                 break;
             case 'lastWeek':
-                var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-                return lastWeek;
+                return new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
                 break;
             case 'thisMonth':
-                var thisMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-                return thisMonth;
+                return new Date(today.getFullYear(), today.getMonth(), 1);
                 break;
             case 'lastMonth':
-                var lastMonth = new Date(today.getFullYear(), today.getMonth()-1, 1);
-                return lastMonth;
+                return new Date(today.getFullYear(), today.getMonth() - 1, 1);
                 break;
             default:
-                var todayDate = new Date();
-                return todayDate;
-    }};
+                return new Date();
+        }
+    };
 
     factory.pickDateTo = function (date) {
         switch (date) {
             case 'today':
-                var todayDate = new Date();
-                return todayDate;
+                return new Date();
                 break;
             case 'yesterday':
-                var todayDate = new Date();
-                return todayDate;
+                return new Date();
                 break;
             case 'lastWeek':
-                var todayDate = new Date();
-                return todayDate;
+                return new Date();
                 break;
             case 'thisMonth':
-                var todayDate = new Date();
-                return todayDate;
+                return new Date();
                 break;
             case 'lastMonth':
-                var lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-                return lastMonth;
+                return new Date(today.getFullYear(), today.getMonth(), 0);
                 break;
             default:
-                var todayDate = new Date();
-                return todayDate;
-        }};
-
+                return new Date();
+        }
+    };
     return factory;
 });
