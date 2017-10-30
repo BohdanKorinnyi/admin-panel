@@ -244,7 +244,7 @@ fieldset[disabled] .btn-info.focus, fieldset[disabled] .btn-info:active, fieldse
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th,
 .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-    padding: 12px 2px !important;
+    padding: 6px 2px !important;
 }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4 {

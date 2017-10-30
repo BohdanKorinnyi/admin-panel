@@ -64,6 +64,10 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
     };
     $scope.selectedDate = 'no-date';
 
+    $scope.export = function () {
+        notify('ti-alert', 'Postback export in development', 'info');
+    };
+
     $scope.getPostbackId = function (postbackId) {
         $http.get('postback/fullurl?id=' + postbackId).then(function successCallback(response) {
             if (response.status === 204) {
