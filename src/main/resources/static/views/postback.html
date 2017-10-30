@@ -272,7 +272,7 @@
                                     OfferID
                                 </a>
                             </th>
-                            <th style="text-align: center; vertical-align: middle">
+                            <th id="offerNameHeader" style="text-align: center; vertical-align: middle">
                                 <a href="" ng-click="sortType = 'OFFER_NAME'; changeOrder();loadPostbacks();">
                                     <span ng-show="sortType == 'OFFER_NAME' && sortReverse == 'ASC'"
                                           class="fa fa-caret-up"></span>
@@ -443,7 +443,7 @@
                             <td style="text-align: center; vertical-align: middle">{{item.id}}</td>
                             <td style="text-align: center; vertical-align: middle;">{{item.prefix}}</td>
                             <td style="text-align: center; vertical-align: middle">{{item.afid}}</td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td id="buyerRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.buyer}}"
                                    style="color:#66615b;">{{item.buyer}}</a>
                             </td>
@@ -463,49 +463,49 @@
                                 <a href="" data-toggle="tooltip" title="{{item.offerid}}"
                                    style="color:#66615b;">{{item.offerid}}</a>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td id="offerNameRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.offername}}"
                                    style="color:#66615b;">{{item.offername}}</a>
                             </td>
                             <td style="text-align: center; vertical-align: middle">{{item.idc}}</td>
                             <td style="text-align: center; vertical-align: middle">{{item.ido}}</td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td class="tokenTRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.t1}}"
                                    style="color:#66615b;">{{item.t1}}</a>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td class="tokenTRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.t2}}"
                                    style="color:#66615b;">{{item.t2}}</a>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td class="tokenTRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.t3}}"
                                    style="color:#66615b;">{{item.t3}}</a>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td class="tokenTRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.t4}}"
                                    style="color:#66615b;">{{item.t4}}</a>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td class="tokenTRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.t5}}"
                                    style="color:#66615b;">{{item.t5}}</a>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td class="tokenTRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.t6}}"
                                    style="color:#66615b;">{{item.t6}}</a>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td class="tokenTRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.t7}}"
                                    style="color:#66615b;">{{item.t7}}</a>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td class="tokenTRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.t8}}"
                                    style="color:#66615b;">{{item.t8}}</a>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td class="tokenTRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.t9}}"
                                    style="color:#66615b;">{{item.t9}}</a>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td class="tokenTRow" style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.t10}}"
                                    style="color:#66615b;">{{item.t10}}</a>
                             </td>
