@@ -64,8 +64,16 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
     };
     $scope.selectedDate = 'no-date';
 
-    $scope.getPostbackId = function (id) {
-        console.log(id);
+    $scope.getPostbackId = function (postbackId) {
+        $http.get('postback/fullurl?id=' + postbackId).then(function successCallback(response) {
+            if (response.status === 204) {
+                notify('ti-alert', 'Full Url doesn\'t found for this postback', 'into');
+            } else {
+                swal({title: 'Full Url', text: response.data.fullurl});
+            }
+        }, function failCallback(response) {
+            notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
+        });
     };
     $scope.changeOrder = function () {
         if ($scope.sortReverse === '') {
