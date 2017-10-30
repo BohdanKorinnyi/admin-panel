@@ -251,7 +251,7 @@ fieldset[disabled] .btn-info.focus, fieldset[disabled] .btn-info:active, fieldse
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th,
 .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-    padding: 6px -1px !important;
+    padding: 6px 12px !important;
 }
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th
@@ -282,6 +282,26 @@ fieldset[disabled] .btn-info.focus, fieldset[disabled] .btn-info:active, fieldse
     overflow: hidden;
 }
 
+.table > thead > tr > th#offerNameHeader,
+.table > tbody > tr > th#offerNameHeader,
+.table > tfoot > tr > th#offerNameHeader{
+    min-width: 20px!important;
+    max-width: 130px!important;
+}
+
+.table > thead > tr > td#buyerRow,
+.table > tbody > tr > td#buyerRow,
+.table > tfoot > tr > td#buyerRow,
+.table > thead > tr > td#offerNameRow,
+.table > tbody > tr > td#offerNameRow,
+.table > tfoot > tr > td#offerNameRow,
+.table > thead > tr > td.tokenTRow,
+.table > tbody > tr > td.tokenTRow,
+.table > tfoot > tr > td.tokenTRow
+{
+    min-width: 20px!important;
+    max-width: 140px!important;
+}
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
     margin: 10px 0 15px !important;
