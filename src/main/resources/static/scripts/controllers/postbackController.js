@@ -1,27 +1,27 @@
-"use strict";
+'use strict';
 
-Application.controller("postbackController", function ($scope, $http, dateFactory) {
+Application.controller('postbackController', function ($scope, $http, dateFactory) {
     $scope.postbacks = [];
     $scope.sortingDetails = {};
     $scope.selectedPage = 1;
     $scope.totalPagination = 1;
     $scope.noOfPages = 1;
 
-    $scope.dpFromDate = "";
-    $scope.dpToDate = "";
+    $scope.dpFromDate = '';
+    $scope.dpToDate = '';
 
-    $scope.sortType = "";
-    $scope.sortReverse = "";
+    $scope.sortType = '';
+    $scope.sortReverse = '';
 
-    $scope.selectedDuplicateValue = "";
-    $scope.selectedStatusFromOfferNameValue = "";
-    $scope.selectedClickIdValue = "";
-    $scope.selectedOfferNameValue = "";
-    $scope.selectedTimeZoneValue = "";
-    $scope.selectedPrefixValue = "";
-    $scope.selectedStatusValue = "";
+    $scope.selectedDuplicateValue = '';
+    $scope.selectedStatusFromOfferNameValue = '';
+    $scope.selectedClickIdValue = '';
+    $scope.selectedOfferNameValue = '';
+    $scope.selectedTimeZoneValue = '';
+    $scope.selectedPrefixValue = '';
+    $scope.selectedStatusValue = '';
     $scope.selectedAdvertiserValue = [];
-    $scope.selectedAfIdValue = "";
+    $scope.selectedAfIdValue = '';
     $scope.selectedBuyerValue = [];
 
     $scope.buyerNames = [];
@@ -33,15 +33,15 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
     $scope.statusValues = [
         {
             id: 0,
-            name: "Approve"
+            name: 'Approve'
         },
         {
             id: 1,
-            name: "Hold"
+            name: 'Hold'
         },
         {
             id: 2,
-            name: "Decline"
+            name: 'Decline'
         }];
     $scope.selectedStatusValue = [];
     $scope.selectedStatusForPostValue = [];
@@ -54,32 +54,32 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
     $scope.selectedSize = 50;
 
     $scope.dateOptions = {
-        "Select Date": "no-date",
-        "Today": "today",
-        "Yesterday": "yesterday",
-        "Last 7 days": "lastWeek",
-        "This Month": "thisMonth",
-        "Last Month": "lastMonth",
-        "Custom Range": "custom"
+        'Select Date': 'no-date',
+        'Today': 'today',
+        'Yesterday': 'yesterday',
+        'Last 7 days': 'lastWeek',
+        'This Month': 'thisMonth',
+        'Last Month': 'lastMonth',
+        'Custom Range': 'custom'
     };
-    $scope.selectedDate = "no-date";
+    $scope.selectedDate = 'no-date';
 
     $scope.getPostbackId = function (id) {
         console.log(id);
     };
     $scope.changeOrder = function () {
-        if ($scope.sortReverse === "") {
-            $scope.sortReverse = "ASC";
+        if ($scope.sortReverse === '') {
+            $scope.sortReverse = 'ASC';
         }
-        else if ($scope.sortReverse === "ASC") {
-            $scope.sortReverse = "DESC";
+        else if ($scope.sortReverse === 'ASC') {
+            $scope.sortReverse = 'DESC';
         }
-        else if ($scope.sortReverse === "DESC") {
-            $scope.sortReverse = "";
+        else if ($scope.sortReverse === 'DESC') {
+            $scope.sortReverse = '';
         }
     };
     $scope.initAdvNames = function () {
-        var url = "/advertiser/names";
+        var url = '/advertiser/names';
         $http.get(url).then(function successCallback(response) {
             for (var i = 0; i < response.data.length; i++) {
                 $scope.advertiserNames.push({
@@ -90,7 +90,7 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
         });
     };
     $scope.initBuyerNames = function () {
-        var url = "/buyer/names";
+        var url = '/buyer/names';
         $http.get(url).then(function successCallback(response) {
             for (var i = 0; i < response.data.length; i++) {
                 $scope.buyerNames.push({
@@ -112,7 +112,7 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
                 $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
             }, function errorCallback(response) {
                 $scope.showLoader = false;
-                console.log('error', response);
+                notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
             });
     };
 
@@ -123,52 +123,52 @@ Application.controller("postbackController", function ($scope, $http, dateFactor
         parameters['filter'] = {};
 
         if ($scope.selectedDate !== 'no-date') {
-            if ($scope.selectedDate === "custom") {
-                parameters.filter["from"] = $scope.dpFromDate;
-                parameters.filter["to"] = $scope.dpToDate;
+            if ($scope.selectedDate === 'custom') {
+                parameters.filter['from'] = $scope.dpFromDate;
+                parameters.filter['to'] = $scope.dpToDate;
             }
             else {
-                parameters.filter["from"] = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
-                parameters.filter["to"] = formatDate(dateFactory.pickDateTo($scope.selectedDate));
+                parameters.filter['from'] = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
+                parameters.filter['to'] = formatDate(dateFactory.pickDateTo($scope.selectedDate));
             }
         }
         $scope.selectedAdvertiserValue = getSelectedValues($scope.selectedAdvertiserNames, $scope.advertiserNames);
         $scope.selectedBuyerValue = getSelectedValues($scope.selectedBuyerNames, $scope.buyerNames);
         $scope.selectedStatusForPostValue = getSelectedValues($scope.selectedStatusValue, $scope.statusValues);
         if ($scope.selectedBuyerValue.join() !== '') {
-            parameters.filter["buyer"] = $scope.selectedBuyerValue.join();
+            parameters.filter['buyer'] = $scope.selectedBuyerValue.join();
         }
         if ($scope.selectedAdvertiserValue.join() !== '') {
-            parameters.filter["advertiser"] = $scope.selectedAdvertiserValue.join();
+            parameters.filter['advertiser'] = $scope.selectedAdvertiserValue.join();
         }
         if ($scope.selectedStatusForPostValue.join() !== '') {
-            parameters.filter["status"] = $scope.selectedStatusForPostValue.join();
+            parameters.filter['status'] = $scope.selectedStatusForPostValue.join();
         }
         if ($scope.selectedAfIdValue !== '') {
-            parameters.filter["afid"] = $scope.selectedAfIdValue;
+            parameters.filter['afid'] = $scope.selectedAfIdValue;
         }
         if ($scope.selectedAfIdValue !== '') {
-            parameters.filter["afid"] = $scope.selectedAfIdValue;
+            parameters.filter['afid'] = $scope.selectedAfIdValue;
         }
         if ($scope.selectedPrefixValue !== '') {
-            parameters.filter["prefix"] = $scope.selectedPrefixValue;
+            parameters.filter['prefix'] = $scope.selectedPrefixValue;
         }
         if ($scope.selectedOfferNameValue !== '') {
-            parameters.filter["offerName"] = $scope.selectedOfferNameValue;
+            parameters.filter['offerName'] = $scope.selectedOfferNameValue;
         }
         if ($scope.selectedClickIdValue !== '') {
-            parameters.filter["clickId"] = $scope.selectedClickIdValue;
+            parameters.filter['clickId'] = $scope.selectedClickIdValue;
         }
         if ($scope.selectedStatusFromOfferNameValue !== '') {
-            parameters.filter["statusFromOfferName"] = $scope.selectedStatusFromOfferNameValue;
+            parameters.filter['statusFromOfferName'] = $scope.selectedStatusFromOfferNameValue;
         }
         if ($scope.selectedDuplicateValue !== '') {
-            parameters.filter["duplicate"] = $scope.selectedDuplicateValue;
+            parameters.filter['duplicate'] = $scope.selectedDuplicateValue;
         }
         if ($scope.sortReverse !== '') {
             parameters['sortingDetails'] = {};
-            parameters.sortingDetails["column"] = $scope.sortType;
-            parameters.sortingDetails["order"] = $scope.sortReverse;
+            parameters.sortingDetails['column'] = $scope.sortType;
+            parameters.sortingDetails['order'] = $scope.sortReverse;
         }
         return parameters;
     };
@@ -178,7 +178,7 @@ Application.directive('selectWatcher', function ($timeout) {
     return {
         link: function (scope, element, attr) {
             var last = attr.last;
-            if (last === "true") {
+            if (last === 'true') {
                 $timeout(function () {
                     $(element).parent().selectpicker('val', 'any');
                     $(element).parent().selectpicker('refresh');
@@ -210,4 +210,18 @@ function getSelectedValues(selected, allValues) {
         }
     }
     return returnType;
+}
+
+function notify(icon, message, type) {
+    $.notify({
+        icon: icon,
+        message: message
+    }, {
+        type: type,
+        timer: 3000,
+        placement: {
+            from: 'top',
+            align: 'right'
+        }
+    });
 }
