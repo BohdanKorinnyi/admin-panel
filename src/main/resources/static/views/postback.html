@@ -1,4 +1,6 @@
 <div ng-controller="postbackController" ng-init="loadPostbacks();">
+    <h4 style="text-align: center; margin-top: 30px!important;
+     margin-bottom: -50px!important;">Postback</h4>
     <div class="cardForConversions">
         <div class="row form-group" id="formBlock">
             <div class="col-md-9">
@@ -154,8 +156,8 @@
 
         <div class="row testimonial-group" style="margin-left: 15px; margin-right: 15px; ">
             <div class="row">
-                <div class="col-md-12">
-                    <table id="table" class="table table-hover table-sm table-bordered"
+                <div class="col-md-12 table-responsive">
+                    <table id="table" class="table table-hover table-sm"
                            style="border-collapse: collapse !important;">
                         <thead class="thead-default">
                         <tr style="text-align: center; vertical-align: middle">
@@ -439,31 +441,82 @@
                             ng-click="getPostbackId(item.id);">
                             <td style="text-align: center; vertical-align: middle">{{$index+1}}</td>
                             <td style="text-align: center; vertical-align: middle">{{item.id}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.prefix}}</td>
+                            <td style="text-align: center; vertical-align: middle;">{{item.prefix}}</td>
                             <td style="text-align: center; vertical-align: middle">{{item.afid}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.buyer}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.date}}</td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.buyer}}"
+                                   style="color:#66615b;">{{item.buyer}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.date}}"
+                                   style="color:#66615b;">{{item.date}}</a>
+                            </td>
                             <td style="text-align: center; vertical-align: middle">{{item.time}}</td>
                             <td style="text-align: center; vertical-align: middle">{{item.sum}}</td>
                             <td style="text-align: center; vertical-align: middle">{{item.currency}}</td>
                             <td style="text-align: center; vertical-align: middle">{{item.status}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.advname}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.offerid}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.offername}}</td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.advname}}"
+                                   style="color:#66615b;">{{item.advname}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.offerid}}"
+                                   style="color:#66615b;">{{item.offerid}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.offername}}"
+                                   style="color:#66615b;">{{item.offername}}</a>
+                            </td>
                             <td style="text-align: center; vertical-align: middle">{{item.idc}}</td>
                             <td style="text-align: center; vertical-align: middle">{{item.ido}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.t1}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.t2}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.t3}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.t4}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.t5}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.t6}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.t7}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.t8}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.t9}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.t10}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.clickId}}</td>
-                            <td style="text-align: center; vertical-align: middle">{{item.transactionid}}</td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.t1}}"
+                                   style="color:#66615b;">{{item.t1}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.t2}}"
+                                   style="color:#66615b;">{{item.t2}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.t3}}"
+                                   style="color:#66615b;">{{item.t3}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.t4}}"
+                                   style="color:#66615b;">{{item.t4}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.t5}}"
+                                   style="color:#66615b;">{{item.t5}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.t6}}"
+                                   style="color:#66615b;">{{item.t6}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.t7}}"
+                                   style="color:#66615b;">{{item.t7}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.t8}}"
+                                   style="color:#66615b;">{{item.t8}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.t9}}"
+                                   style="color:#66615b;">{{item.t9}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.t10}}"
+                                   style="color:#66615b;">{{item.t10}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.clickId}}"
+                                   style="color:#66615b;">{{item.clickId}}</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle">
+                                <a href="" data-toggle="tooltip" title="{{item.transactionid}}"
+                                    style="color:#66615b;">{{item.transactionid}}</a>
+                            </td>
                             <td style="text-align: center; vertical-align: middle">{{item.duplicate}}</td>
                         </tr>
                         <tr ng-show="postbacks.length == 0">

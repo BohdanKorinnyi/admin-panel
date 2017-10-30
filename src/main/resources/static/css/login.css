@@ -5,6 +5,7 @@ body {
 
 #formBlock {
     margin-top: 10px;
+    margin-bottom: -10px;
 }
 
 #navbar {
@@ -110,6 +111,12 @@ tr {
 td {
     vertical-align: middle;
     text-align: center;
+}
+
+.tokens{
+    min-width: 40px!important;
+    width:50px!important;
+    max-width: 60px!important;
 }
 
 #advertiserName {
@@ -244,8 +251,37 @@ fieldset[disabled] .btn-info.focus, fieldset[disabled] .btn-info:active, fieldse
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th,
 .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-    padding: 6px 2px !important;
+    padding: 6px -1px !important;
 }
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th
+{
+    min-width: 20px!important;
+    max-width: 108px!important;
+}
+
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td
+{
+    min-width: 20px!important;
+    max-width: 90px!important;
+}
+
+.table > thead > tr > th > a
+{
+    min-width: 20px!important;
+    width: 60px!important;
+    max-width: 100px!important;
+}
+
+.table > tbody > td{
+    max-width: 100px;
+}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th,
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
     margin: 10px 0 15px !important;
