@@ -17,7 +17,7 @@ public class PayrollController {
 
     private final PayrollService payrollService;
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity getPayrolls(@RequestBody Page page) {
         return ResponseEntity.ok(payrollService.findPayrolls(page));
     }
@@ -28,7 +28,7 @@ public class PayrollController {
         payrollService.update(payrolls);
     }
 
-    @PostMapping
+    @PostMapping(path = "save")
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@RequestBody List<Payroll> payrolls) {
         payrollService.save(payrolls);
