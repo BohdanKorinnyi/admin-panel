@@ -38,4 +38,9 @@ public class PayrollServiceImpl implements PayrollService {
     public void delete(List<Long> ids) {
         payrollDao.delete(ids);
     }
+
+    @Override
+    public List<String> getPayrollDescription() {
+        return payrollDao.getPayrollDescription();
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -41,5 +42,15 @@ public class PayrollController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@RequestBody List<Long> ids) {
         payrollService.delete(ids);
+    }
+
+    @GetMapping("description")
+    public List<String> getPayrollDescription() {
+        return payrollService.getPayrollDescription();
+    }
+
+    @GetMapping("types")
+    public List<String> getPayrollTypes() {
+        return Collections.emptyList();
     }
 }

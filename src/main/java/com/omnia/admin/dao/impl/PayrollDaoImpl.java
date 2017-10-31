@@ -21,7 +21,8 @@ public class PayrollDaoImpl implements PayrollDao {
     private static final String SELECT_COUNT_PAYROLLS = "SELECT COUNT(*) FROM payroll";
     private static final String UPDATE_PAYROLL = "UPDATE payroll SET buyer_id = ?, date = ?, description = ?, type = ?, sum = ?, currency_id = ? WHERE id = ?;";
     private static final String INSERT_PAYROLL = "INSERT INTO payroll (buyer_id, date, description, type, sum, currency_id) VALUES (?, ?, ?, ?, ?, ?);";
-    private static final String DELETE_PAYTOLL = "DELETE FROM payroll WHERE id = ?";
+    private static final String DELETE_PAYROLL = "DELETE FROM payroll WHERE id = ?";
+    private static final String SELECT_PAYROLL_DESCRIPTION = "SELECT name FROM payroll_description";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -78,7 +79,7 @@ public class PayrollDaoImpl implements PayrollDao {
 
     @Override
     public void delete(List<Long> ids) {
-        jdbcTemplate.batchUpdate(DELETE_PAYTOLL, new BatchPreparedStatementSetter() {
+        jdbcTemplate.batchUpdate(DELETE_PAYROLL, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 ps.setLong(1, ids.get(i));
@@ -89,5 +90,10 @@ public class PayrollDaoImpl implements PayrollDao {
                 return ids.size();
             }
         });
+    }
+
+    @Override
+    public List<String> getPayrollDescription() {
+        return jdbcTemplate.queryForList(SELECT_PAYROLL_DESCRIPTION, String.class);
     }
 }
