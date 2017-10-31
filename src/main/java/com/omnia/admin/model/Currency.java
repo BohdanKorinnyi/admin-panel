@@ -2,13 +2,14 @@ package com.omnia.admin.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-@AllArgsConstructor
+@Setter
 public class Currency {
     private Long id;
     private String code;
-    private String description;
+    private String descriptions;
     private Long sync;
     private Long count;
 }
