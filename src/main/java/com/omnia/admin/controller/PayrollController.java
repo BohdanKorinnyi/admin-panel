@@ -37,7 +37,7 @@ public class PayrollController {
         payrollService.save(payrolls);
     }
 
-    @PostMapping
+    @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     public void delete(@RequestBody List<Long> ids) {
         payrollService.delete(ids);

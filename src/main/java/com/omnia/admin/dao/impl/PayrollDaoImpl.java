@@ -17,8 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 public class PayrollDaoImpl implements PayrollDao {
 
-    private static final String SELECT_PAYROLLS = "SELECT * FROM payrolls ";
-    private static final String SELECT_COUNT_PAYROLLS = "SELECT COUNT(*) FROM payrolls";
+    private static final String SELECT_PAYROLLS = "SELECT * FROM payroll ";
+    private static final String SELECT_COUNT_PAYROLLS = "SELECT COUNT(*) FROM payroll";
     private static final String UPDATE_PAYROLL = "UPDATE payroll SET buyer_id = ?, date = ?, description = ?, type = ?, sum = ?, currency_id = ? WHERE id = ?;";
     private static final String INSERT_PAYROLL = "INSERT INTO payroll (buyer_id, date, description, type, sum, currency_id) VALUES (?, ?, ?, ?, ?, ?);";
     private static final String DELETE_PAYTOLL = "DELETE FROM payroll WHERE id = ?";

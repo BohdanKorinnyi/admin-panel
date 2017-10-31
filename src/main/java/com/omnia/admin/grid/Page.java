@@ -11,6 +11,6 @@ public class Page {
     @Getter private Integer number;
 
     public String limit() {
-        return String.format(LIMIT, (size - 1) * number, size);
+        return String.format(LIMIT, (number - 1) * size, size);
     }
 }
