@@ -15,6 +15,11 @@ public class PayrollServiceImpl implements PayrollService {
     private final PayrollDao payrollDao;
 
     @Override
+    public Integer countAll() {
+        return payrollDao.countAll();
+    }
+
+    @Override
     public List<Payroll> findPayrolls(Page page) {
         return payrollDao.findPayrolls(page);
     }

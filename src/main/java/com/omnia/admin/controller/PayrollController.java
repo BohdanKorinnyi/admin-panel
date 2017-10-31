@@ -1,5 +1,6 @@
 package com.omnia.admin.controller;
 
+import com.omnia.admin.dto.PageResponse;
 import com.omnia.admin.grid.Page;
 import com.omnia.admin.model.Payroll;
 import com.omnia.admin.service.PayrollService;
@@ -19,7 +20,9 @@ public class PayrollController {
 
     @PostMapping
     public ResponseEntity getPayrolls(@RequestBody Page page) {
-        return ResponseEntity.ok(payrollService.findPayrolls(page));
+        Integer total = payrollService.countAll();
+        List<Payroll> payrolls = payrollService.findPayrolls(page);
+        return ResponseEntity.ok(new PageResponse(total, page.getNumber(), payrolls));
     }
 
     @PutMapping

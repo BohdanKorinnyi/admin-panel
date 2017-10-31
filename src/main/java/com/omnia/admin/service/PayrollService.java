@@ -6,6 +6,8 @@ import com.omnia.admin.model.Payroll;
 import java.util.List;
 
 public interface PayrollService {
+    Integer countAll();
+
     List<Payroll> findPayrolls(Page page);
 
     void update(List<Payroll> payrolls);
