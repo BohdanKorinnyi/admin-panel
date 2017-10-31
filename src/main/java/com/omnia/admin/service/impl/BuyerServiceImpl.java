@@ -1,6 +1,7 @@
 package com.omnia.admin.service.impl;
 
 import com.omnia.admin.dao.BuyerDao;
+import com.omnia.admin.model.Buyer;
 import com.omnia.admin.service.BuyerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,5 +16,10 @@ public class BuyerServiceImpl implements BuyerService {
     @Override
     public List<String> getBuyersName() {
         return buyerDao.getBuyersName();
+    }
+
+    @Override
+    public List<Buyer> getBuyers() {
+        return buyerDao.getBuyers();
     }
 }

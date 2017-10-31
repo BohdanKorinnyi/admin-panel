@@ -1,5 +1,6 @@
 package com.omnia.admin.controller;
 
+import com.omnia.admin.model.Buyer;
 import com.omnia.admin.service.BuyerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +17,11 @@ import java.util.List;
 @Api(description = "Operations about buyer")
 public class BuyerController {
     private final BuyerService buyerService;
+
+    @GetMapping
+    public List<Buyer> getBuyers() {
+        return buyerService.getBuyers();
+    }
 
     @GetMapping("names")
     @ApiOperation(value = "Returns list of all buyers")

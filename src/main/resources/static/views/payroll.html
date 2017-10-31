@@ -1,4 +1,4 @@
-<div ng-controller="payrollController">
+<div ng-controller="payrollController" ng-init="loadPayrolls();">
 
     <div class="cardForPayrollsControl">
         <div class="row">
@@ -53,7 +53,6 @@
             </div>
         </div>
     </div>
-
     <div class="cardForPayrollsTable">
         <div class="row">
             <div class="col-md-1">
@@ -68,90 +67,48 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table id="table" class="table table-hover table-sm table-bordered" ng-style="tableStyle"
+                <table id="table" class="table table-hover table-sm table-bordered text-center" ng-style="tableStyle"
                        style="border-collapse: collapse !important;">
                     <thead class="thead-default">
-                    <tr style="text-align: center; vertical-align: middle">
-                        <th style="text-align: center; vertical-align: middle"><a href="">#</a></th>
-
-                        <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = ''">
-                                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
+                    <tr>
+                        <th><a href="">#</a></th>
+                        <th>
+                            <a href="" ng-click="sortColumn = 'buyer';changeOrder();">
+                                    <span ng-show="sortColumn == 'buyer' && sortReverse == 'ASC'"
                                           class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
+                                <span ng-show="sortColumn == 'buyer' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
+                                <span ng-show="sortColumn == 'buyer' && sortReverse == ''"></span>
                                 Buyer
                             </a>
                         </th>
-
-                        <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = ''">
-                                <span ng-show="sortType == '' && sortReverse == 'ASC'"
+                        <th>
+                            <a href="" ng-click="sortColumn = 'date';changeOrder();">
+                                <span ng-show="sortColumn == 'date' && sortReverse == 'ASC'"
                                       class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
+                                <span ng-show="sortColumn == 'date' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
+                                <span ng-show="sortColumn == 'date' && sortReverse == ''"></span>
                                 Date
                             </a>
                         </th>
-
-                        <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = ''">
-                                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                                          class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Type
-                            </a>
-                        </th>
-
-                        <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = ''">
-                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                          class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Sum
-                            </a>
-                        </th>
-
-                        <th style="text-align: center; vertical-align: middle">
-                            <a href=""
-                               ng-click="sortType = ''">
-                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                          class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Currency
-                            </a>
-                        </th>
-
-                        <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = ''">
-                                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                                          class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Description
-                            </a>
-                        </th>
+                        <th><a>Type</a></th>
+                        <th><a>Sum</a></th>
+                        <th><a>Currency</a></th>
+                        <th><a>Description</a></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr style="text-align: center; vertical-align: middle" ng-show="payrolls.length != 0"
-                        ng-repeat="item in payrolls">
-                        <td style="text-align: center; vertical-align: middle">{{$index+1}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{item.buyer}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{item.date}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{item.type}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{item.sum}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{item.currency}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{item.description}}</td>
+                    <tr ng-show="payrolls.length != 0" ng-repeat="item in payrolls"
+                        ng-click="clickRow(item)" data-toggle="modal" data-target="#payroll-modal">
+
+                        <td>{{$index+1}}</td>
+                        <td>{{item.buyerId}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.type}}</td>
+                        <td>{{item.sum}}</td>
+                        <td>{{item.currencyId}}</td>
+                        <td>{{item.description}}</td>
                     </tr>
                     <tr ng-show="payrolls.length == 0">
                         <td colspan="15">
@@ -161,13 +118,35 @@
                     </tr>
                     </tbody>
                 </table>
-
                 <div class="panel-footer">
                     <div class="text-center">
                         <uib-pagination total-items="totalPagination" max-size="5"
-                                        ng-model="selectedPage" items-per-page="selectedSize"
-                                        ng-click=""></uib-pagination>
+                                        ng-model="selectedPage" items-per-page="selectedSize">
+                        </uib-pagination>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="payroll-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit payroll</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <input type="text" class="form-control"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal"
+                            ng-click="saveExistingPayroll();">Save changes
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            ng-click="close();">Close
+                    </button>
                 </div>
             </div>
         </div>
