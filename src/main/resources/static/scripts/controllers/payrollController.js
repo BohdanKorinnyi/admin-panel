@@ -2,6 +2,7 @@
 
 Application.controller('payrollController', function ($scope, $http) {
     var baseUrl = 'payroll';
+    $scope.showPayrollsLoader = true;
     $scope.addedPayrolls = [];
     $scope.existedPayrolls = [];
     $scope.selectedSize = 50;
@@ -86,10 +87,13 @@ Application.controller('payrollController', function ($scope, $http) {
     };
 
     $scope.loadPayrolls = function () {
+        $scope.payrolls = [];
+        $scope.showPayrollsLoader = true;
         $http.post(baseUrl, $scope.getGridDetails()).then(function (response) {
             $scope.payrolls = $scope.updatePayrolls(response.data.data);
-            console.log($scope.payrolls);
+            $scope.showPayrollsLoader = false;
         }, function () {
+            $scope.showPayrollsLoader = false;
             notify('ti-alert', 'Error occurred during loading payrolls', 'danger');
         });
     };
