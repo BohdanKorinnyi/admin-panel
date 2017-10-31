@@ -26,11 +26,15 @@ public class PostbackGridDaoImpl implements PostbackGridDao {
             "  postback.* " +
             "FROM postback " +
             "  LEFT JOIN affiliates ON affiliates.afid = postback.afid " +
-            "  LEFT JOIN buyers ON affiliates.buyer_id = buyers.id ";
+            "  LEFT JOIN buyers ON affiliates.buyer_id = buyers.id " +
+            "  JOIN adverts ON postback.advname = adverts.advshortname " +
+            "  LEFT JOIN adv_status ON postback.status = adv_status.name ";
     private static final String SELECT_POSTBACK_COUNT = "SELECT COUNT(*) " +
             "FROM postback " +
             "  LEFT JOIN affiliates ON affiliates.afid = postback.afid " +
-            "  LEFT JOIN buyers ON affiliates.buyer_id = buyers.id ";
+            "  LEFT JOIN buyers ON affiliates.buyer_id = buyers.id " +
+            "  JOIN adverts ON postback.advname = adverts.advshortname " +
+            "  LEFT JOIN adv_status ON postback.status = adv_status.name ";
 
     private final JdbcTemplate jdbcTemplate;
 

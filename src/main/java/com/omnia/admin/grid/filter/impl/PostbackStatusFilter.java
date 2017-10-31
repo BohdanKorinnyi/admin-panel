@@ -8,11 +8,10 @@ import static com.omnia.admin.grid.filter.FilterConstant.EQUALS;
 
 public class PostbackStatusFilter implements Filter {
 
-    private static final String COLUMN = "postback.status";
+    private static final String COLUMN = "adv_status.real_status";
 
     @Override
     public String getSql(String value) {
-//        return COLUMN + String.format(EQUALS, value);
         if (StringUtils.isEmpty(value)) {
             return EMPTY;
         }
