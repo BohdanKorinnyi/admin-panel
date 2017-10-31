@@ -1,7 +1,9 @@
 package com.omnia.admin.dao.impl;
 
+import com.google.common.collect.ImmutableSet;
 import com.omnia.admin.dao.PayrollDao;
 import com.omnia.admin.grid.Page;
+import com.omnia.admin.model.ColumnOrder;
 import com.omnia.admin.model.Payroll;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -12,11 +14,17 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
+
+import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
+import static java.util.Objects.nonNull;
 
 @Repository
 @AllArgsConstructor
 public class PayrollDaoImpl implements PayrollDao {
 
+    private static final Set<String> SORTED_PAYROLL_COLUMNS = ImmutableSet.of("date", "buyer_id");
+    private static final String ORDER_BY = "ORDER BY %s %s";
     private static final String SELECT_PAYROLLS = "SELECT * FROM payroll ";
     private static final String SELECT_COUNT_PAYROLLS = "SELECT COUNT(*) FROM payroll";
     private static final String UPDATE_PAYROLL = "UPDATE payroll SET buyer_id = ?, date = ?, description = ?, type = ?, sum = ?, currency_id = ? WHERE id = ?;";
@@ -33,7 +41,12 @@ public class PayrollDaoImpl implements PayrollDao {
 
     @Override
     public List<Payroll> findPayrolls(Page page) {
-        return jdbcTemplate.query(SELECT_PAYROLLS + page.limit(), new BeanPropertyRowMapper<>(Payroll.class));
+        String where = EMPTY;
+        ColumnOrder columnOrder = page.getColumnOrder();
+        if (isValidSortDetails(page.getColumnOrder())) {
+            where = String.format(ORDER_BY, columnOrder.getColumn(), columnOrder.getOrder());
+        }
+        return jdbcTemplate.query(SELECT_PAYROLLS + where + page.limit(), new BeanPropertyRowMapper<>(Payroll.class));
     }
 
     @Override
@@ -95,5 +108,12 @@ public class PayrollDaoImpl implements PayrollDao {
     @Override
     public List<String> getPayrollDescription() {
         return jdbcTemplate.queryForList(SELECT_PAYROLL_DESCRIPTION, String.class);
+    }
+
+    private boolean isValidSortDetails(ColumnOrder columnOrder) {
+        if (nonNull(columnOrder) && columnOrder.isValid()) {
+            return SELECT_PAYROLL_DESCRIPTION.contains(columnOrder.getColumn());
+        }
+        return false;
     }
 }

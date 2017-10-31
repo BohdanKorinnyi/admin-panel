@@ -48,9 +48,4 @@ public class PayrollController {
     public List<String> getPayrollDescription() {
         return payrollService.getPayrollDescription();
     }
-
-    @GetMapping("types")
-    public List<String> getPayrollTypes() {
-        return Collections.emptyList();
-    }
 }
