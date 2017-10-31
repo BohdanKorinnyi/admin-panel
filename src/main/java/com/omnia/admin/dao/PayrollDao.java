@@ -15,4 +15,6 @@ public interface PayrollDao {
     void save(List<Payroll> payrolls);
 
     void delete(List<Long> ids);
+
+    List<String> getPayrollDescription();
 }

@@ -22,6 +22,7 @@ Application.controller('payrollController', function ($scope) {
             $scope.sortReverse = '';
         }
     };
+});
 
 function notify(icon, message, type) {
     $.notify({

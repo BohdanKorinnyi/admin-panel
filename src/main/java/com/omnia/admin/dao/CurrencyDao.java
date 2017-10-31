@@ -1,5 +1,9 @@
 package com.omnia.admin.dao;
 
+import com.omnia.admin.model.Currency;
+
+import java.util.List;
+
 public interface CurrencyDao {
-    Integer getCurrencyIdByPostback(String postbackCurrencyCode);
+    List<Currency> getAllCurrency();
 }
