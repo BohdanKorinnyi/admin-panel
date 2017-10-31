@@ -1,4 +1,4 @@
-<div ng-controller="payrollController" ng-init="loadPayrolls();">
+<div ng-controller="payrollController" ng-init="loadPayrolls(); getBuyers(); getCurrency(); getDescription();">
 
     <div class="cardForPayrollsControl">
         <div class="row">
@@ -27,25 +27,36 @@
                 <form class="form-inline">
                     <div class="form-group">
                         <label>
-                            <select class="form-control" data-ng-model="p.buyer"
-                                    data-ng-options="v as k for (k, v) in buyerOptions"
-                                    style="width: 220px;">
+                            <select class="form-control" ng-model="p.buyer"
+                                    style="width: 16%!important;">
+                                <option ng-repeat="b in buyerOptions"
+                                        value="{{b.name}}">
+                                    {{b.name}}
+                                </option>
                             </select>
                             <input type="text" class="form-control" id="payrollDate"
-                                   ng-model="p.date" placeholder="Date"/>
+                                   ng-model="p.date" placeholder="Date"
+                                   style="width: 16%!important;"/>
                             <select class="form-control" data-ng-model="p.type"
                                     data-ng-options="v as k for (k, v) in typeValues"
-                                    style="width: 150px;">
+                                    style="width: 16%!important;">
                             </select>
                             <input type="text" class="form-control" id="payrollSum"
-                                   ng-model="p.sum" placeholder="Sum"/>
-                            <select class="form-control" data-ng-model="p.currency"
-                                    data-ng-options="v as k for (k, v) in currencyOptions"
-                                    style="width: 200px;">
+                                   ng-model="p.sum" placeholder="Sum"
+                                   style="width: 16%!important;"/>
+                            <select class="form-control" ng-model="p.currency"
+                                    style="width: 16%!important;">
+                                <option ng-repeat="c in currencyOptions"
+                                        value="{{c.code}}">
+                                    {{c.code}}
+                                </option>
                             </select>
-                            <select class="form-control" data-ng-model="p.description"
-                                    data-ng-options="v as k for (k, v) in descriptionOptions"
-                                    style="width: 290px;">
+                            <select class="form-control" ng-model="p.description"
+                                    style="width: 16%!important;">
+                                <option ng-repeat="d in descriptionOptions"
+                                        value="{{d}}">
+                                    {{d}}
+                                </option>
                             </select>
                         </label>
                     </div>

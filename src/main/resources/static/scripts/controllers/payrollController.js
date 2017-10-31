@@ -37,34 +37,34 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.applyPayroll = function () {
         $http.post("payroll/save", $scope.addedPayrolls).then(function successCallback(response) {
-            //post for all payrolls
-        }, function errorCallback(r) {
+            $scope.loadPayrolls();
+        }, function errorCallback(response) {
             notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
         });
     };
 
 
     $scope.getBuyers = function () {
-        $http.get("/buyer").then(function success(r) {
-
-        }, function fail(r) {
-
+        $http.get("/buyer").then(function success(response) {
+            $scope.buyerOptions = response.data;
+        }, function fail(response) {
+            notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
         });
     };
 
     $scope.getCurrency = function () {
-        $http.get("/currency").then(function success(r) {
-
-        }, function fail(r) {
-
+        $http.get("/currency").then(function success(response) {
+            $scope.currencyOptions = response.data;
+        }, function fail(response) {
+            notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
         });
     };
 
     $scope.getDescription = function () {
-        $http.get("payroll/description").then(function success(r) {
-
-        }, function fail(r) {
-
+        $http.get("payroll/description").then(function success(response) {
+            $scope.descriptionOptions = response.data;
+        }, function fail(response) {
+            notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
         });
     };
 
