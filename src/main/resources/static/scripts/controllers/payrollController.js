@@ -87,7 +87,7 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.loadPayrolls = function () {
         $http.post(baseUrl, $scope.getGridDetails()).then(function (response) {
-            $scope.payrolls = response.data.data;
+            $scope.payrolls = $scope.updatePayrolls(response.data.data);
             console.log($scope.payrolls);
         }, function () {
             notify('ti-alert', 'Error occurred during loading payrolls', 'danger');
@@ -101,7 +101,34 @@ Application.controller('payrollController', function ($scope, $http) {
             'columnOrder': {'column': $scope.sortColumn, 'order': $scope.sortReverse}
         };
     };
+
+    $scope.updatePayrolls = function (payrolls) {
+        for (var i = 0; i < payrolls.length; i++) {
+            payrolls[i]['bayerName'] = findBuyerName(payrolls[i].buyerId, $scope.buyerOptions);
+            payrolls[i]['code'] = findCurrencyCode(payrolls[i].currencyId, $scope.currencyOptions);
+            payrolls[i]['typeName'] = payrolls[i].type === 0 ? 'Revenue' : 'Cost';
+        }
+        console.log(payrolls);
+        return payrolls;
+    };
 });
+
+function findCurrencyCode(id, currency) {
+    for (var i = 0; i < currency.length; i++) {
+        if (currency[i].id === id) {
+            return currency[i].code;
+        }
+    }
+}
+
+
+function findBuyerName(id, buyers) {
+    for (var i = 0; i < buyers.length; i++) {
+        if (buyers[i].id === id) {
+            return buyers[i].name;
+        }
+    }
+}
 
 function notify(icon, message, type) {
     $.notify({

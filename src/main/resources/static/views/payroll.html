@@ -1,4 +1,4 @@
-<div ng-controller="payrollController" ng-init="loadPayrolls(); getBuyers(); getCurrency(); getDescription();">
+<div ng-controller="payrollController" ng-init="getBuyers(); getCurrency(); getDescription();loadPayrolls();">
 
     <div class="cardForPayrollsControl">
         <div class="row">
@@ -25,10 +25,10 @@
         <div class="row" style="margin-top: 10px;">
             <div class="col-md-12 container-fluid" ng-repeat="p in addedPayrolls track by $index">
                 <form class="form-inline">
-                    <div class="form-group">
-                        <label>
+                    <div class="form-group" style="width: 100%">
+                        <label style="width: 100%">
                             <select class="form-control" ng-model="p.buyer"
-                                    style="width: 16%!important;">
+                                    style="width: 18%!important;">
                                 <option ng-repeat="b in buyerOptions"
                                         value="{{b.name}}">
                                     {{b.name}}
@@ -114,11 +114,11 @@
                         ng-click="clickRow(item)" data-toggle="modal" data-target="#payroll-modal">
 
                         <td>{{$index+1}}</td>
-                        <td>{{item.buyerId}}</td>
+                        <td>{{item.bayerName}}</td>
                         <td>{{item.date}}</td>
-                        <td>{{item.type}}</td>
+                        <td>{{item.typeName}}</td>
                         <td>{{item.sum}}</td>
-                        <td>{{item.currencyId}}</td>
+                        <td>{{item.code}}</td>
                         <td>{{item.description}}</td>
                     </tr>
                     <tr ng-show="payrolls.length == 0">
