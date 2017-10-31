@@ -7,10 +7,11 @@
                 <div class="row">
                     <div class="col-md-12" style="text-align: right">
                         <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
-                                ng-click="">
+                                ng-click="applyPayroll();">
                             Apply
                         </button>
-                        <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit">
+                        <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit"
+                                ng-click="addPayroll();">
                             Add
                         </button>
                         <button class="btn btn-primary btn-md" id="postBtn" name="postback" type="submit">
@@ -20,12 +21,55 @@
                 </div>
             </div>
         </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-md-12 container-fluid" ng-repeat="p in addedPayrolls track by $index">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>
+                            <select class="form-control" data-ng-model="p.buyer"
+                                    data-ng-options="v as k for (k, v) in buyerOptions"
+                                    style="width: 220px;">
+                            </select>
+                            <input type="text" class="form-control" id="payrollDate"
+                                   ng-model="p.date" placeholder="Date"/>
+                            <select class="form-control" data-ng-model="p.type"
+                                    data-ng-options="v as k for (k, v) in typeValues"
+                                    style="width: 150px;">
+                            </select>
+                            <input type="text" class="form-control" id="payrollSum"
+                                   ng-model="p.sum" placeholder="Sum"/>
+                            <select class="form-control" data-ng-model="p.currency"
+                                    data-ng-options="v as k for (k, v) in currencyOptions"
+                                    style="width: 200px;">
+                            </select>
+                            <select class="form-control" data-ng-model="p.description"
+                                    data-ng-options="v as k for (k, v) in descriptionOptions"
+                                    style="width: 290px;">
+                            </select>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="cardForPayrollsTable">
         <div class="row">
+            <div class="col-md-1">
+                <div class="form-group" id="size">
+                    <select class="form-control" data-ng-model="selectedSize"
+                            data-ng-options="v as k for (k, v) in sizeOptions"
+                            style="width: 100px;margin-bottom: 14px;">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-11"></div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
-                <table id="table" class="table table-hover table-sm table-bordered" ng-style="tableStyle" style="border-collapse: collapse !important;">
+                <table id="table" class="table table-hover table-sm table-bordered" ng-style="tableStyle"
+                       style="border-collapse: collapse !important;">
                     <thead class="thead-default">
                     <tr style="text-align: center; vertical-align: middle">
                         <th style="text-align: center; vertical-align: middle"><a href="">#</a></th>
@@ -44,7 +88,7 @@
                         <th style="text-align: center; vertical-align: middle">
                             <a href="" ng-click="sortType = ''">
                                 <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                                    class="fa fa-caret-up"></span>
+                                      class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == '' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == '' && sortReverse == ''"></span>
