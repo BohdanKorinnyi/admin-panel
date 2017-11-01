@@ -27,7 +27,7 @@
                 <form class="form-inline">
                     <div class="form-group" style="width: 100%">
                         <label style="width: 100%">
-                            <select class="form-control" ng-model="p.buyer"
+                            <select class="form-control" ng-model="p.buyerId"
                                     style="width: 18%!important;">
                                 <option ng-repeat="b in buyerOptions"
                                         value="{{b.id}}">
@@ -40,14 +40,14 @@
                             <select class="form-control" ng-model="p.type"
                                     style="width: 16%!important;">
                                 <option ng-repeat="t in typeValues"
-                                        value="{{t.id}}">
+                                        value="{{t.value}}">
                                     {{t.name}}
                                 </option>
                             </select>
                             <input type="text" class="form-control" id="payrollSum"
                                    ng-model="p.sum" placeholder="Sum"
                                    style="width: 16%!important;"/>
-                            <select class="form-control" ng-model="p.currency"
+                            <select class="form-control" ng-model="p.currencyId"
                                     style="width: 16%!important;">
                                 <option ng-repeat="c in currencyOptions"
                                         value="{{c.id}}">

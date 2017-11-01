@@ -10,7 +10,7 @@ Application.controller('payrollController', function ($scope, $http) {
     $scope.totalPagination = 1;
     $scope.noOfPages = 1;
     $scope.typeValues = [
-        {'name': 'Revenue', 'value': '0'},
+        {'name': 'Revenue', 'value': 0},
         {'name': 'Cost', 'value': 1}
     ];
     $scope.sizeOptions = {
@@ -30,8 +30,8 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.addPayroll = function () {
         $scope.addedPayrolls.push({
-            buyer: null, date: null, type: null,
-            sum: null, currency: null, description: null
+            buyerId: null, date: null, type: null,
+            sum: null, currencyId: null, description: null
         });
     };
 
