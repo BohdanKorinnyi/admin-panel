@@ -130,12 +130,32 @@ Application.controller('payrollController', function ($scope, $http) {
     $scope.saveExistingPayroll = function () {
         var params = {};
         params.id = $scope.selectedPayrollItem.id;
-        params.buyerId = $scope.selectedBuyerId;
         params.description = $scope.selectedDescriptionValue;
-        params.type = $scope.selectedTypeId;
-        params.currencyId = $scope.selectedCurrencyId;
+
         params.date = $scope.selectedDate;
         params.sum = $scope.selectedSum;
+
+        if($scope.selectedTypeValue == "Revenue"){
+            $scope.selectedTypeId = 0;
+        }
+        else{
+            $scope.selectedTypeId = 1;
+        }
+        params.type = $scope.selectedTypeId;
+
+        for(var i = 0; i<$scope.currencyOptions.length; i++){
+            if($scope.selectedCurrencyCode == $scope.currencyOptions[i].code){
+                $scope.selectedCurrencyId = $scope.currencyOptions[i].id;
+            }
+        }
+        for(var i = 0; i<$scope.buyerOptions.length; i++){
+            if($scope.selectedBuyerName == $scope.buyerOptions[i].name){
+                $scope.selectedBuyerId = $scope.buyerOptions[i].id;
+            }
+        }
+        params.buyerId = $scope.selectedBuyerId;
+        params.currencyId = $scope.selectedCurrencyId;
+
         $http.put(baseUrl, params).then(function success(response) {
             //
         }, function fail(response) {
