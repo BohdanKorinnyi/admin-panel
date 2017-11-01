@@ -20,4 +20,8 @@ Application.config(function($routeProvider) {
             templateUrl : "views/payroll.html",
             controller  : "payrollController"
         })
+        .when('/buyers', {
+            templateUrl : "views/buyers.html",
+            controller  : "buyerController"
+        })
 });
