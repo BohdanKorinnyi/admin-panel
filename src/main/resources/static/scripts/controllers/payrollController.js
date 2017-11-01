@@ -8,10 +8,10 @@ Application.controller('payrollController', function ($scope, $http) {
     $scope.selectedPage = 1;
     $scope.totalPagination = 1;
     $scope.noOfPages = 1;
-    $scope.typeValues = {
-        'Revenue': 0,
-        'Cost': 1
-    };
+    $scope.typeValues = [
+        {'name': 'Revenue', 'value': '0'},
+        {'name': 'Cost', 'value': 1}
+    ];
     $scope.sizeOptions = {
         50: 50,
         100: 100,
@@ -19,7 +19,6 @@ Application.controller('payrollController', function ($scope, $http) {
     };
 
     $scope.selectedSize = 50;
-    $scope.typeOptions = [];
     $scope.buyerOptions = [];
     $scope.currencyOptions = [];
     $scope.descriptionOptions = [];
@@ -81,8 +80,39 @@ Application.controller('payrollController', function ($scope, $http) {
         }
     };
 
+
+    $scope.selectedPayrollItem = {};
+    $scope.selectedBuyerName = "";
+    $scope.selectedTypeValue = "";
+    $scope.selectedCurrencyCode = "";
+    $scope.selectedDescriptionValue = "";
+
     $scope.clickRow = function (payroll) {
-        console.log(payroll);
+        $scope.selectedPayrollItem = payroll;
+        if(payroll.type == 0){
+            $scope.selectedTypeValue = "Revenue";
+        }
+        else{
+            $scope.selectedTypeValue = "Cost";
+        }
+
+        for(var i = 0; i<$scope.buyerOptions.length; i++){
+            if(payroll.id == $scope.buyerOptions[i].id){
+                $scope.selectedBuyerName = $scope.buyerOptions[i].name;
+            }
+        }
+
+        for(var i = 0; i<$scope.currencyOptions.length; i++){
+            if(payroll.currencyId == $scope.currencyOptions[i].id){
+                $scope.selectedCurrencyCode = $scope.currencyOptions[i].code;
+            }
+        }
+
+        for(var i = 0; i<$scope.descriptionOptions.length; i++){
+            if(payroll.description == $scope.descriptionOptions[i]){
+                $scope.selectedDescriptionValue = $scope.descriptionOptions[i];
+            }
+        }
     };
 
     $scope.loadPayrolls = function () {
