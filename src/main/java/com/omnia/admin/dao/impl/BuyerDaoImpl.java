@@ -14,7 +14,7 @@ import java.util.List;
 public class BuyerDaoImpl implements BuyerDao {
 
     private static final String SELECT_ALL_BUYERS_NAME = "SELECT name FROM buyers ORDER BY name ASC;";
-    private static final String SELECT_ALL_BUYERS = "SELECT id,name FROM buyers ORDER BY name ASC;";
+    private static final String SELECT_ALL_BUYERS = "SELECT * FROM buyers ORDER BY name ASC;";
 
     private final JdbcTemplate jdbcTemplate;
 

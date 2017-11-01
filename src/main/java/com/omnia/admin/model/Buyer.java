@@ -1,6 +1,5 @@
 package com.omnia.admin.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,4 +8,10 @@ import lombok.Setter;
 public class Buyer {
     private Long id;
     private String name;
+    private String type;
+    private String comment;
+    private int planRev;
+    private int planProfit;
+    private int planRevOld;
+    private int planProfitOld;
 }
