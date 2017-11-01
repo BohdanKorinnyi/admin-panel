@@ -23,6 +23,7 @@ Application.controller('payrollController', function ($scope, $http) {
     $scope.buyerOptions = [];
     $scope.currencyOptions = [];
     $scope.descriptionOptions = [];
+    $scope.datePicker = '';
 
 
     $scope.sortColumn = '';
