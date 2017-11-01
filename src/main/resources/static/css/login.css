@@ -119,6 +119,10 @@ td {
     max-width: 60px!important;
 }
 
+#payrollDatePicker{
+    width: 150px!important;
+}
+
 #advertiserName {
     width: 99%;
 }
@@ -387,4 +391,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 
 .bootstrap-select > .dropdown-toggle{
     width: 110px!important;
+}
+
+datepicker, .datepicker, [datepicker], ._720kb-datepicker-calendar-header,
+._720kb-datepicker-calendar-body, ._720kb-datepicker-calendar-days-header,
+._720kb-datepicker-calendar-years-pagination-pages{
+    float:none!important;
 }

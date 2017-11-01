@@ -3,7 +3,8 @@
     <div class="cardForPayrollsControl">
         <div class="row">
             <div class="col-md-9" style="text-align: left">
-                <a ng-click="addPayroll();" style="margin-left: 8px;"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a>
+                <a ng-click="addPayroll();" style="margin-left: 8px;"><i class="fa fa-plus fa-2x"
+                                                                         aria-hidden="true"></i></a>
             </div>
             <div class="col-md-3">
                 <div class="row">
@@ -25,49 +26,54 @@
             <div class="col-md-12 container-fluid" ng-repeat="p in addedPayrolls track by $index">
                 <form class="form-inline">
                     <div class="form-group" style="width: 100%">
-                        <label style="width: 100%">
-                            <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
-                                <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
-                            </button>
-                            <select class="form-control" ng-model="p.buyerId"
-                                    style="width: 17%!important;">
-                                <option value="" disabled selected>Buyer</option>
-                                <option ng-repeat="b in buyerOptions"
-                                        value="{{b.id}}">
-                                    {{b.name}}
-                                </option>
-                            </select>
-                            <input type="text" class="form-control" id="payrollDate"
-                                   ng-model="p.date" placeholder="Date"
-                                   style="width: 16%!important;"/>
-                            <select class="form-control" ng-model="p.type"
-                                    style="width: 11%!important;">
-                                <option value="" disabled selected>Type</option>
-                                <option ng-repeat="t in typeValues"
-                                        value="{{t.value}}">
-                                    {{t.name}}
-                                </option>
-                            </select>
-                            <input type="text" class="form-control" id="payrollSum"
-                                   ng-model="p.sum" placeholder="Sum"
-                                   style="width: 10%!important;"/>
-                            <select class="form-control" ng-model="p.currencyId"
-                                    style="width: 11%!important;">
-                                <option value="" disabled selected>Currency</option>
-                                <option ng-repeat="c in currencyOptions"
-                                        value="{{c.id}}">
-                                    {{c.code}}
-                                </option>
-                            </select>
-                            <select class="form-control" ng-model="p.description"
-                                    style="width: 28%!important;">
-                                <option value="" disabled selected>Description</option>
-                                <option ng-repeat="d in descriptionOptions"
-                                        value="{{d}}">
-                                    {{d}}
-                                </option>
-                            </select>
-                        </label>
+                        <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
+                            <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                        </button>
+                        <select class="form-control" ng-model="p.buyerId"
+                                style="width: 17%!important;">
+                            <option value="" disabled selected>Buyer</option>
+                            <option ng-repeat="b in buyerOptions"
+                                    value="{{b.id}}">
+                                {{b.name}}
+                            </option>
+                        </select>
+                            <datepicker date-format="yyyy-MM-dd" selector="form-control"
+                                        id="payrollDatePicker">
+                                <div class="input-group" style="margin-top: 10px;">
+                                    <input class="form-control" data-ng-model="p.date"
+                                           placeholder="Date"/>
+                                    <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </datepicker>
+                        <select class="form-control" ng-model="p.type"
+                                style="width: 11%!important;">
+                            <option value="" disabled selected>Type</option>
+                            <option ng-repeat="t in typeValues"
+                                    value="{{t.value}}">
+                                {{t.name}}
+                            </option>
+                        </select>
+                        <input type="text" class="form-control" id="payrollSum"
+                               ng-model="p.sum" placeholder="Sum"
+                               style="width: 10%!important;"/>
+                        <select class="form-control" ng-model="p.currencyId"
+                                style="width: 11%!important;">
+                            <option value="" disabled selected>Currency</option>
+                            <option ng-repeat="c in currencyOptions"
+                                    value="{{c.id}}">
+                                {{c.code}}
+                            </option>
+                        </select>
+                        <select class="form-control" ng-model="p.description"
+                                style="width: 26%!important;">
+                            <option value="" disabled selected>Description</option>
+                            <option ng-repeat="d in descriptionOptions"
+                                    value="{{d}}">
+                                {{d}}
+                            </option>
+                        </select>
                     </div>
                 </form>
             </div>
