@@ -10,7 +10,7 @@ public interface PayrollService {
 
     List<Payroll> findPayrolls(Page page);
 
-    void update(List<Payroll> payrolls);
+    void update(Payroll payroll);
 
     void save(List<Payroll> payrolls);
 

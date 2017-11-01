@@ -36,7 +36,7 @@ Application.controller('payrollController', function ($scope, $http) {
     };
 
     $scope.applyPayroll = function () {
-        $http.post("payroll/save", $scope.addedPayrolls).then(function successCallback(response) {
+        $http.post('payroll/save', $scope.addedPayrolls).then(function successCallback(response) {
             $scope.loadPayrolls();
         }, function errorCallback(response) {
             notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
@@ -45,7 +45,7 @@ Application.controller('payrollController', function ($scope, $http) {
 
 
     $scope.getBuyers = function () {
-        $http.get("/buyer").then(function success(response) {
+        $http.get('/buyer').then(function success(response) {
             $scope.buyerOptions = response.data;
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
@@ -53,7 +53,7 @@ Application.controller('payrollController', function ($scope, $http) {
     };
 
     $scope.getCurrency = function () {
-        $http.get("/currency").then(function success(response) {
+        $http.get('/currency').then(function success(response) {
             $scope.currencyOptions = response.data;
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
@@ -61,7 +61,7 @@ Application.controller('payrollController', function ($scope, $http) {
     };
 
     $scope.getDescription = function () {
-        $http.get("payroll/description").then(function success(response) {
+        $http.get('payroll/description').then(function success(response) {
             $scope.descriptionOptions = response.data;
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
@@ -81,15 +81,14 @@ Application.controller('payrollController', function ($scope, $http) {
         }
     };
 
-
     $scope.selectedPayrollItem = {};
-    $scope.selectedBuyerName = "";
+    $scope.selectedBuyerName = '';
     $scope.selectedBuyerId = 0;
-    $scope.selectedTypeValue = "";
+    $scope.selectedTypeValue = '';
     $scope.selectedTypeId = 0;
-    $scope.selectedCurrencyCode = "";
+    $scope.selectedCurrencyCode = '';
     $scope.selectedCurrencyId = 0;
-    $scope.selectedDescriptionValue = "";
+    $scope.selectedDescriptionValue = '';
     $scope.selectedDate = "";
     $scope.selectedSum = "";
 
@@ -97,31 +96,28 @@ Application.controller('payrollController', function ($scope, $http) {
         $scope.selectedPayrollItem = payroll;
         $scope.selectedDate = payroll.date;
         $scope.selectedSum = payroll.sum;
-        if(payroll.type == 0){
-            $scope.selectedTypeValue = "Revenue";
+        if (payroll.type === 0) {
+            $scope.selectedTypeValue = 'Revenue';
             $scope.selectedTypeId = 0;
         }
-        else{
-            $scope.selectedTypeValue = "Cost";
+        else {
+            $scope.selectedTypeValue = 'Cost';
             $scope.selectedTypeId = 1;
         }
-
-        for(var i = 0; i<$scope.buyerOptions.length; i++){
-            if(payroll.id == $scope.buyerOptions[i].id){
+        for (var i = 0; i < $scope.buyerOptions.length; i++) {
+            if (payroll.id === $scope.buyerOptions[i].id) {
                 $scope.selectedBuyerName = $scope.buyerOptions[i].name;
                 $scope.selectedBuyerId = $scope.buyerOptions[i].id;
             }
         }
-
-        for(var i = 0; i<$scope.currencyOptions.length; i++){
-            if(payroll.currencyId == $scope.currencyOptions[i].id){
+        for (var i = 0; i < $scope.currencyOptions.length; i++) {
+            if (payroll.currencyId === $scope.currencyOptions[i].id) {
                 $scope.selectedCurrencyCode = $scope.currencyOptions[i].code;
                 $scope.selectedCurrencyId = $scope.currencyOptions[i].id;
             }
         }
-
-        for(var i = 0; i<$scope.descriptionOptions.length; i++){
-            if(payroll.description == $scope.descriptionOptions[i]){
+        for (var i = 0; i < $scope.descriptionOptions.length; i++) {
+            if (payroll.description === $scope.descriptionOptions[i]) {
                 $scope.selectedDescriptionValue = $scope.descriptionOptions[i];
             }
         }
@@ -161,7 +157,7 @@ Application.controller('payrollController', function ($scope, $http) {
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
         });
-    }
+    };
 
     $scope.loadPayrolls = function () {
         $scope.payrolls = [];
@@ -201,7 +197,6 @@ function findCurrencyCode(id, currency) {
         }
     }
 }
-
 
 function findBuyerName(id, buyers) {
     for (var i = 0; i < buyers.length; i++) {

@@ -25,8 +25,8 @@ public class PayrollServiceImpl implements PayrollService {
     }
 
     @Override
-    public void update(List<Payroll> payrolls) {
-        payrollDao.update(payrolls);
+    public void update(Payroll payroll) {
+        payrollDao.update(payroll);
     }
 
     @Override

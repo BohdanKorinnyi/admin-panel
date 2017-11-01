@@ -50,24 +50,9 @@ public class PayrollDaoImpl implements PayrollDao {
     }
 
     @Override
-    public void update(List<Payroll> payrolls) {
-        jdbcTemplate.batchUpdate(UPDATE_PAYROLL, new BatchPreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setLong(1, payrolls.get(i).getBuyerId());
-                ps.setDate(2, payrolls.get(i).getDate());
-                ps.setString(3, payrolls.get(i).getDescription());
-                ps.setInt(4, payrolls.get(i).getType());
-                ps.setFloat(5, payrolls.get(i).getSum());
-                ps.setInt(6, payrolls.get(i).getCurrencyId());
-                ps.setLong(7, payrolls.get(i).getId());
-            }
-
-            @Override
-            public int getBatchSize() {
-                return payrolls.size();
-            }
-        });
+    public void update(Payroll payroll) {
+        jdbcTemplate.update(UPDATE_PAYROLL, payroll.getBuyerId(), payroll.getDate(), payroll.getDescription(),
+                payroll.getType(), payroll.getSum(), payroll.getCurrencyId(), payroll.getId());
     }
 
     @Override

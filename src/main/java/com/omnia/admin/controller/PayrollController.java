@@ -28,7 +28,7 @@ public class PayrollController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void update(@RequestBody List<Payroll> payrolls) {
+    public void update(@RequestBody Payroll payrolls) {
         payrollService.update(payrolls);
     }
 
