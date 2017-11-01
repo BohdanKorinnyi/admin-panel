@@ -41,6 +41,7 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.applyPayroll = function () {
         $http.post('payroll/save', $scope.addedPayrolls).then(function successCallback(response) {
+            $scope.cancelClick();
             $scope.loadPayrolls();
         }, function errorCallback(response) {
             notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
