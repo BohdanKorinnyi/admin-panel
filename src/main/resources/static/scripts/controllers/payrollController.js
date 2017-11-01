@@ -10,8 +10,8 @@ Application.controller('payrollController', function ($scope, $http) {
     $scope.totalPagination = 1;
     $scope.noOfPages = 1;
     $scope.typeValues = [
-        {'name': 'Revenue', 'value': 0},
-        {'name': 'Cost', 'value': 1}
+        {'name': 'Accrual', 'value': 0},
+        {'name': 'Write-off', 'value': 1}
     ];
     $scope.sizeOptions = {
         50: 50,
@@ -102,11 +102,11 @@ Application.controller('payrollController', function ($scope, $http) {
         $scope.selectedDate = payroll.date;
         $scope.selectedSum = payroll.sum;
         if (payroll.type === 0) {
-            $scope.selectedTypeValue = 'Revenue';
+            $scope.selectedTypeValue = 'Accrual';
             $scope.selectedTypeId = 0;
         }
         else {
-            $scope.selectedTypeValue = 'Cost';
+            $scope.selectedTypeValue = 'Write-off';
             $scope.selectedTypeId = 1;
         }
         for (var i = 0; i < $scope.buyerOptions.length; i++) {
@@ -136,7 +136,7 @@ Application.controller('payrollController', function ($scope, $http) {
         params.date = $scope.selectedDate;
         params.sum = $scope.selectedSum;
 
-        if ($scope.selectedTypeValue === 'Revenue') {
+        if ($scope.selectedTypeValue === 'Accrual') {
             $scope.selectedTypeId = 0;
         }
         else {
@@ -189,10 +189,13 @@ Application.controller('payrollController', function ($scope, $http) {
         for (var i = 0; i < payrolls.length; i++) {
             payrolls[i]['bayerName'] = findBuyerName(payrolls[i].buyerId, $scope.buyerOptions);
             payrolls[i]['code'] = findCurrencyCode(payrolls[i].currencyId, $scope.currencyOptions);
-            payrolls[i]['typeName'] = payrolls[i].type === 0 ? 'Revenue' : 'Cost';
+            payrolls[i]['typeName'] = payrolls[i].type === 0 ? 'Accrual' : 'Write-off';
         }
-        console.log(payrolls);
         return payrolls;
+    };
+
+    $scope.removeRow = function (item) {
+        console.log(item);
     };
 });
 

@@ -2,7 +2,9 @@
 
     <div class="cardForPayrollsControl">
         <div class="row">
-            <div class="col-md-9"></div>
+            <div class="col-md-9" style="text-align: left">
+                <a ng-click="addPayroll();" style="margin-left: 8px;"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a>
+            </div>
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-12" style="text-align: right">
@@ -10,12 +12,8 @@
                                 ng-click="applyPayroll();">
                             Apply
                         </button>
-                        <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit"
-                                ng-click="addPayroll();">
-                            Add
-                        </button>
                         <button class="btn btn-primary btn-md" id="postBtn" name="postback" type="submit"
-                        ng-click="cancelClick()">
+                                ng-click="cancelClick()">
                             Cancel
                         </button>
                     </div>
@@ -28,8 +26,11 @@
                 <form class="form-inline">
                     <div class="form-group" style="width: 100%">
                         <label style="width: 100%">
+                            <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow()">
+                                <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                            </button>
                             <select class="form-control" ng-model="p.buyerId"
-                                    style="width: 18%!important;">
+                                    style="width: 17%!important;">
                                 <option value="" disabled selected>Buyer</option>
                                 <option ng-repeat="b in buyerOptions"
                                         value="{{b.id}}">
@@ -40,7 +41,7 @@
                                    ng-model="p.date" placeholder="Date"
                                    style="width: 16%!important;"/>
                             <select class="form-control" ng-model="p.type"
-                                    style="width: 16%!important;">
+                                    style="width: 11%!important;">
                                 <option value="" disabled selected>Type</option>
                                 <option ng-repeat="t in typeValues"
                                         value="{{t.value}}">
@@ -49,9 +50,9 @@
                             </select>
                             <input type="text" class="form-control" id="payrollSum"
                                    ng-model="p.sum" placeholder="Sum"
-                                   style="width: 16%!important;"/>
+                                   style="width: 10%!important;"/>
                             <select class="form-control" ng-model="p.currencyId"
-                                    style="width: 16%!important;">
+                                    style="width: 11%!important;">
                                 <option value="" disabled selected>Currency</option>
                                 <option ng-repeat="c in currencyOptions"
                                         value="{{c.id}}">
@@ -59,7 +60,7 @@
                                 </option>
                             </select>
                             <select class="form-control" ng-model="p.description"
-                                    style="width: 16%!important;">
+                                    style="width: 28%!important;">
                                 <option value="" disabled selected>Description</option>
                                 <option ng-repeat="d in descriptionOptions"
                                         value="{{d}}">
