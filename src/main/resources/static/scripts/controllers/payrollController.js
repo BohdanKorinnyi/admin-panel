@@ -110,7 +110,7 @@ Application.controller('payrollController', function ($scope, $http) {
             $scope.selectedTypeId = 1;
         }
         for (var i = 0; i < $scope.buyerOptions.length; i++) {
-            if (payroll.id === $scope.buyerOptions[i].id) {
+            if (payroll.buyerId === $scope.buyerOptions[i].id) {
                 $scope.selectedBuyerName = $scope.buyerOptions[i].name;
                 $scope.selectedBuyerId = $scope.buyerOptions[i].id;
             }
