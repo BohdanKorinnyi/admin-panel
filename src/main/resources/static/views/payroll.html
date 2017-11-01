@@ -92,17 +92,17 @@
                     <tr>
                         <th><a href="">#</a></th>
                         <th>
-                            <a href="" ng-click="sortColumn = 'buyer';changeOrder();">
-                                    <span ng-show="sortColumn == 'buyer' && sortReverse == 'ASC'"
+                            <a href="" ng-click="sortColumn = 'buyer_id';changeOrder();loadPayrolls();">
+                                    <span ng-show="sortColumn == 'buyer_id' && sortReverse == 'ASC'"
                                           class="fa fa-caret-up"></span>
-                                <span ng-show="sortColumn == 'buyer' && sortReverse == 'DESC'"
+                                <span ng-show="sortColumn == 'buyer_id' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
-                                <span ng-show="sortColumn == 'buyer' && sortReverse == ''"></span>
+                                <span ng-show="sortColumn == 'buyer_id' && sortReverse == ''"></span>
                                 Buyer
                             </a>
                         </th>
                         <th>
-                            <a href="" ng-click="sortColumn = 'date';changeOrder();">
+                            <a href="" ng-click="sortColumn = 'date';changeOrder();loadPayrolls();">
                                 <span ng-show="sortColumn == 'date' && sortReverse == 'ASC'"
                                       class="fa fa-caret-up"></span>
                                 <span ng-show="sortColumn == 'date' && sortReverse == 'DESC'"
