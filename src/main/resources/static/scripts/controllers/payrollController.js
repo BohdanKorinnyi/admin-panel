@@ -84,28 +84,39 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.selectedPayrollItem = {};
     $scope.selectedBuyerName = "";
+    $scope.selectedBuyerId = 0;
     $scope.selectedTypeValue = "";
+    $scope.selectedTypeId = 0;
     $scope.selectedCurrencyCode = "";
+    $scope.selectedCurrencyId = 0;
     $scope.selectedDescriptionValue = "";
+    $scope.selectedDate = "";
+    $scope.selectedSum = "";
 
     $scope.clickRow = function (payroll) {
         $scope.selectedPayrollItem = payroll;
+        $scope.selectedDate = payroll.date;
+        $scope.selectedSum = payroll.sum;
         if(payroll.type == 0){
             $scope.selectedTypeValue = "Revenue";
+            $scope.selectedTypeId = 0;
         }
         else{
             $scope.selectedTypeValue = "Cost";
+            $scope.selectedTypeId = 1;
         }
 
         for(var i = 0; i<$scope.buyerOptions.length; i++){
             if(payroll.id == $scope.buyerOptions[i].id){
                 $scope.selectedBuyerName = $scope.buyerOptions[i].name;
+                $scope.selectedBuyerId = $scope.buyerOptions[i].id;
             }
         }
 
         for(var i = 0; i<$scope.currencyOptions.length; i++){
             if(payroll.currencyId == $scope.currencyOptions[i].id){
                 $scope.selectedCurrencyCode = $scope.currencyOptions[i].code;
+                $scope.selectedCurrencyId = $scope.currencyOptions[i].id;
             }
         }
 
@@ -115,6 +126,22 @@ Application.controller('payrollController', function ($scope, $http) {
             }
         }
     };
+
+    $scope.saveExistingPayroll = function () {
+        var params = {};
+        params.id = $scope.selectedPayrollItem.id;
+        params.buyerId = $scope.selectedBuyerId;
+        params.description = $scope.selectedDescriptionValue;
+        params.type = $scope.selectedTypeId;
+        params.currencyId = $scope.selectedCurrencyId;
+        params.date = $scope.selectedDate;
+        params.sum = $scope.selectedSum;
+        $http.put(baseUrl, params).then(function success(response) {
+            //
+        }, function fail(response) {
+            notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
+        });
+    }
 
     $scope.loadPayrolls = function () {
         $scope.payrolls = [];
