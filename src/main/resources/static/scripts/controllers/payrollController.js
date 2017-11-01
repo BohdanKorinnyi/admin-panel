@@ -44,7 +44,7 @@ Application.controller('payrollController', function ($scope, $http) {
             $scope.cancelClick();
             $scope.loadPayrolls();
         }, function errorCallback(response) {
-            notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
+            notify('ti-alert', 'Error occurred during saving payroll', 'danger');
         });
     };
 
@@ -53,7 +53,7 @@ Application.controller('payrollController', function ($scope, $http) {
         $http.get('/buyer').then(function success(response) {
             $scope.buyerOptions = response.data;
         }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
+            notify('ti-alert', 'Error occurred during loading buyers', 'danger');
         });
     };
 
@@ -61,7 +61,7 @@ Application.controller('payrollController', function ($scope, $http) {
         $http.get('/currency').then(function success(response) {
             $scope.currencyOptions = response.data;
         }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
+            notify('ti-alert', 'Error occurred during loading currency', 'danger');
         });
     };
 
@@ -69,7 +69,7 @@ Application.controller('payrollController', function ($scope, $http) {
         $http.get('payroll/description').then(function success(response) {
             $scope.descriptionOptions = response.data;
         }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
+            notify('ti-alert', 'Error occurred during loading description', 'danger');
         });
     };
 
@@ -161,7 +161,7 @@ Application.controller('payrollController', function ($scope, $http) {
             $scope.loadPayrolls();
             notify('ti-alert', 'Payroll updated successfully', 'success');
         }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
+            notify('ti-alert', 'Error occurred during loading payrolls', 'danger');
         });
     };
 
