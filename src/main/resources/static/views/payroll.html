@@ -30,7 +30,7 @@
                         <label style="width: 100%">
                             <select class="form-control" ng-model="p.buyerId"
                                     style="width: 18%!important;">
-                                <option value="" disabled selected>Buyers</option>
+                                <option value="" disabled selected>Buyer</option>
                                 <option ng-repeat="b in buyerOptions"
                                         value="{{b.id}}">
                                     {{b.name}}
@@ -41,6 +41,7 @@
                                    style="width: 16%!important;"/>
                             <select class="form-control" ng-model="p.type"
                                     style="width: 16%!important;">
+                                <option value="" disabled selected>Type</option>
                                 <option ng-repeat="t in typeValues"
                                         value="{{t.value}}">
                                     {{t.name}}
@@ -51,6 +52,7 @@
                                    style="width: 16%!important;"/>
                             <select class="form-control" ng-model="p.currencyId"
                                     style="width: 16%!important;">
+                                <option value="" disabled selected>Currency</option>
                                 <option ng-repeat="c in currencyOptions"
                                         value="{{c.id}}">
                                     {{c.code}}
@@ -58,6 +60,7 @@
                             </select>
                             <select class="form-control" ng-model="p.description"
                                     style="width: 16%!important;">
+                                <option value="" disabled selected>Description</option>
                                 <option ng-repeat="d in descriptionOptions"
                                         value="{{d}}">
                                     {{d}}
