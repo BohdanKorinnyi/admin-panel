@@ -195,7 +195,7 @@ Application.controller('payrollController', function ($scope, $http) {
     };
 
     $scope.removeRow = function (item) {
-        console.log(item);
+        $scope.addedPayrolls.splice(item, 1);
     };
 });
 
