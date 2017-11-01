@@ -37,9 +37,12 @@
                             <input type="text" class="form-control" id="payrollDate"
                                    ng-model="p.date" placeholder="Date"
                                    style="width: 16%!important;"/>
-                            <select class="form-control" data-ng-model="p.type"
-                                    data-ng-options="v as k for (k, v) in typeValues"
+                            <select class="form-control" ng-model="p.type"
                                     style="width: 16%!important;">
+                                <option ng-repeat="t in typeValues"
+                                        value="{{t.id}}">
+                                    {{t.name}}
+                                </option>
                             </select>
                             <input type="text" class="form-control" id="payrollSum"
                                    ng-model="p.sum" placeholder="Sum"
@@ -150,7 +153,7 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <label>
-                                <select class="form-control" ng-model="p.buyer"
+                                <select class="form-control" ng-model="selectedBuyerName"
                                         style="width: 16%!important;">
                                     <option ng-repeat="b in buyerOptions"
                                             value="{{b.name}}">
@@ -160,21 +163,24 @@
                                 <input type="text" class="form-control"
                                        ng-model="p.date" placeholder="Date"
                                        style="width: 16%!important;"/>
-                                <select class="form-control" data-ng-model="p.type"
-                                        data-ng-options="v as k for (k, v) in typeValues"
+                                <select class="form-control" ng-model="selectedTypeValue"
                                         style="width: 16%!important;">
+                                    <option ng-repeat="t in typeValues"
+                                            value="{{t.name}}">
+                                        {{t.name}}
+                                    </option>
                                 </select>
                                 <input type="text" class="form-control"
                                        ng-model="p.sum" placeholder="Sum"
                                        style="width: 16%!important;"/>
-                                <select class="form-control" ng-model="p.currency"
+                                <select class="form-control" ng-model="selectedCurrencyCode"
                                         style="width: 16%!important;">
                                     <option ng-repeat="c in currencyOptions"
                                             value="{{c.code}}">
                                         {{c.code}}
                                     </option>
                                 </select>
-                                <select class="form-control" ng-model="p.description"
+                                <select class="form-control" ng-model="selectedDescriptionValue"
                                         style="width: 16%!important;">
                                     <option ng-repeat="d in descriptionOptions"
                                             value="{{d}}">
