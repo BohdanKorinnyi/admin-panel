@@ -30,7 +30,7 @@
                             <select class="form-control" ng-model="p.buyer"
                                     style="width: 18%!important;">
                                 <option ng-repeat="b in buyerOptions"
-                                        value="{{b.name}}">
+                                        value="{{b.id}}">
                                     {{b.name}}
                                 </option>
                             </select>
@@ -50,7 +50,7 @@
                             <select class="form-control" ng-model="p.currency"
                                     style="width: 16%!important;">
                                 <option ng-repeat="c in currencyOptions"
-                                        value="{{c.code}}">
+                                        value="{{c.id}}">
                                     {{c.code}}
                                 </option>
                             </select>
