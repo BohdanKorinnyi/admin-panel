@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -50,12 +51,14 @@ public class PayrollDaoImpl implements PayrollDao {
     }
 
     @Override
+    @Transactional
     public void update(Payroll payroll) {
         jdbcTemplate.update(UPDATE_PAYROLL, payroll.getBuyerId(), payroll.getDate(), payroll.getDescription(),
                 payroll.getType(), payroll.getSum(), payroll.getCurrencyId(), payroll.getId());
     }
 
     @Override
+    @Transactional
     public void save(List<Payroll> payrolls) {
         jdbcTemplate.batchUpdate(INSERT_PAYROLL, new BatchPreparedStatementSetter() {
             @Override
@@ -76,6 +79,7 @@ public class PayrollDaoImpl implements PayrollDao {
     }
 
     @Override
+    @Transactional
     public void delete(List<Long> ids) {
         jdbcTemplate.batchUpdate(DELETE_PAYROLL, new BatchPreparedStatementSetter() {
             @Override

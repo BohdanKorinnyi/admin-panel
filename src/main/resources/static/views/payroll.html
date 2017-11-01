@@ -30,6 +30,7 @@
                         <label style="width: 100%">
                             <select class="form-control" ng-model="p.buyerId"
                                     style="width: 18%!important;">
+                                <option value="" disabled selected>Buyers</option>
                                 <option ng-repeat="b in buyerOptions"
                                         value="{{b.id}}">
                                     {{b.name}}
