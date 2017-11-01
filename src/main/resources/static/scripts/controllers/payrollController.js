@@ -28,6 +28,10 @@ Application.controller('payrollController', function ($scope, $http) {
     $scope.sortColumn = '';
     $scope.sortReverse = '';
 
+    $scope.cancelClick = function () {
+        $scope.addedPayrolls = [];
+    };
+
     $scope.addPayroll = function () {
         $scope.addedPayrolls.push({
             buyerId: null, date: null, type: null,
@@ -89,8 +93,8 @@ Application.controller('payrollController', function ($scope, $http) {
     $scope.selectedCurrencyCode = '';
     $scope.selectedCurrencyId = 0;
     $scope.selectedDescriptionValue = '';
-    $scope.selectedDate = "";
-    $scope.selectedSum = "";
+    $scope.selectedDate = '';
+    $scope.selectedSum = '';
 
     $scope.clickRow = function (payroll) {
         $scope.selectedPayrollItem = payroll;
@@ -131,21 +135,21 @@ Application.controller('payrollController', function ($scope, $http) {
         params.date = $scope.selectedDate;
         params.sum = $scope.selectedSum;
 
-        if($scope.selectedTypeValue == "Revenue"){
+        if ($scope.selectedTypeValue === 'Revenue') {
             $scope.selectedTypeId = 0;
         }
-        else{
+        else {
             $scope.selectedTypeId = 1;
         }
         params.type = $scope.selectedTypeId;
 
-        for(var i = 0; i<$scope.currencyOptions.length; i++){
-            if($scope.selectedCurrencyCode == $scope.currencyOptions[i].code){
+        for (var i = 0; i < $scope.currencyOptions.length; i++) {
+            if ($scope.selectedCurrencyCode === $scope.currencyOptions[i].code) {
                 $scope.selectedCurrencyId = $scope.currencyOptions[i].id;
             }
         }
-        for(var i = 0; i<$scope.buyerOptions.length; i++){
-            if($scope.selectedBuyerName == $scope.buyerOptions[i].name){
+        for (var i = 0; i < $scope.buyerOptions.length; i++) {
+            if ($scope.selectedBuyerName === $scope.buyerOptions[i].name) {
                 $scope.selectedBuyerId = $scope.buyerOptions[i].id;
             }
         }
@@ -153,7 +157,8 @@ Application.controller('payrollController', function ($scope, $http) {
         params.currencyId = $scope.selectedCurrencyId;
 
         $http.put(baseUrl, params).then(function success(response) {
-            //
+            $scope.loadPayrolls();
+            notify('ti-alert', 'Payroll updated successfully', 'success');
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
         });
