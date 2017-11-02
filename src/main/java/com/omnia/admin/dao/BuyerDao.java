@@ -8,4 +8,8 @@ public interface BuyerDao {
     List<String> getBuyersName();
 
     List<Buyer> getBuyers();
+
+    void saveBuyers(List<Buyer> buyers);
+
+    void updateBuyers(List<Buyer> buyers);
 }

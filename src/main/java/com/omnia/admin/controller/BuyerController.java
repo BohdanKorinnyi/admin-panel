@@ -5,9 +5,7 @@ import com.omnia.admin.service.BuyerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +25,15 @@ public class BuyerController {
     @ApiOperation(value = "Returns list of all buyers")
     public List<String> getBuyersName() {
         return buyerService.getBuyersName();
+    }
+
+    @PutMapping("update")
+    public void updateBuyers(@RequestBody List<Buyer> buyers) {
+        buyerService.updateBuyers(buyers);
+    }
+
+    @PostMapping("save")
+    public void saveBuyers(@RequestBody List<Buyer> buyers) {
+        buyerService.saveBuyers(buyers);
     }
 }

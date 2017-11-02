@@ -22,4 +22,14 @@ public class BuyerServiceImpl implements BuyerService {
     public List<Buyer> getBuyers() {
         return buyerDao.getBuyers();
     }
+
+    @Override
+    public void saveBuyers(List<Buyer> buyers) {
+        buyerDao.saveBuyers(buyers);
+    }
+
+    @Override
+    public void updateBuyers(List<Buyer> buyers) {
+        buyerDao.updateBuyers(buyers);
+    }
 }
