@@ -15,6 +15,6 @@ public class AffiliatesDaoImpl implements AffiliatesDao {
 
     @Override
     public List<Long> getAffiliatesIdsByBuyerId(long buyerId) {
-        return null;
+        return jdbcTemplate.queryForList("SELECT afid FROM affiliates WHERE buyer_id = ?;", Long.class, buyerId);
     }
 }

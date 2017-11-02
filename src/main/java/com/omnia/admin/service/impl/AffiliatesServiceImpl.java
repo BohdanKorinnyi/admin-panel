@@ -14,6 +14,6 @@ public class AffiliatesServiceImpl implements AffiliatesService {
 
     @Override
     public List<Long> getAffiliatesIdsByBuyerId(long buyerId) {
-        return null;
+        return affiliatesDao.getAffiliatesIdsByBuyerId(buyerId);
     }
 }
