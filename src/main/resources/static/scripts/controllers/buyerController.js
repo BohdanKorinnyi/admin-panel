@@ -35,44 +35,28 @@ Application.controller("buyerController", function ($scope, $http) {
     $scope.buyersToSave = [];
 
     $scope.applyClick = function(){
+        var toSave = [];
+        var toUpdate = [];
         for(var i = 0; i < $scope.buyers.length; i++) {
-            if ($scope.buyers[i].id == null) {
-                $scope.buyersToSave.push($scope.buyers[i]);
+            if ($scope.buyers[i].id === null) {
+                toSave.push($scope.buyers[i]);
+            } else {
+                toUpdate.push($scope.buyers[i]);
             }
         }
-        if($scope.buyersToSave.length !== 0){
-            $http.post("/buyer/save", $scope.buyersToSave).then(function success(response) {
+        if(toSave.length !== 0){
+            $http.post("/buyer/save", toSave).then(function success(response) {
                 $scope.initData();
-                swal(
-                    'Updated successfully',
-                    'Buyers have updated!',
-                    'success'
-                );
                 $scope.cancelBuyersData();
             }, function errorCallback() {
-                swal(
-                    'Update failed',
-                    'Error occurred during saving data',
-                    'error'
-                );
                 $scope.cancelBuyersData();
             });
         }
-        else {
-            $http.put("/buyer/update", $scope.buyers).then(function success(response){
+        if(toUpdate.length !== 0) {
+            $http.put("/buyer/update", toUpdate).then(function success(response){
                 $scope.initData();
-                swal(
-                    'Updated successfully',
-                    'Buyers have updated!',
-                    'success'
-                );
                 $scope.cancelBuyersData();
             }, function errorCallback() {
-                swal(
-                    'Update failed',
-                    'Error occurred during saving data',
-                    'error'
-                );
                 $scope.cancelBuyersData();
             });
         }
@@ -147,6 +131,4 @@ Application.controller("buyerController", function ($scope, $http) {
         $scope.selectedBuyerIndex = -1;
         $scope.previousBuyerIndex = -1;
     };
-
-
 });
