@@ -32,6 +32,51 @@ Application.controller("buyerController", function ($scope, $http) {
         });
     };
 
+    $scope.buyersToSave = [];
+
+    $scope.applyClick = function(){
+        for(var i = 0; i < $scope.buyers.length; i++) {
+            if ($scope.buyers[i].id == null) {
+                $scope.buyersToSave.push($scope.buyers[i]);
+            }
+        }
+        if($scope.buyersToSave.length !== 0){
+            $http.post("/buyer/save", $scope.buyersToSave).then(function success(response) {
+                $scope.initData();
+                swal(
+                    'Updated successfully',
+                    'Buyers have updated!',
+                    'success'
+                );
+                $scope.cancelBuyersData();
+            }, function errorCallback() {
+                swal(
+                    'Update failed',
+                    'Error occurred during saving data',
+                    'error'
+                );
+                $scope.cancelBuyersData();
+            });
+        }
+        else {
+            $http.put("/buyer/update", $scope.buyers).then(function success(response){
+                $scope.initData();
+                swal(
+                    'Updated successfully',
+                    'Buyers have updated!',
+                    'success'
+                );
+                $scope.cancelBuyersData();
+            }, function errorCallback() {
+                swal(
+                    'Update failed',
+                    'Error occurred during saving data',
+                    'error'
+                );
+                $scope.cancelBuyersData();
+            });
+        }
+    };
 
     $scope.onBuyerClick = function (buyer, index) {
         if ($scope.selectedBuyerIndex === -1) {
@@ -72,8 +117,6 @@ Application.controller("buyerController", function ($scope, $http) {
     $scope.updateBuyerComment = function () {
         $scope.buyers[$scope.selectedBuyerIndex].comment = $scope.comment;
     };
-
-
 
     $scope.addBuyer = function () {
         $scope.buyers.push({
