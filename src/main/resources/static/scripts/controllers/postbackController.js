@@ -33,7 +33,7 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
     $scope.statusValues = [
         {
             id: 0,
-            name: 'Approve'
+            name: 'Approved'
         },
         {
             id: 1,
@@ -41,7 +41,7 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
         },
         {
             id: 2,
-            name: 'Decline'
+            name: 'Declined'
         }];
     $scope.selectedStatusValue = [];
     $scope.selectedStatusForPostValue = [];
