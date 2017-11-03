@@ -117,7 +117,9 @@
                                 </a>
                             </h4>
                             <div class="col-md-12">
-
+                                <p style="cursor:pointer; width: 150px;display:block;word-wrap:break-word;"
+                                   data-toggle="modal" data-target="#buyerAfid-modal">
+                                    {{buyersAfidsString}}</p>
                             </div>
                         </div>
                     </div>
@@ -125,4 +127,30 @@
             </div>
         </div>
     </div>
+
+    <div id="buyerAfid-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="width:70%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Afid</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label>
+                                <p style="cursor:pointer;">
+                                    {{buyersAfidsString}}
+                                </p>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

@@ -5,6 +5,7 @@ Application.controller("buyerController", function ($scope, $http) {
     $scope.buyers = [];
 
     $scope.buyersAfids = [];
+    $scope.buyersAfidsString = "";
 
     $scope.name = "";
     $scope.planProfit = 0;
@@ -32,8 +33,6 @@ Application.controller("buyerController", function ($scope, $http) {
         });
     };
 
-    $scope.buyersToSave = [];
-
     $scope.applyClick = function(){
         var toSave = [];
         var toUpdate = [];
@@ -50,6 +49,7 @@ Application.controller("buyerController", function ($scope, $http) {
                 $scope.cancelBuyersData();
             }, function errorCallback() {
                 $scope.cancelBuyersData();
+                notify('ti-alert', 'Error occurred during saving buyers', 'danger');
             });
         }
         if(toUpdate.length !== 0) {
@@ -58,6 +58,7 @@ Application.controller("buyerController", function ($scope, $http) {
                 $scope.cancelBuyersData();
             }, function errorCallback() {
                 $scope.cancelBuyersData();
+                notify('ti-alert', 'Error occurred during updating buyers', 'danger');
             });
         }
     };
@@ -70,7 +71,7 @@ Application.controller("buyerController", function ($scope, $http) {
         $scope.previousBuyerIndex = $scope.selectedBuyerIndex;
         $scope.selectedBuyerIndex = index;
 
-        //$scope.getBuyerAfidById(buyer.id, index);
+        $scope.getBuyerAfidById(buyer.id);
         $scope.name = buyer.name;
         $scope.planProfit = buyer.planProfit;
         $scope.planProfitOld = buyer.planProfitOld;
@@ -78,6 +79,13 @@ Application.controller("buyerController", function ($scope, $http) {
         $scope.planRevOld = buyer.planRevOld;
         $scope.type = buyer.type;
         $scope.comment = buyer.comment;
+    };
+
+    $scope.getBuyerAfidById = function (id) {
+        $http.get(" /affiliates?buyer_id="+id).then (function success(response) {
+            $scope.buyersAfids = response.data;
+            $scope.buyersAfidsString = response.data.join();
+        });
     };
 
     $scope.updateBuyerName= function () {
