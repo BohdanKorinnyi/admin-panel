@@ -7,6 +7,7 @@ Application.controller("buyerController", function ($scope, $http) {
     $scope.buyersAfids = [];
     $scope.buyersAfidsString = "";
 
+    $scope.addedBuyersAfidCount = "";
     $scope.name = "";
     $scope.planProfit = 0;
     $scope.planProfitOld = 0;
@@ -65,6 +66,8 @@ Application.controller("buyerController", function ($scope, $http) {
         }
     };
 
+    $scope.idOfSelectedBuyer = 0;
+
     $scope.onBuyerClick = function (buyer, index) {
         if ($scope.selectedBuyerIndex === -1) {
             $scope.selectedBuyerIndex = index;
@@ -73,6 +76,7 @@ Application.controller("buyerController", function ($scope, $http) {
         $scope.previousBuyerIndex = $scope.selectedBuyerIndex;
         $scope.selectedBuyerIndex = index;
 
+        $scope.idOfSelectedBuyer = buyer.id;
         $scope.getBuyerAfidById(buyer.id);
         $scope.name = buyer.name;
         $scope.planProfit = buyer.planProfit;
@@ -145,5 +149,19 @@ Application.controller("buyerController", function ($scope, $http) {
         $scope.buyerAfids = [];
         $scope.selectedBuyerIndex = -1;
         $scope.previousBuyerIndex = -1;
+    };
+
+
+    $scope.addAfids = function () {
+        $http.post("", $scope.addedBuyersAfidCount).then(function success(response){
+            $scope.getBuyerAfidById($scope.idOfSelectedBuyer);
+            $scope.cancelAfids();
+        }, function errorCallback(response) {
+            notify('ti-alert', 'Error occurred during adding afids', 'danger');
+        });
+    };
+
+    $scope.cancelAfids = function () {
+        $scope.addedBuyersAfidCount = "";
     };
 });

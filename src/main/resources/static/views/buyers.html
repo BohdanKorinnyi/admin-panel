@@ -109,17 +109,28 @@
                     <div class="cardForBuyersAfid">
                         <div class="row">
                             <h4 class="title">AfId
-                                <a>
+                                <a ng-click="addAfids();">
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
-                                <a>
+                                <a ng-click="cancelAfids();">
                                     <i class="fa fa-minus-circle" aria-hidden="true"></i>
                                 </a>
                             </h4>
                             <div class="col-md-12">
-                                <p style="cursor:pointer; width: 150px;display:block;word-wrap:break-word;"
-                                   data-toggle="modal" data-target="#buyerAfid-modal">
-                                    {{buyersAfidsString}}</p>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" id="buyersAfid"
+                                               ng-model="addedBuyersAfidCount" placeholder="Afids"
+                                               style="width:90%;"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p style="cursor:pointer; width: 150px;display:block;word-wrap:break-word;"
+                                           data-toggle="modal" data-target="#buyerAfid-modal">
+                                            {{buyersAfidsString}}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
