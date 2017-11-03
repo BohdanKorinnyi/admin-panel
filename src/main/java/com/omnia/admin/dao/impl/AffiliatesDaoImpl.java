@@ -17,4 +17,14 @@ public class AffiliatesDaoImpl implements AffiliatesDao {
     public List<Long> getAffiliatesIdsByBuyerId(long buyerId) {
         return jdbcTemplate.queryForList("SELECT afid FROM affiliates WHERE buyer_id = ?;", Long.class, buyerId);
     }
+
+    @Override
+    public List<Long> getAffiliatesIdsByBuyerId() {
+        return jdbcTemplate.queryForList("SELECT afid FROM affiliates;", Long.class);
+    }
+
+    @Override
+    public void generate(long afid, long buyerId) {
+        jdbcTemplate.update("INSERT INTO affiliates (afid, buyer_id) VALUES (?, ?);", afid, buyerId);
+    }
 }
