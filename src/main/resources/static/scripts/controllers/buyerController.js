@@ -85,6 +85,8 @@ Application.controller("buyerController", function ($scope, $http) {
         $http.get(" /affiliates?buyer_id="+id).then (function success(response) {
             $scope.buyersAfids = response.data;
             $scope.buyersAfidsString = response.data.join();
+        }, function errorCallback() {
+            notify('ti-alert', 'Error occurred during loading afids', 'danger');
         });
     };
 
