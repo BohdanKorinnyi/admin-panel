@@ -27,24 +27,25 @@ Application.controller("buyerController", function ($scope, $http) {
         var url = "/buyer";
         $http.get(url).then(function success(response) {
             $scope.buyers = response.data;
-            console.log($scope.buyers);
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading buyers', 'danger');
         });
     };
 
-    $scope.applyClick = function(){
+    $scope.applyClick = function () {
         var toSave = [];
         var toUpdate = [];
-        for(var i = 0; i < $scope.buyers.length; i++) {
+        for (var i = 0; i < $scope.buyers.length; i++) {
             if ($scope.buyers[i].id === null) {
                 toSave.push($scope.buyers[i]);
             } else {
                 toUpdate.push($scope.buyers[i]);
             }
         }
-        if(toSave.length !== 0){
+        $scope.buyersAfidsString = '';
+        if (toSave.length !== 0) {
             $http.post("/buyer/save", toSave).then(function success(response) {
+                notify('ti-thumb-up', 'Buyers saved successfully', 'success');
                 $scope.initData();
                 $scope.cancelBuyersData();
             }, function errorCallback() {
@@ -52,8 +53,9 @@ Application.controller("buyerController", function ($scope, $http) {
                 notify('ti-alert', 'Error occurred during saving buyers', 'danger');
             });
         }
-        if(toUpdate.length !== 0) {
-            $http.put("/buyer/update", toUpdate).then(function success(response){
+        if (toUpdate.length !== 0) {
+            $http.put("/buyer/update", toUpdate).then(function success(response) {
+                notify('ti-thumb-up', 'Buyers updated successfully', 'success');
                 $scope.initData();
                 $scope.cancelBuyersData();
             }, function errorCallback() {
@@ -82,15 +84,18 @@ Application.controller("buyerController", function ($scope, $http) {
     };
 
     $scope.getBuyerAfidById = function (id) {
-        $http.get(" /affiliates?buyer_id="+id).then (function success(response) {
-            $scope.buyersAfids = response.data;
-            $scope.buyersAfidsString = response.data.join();
-        }, function errorCallback() {
-            notify('ti-alert', 'Error occurred during loading afids', 'danger');
-        });
+        $scope.buyersAfidsString = '';
+        if (id !== null) {
+            $http.get(" /affiliates?buyer_id=" + id).then(function success(response) {
+                $scope.buyersAfids = response.data;
+                $scope.buyersAfidsString = response.data.join();
+            }, function errorCallback() {
+                notify('ti-alert', 'Error occurred during loading afids', 'danger');
+            });
+        }
     };
 
-    $scope.updateBuyerName= function () {
+    $scope.updateBuyerName = function () {
         $scope.buyers[$scope.selectedBuyerIndex].name = $scope.name;
     };
     $scope.updateBuyerPlanProfit = function () {
