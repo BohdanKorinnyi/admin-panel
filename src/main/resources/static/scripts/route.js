@@ -24,4 +24,12 @@ Application.config(function($routeProvider) {
             templateUrl : "views/buyers.html",
             controller  : "buyerController"
         })
+        .when('/arbitratorExecutiveHome', {
+            templateUrl : "views/arbitratorExecutive.html",
+            controller  : "arbitratorExecutiveController"
+        })
+        .when('/arbitratorHome', {
+            templateUrl : "views/arbitratorHomeScreen.html",
+            controller  : "arbitratorController"
+        })
 });
