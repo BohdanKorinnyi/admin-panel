@@ -32,4 +32,8 @@ Application.config(function($routeProvider) {
             templateUrl : "views/arbitratorHomeScreen.html",
             controller  : "arbitratorController"
         })
+        .when('/costDataReport', {
+            templateUrl : "views/costDataReport.html",
+            controller  : "costDataReportController"
+        })
 });
