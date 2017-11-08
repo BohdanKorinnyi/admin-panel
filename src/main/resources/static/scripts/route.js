@@ -30,12 +30,12 @@ Application.config(function($routeProvider, $locationProvider) {
         })
         .when('/arbitrator', {
             templateUrl : "views/arbitratorHomeScreen.html",
-            controller  : "arbitratorController",
-            resolve: {
-                permission: function(authorizationService, $route) {
-                    return authorizationService.permissionCheck([roles.DIRECTOR]);
-                },
-            }
+            controller  : "arbitratorController"//,
+            // resolve: {
+            //     permission: function(authorizationService, $route) {
+            //         return authorizationService.permissionCheck([roles.DIRECTOR]);
+            //     },
+            // }
         })
         .when('/cost', {
             templateUrl : "views/costDataReport.html",
