@@ -1,0 +1,200 @@
+<div ng-controller="costDataReportController">
+    <div class="cardForCostDataReportControl">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <form class="form-inline">
+                        <div class="form-group" id="size">
+                            <select class="form-control" data-ng-model="selectedSize"
+                                    data-ng-options="v as k for (k, v) in sizeOptions"
+                                    style="margin-left: 20px;margin-bottom: 14px;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" data-ng-model="selectedDate"
+                                    data-ng-options="v as k for (k, v) in dateOptions"
+                                    style="margin-bottom: 14px;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6" style="width: 225px">
+                                    <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
+                                        <div class="input-group">
+                                            <input class="form-control" data-ng-model="dpFromDate"
+                                                   ng-disabled="selectedDate !== 'custom'" placeholder="From"/>
+                                            <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+                                        </div>
+                                    </datepicker>
+                                </div>
+                                <div class="col-md-6" style="width:225px; margin-left: 10px">
+                                    <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
+                                        <div class="input-group">
+                                            <input class="form-control" data-ng-model="dpToDate"
+                                                   ng-disabled="selectedDate !== 'custom'" placeholder="To"/>
+                                            <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+                                        </div>
+                                    </datepicker>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: right">
+                        <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
+                                ng-click="">
+                            Apply
+                        </button>
+                        <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit">
+                            Add
+                        </button>
+                        <button class="btn btn-primary btn-md" id="postBtn" name="postback" type="submit">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-11 form-group">
+                <form class="form-inline">
+                    <div ng-init="getBuyers();"
+                         style="margin-top:10px;">
+                        <select class="selectpicker" multiple
+                                data-style="btn-info btn-fill btn-block"
+                                data-size="5"
+                                title="Buyer"
+                                data-header="Buyers"
+                                ng-model="selectedBuyerNames"
+                                style="width: 130%;margin-left: 5px;">
+                            <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
+                                    data-last="{{$last}}" value="{{b.id}}">{{b.name}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div ng-init=""
+                         style="margin-top:10px;">
+                        <select class="selectpicker" multiple
+                                data-style="btn-info btn-fill btn-block"
+                                data-size="5"
+                                data-header="Types"
+                                selected-header="options selected"
+                                title="Types"
+                                ng-model="selectedTypes"
+                                style="width: 120%;">
+                            <option class="small-font" ng-repeat="t in types"
+                                    data-select-watcher
+                                    data-last="{{$last}}" value="{{t.id}}">{{t.name}}
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="cardForCostDataReportTable">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="table" class="table table-hover table-sm table-bordered" ng-style="tableStyle"
+                       style="border-collapse: collapse !important;">
+                    <thead class="thead-default">
+                    <tr style="text-align: center; vertical-align: middle">
+                        <th style="text-align: center; vertical-align: middle"><a href="">#</a></th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = ''">
+                                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == '' && sortReverse == ''"></span>
+                                Buyer
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = ''">
+                                <span ng-show="sortType == '' && sortReverse == 'ASC'"
+                                      class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == '' && sortReverse == ''"></span>
+                                Date
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = ''">
+                                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == '' && sortReverse == ''"></span>
+                                Source of costs
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = ''">
+                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == '' && sortReverse == ''"></span>
+                                Company
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href=""
+                               ng-click="sortType = ''">
+                            <span ng-show="sortType == '' && sortReverse == 'ASC'"
+                                  class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == '' && sortReverse == ''"></span>
+                                Sum
+                            </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr style="text-align: center; vertical-align: middle" ng-show="costs.length != 0"
+                        ng-repeat="item in costs">
+                        <td style="text-align: center; vertical-align: middle">{{$index+1}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.buyer}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.date}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.source}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.company}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{item.sum}}</td>
+                    </tr>
+                    <tr ng-show="costs.length == 0">
+                        <td colspan="15">
+                            <div class="loader" style="text-align: center;" ng-show=""></div>
+                            <div style="text-align: center;" ng-show="">No data</div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="panel-footer">
+                    <div class="text-center">
+                        <uib-pagination total-items="totalPagination" max-size="5"
+                                        ng-model="selectedPage" items-per-page="selectedSize"
+                                        ng-click=""></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -184,8 +184,20 @@ p:focus {
 
 .cardForAdvertisers, .cardForAdvertisersData, .cardForAdvertisersStatus,
 .cardForConversions, .cardForPayrollsControl, .cardForPayrollsTable,
-.cardForBuyers, .cardForBuyersData, .cardForBuyersAfid{
+.cardForBuyers, .cardForBuyersData, .cardForBuyersAfid,
+.cardForCostDataReportControl, .cardForCostDataReportTable {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.cardForCostDataReportTable {
+    margin: 10px 25px 25px;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-clip: padding-box;
+    background: white;
 }
 
 .cardForPayrollsTable {
@@ -205,6 +217,17 @@ p:focus {
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 25px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-clip: padding-box;
+    background: white;
+}
+
+.cardForCostDataReportControl {
+    margin: 55px 25px 25px;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
     box-sizing: border-box;
     border-radius: 2px;
     background-clip: padding-box;
@@ -457,4 +480,8 @@ datepicker, .datepicker, [datepicker], ._720kb-datepicker-calendar-header,
 ._720kb-datepicker-calendar-body, ._720kb-datepicker-calendar-days-header,
 ._720kb-datepicker-calendar-years-pagination-pages{
     float:none!important;
+}
+
+.bootstrap-select.btn-group .dropdown-menu{
+    min-width: 4%!important;
 }
