@@ -24,15 +24,15 @@ Application.config(function($routeProvider) {
             templateUrl : "views/buyers.html",
             controller  : "buyerController"
         })
-        .when('/arbitratorExecutiveHome', {
+        .when('/cbo', {
             templateUrl : "views/arbitratorExecutive.html",
             controller  : "arbitratorExecutiveController"
         })
-        .when('/arbitratorHome', {
+        .when('/arbitrator', {
             templateUrl : "views/arbitratorHomeScreen.html",
             controller  : "arbitratorController"
         })
-        .when('/costDataReport', {
+        .when('/cost', {
             templateUrl : "views/costDataReport.html",
             controller  : "costDataReportController"
         })
