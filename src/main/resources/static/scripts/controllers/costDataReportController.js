@@ -1,6 +1,6 @@
 "use strict";
 
-Application.controller("costDataReportController", function ($scope, $http) {
+Application.controller("costDataReportController", function ($scope, $http, dateFactory) {
 
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
@@ -29,6 +29,20 @@ Application.controller("costDataReportController", function ($scope, $http) {
         'Custom Range': 'custom'
     };
     $scope.selectedDate = 'no-date';
+    $scope.dpFromDate = "";
+    $scope.dpToDate = "";
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
 
     $scope.loadCosts = function () {
         var url = "/statistic/all";
@@ -44,9 +58,24 @@ Application.controller("costDataReportController", function ($scope, $http) {
     };
 
     $scope.getGridDetails = function () {
+        var fromDate = "";
+        var toDate = "";
+        if ($scope.selectedDate !== 'no-date') {
+            if ($scope.selectedDate === 'custom') {
+                fromDate = $scope.dpFromDate;
+                toDate = $scope.dpToDate;
+            }
+            else {
+                fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
+                toDate = formatDate(dateFactory.pickDateTo($scope.selectedDate));
+            }
+        }
+
         return {
             "buyers": $scope.selectedBuyerNames,
-            "types": $scope.selectedTypes
+            "types": $scope.selectedTypes,
+            "from": fromDate,
+            "to": toDate
         };
     };
 
@@ -60,12 +89,33 @@ Application.controller("costDataReportController", function ($scope, $http) {
         });
     };
 
+
     $scope.getTypes = function () {
         var url = "/account/types";
         $http.get(url).then(function success(response) {
-            $scope.types = response.data;
+            for(var i = 0; i < response.data.length; i++){
+                $scope.types.push({
+                    id: i,
+                    name: response.data[i]
+                });
+            }
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading types', 'danger');
         });
+    };
+
+    $scope.export = function () {
+        var url = "report/stats";
+        $http.post(url, $scope.getGridDetails()).then(function success() {
+            var anchor = angular.element('<a/>');
+            anchor.attr({
+                href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+                target: '_blank',
+                download: 'filename.csv'
+            })[0].click();
+        }),
+            function fail(data, status, headers, config) {
+            // handle error
+        };
     };
 });
