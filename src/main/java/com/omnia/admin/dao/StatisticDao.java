@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface StatisticDao {
     List<Statistic> getStatistics(StatisticFilterDto filter);
+
+    List<Statistic> getDailyStatistics(StatisticFilterDto filter);
 }

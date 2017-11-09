@@ -1,17 +1,35 @@
 package com.omnia.admin.service.impl;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.omnia.admin.dao.BuyerDao;
 import com.omnia.admin.model.Buyer;
 import com.omnia.admin.service.BuyerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @AllArgsConstructor
 public class BuyerServiceImpl implements BuyerService {
+    private LoadingCache<Integer, String> buyerNameCache;
     private final BuyerDao buyerDao;
+
+    @PostConstruct
+    public void init() {
+        buyerNameCache = CacheBuilder.newBuilder()
+                .expireAfterWrite(1, TimeUnit.DAYS)
+                .build(new CacheLoader<Integer, String>() {
+                    @Override
+                    public String load(Integer buyerId) throws Exception {
+                        return buyerDao.getBuyerById(buyerId);
+                    }
+                });
+    }
 
     @Override
     public List<String> getBuyersName() {
@@ -35,6 +53,6 @@ public class BuyerServiceImpl implements BuyerService {
 
     @Override
     public String getBuyerById(int buyerId) {
-        return buyerDao.getBuyerById(buyerId);
+        return buyerNameCache.getUnchecked(buyerId);
     }
 }

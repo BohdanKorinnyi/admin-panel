@@ -8,17 +8,15 @@ import com.omnia.admin.service.BuyerService;
 import com.omnia.admin.service.StatisticService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class StatisticServiceImpl implements StatisticService {
-    private static final Map<Integer, BuyerStatistic> EMPTY_MAP = new HashMap<>();
+    public static final Map<Integer, List<Statistic>> EMPTY_STATS_MAP = new HashMap<>();
 
     private final BuyerService buyerService;
     private final StatisticDao statisticDao;
@@ -26,14 +24,32 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public Map<Integer, BuyerStatistic> getStatistics(StatisticFilterDto filter) {
         List<Statistic> statistics = statisticDao.getStatistics(filter);
-        if (CollectionUtils.isEmpty(statistics)) {
-            return EMPTY_MAP;
+        return groupStats(groupByBuyer(statistics));
+    }
+
+    @Override
+    public Map<Integer, BuyerStatistic> getDailyStatistics(StatisticFilterDto filter) {
+        List<Statistic> dailyStatistics = statisticDao.getDailyStatistics(filter);
+        return groupStats(groupByBuyer(dailyStatistics));
+    }
+
+    @Override
+    public Map<Integer, BuyerStatistic> getAllStatistics(StatisticFilterDto filter) {
+        Map<Integer, List<Statistic>> stats = new HashMap<>();
+        List<Statistic> statistics = statisticDao.getStatistics(filter);
+        if (isFilterIncludeToday(filter.getTo())) {
+            Map<Integer, List<Statistic>> dailyStats = groupByBuyer(statisticDao.getDailyStatistics(filter));
+            updateAllStats(stats, dailyStats);
         }
-        Map<Integer, List<Statistic>> buyers = statistics.stream()
-                .collect(Collectors.groupingBy(Statistic::getBuyerId, Collectors.toList()));
+        Map<Integer, List<Statistic>> allStats = groupByBuyer(statistics);
+        updateAllStats(stats, allStats);
+        return groupStats(stats);
+    }
+
+    private Map<Integer, BuyerStatistic> groupStats(Map<Integer, List<Statistic>> stats) {
         Map<Integer, BuyerStatistic> buyerStatistic = new HashMap<>();
 
-        for (Map.Entry<Integer, List<Statistic>> entry : buyers.entrySet()) {
+        for (Map.Entry<Integer, List<Statistic>> entry : stats.entrySet()) {
             BuyerStatistic buyerCost = createBuyerStatistic(entry.getKey(), entry.getValue());
             buyerCost.setBuyerName(buyerService.getBuyerById(entry.getKey()));
             buyerStatistic.put(entry.getKey(), buyerCost);
