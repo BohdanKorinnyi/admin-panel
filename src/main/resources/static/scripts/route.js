@@ -1,4 +1,4 @@
-Application.config(function($routeProvider) {
+Application.config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/login', {
             templateUrl : "views/login.html",
