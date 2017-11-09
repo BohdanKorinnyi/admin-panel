@@ -1,4 +1,4 @@
-<div ng-controller="costDataReportController">
+<div ng-controller="costDataReportController" ng-init="loadCosts();">
     <div class="cardForCostDataReportControl">
         <div class="row">
             <div class="col-md-9">
@@ -81,7 +81,7 @@
                         </select>
                     </div>
 
-                    <div ng-init=""
+                    <div class="form-group" ng-init="getTypes();"
                          style="margin-top:10px;">
                         <select class="selectpicker" multiple
                                 data-style="btn-info btn-fill btn-block"
@@ -99,6 +99,7 @@
                     </div>
                 </form>
             </div>
+            <div class="col-md-1"></div>
         </div>
     </div>
 
@@ -109,19 +110,6 @@
                        style="border-collapse: collapse !important;">
                     <thead class="thead-default">
                     <tr style="text-align: center; vertical-align: middle">
-                        <th style="text-align: center; vertical-align: middle"><a href="">#</a></th>
-
-                        <th style="text-align: center; vertical-align: middle">
-                            <a href="" ng-click="sortType = ''">
-                                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                                          class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Buyer
-                            </a>
-                        </th>
-
                         <th style="text-align: center; vertical-align: middle">
                             <a href="" ng-click="sortType = ''">
                                 <span ng-show="sortType == '' && sortReverse == 'ASC'"
@@ -140,7 +128,18 @@
                                 <span ng-show="sortType == '' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Source of costs
+                                Source
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle; width:30%;">
+                            <a href="" ng-click="sortType = ''">
+                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == '' && sortReverse == ''"></span>
+                                Compaign Name
                             </a>
                         </th>
 
@@ -151,7 +150,7 @@
                                 <span ng-show="sortType == '' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Company
+                                Account Holder
                             </a>
                         </th>
 
@@ -163,20 +162,29 @@
                                 <span ng-show="sortType == '' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Sum
+                                Spent
                             </a>
                         </th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr style="text-align: center; vertical-align: middle" ng-show="costs.length != 0"
-                        ng-repeat="item in costs">
-                        <td style="text-align: center; vertical-align: middle">{{$index+1}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{item.buyer}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{item.date}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{item.source}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{item.company}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{item.sum}}</td>
+                    <tbody ng-repeat="item in costs">
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle" colspan="5">
+                            <strong>Buyer: {{item.buyerName}}</strong></td>
+                    </tr>
+                    <tr style="text-align: center; vertical-align: middle"
+                        ng-repeat="stat in item.statistics">
+                        <td style="text-align: center; vertical-align: middle">{{stat.date}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{stat.accountType}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{stat.campaignName}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{stat.username}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{stat.spent}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; vertical-align: middle" colspan="4">
+                            <strong>Total by buyer: {{item.buyerName}}</strong></td>
+                        <td style="text-align: center; vertical-align: middle">
+                            <strong>{{item.buyerTotalSpent}}</strong></td>
                     </tr>
                     <tr ng-show="costs.length == 0">
                         <td colspan="15">
@@ -188,11 +196,11 @@
                 </table>
 
                 <div class="panel-footer">
-                    <div class="text-center">
-                        <uib-pagination total-items="totalPagination" max-size="5"
-                                        ng-model="selectedPage" items-per-page="selectedSize"
-                                        ng-click=""></uib-pagination>
-                    </div>
+                    <!--<div class="text-center">-->
+                        <!--<uib-pagination total-items="totalPagination" max-size="5"-->
+                                        <!--ng-model="selectedPage" items-per-page="selectedSize"-->
+                                        <!--ng-click=""></uib-pagination>-->
+                    <!--</div>-->
                 </div>
             </div>
         </div>
