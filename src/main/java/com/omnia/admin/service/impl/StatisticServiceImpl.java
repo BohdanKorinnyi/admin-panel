@@ -1,5 +1,6 @@
 package com.omnia.admin.service.impl;
 
+import com.google.common.collect.ImmutableMap;
 import com.omnia.admin.dao.StatisticDao;
 import com.omnia.admin.dto.StatisticFilterDto;
 import com.omnia.admin.model.BuyerStatistic;
@@ -16,7 +17,7 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class StatisticServiceImpl implements StatisticService {
-    public static final Map<Integer, List<Statistic>> EMPTY_STATS_MAP = new HashMap<>();
+    public static final Map<Integer, List<Statistic>> EMPTY_STATS_MAP = ImmutableMap.of();
 
     private final BuyerService buyerService;
     private final StatisticDao statisticDao;
