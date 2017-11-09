@@ -2,7 +2,7 @@ package com.omnia.admin.service.impl;
 
 import com.google.common.collect.ImmutableMap;
 import com.omnia.admin.dao.StatisticDao;
-import com.omnia.admin.dto.StatisticFilterDto;
+import com.omnia.admin.dto.StatFilter;
 import com.omnia.admin.model.BuyerStatistic;
 import com.omnia.admin.model.Statistic;
 import com.omnia.admin.service.BuyerService;
@@ -23,19 +23,19 @@ public class StatisticServiceImpl implements StatisticService {
     private final StatisticDao statisticDao;
 
     @Override
-    public Map<Integer, BuyerStatistic> getStatistics(StatisticFilterDto filter) {
+    public Map<Integer, BuyerStatistic> getStatistics(StatFilter filter) {
         List<Statistic> statistics = statisticDao.getStatistics(filter);
         return groupStats(groupByBuyer(statistics));
     }
 
     @Override
-    public Map<Integer, BuyerStatistic> getDailyStatistics(StatisticFilterDto filter) {
+    public Map<Integer, BuyerStatistic> getDailyStatistics(StatFilter filter) {
         List<Statistic> dailyStatistics = statisticDao.getDailyStatistics(filter);
         return groupStats(groupByBuyer(dailyStatistics));
     }
 
     @Override
-    public Map<Integer, BuyerStatistic> getAllStatistics(StatisticFilterDto filter) {
+    public Map<Integer, BuyerStatistic> getAllStatistics(StatFilter filter) {
         Map<Integer, List<Statistic>> stats = new HashMap<>();
         List<Statistic> statistics = statisticDao.getStatistics(filter);
         if (isFilterIncludeToday(filter.getTo())) {

@@ -1,7 +1,7 @@
 package com.omnia.admin.dao.impl;
 
 import com.omnia.admin.dao.StatisticDao;
-import com.omnia.admin.dto.StatisticFilterDto;
+import com.omnia.admin.dto.StatFilter;
 import com.omnia.admin.model.Statistic;
 import com.omnia.admin.service.QueryHelper;
 import lombok.AllArgsConstructor;
@@ -26,16 +26,16 @@ public class StatisticDaoImpl implements StatisticDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Statistic> getStatistics(StatisticFilterDto filter) {
+    public List<Statistic> getStatistics(StatFilter filter) {
         return jdbcTemplate.query(updateWhereClause(SELECT_STATISTIC, filter), BeanPropertyRowMapper.newInstance(Statistic.class));
     }
 
     @Override
-    public List<Statistic> getDailyStatistics(StatisticFilterDto filter) {
+    public List<Statistic> getDailyStatistics(StatFilter filter) {
         return jdbcTemplate.query(updateWhereClause(SELECT_DAILY_STATISTIC, filter), BeanPropertyRowMapper.newInstance(Statistic.class));
     }
 
-    private String updateWhereClause(String sql, StatisticFilterDto filter) {
+    private String updateWhereClause(String sql, StatFilter filter) {
         String where = EMPTY;
         if (!CollectionUtils.isEmpty(filter.getBuyers())) {
             StringJoiner joiner = new StringJoiner("','", "'", "'");

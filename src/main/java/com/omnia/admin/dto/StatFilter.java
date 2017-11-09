@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class StatisticFilterDto {
+public class StatFilter {
     private final List<String> buyers;
     private final List<String> types;
     private final String from;
