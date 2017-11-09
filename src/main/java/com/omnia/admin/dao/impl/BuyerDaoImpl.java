@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BuyerDaoImpl implements BuyerDao {
 
+    private static final String SELECT_BUYER_NAME_BY_ID = "SELECT name FROM buyers WHERE id = ?;";
     private static final String SELECT_ALL_BUYERS_NAME = "SELECT name FROM buyers ORDER BY name ASC;";
     private static final String SELECT_ALL_BUYERS = "SELECT * FROM buyers ORDER BY name ASC;";
     private static final String INSERT_BUYER = "INSERT INTO buyers (name, type, comment, plan_rev, plan_profit, plan_rev_old, plan_profit_old) VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -55,6 +56,11 @@ public class BuyerDaoImpl implements BuyerDao {
                 return buyers.size();
             }
         });
+    }
+
+    @Override
+    public String getBuyerById(int buyerId) {
+        return jdbcTemplate.queryForObject(SELECT_BUYER_NAME_BY_ID, String.class, buyerId);
     }
 
     @Override

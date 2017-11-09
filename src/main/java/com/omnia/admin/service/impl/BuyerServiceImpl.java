@@ -32,4 +32,9 @@ public class BuyerServiceImpl implements BuyerService {
     public void updateBuyers(List<Buyer> buyers) {
         buyerDao.updateBuyers(buyers);
     }
+
+    @Override
+    public String getBuyerById(int buyerId) {
+        return buyerDao.getBuyerById(buyerId);
+    }
 }

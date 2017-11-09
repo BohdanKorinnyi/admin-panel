@@ -12,4 +12,6 @@ public interface BuyerDao {
     void saveBuyers(List<Buyer> buyers);
 
     void updateBuyers(List<Buyer> buyers);
+
+    String getBuyerById(int buyerId);
 }
