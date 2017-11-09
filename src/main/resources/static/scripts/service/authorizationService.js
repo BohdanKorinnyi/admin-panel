@@ -17,8 +17,8 @@ Application.factory('authorizationService', function ($resource, $q, $rootScope,
             if (this.permissionModel.isPermissionLoaded) {
                 this.getPermission(this.permissionModel, roleCollection, deferred);
             } else {
-                $resource('/user/me').get().$promise.then(function (response) {
-                    parentPointer.permissionModel.permission = response.authorities;
+                $resource('/user/me').get().then(function (response) {
+                    parentPointer.permissionModel.permission = response;
                     parentPointer.permissionModel.isPermissionLoaded = true;
                     parentPointer.getPermission(parentPointer.permissionModel, roleCollection, deferred);
                 });
@@ -33,37 +33,37 @@ Application.factory('authorizationService', function ($resource, $q, $rootScope,
             angular.forEach(roleCollection, function (role) {
                 switch (role) {
                     case roles.BUYER:
-                        if (permissionModel.permission.authority == "ROLE_BUYER") {
+                        if (permissionModel.permission.isBuyer) {
                             ifPermissionPassed = true;
                         }
                         break;
                     case roles.TEAM_LEADER:
-                        if (permissionModel.permission.authority == "ROLE_TEAM_LEADER") {
+                        if (permissionModel.permission.authority == "TEAM_LEADER") {
                             ifPermissionPassed = true;
                         }
                         break;
                     case roles.CBO:
-                        if (permissionModel.permission.authority == "ROLE_CBO") {
+                        if (permissionModel.permission.authority == "CBO") {
                             ifPermissionPassed = true;
                         }
                         break;
                     case roles.MENTOR:
-                        if (permissionModel.permission.authority == "ROLE_MENTOR") {
+                        if (permissionModel.permission.authority == "MENTOR") {
                             ifPermissionPassed = true;
                         }
                         break;
                     case roles.CFO:
-                        if (permissionModel.permission.authority == "ROLE_CFO") {
+                        if (permissionModel.permission.authority == "CFO") {
                             ifPermissionPassed = true;
                         }
                         break;
                     case roles.DIRECTOR:
-                        if (permissionModel.permission.authority == "ROLE_DIRECTOR") {
+                        if (permissionModel.permission.authority == "DIRECTOR") {
                             ifPermissionPassed = true;
                         }
                         break;
                     case roles.ADMIN:
-                        if (permissionModel.permission.authority == "ROLE_ADMIN") {
+                        if (permissionModel.permission.isAdmin) {
                             ifPermissionPassed = true;
                         }
                         break;
