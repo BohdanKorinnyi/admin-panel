@@ -6,7 +6,7 @@ import com.google.common.cache.LoadingCache;
 import com.omnia.admin.dao.BuyerDao;
 import com.omnia.admin.model.Buyer;
 import com.omnia.admin.service.BuyerService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,10 +14,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@AllArgsConstructor
 public class BuyerServiceImpl implements BuyerService {
     private LoadingCache<Integer, String> buyerNameCache;
     private final BuyerDao buyerDao;
+
+    @Autowired
+    public BuyerServiceImpl(BuyerDao buyerDao) {
+        this.buyerDao = buyerDao;
+    }
 
     @PostConstruct
     public void init() {
