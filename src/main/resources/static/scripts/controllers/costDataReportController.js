@@ -93,7 +93,7 @@ Application.controller("costDataReportController", function ($scope, $http, date
     $scope.getTypes = function () {
         var url = "/account/types";
         $http.get(url).then(function success(response) {
-            for(var i = 0; i < response.data.length; i++){
+            for (var i = 0; i < response.data.length; i++) {
                 $scope.types.push({
                     id: i,
                     name: response.data[i]
@@ -106,16 +106,14 @@ Application.controller("costDataReportController", function ($scope, $http, date
 
     $scope.export = function () {
         var url = "report/stats";
-        $http.post(url, $scope.getGridDetails()).then(function success() {
+        $http.get(url).then(function success(data) {
             var anchor = angular.element('<a/>');
             anchor.attr({
-                href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-                target: '_blank',
-                download: 'filename.csv'
+                href: 'data:' + encodeURI(data.data),
+                download: 'report.xlsx'
             })[0].click();
-        }),
-            function fail(data, status, headers, config) {
+        }, function fail(data, status, headers, config) {
             // handle error
-        };
+        });
     };
 });

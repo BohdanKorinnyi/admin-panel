@@ -8,6 +8,7 @@ import com.omnia.admin.service.ExcelReportService;
 import com.omnia.admin.service.StatisticService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -24,7 +25,6 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class StatsExcelReportServiceImpl implements ExcelReportService {
-    private static final String REPORT_NAME = "report.xlsx";
     private static final String SHEET_NAME = "Buyer's statistics report";
     private static final String BUYER_REPORT_NAME = "Buyer: %s";
     private static final String TOTAL_BUYER_SPENT = "Total by buyer %s";
@@ -35,9 +35,8 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
 
     @Override
     public File create(StatFilter filter) {
-        File report = null;
         Map<Integer, BuyerStatistic> stats = statisticService.getAllStatistics(filter);
-
+        File report = null;
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
             XSSFSheet sheet = workbook.createSheet(SHEET_NAME);
             XSSFRow headerRow = sheet.createRow(0);
@@ -52,9 +51,9 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
                 rowNumber = createRows(sheet, buyerStatistic, rowNumber);
                 rowNumber = resultBuyerRow(sheet, buyerStatistic.getBuyerName(), buyerStatistic.getBuyerTotalSpent(), rowNumber);
             }
-            report = new File(REPORT_NAME);
-            try (FileOutputStream out = new FileOutputStream(report)) {
-                workbook.write(out);
+            report = new File("report.xlsx");
+            try (FileOutputStream outputStream = new FileOutputStream(report)) {
+                workbook.write(outputStream);
             }
         } catch (Exception e) {
             log.error("Error occurred during filling excel sheet", e);
@@ -90,6 +89,7 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
         XSSFRow row = sheet.createRow(rowNumber);
         sheet.addMergedRegion(new CellRangeAddress(rowNumber, rowNumber, 0, COLUMNS.size() - 1));
         XSSFCell cell = row.createCell(0);
+        cell.getCellStyle().setAlignment(HorizontalAlignment.CENTER);
         cell.setCellValue(String.format(BUYER_REPORT_NAME, buyerName));
         return rowNumber + 1;
     }
@@ -98,7 +98,7 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
         XSSFRow row = sheet.createRow(rowNumber);
         XSSFCell data = row.createCell(0);
         data.setCellValue(String.format(TOTAL_BUYER_SPENT, buyerName));
-
+        data.getCellStyle().setAlignment(HorizontalAlignment.CENTER);
         XSSFCell spent = row.createCell(4);
         spent.setCellValue(totalSpent);
         sheet.addMergedRegion(new CellRangeAddress(rowNumber, rowNumber, 0, COLUMNS.size() - 2));
