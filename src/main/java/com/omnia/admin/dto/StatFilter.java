@@ -8,6 +8,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class StatFilter {
+    private final int page;
+    private final int size;
     private final List<String> buyers;
     private final List<String> types;
     private final String from;

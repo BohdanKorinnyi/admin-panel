@@ -30,7 +30,7 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
 
 
     @Override
-    public Object create(StatFilter filter) {
+    public File create(StatFilter filter) {
         Map<Integer, BuyerStatistic> stats = statisticService.getAllStatistics(filter);
 
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
