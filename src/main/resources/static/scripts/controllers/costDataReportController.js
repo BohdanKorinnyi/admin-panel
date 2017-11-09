@@ -106,14 +106,14 @@ Application.controller("costDataReportController", function ($scope, $http, date
 
     $scope.export = function () {
         var url = "report/stats";
-        $http.get(url).then(function success(data) {
-            var anchor = angular.element('<a/>');
-            anchor.attr({
-                href: 'data:' + encodeURI(data.data),
-                download: 'report.xlsx'
-            })[0].click();
-        }, function fail(data, status, headers, config) {
-            // handle error
-        });
+        $http.post(url)
+            .then(function success(data, status, headers, config) {
+                var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                var objectUrl = URL.createObjectURL(blob);
+                window.open(objectUrl);
+        }),
+            function fail(data, status, headers, config) {
+                notify('ti-alert', 'Error occurred during export to file', 'danger');
+        }
     };
 });

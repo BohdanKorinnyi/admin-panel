@@ -45,7 +45,7 @@ public class StatisticDaoImpl implements StatisticDao {
         if (!CollectionUtils.isEmpty(filter.getTypes())) {
             StringJoiner joiner = new StringJoiner("','", "'", "'");
             filter.getTypes().forEach(joiner::add);
-            where = " AND accountType IN (" + joiner.toString() + ") ";
+            where = " AND accounts.type IN (" + joiner.toString() + ") ";
         }
         if (!StringUtils.isEmpty(filter.getFrom()) && !StringUtils.isEmpty(filter.getTo())) {
             where = " AND date BETWEEN '" + filter.getFrom() + "' AND '" + filter.getTo() + "' ";
