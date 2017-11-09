@@ -7,10 +7,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,7 +22,7 @@ public class ReportController {
 
     @PostMapping("stats")
     public ResponseEntity downloadStatsReport(@RequestBody StatFilter filter) throws IOException {
-        return ResponseEntity.ok(fileResponse(excelReportService.create(filter)));
+        return fileResponse(excelReportService.create(filter));
     }
 
     private ResponseEntity fileResponse(File report) throws IOException {
