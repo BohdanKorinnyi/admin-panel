@@ -8,7 +8,6 @@ import org.springframework.util.StringUtils;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,25 +44,29 @@ public interface StatisticService {
 
     default boolean isFilterIncludeToday(String toDate) {
         if (StringUtils.isEmpty(toDate)) {
-            return false;
+            return true;
         }
         Date filterDate = Date.valueOf(toDate);
         Date today = Date.valueOf(LocalDate.now());
         return filterDate.equals(today) || filterDate.after(today);
     }
 
-    default void updateAllStats(Map<Integer, List<Statistic>> stats, Map<Integer, List<Statistic>> newStats) {
+    default Map<Integer, List<Statistic>> updateAllStats(Map<Integer, List<Statistic>> stats, Map<Integer, List<Statistic>> newStats) {
         if (isNull(newStats) || newStats.isEmpty()) {
-            return;
+            return stats;
         }
         if (stats.isEmpty()) {
-            stats = newStats;
-            return;
+            return newStats;
         }
 
         for (Map.Entry<Integer, List<Statistic>> entry : newStats.entrySet()) {
-            List<Statistic> statistics = stats.getOrDefault(entry.getKey(), new ArrayList<>());
-            statistics.addAll(entry.getValue());
+            if (stats.containsKey(entry.getKey())) {
+                List<Statistic> statistics = stats.get(entry.getKey());
+                statistics.addAll(entry.getValue());
+                continue;
+            }
+            stats.put(entry.getKey(), entry.getValue());
         }
+        return stats;
     }
 }

@@ -39,11 +39,10 @@ public class StatisticServiceImpl implements StatisticService {
         List<Statistic> statistics = statisticDao.getStatistics(filter);
         if (isFilterIncludeToday(filter.getTo())) {
             Map<Integer, List<Statistic>> dailyStats = groupByBuyer(statisticDao.getDailyStatistics(filter));
-            updateAllStats(stats, dailyStats);
+            stats = updateAllStats(stats, dailyStats);
         }
         Map<Integer, List<Statistic>> allStats = groupByBuyer(statistics);
-        updateAllStats(stats, allStats);
-        return groupStats(stats);
+        return groupStats(updateAllStats(stats, allStats));
     }
 
     private Map<Integer, BuyerStatistic> groupStats(Map<Integer, List<Statistic>> stats) {
