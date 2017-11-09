@@ -29,7 +29,7 @@
                                         </div>
                                     </datepicker>
                                 </div>
-                                <div class="col-md-6" style="width:225px; margin-left: 10px">
+                                <div class="col-md-6" style="width:225px; margin-left: -27px">
                                     <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
                                         <div class="input-group">
                                             <input class="form-control" data-ng-model="dpToDate"
@@ -52,11 +52,9 @@
                                 ng-click="">
                             Apply
                         </button>
-                        <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit">
-                            Add
-                        </button>
-                        <button class="btn btn-primary btn-md" id="postBtn" name="postback" type="submit">
-                            Cancel
+                        <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit"
+                                ng-click="export();">
+                            Export
                         </button>
                     </div>
                 </div>
@@ -66,7 +64,7 @@
         <div class="row">
             <div class="col-md-11 form-group">
                 <form class="form-inline">
-                    <div ng-init="getBuyers();"
+                    <div class="form-group" ng-init="getBuyers();"
                          style="margin-top:10px;">
                         <select class="selectpicker" multiple
                                 data-style="btn-info btn-fill btn-block"
