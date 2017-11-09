@@ -1,4 +1,4 @@
-Application.config(function($routeProvider) {
+Application.config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/login', {
             templateUrl : "views/login.html",
@@ -30,10 +30,16 @@ Application.config(function($routeProvider) {
         })
         .when('/arbitrator', {
             templateUrl : "views/arbitratorHomeScreen.html",
-            controller  : "arbitratorController"
+            caseInsensitiveMatch: true,
+            controller  : "arbitratorController",
+            resolve: {
+                permission: function(authorizationService, $route) {
+                    return authorizationService.permissionCheck([roles.BUYER, roles.ADMIN]);
+                },
+            }
         })
         .when('/cost', {
             templateUrl : "views/costDataReport.html",
             controller  : "costDataReportController"
-        })
+        });
 });
