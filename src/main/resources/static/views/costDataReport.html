@@ -97,7 +97,10 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-1">
+                <div class="loader" style="text-align: center;" ng-show="showCostsLoader"></div>
+                <div style="text-align: center;" ng-show="!showCostsLoader"></div>
+            </div>
         </div>
     </div>
 
@@ -167,37 +170,35 @@
                     </thead>
                     <tbody ng-repeat="item in costs">
                     <tr>
-                        <td style="text-align: center; vertical-align: middle" colspan="5">
-                            <strong>Buyer: {{item.buyerName}}</strong></td>
+                        <td style="text-align: left; vertical-align: middle; cursor:pointer"
+                            colspan="5" data-toggle="collapse" ng-click="showBuyerDetailsColumn(item.buyerId);">
+                            <strong class="panel-heading">Buyer: {{item.buyerName }} <i
+                                    class="ti-angle-down"></i></strong></td>
                     </tr>
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="stat in item.statistics">
-                        <td style="text-align: center; vertical-align: middle">{{stat.date}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{stat.accountType}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{stat.campaignName}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{stat.username}}</td>
-                        <td style="text-align: center; vertical-align: middle">{{stat.spent}}</td>
+                        ng-repeat="stat in item.statistics" ng-show="buyerDetails && idFinder(item.buyerId)">
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.date}}</td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.accountType}}
+                        </td>
+                        <td style="text-align: left; vertical-align: middle" class="panel-body">{{stat.campaignName}}
+                        </td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.username}}</td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.spent}}</td>
                     </tr>
-                    <tr>
+                    <tr ng-show="buyerDetails && idFinder(item.buyerId)">
                         <td style="text-align: left; vertical-align: middle" colspan="4">
                             <strong>Total by buyer: {{item.buyerName}}</strong></td>
                         <td style="text-align: center; vertical-align: middle">
                             <strong>{{item.buyerTotalSpent}}</strong></td>
-                    </tr>
-                    <tr ng-show="costs.length == 0">
-                        <td colspan="15">
-                            <div class="loader" style="text-align: center;" ng-show=""></div>
-                            <div style="text-align: center;" ng-show="">No data</div>
-                        </td>
                     </tr>
                     </tbody>
                 </table>
 
                 <div class="panel-footer">
                     <!--<div class="text-center">-->
-                        <!--<uib-pagination total-items="totalPagination" max-size="5"-->
-                                        <!--ng-model="selectedPage" items-per-page="selectedSize"-->
-                                        <!--ng-click=""></uib-pagination>-->
+                    <!--<uib-pagination total-items="totalPagination" max-size="5"-->
+                    <!--ng-model="selectedPage" items-per-page="selectedSize"-->
+                    <!--ng-click=""></uib-pagination>-->
                     <!--</div>-->
                 </div>
             </div>
