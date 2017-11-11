@@ -9,8 +9,9 @@ Application.controller("costDataReportController", function ($scope, $http, date
     $scope.selectedTypes = [];
 
     $scope.costs = [];
-    $scope.showCostsLoader = false;
+    $scope.showCostsLoader = true;
 
+    $scope.buyerDetails = false;
 
     $scope.sizeOptions = {
         50: 50,
@@ -47,7 +48,7 @@ Application.controller("costDataReportController", function ($scope, $http, date
     $scope.loadCosts = function () {
         var url = "/statistic/all";
         $scope.costs = [];
-        $scope.showPayrollsLoader = true;
+        $scope.showCostsLoader = true;
         $http.post(url, $scope.getGridDetails()).then(function (response) {
             $scope.costs = response.data;
             $scope.showCostsLoader = false;
@@ -115,5 +116,31 @@ Application.controller("costDataReportController", function ($scope, $http, date
             function fail(data, status, headers, config) {
                 notify('ti-alert', 'Error occurred during export to file', 'danger');
         }
+    };
+
+    $scope.currentCostId = [];
+
+    $scope.showBuyerDetailsColumn = function (id) {
+        $scope.currentCostId.push(id);
+        if($scope.buyerDetails === false) {
+            $scope.buyerDetails = true;
+        }
+        else {
+            $scope.buyerDetails = false;
+            var index = $scope.currentCostId.indexOf(id);
+            $scope.currentCostId.slice(index, 1);
+        }
+    };
+
+    $scope.idFinder = function (id) {
+      for(var i = 0; i < $scope.currentCostId.length; i++){
+          if($scope.currentCostId[i] === id){
+              return true;
+          }
+          else{
+              continue;
+          }
+      }
+      return false;
     };
 });
