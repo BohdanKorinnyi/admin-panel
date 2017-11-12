@@ -1,5 +1,6 @@
 package com.omnia.admin.controller;
 
+import com.google.common.collect.Lists;
 import com.omnia.admin.dto.StatFilter;
 import com.omnia.admin.service.ExcelReportService;
 import lombok.AllArgsConstructor;
@@ -7,8 +8,10 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
@@ -23,8 +26,16 @@ public class ReportController {
     private final ExcelReportService excelReportService;
 
     @GetMapping("stats")
-    public ResponseEntity downloadStatsReport() throws IOException {
-        return fileResponse(excelReportService.create(new StatFilter()));
+    public ResponseEntity downloadStatsReport(@RequestParam String buyers,
+                                              @RequestParam String from,
+                                              @RequestParam String to,
+                                              @RequestParam String types) throws IOException {
+        StatFilter statFilter = new StatFilter();
+        statFilter.setBuyers(Lists.newArrayList(StringUtils.commaDelimitedListToSet(buyers)));
+        statFilter.setTypes(Lists.newArrayList(StringUtils.commaDelimitedListToSet(types)));
+        statFilter.setFrom(from);
+        statFilter.setTo(to);
+        return fileResponse(excelReportService.create(statFilter));
     }
 
     private ResponseEntity fileResponse(File report) throws IOException {
