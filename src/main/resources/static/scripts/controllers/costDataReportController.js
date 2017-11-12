@@ -1,21 +1,24 @@
-'use strict';
+"use strict";
 
-Application.controller('costDataReportController', function ($scope, $http, dateFactory) {
-    $scope.selectedSize = 50;
-    $scope.costs = [];
-    $scope.types = [];
+Application.controller("costDataReportController", function ($scope, $http, dateFactory) {
+
     $scope.buyerNames = [];
-    $scope.selectedTypes = [];
     $scope.selectedBuyerNames = [];
 
-    $scope.buyerDetails = false;
+    $scope.types = [];
+    $scope.selectedTypes = [];
+
+    $scope.costs = [];
     $scope.showCostsLoader = true;
+
+    $scope.buyerDetails = false;
 
     $scope.sizeOptions = {
         50: 50,
         100: 100,
         500: 500
     };
+    $scope.selectedSize = 50;
 
     $scope.dateOptions = {
         'Select Date': 'no-date',
@@ -27,8 +30,8 @@ Application.controller('costDataReportController', function ($scope, $http, date
         'Custom Range': 'custom'
     };
     $scope.selectedDate = 'no-date';
-    $scope.dpFromDate = '';
-    $scope.dpToDate = '';
+    $scope.dpFromDate = "";
+    $scope.dpToDate = "";
 
     function formatDate(date) {
         var d = new Date(date),
@@ -43,7 +46,7 @@ Application.controller('costDataReportController', function ($scope, $http, date
     }
 
     $scope.loadCosts = function () {
-        var url = '/statistic/all';
+        var url = "/statistic/all";
         $scope.costs = [];
         $scope.showCostsLoader = true;
         $http.post(url, $scope.getGridDetails()).then(function (response) {
@@ -56,8 +59,8 @@ Application.controller('costDataReportController', function ($scope, $http, date
     };
 
     $scope.getGridDetails = function () {
-        var fromDate = '';
-        var toDate = '';
+        var fromDate = "";
+        var toDate = "";
         if ($scope.selectedDate !== 'no-date') {
             if ($scope.selectedDate === 'custom') {
                 fromDate = $scope.dpFromDate;
@@ -68,16 +71,18 @@ Application.controller('costDataReportController', function ($scope, $http, date
                 toDate = formatDate(dateFactory.pickDateTo($scope.selectedDate));
             }
         }
+
         return {
-            'buyers': $scope.selectedBuyerNames,
-            'types': $scope.selectedTypes,
-            'from': fromDate,
-            'to': toDate
+            "buyers": $scope.selectedBuyerNames,
+            "types": $scope.selectedTypes,
+            "from": fromDate,
+            "to": toDate
         };
     };
 
+
     $scope.getBuyers = function () {
-        var url = '/buyer';
+        var url = "/buyer";
         $http.get(url).then(function success(response) {
             $scope.buyerNames = response.data;
         }, function fail(response) {
@@ -87,7 +92,7 @@ Application.controller('costDataReportController', function ($scope, $http, date
 
 
     $scope.getTypes = function () {
-        var url = '/account/types';
+        var url = "/account/types";
         $http.get(url).then(function success(response) {
             for (var i = 0; i < response.data.length; i++) {
                 $scope.types.push({
@@ -101,37 +106,28 @@ Application.controller('costDataReportController', function ($scope, $http, date
     };
 
     $scope.export = function () {
-        var args = $scope.getGridDetails();
-        window.location.href = 'report/stats?buyers='
-            + args.buyers.join(',')
-            + '&types=' + args.types.join(',')
-            + '&from=' + args.from
-            + '&to=' + args.to;
+        var url = "report/stats";
+        $http.post(url)
+            .then(function success(data, status, headers, config) {
+                var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                var objectUrl = URL.createObjectURL(blob);
+                window.open(objectUrl);
+        }),
+            function fail(data, status, headers, config) {
+                notify('ti-alert', 'Error occurred during export to file', 'danger');
+        }
     };
 
     $scope.currentCostId = [];
+    $scope.id = -1;
 
     $scope.showBuyerDetailsColumn = function (id) {
-        $scope.currentCostId.push(id);
-        if ($scope.buyerDetails === false) {
+        if($scope.id === id){
+            $scope.buyerDetails = false;
+        }
+        else{
             $scope.buyerDetails = true;
         }
-        else {
-            $scope.buyerDetails = false;
-            var index = $scope.currentCostId.indexOf(id);
-            $scope.currentCostId.slice(index, 1);
-        }
-    };
-
-    $scope.idFinder = function (id) {
-        for (var i = 0; i < $scope.currentCostId.length; i++) {
-            if ($scope.currentCostId[i] === id) {
-                return true;
-            }
-            else {
-                continue;
-            }
-        }
-        return false;
+        $scope.id = id;
     };
 });
