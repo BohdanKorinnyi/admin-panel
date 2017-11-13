@@ -193,7 +193,7 @@
                                     class="ti-angle-down"></i></strong></td>
                     </tr>
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="stat in item.statistics" ng-show="buyerDetails && item.buyerId == id">
+                        ng-repeat="stat in item.sourceStatistics" ng-show="buyerDetails && item.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.date}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.accountType}}
                         </td>

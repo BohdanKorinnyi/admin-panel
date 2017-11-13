@@ -1,11 +1,11 @@
 package com.omnia.admin.service.impl;
 
 import com.google.common.collect.ImmutableList;
-import com.omnia.admin.dto.StatFilter;
+import com.omnia.admin.dto.SourceStatFilter;
 import com.omnia.admin.model.BuyerStatistic;
-import com.omnia.admin.model.Statistic;
+import com.omnia.admin.model.SourceStatistic;
 import com.omnia.admin.service.ExcelReportService;
-import com.omnia.admin.service.StatisticService;
+import com.omnia.admin.service.SourceStatsService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -25,17 +25,17 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class StatsExcelReportServiceImpl implements ExcelReportService {
-    private static final String SHEET_NAME = "Buyer's statistics report";
+    private static final String SHEET_NAME = "Buyer's sourceStatistics report";
     private static final String BUYER_REPORT_NAME = "Buyer: %s";
     private static final String TOTAL_BUYER_SPENT = "Total by buyer %s";
     private static final List<String> COLUMNS = ImmutableList.of("Date", "Source", "Campaign Name",
             "Account Holder", "Spent");
 
-    private final StatisticService statisticService;
+    private final SourceStatsService sourceStatsService;
 
     @Override
-    public File create(StatFilter filter) {
-        Map<Integer, BuyerStatistic> stats = statisticService.getAllStatistics(filter);
+    public File create(SourceStatFilter filter) {
+        Map<Integer, BuyerStatistic> stats = sourceStatsService.getAllStatistics(filter);
         File report = null;
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
             XSSFSheet sheet = workbook.createSheet(SHEET_NAME);
@@ -62,25 +62,25 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
     }
 
     private int createRows(XSSFSheet sheet, BuyerStatistic buyerStats, int rowNumber) {
-        for (Statistic statistic : buyerStats.getStatistics()) {
+        for (SourceStatistic sourceStatistic : buyerStats.getSourceStatistics()) {
             XSSFRow row = sheet.createRow(rowNumber);
-            rowNumber = fillStatsRow(row, statistic, rowNumber);
+            rowNumber = fillStatsRow(row, sourceStatistic, rowNumber);
         }
         return rowNumber;
     }
 
-    private int fillStatsRow(XSSFRow row, Statistic statistic, int rowNumber) {
+    private int fillStatsRow(XSSFRow row, SourceStatistic sourceStatistic, int rowNumber) {
         XSSFCell date = row.createCell(0);
         XSSFCell accountType = row.createCell(1);
         XSSFCell campaign = row.createCell(2);
         XSSFCell accountHolder = row.createCell(3);
         XSSFCell spent = row.createCell(4);
 
-        date.setCellValue(statistic.getDate());
-        accountType.setCellValue(statistic.getAccountType());
-        campaign.setCellValue(statistic.getCampaignName());
-        accountHolder.setCellValue(statistic.getUsername());
-        spent.setCellValue(statistic.getSpent());
+        date.setCellValue(sourceStatistic.getDate());
+        accountType.setCellValue(sourceStatistic.getAccountType());
+        campaign.setCellValue(sourceStatistic.getCampaignName());
+        accountHolder.setCellValue(sourceStatistic.getUsername());
+        spent.setCellValue(sourceStatistic.getSpent());
 
         return rowNumber + 1;
     }

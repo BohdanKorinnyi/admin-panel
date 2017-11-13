@@ -1,8 +1,8 @@
 package com.omnia.admin.dao.impl;
 
-import com.omnia.admin.dao.StatisticDao;
-import com.omnia.admin.dto.StatFilter;
-import com.omnia.admin.model.Statistic;
+import com.omnia.admin.dao.SourceStatisticDao;
+import com.omnia.admin.dto.SourceStatFilter;
+import com.omnia.admin.model.SourceStatistic;
 import com.omnia.admin.service.QueryHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -18,7 +18,7 @@ import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 
 @Repository
 @AllArgsConstructor
-public class StatisticDaoImpl implements StatisticDao {
+public class SourceStatisticDaoImpl implements SourceStatisticDao {
 
     private static final String SELECT_STATISTIC = QueryHelper.loadQueryFromFile("statistic.sql");
     private static final String SELECT_DAILY_STATISTIC = QueryHelper.loadQueryFromFile("statistic_daily.sql");
@@ -26,16 +26,16 @@ public class StatisticDaoImpl implements StatisticDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Statistic> getStatistics(StatFilter filter) {
-        return jdbcTemplate.query(updateWhereClause(SELECT_STATISTIC, filter), BeanPropertyRowMapper.newInstance(Statistic.class));
+    public List<SourceStatistic> getStatistics(SourceStatFilter filter) {
+        return jdbcTemplate.query(updateWhereClause(SELECT_STATISTIC, filter), BeanPropertyRowMapper.newInstance(SourceStatistic.class));
     }
 
     @Override
-    public List<Statistic> getDailyStatistics(StatFilter filter) {
-        return jdbcTemplate.query(updateWhereClause(SELECT_DAILY_STATISTIC, filter), BeanPropertyRowMapper.newInstance(Statistic.class));
+    public List<SourceStatistic> getDailyStatistics(SourceStatFilter filter) {
+        return jdbcTemplate.query(updateWhereClause(SELECT_DAILY_STATISTIC, filter), BeanPropertyRowMapper.newInstance(SourceStatistic.class));
     }
 
-    private String updateWhereClause(String sql, StatFilter filter) {
+    private String updateWhereClause(String sql, SourceStatFilter filter) {
         String where = EMPTY;
         if (!CollectionUtils.isEmpty(filter.getBuyers())) {
             StringJoiner joiner = new StringJoiner("','", "'", "'");
