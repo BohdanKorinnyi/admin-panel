@@ -5,6 +5,7 @@ SELECT
   source_statistics.campaign_name,
   accounts.type AS accountType,
   accounts.username,
+  buyers.id AS buyerId,
   buyers.name,
   source_statistics.date
 FROM source_statistics
