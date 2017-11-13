@@ -1,6 +1,6 @@
 "use strict";
 
-Application.controller("costDataReportController", function ($scope, $http, dateFactory) {
+Application.controller("buyerCostsController", function ($scope, $http, dateFactory) {
 
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
@@ -54,7 +54,7 @@ Application.controller("costDataReportController", function ($scope, $http, date
             $scope.showCostsLoader = false;
         }, function () {
             $scope.showCostsLoader = false;
-            notify('ti-alert', 'Error occurred during loading sources', 'danger');
+            notify('ti-alert', 'Error occurred during loading buyer costs', 'danger');
         });
     };
 

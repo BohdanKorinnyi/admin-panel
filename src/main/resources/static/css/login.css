@@ -185,11 +185,23 @@ p:focus {
 .cardForAdvertisers, .cardForAdvertisersData, .cardForAdvertisersStatus,
 .cardForConversions, .cardForPayrollsControl, .cardForPayrollsTable,
 .cardForBuyers, .cardForBuyersData, .cardForBuyersAfid,
-.cardForCostDataReportControl, .cardForCostDataReportTable {
+.cardForCostDataReportControl, .cardForCostDataReportTable,
+.cardForBuyerCosts, .cardForBuyerCostsTable{
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 .cardForCostDataReportTable {
+    margin: 10px 25px 25px;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-clip: padding-box;
+    background: white;
+}
+
+.cardForBuyerCostsTable {
     margin: 10px 25px 25px;
     padding-top: 15px;
     padding-left: 15px;
@@ -224,6 +236,17 @@ p:focus {
 }
 
 .cardForCostDataReportControl {
+     margin: 55px 25px 25px;
+     padding-top: 15px;
+     padding-left: 15px;
+     padding-right: 15px;
+     box-sizing: border-box;
+     border-radius: 2px;
+     background-clip: padding-box;
+     background: white;
+ }
+
+.cardForBuyerCosts{
     margin: 55px 25px 25px;
     padding-top: 15px;
     padding-left: 15px;
