@@ -11,5 +11,5 @@ public class BuyerStatistic {
     private Integer buyerId;
     private String buyerName;
     private Double buyerTotalSpent;
-    private List<Statistic> statistics;
+    private List<SourceStatistic> sourceStatistics;
 }

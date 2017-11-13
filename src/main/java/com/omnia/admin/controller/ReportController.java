@@ -1,7 +1,7 @@
 package com.omnia.admin.controller;
 
 import com.google.common.collect.Lists;
-import com.omnia.admin.dto.StatFilter;
+import com.omnia.admin.dto.SourceStatFilter;
 import com.omnia.admin.service.ExcelReportService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -30,12 +30,12 @@ public class ReportController {
                                               @RequestParam String from,
                                               @RequestParam String to,
                                               @RequestParam String types) throws IOException {
-        StatFilter statFilter = new StatFilter();
-        statFilter.setBuyers(Lists.newArrayList(StringUtils.commaDelimitedListToSet(buyers)));
-        statFilter.setTypes(Lists.newArrayList(StringUtils.commaDelimitedListToSet(types)));
-        statFilter.setFrom(from);
-        statFilter.setTo(to);
-        return fileResponse(excelReportService.create(statFilter));
+        SourceStatFilter sourceStatFilter = new SourceStatFilter();
+        sourceStatFilter.setBuyers(Lists.newArrayList(StringUtils.commaDelimitedListToSet(buyers)));
+        sourceStatFilter.setTypes(Lists.newArrayList(StringUtils.commaDelimitedListToSet(types)));
+        sourceStatFilter.setFrom(from);
+        sourceStatFilter.setTo(to);
+        return fileResponse(excelReportService.create(sourceStatFilter));
     }
 
     private ResponseEntity fileResponse(File report) throws IOException {

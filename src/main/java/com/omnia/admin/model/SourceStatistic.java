@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Statistic {
+public class SourceStatistic {
     private int amount;
     private Double spent;
     private int buyerId;
