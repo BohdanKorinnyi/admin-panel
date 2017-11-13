@@ -62,7 +62,24 @@
         </div>
 
         <div class="row">
-            <div class="col-md-11 form-group">
+
+            <input class="form-control" data-ng-model="dpFromDate" placeholder="From"/>
+            <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar" style="z-index: 132"></i>
+                                    </span>
+
+
+            <div class="col-md-6" style="width:182px; margin-left: -20px">
+                <datepicker date-format="yyyy-MM-dd" selector="form-control">
+                    <div class="input-group">
+                        <input class="form-control" placeholder="To"/>
+                        <input class="form-control" data-ng-model="dpToDate"
+                               placeholder="To"/>
+                        <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+
+                        <div class="col-md-11 form-group">
                 <form class="form-inline">
                     <div class="form-group" ng-init="getBuyers();"
                          style="margin-top:10px;">
@@ -176,7 +193,7 @@
                                     class="ti-angle-down"></i></strong></td>
                     </tr>
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="stat in item.statistics" ng-show="buyerDetails && idFinder(item.buyerId)">
+                        ng-repeat="stat in item.statistics" ng-show="buyerDetails && item.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.date}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.accountType}}
                         </td>
@@ -185,13 +202,21 @@
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.username}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.spent}}</td>
                     </tr>
-                    <tr ng-show="buyerDetails && idFinder(item.buyerId)">
+                    <tr ng-show="buyerDetails && item.buyerId == id">
                         <td style="text-align: left; vertical-align: middle" colspan="4">
                             <strong>Total by buyer: {{item.buyerName}}</strong></td>
                         <td style="text-align: center; vertical-align: middle">
                             <strong>{{item.buyerTotalSpent}}</strong></td>
                     </tr>
                     </tbody>
+                    <tfoot>
+                    <tr ng-show="costs.length == 0">
+                        <td colspan="5">
+                            <div class="loader" style="text-align: center;" ng-show="showCostsLoader"></div>
+                            <div style="text-align: center;" ng-show="!showCostsLoader">No data</div>
+                        </td>
+                    </tr>
+                    </tfoot>
                 </table>
 
                 <div class="panel-footer">
