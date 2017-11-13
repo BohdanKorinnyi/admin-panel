@@ -3,6 +3,8 @@ package com.omnia.admin.dao.impl;
 import com.omnia.admin.dao.BuyerDao;
 import com.omnia.admin.model.Buyer;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,10 +14,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+@Log4j
 @Repository
 @AllArgsConstructor
 public class BuyerDaoImpl implements BuyerDao {
-
+    private static final String NO_BUYER_NAME = "No buyer name";
     private static final String SELECT_BUYER_NAME_BY_ID = "SELECT name FROM buyers WHERE id = ?;";
     private static final String SELECT_ALL_BUYERS_NAME = "SELECT name FROM buyers ORDER BY name ASC;";
     private static final String SELECT_ALL_BUYERS = "SELECT * FROM buyers ORDER BY name ASC;";
@@ -60,7 +63,14 @@ public class BuyerDaoImpl implements BuyerDao {
 
     @Override
     public String getBuyerById(int buyerId) {
-        return jdbcTemplate.queryForObject(SELECT_BUYER_NAME_BY_ID, String.class, buyerId);
+        try {
+            return jdbcTemplate.queryForObject(SELECT_BUYER_NAME_BY_ID, String.class, buyerId);
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Not found buyer name by id=" + buyerId + " in database, sql=" + SELECT_BUYER_NAME_BY_ID);
+        } catch (Exception e) {
+            log.error("Error occurred during getting buyers", e);
+        }
+        return NO_BUYER_NAME;
     }
 
     @Override

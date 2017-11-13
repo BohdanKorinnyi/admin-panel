@@ -1,7 +1,7 @@
 package com.omnia.admin.service.impl;
 
 import com.google.common.collect.ImmutableList;
-import com.omnia.admin.dto.SourceStatFilter;
+import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.model.BuyerStatistic;
 import com.omnia.admin.model.SourceStatistic;
 import com.omnia.admin.service.ExcelReportService;
@@ -34,7 +34,7 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
     private final SourceStatsService sourceStatsService;
 
     @Override
-    public File create(SourceStatFilter filter) {
+    public File create(StatisticFilter filter) {
         Map<Integer, BuyerStatistic> stats = sourceStatsService.getAllStatistics(filter);
         File report = null;
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {

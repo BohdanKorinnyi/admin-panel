@@ -1,6 +1,6 @@
 package com.omnia.admin.controller;
 
-import com.omnia.admin.dto.SourceStatFilter;
+import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.service.ExcelReportService;
 import com.omnia.admin.service.SourceStatsService;
 import lombok.AllArgsConstructor;
@@ -20,17 +20,17 @@ public class SourceStatisticController {
 
 
     @PostMapping
-    public ResponseEntity getStatistic(@RequestBody SourceStatFilter filter) {
+    public ResponseEntity getStatistic(@RequestBody StatisticFilter filter) {
         return ResponseEntity.ok(sourceStatsService.getStatistics(filter));
     }
 
     @PostMapping("daily")
-    public ResponseEntity getDailyStatistic(@RequestBody SourceStatFilter filter) {
+    public ResponseEntity getDailyStatistic(@RequestBody StatisticFilter filter) {
         return ResponseEntity.ok(sourceStatsService.getDailyStatistics(filter));
     }
 
     @PostMapping("all")
-    public ResponseEntity getAllStatistic(@RequestBody SourceStatFilter filter) {
+    public ResponseEntity getAllStatistic(@RequestBody StatisticFilter filter) {
         return ResponseEntity.ok(sourceStatsService.getAllStatistics(filter));
     }
 }

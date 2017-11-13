@@ -1,6 +1,6 @@
 package com.omnia.admin.service;
 
-import com.omnia.admin.dto.SourceStatFilter;
+import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.model.BuyerStatistic;
 import com.omnia.admin.model.SourceStatistic;
 import org.springframework.util.CollectionUtils;
@@ -16,11 +16,11 @@ import static com.omnia.admin.service.impl.SourceStatsServiceImpl.EMPTY_STATS_MA
 import static java.util.Objects.isNull;
 
 public interface SourceStatsService {
-    Map<Integer, BuyerStatistic> getStatistics(SourceStatFilter filter);
+    Map<Integer, BuyerStatistic> getStatistics(StatisticFilter filter);
 
-    Map<Integer, BuyerStatistic> getDailyStatistics(SourceStatFilter filter);
+    Map<Integer, BuyerStatistic> getDailyStatistics(StatisticFilter filter);
 
-    Map<Integer, BuyerStatistic> getAllStatistics(SourceStatFilter filter);
+    Map<Integer, BuyerStatistic> getAllStatistics(StatisticFilter filter);
 
     default BuyerStatistic createBuyerStatistic(int buyerId, List<SourceStatistic> sourceStatistics) {
         double sum = sourceStatistics.stream()

@@ -1,9 +1,9 @@
 package com.omnia.admin.service;
 
-import com.omnia.admin.dto.SourceStatFilter;
+import com.omnia.admin.dto.StatisticFilter;
 
 import java.io.File;
 
 public interface ExcelReportService {
-    File create(SourceStatFilter filter);
+    File create(StatisticFilter filter);
 }

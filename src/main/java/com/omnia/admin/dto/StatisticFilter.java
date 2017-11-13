@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SourceStatFilter {
+public class StatisticFilter {
     private  int page;
     private  int size;
     private  List<String> buyers;
