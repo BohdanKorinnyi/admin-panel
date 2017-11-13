@@ -37,8 +37,12 @@ Application.config(function($routeProvider, $locationProvider) {
             //     },
             // }
         })
-        .when('/cost', {
+        .when('/sources', {
             templateUrl : "views/costDataReport.html",
             controller  : "costDataReportController"
+        })
+        .when('/buyerCosts', {
+            templateUrl : "views/buyerCosts.html",
+            controller  : "buyerCostsController"
         });
 });
