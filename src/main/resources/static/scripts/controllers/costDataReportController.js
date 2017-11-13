@@ -106,26 +106,22 @@ Application.controller("costDataReportController", function ($scope, $http, date
     };
 
     $scope.export = function () {
-        var url = "report/stats";
-        $http.post(url)
-            .then(function success(data, status, headers, config) {
-                var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-                var objectUrl = URL.createObjectURL(blob);
-                window.open(objectUrl);
-        }),
-            function fail(data, status, headers, config) {
-                notify('ti-alert', 'Error occurred during export to file', 'danger');
-        }
+        var args = $scope.getGridDetails();
+        window.location.href = 'report/stats?buyers='
+            + args.buyers.join(',')
+            + '&types=' + args.types.join(',')
+            + '&from=' + args.from
+            + '&to=' + args.to;
     };
 
     $scope.currentCostId = [];
     $scope.id = -1;
 
     $scope.showBuyerDetailsColumn = function (id) {
-        if($scope.id === id){
+        if ($scope.id === id) {
             $scope.buyerDetails = false;
         }
-        else{
+        else {
             $scope.buyerDetails = true;
         }
         $scope.id = id;
