@@ -19,7 +19,7 @@ public class SourceStatisticController {
     private final ExcelReportService excelReportService;
 
 
-    @PostMapping
+    @PostMapping("old")
     public ResponseEntity getStatistic(@RequestBody StatisticFilter filter) {
         return ResponseEntity.ok(sourceStatsService.getStatistics(filter));
     }
