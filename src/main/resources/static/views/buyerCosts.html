@@ -146,13 +146,31 @@
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
+                        ng-show="buyerDetails && item.buyerInfo.buyerId == id && item.sources !== null">
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Buyer Name</strong></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Date</strong></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Account Type</strong></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Spent</strong></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"></td>
+                    </tr>
+
+                    <tr style="text-align: center; vertical-align: middle"
                         ng-repeat="stat in item.sources.sourceStatistics" ng-show="buyerDetails && item.buyerInfo.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.username}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.date}}
                         </td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.accountType}}</td>
-                        <td style="text-align: left; vertical-align: middle" class="panel-body">{{stat.spent}}</td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.spent}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body"></td>
+                    </tr>
+
+                    <tr style="text-align: center; vertical-align: middle"
+                        ng-show="buyerDetails && item.buyerInfo.buyerId == id && item.postbacks !== null">
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Buyer Name</strong></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Date</strong></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Adv Name</strong></td>
+                        <td style="text-align: left; vertical-align: middle" class="panel-body"></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Sum</strong></td>
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
@@ -165,11 +183,20 @@
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
+                        ng-show="buyerDetails && item.buyerInfo.buyerId == id && item.expenses !== null">
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Buyer Name</strong></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Date</strong></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Exp Name</strong></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"><strong>Sum</strong></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body"></td>
+                    </tr>
+
+                    <tr style="text-align: center; vertical-align: middle"
                         ng-repeat="exp in item.expenses" ng-show="buyerDetails && item.buyerInfo.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.buyer}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.date}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.name}}</td>
-                        <td style="text-align: left; vertical-align: middle" class="panel-body">{{exp.sum}}</td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.sum}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body"></td>
                     </tr>
 
