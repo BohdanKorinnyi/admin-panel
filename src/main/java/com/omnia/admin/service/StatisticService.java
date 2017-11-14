@@ -1,9 +1,10 @@
 package com.omnia.admin.service;
 
 import com.omnia.admin.dto.StatisticFilter;
+import com.omnia.admin.model.Stats;
 
-import java.util.Map;
+import java.util.List;
 
 public interface StatisticService {
-    Map<String, Object> getBuyerStatistics(StatisticFilter filter);
+    List<Stats> getBuyerStatistics(StatisticFilter filter);
 }
