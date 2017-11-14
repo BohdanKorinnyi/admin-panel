@@ -4,15 +4,9 @@
             <div class="col-md-9">
                 <div class="row">
                     <form class="form-inline">
-                        <div class="form-group" id="size">
-                            <select class="form-control" data-ng-model="selectedSize"
-                                    data-ng-options="v as k for (k, v) in sizeOptions"
-                                    style="margin-left: 20px;margin-bottom: 14px;">
-                            </select>
-                        </div>
 
                         <div class="form-group" ng-init="getBuyers();"
-                             style="margin-right:-3px;margin-bottom: 3px; margin-left: 5px;">
+                             style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
                             <select class="selectpicker" multiple
                                     data-style="btn-info btn-fill btn-block"
                                     data-size="5"
@@ -22,23 +16,6 @@
                                     style="width: 130%;margin-left: 5px;">
                                 <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
                                         data-last="{{$last}}" value="{{b.name}}">{{b.name}}
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="form-group" ng-init="getTypes();"
-                             style="margin-right:5px;margin-bottom: 3px; margin-left: 5px;">
-                            <select class="selectpicker" multiple
-                                    data-style="btn-info btn-fill btn-block"
-                                    data-size="5"
-                                    data-header="Types"
-                                    selected-header="options selected"
-                                    title="Types"
-                                    ng-model="selectedTypes"
-                                    style="width: 120%;">
-                                <option class="small-font" ng-repeat="t in types"
-                                        data-select-watcher
-                                        data-last="{{$last}}" value="{{t.name}}">{{t.name}}
                                 </option>
                             </select>
                         </div>
@@ -83,13 +60,13 @@
                 <div class="row">
                     <div class="col-md-12" style="text-align: right">
                         <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
-                                ng-click="loadCosts();">
+                                ng-click="loadsources();">
                             Apply
                         </button>
-                        <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit"
-                                ng-click="export();">
-                            Export
-                        </button>
+                        <!--<button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit"-->
+                                <!--ng-click="export();">-->
+                            <!--Export-->
+                        <!--</button>-->
                     </div>
                 </div>
             </div>
@@ -125,17 +102,6 @@
                             </a>
                         </th>
 
-                        <th style="text-align: center; vertical-align: middle; width:30%;">
-                            <a href="" ng-click="sortType = ''">
-                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                          class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Spent
-                            </a>
-                        </th>
-
                         <th style="text-align: center; vertical-align: middle">
                             <a href="" ng-click="sortType = ''">
                     <span ng-show="sortType == '' && sortReverse == 'ASC'"
@@ -144,6 +110,17 @@
                                       class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == '' && sortReverse == ''"></span>
                                 Description
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle; width:30%;">
+                            <a href="" ng-click="sortType = ''">
+                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
+                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == '' && sortReverse == ''"></span>
+                                Spent
                             </a>
                         </th>
 
@@ -173,38 +150,34 @@
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.username}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.date}}
                         </td>
-                        <td style="text-align: left; vertical-align: middle" class="panel-body">{{stat.spent}}
-                        </td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.accountType}}</td>
+                        <td style="text-align: left; vertical-align: middle" class="panel-body">{{stat.spent}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body"></td>
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
                         ng-repeat="post in item.postbacks" ng-show="buyerDetails && item.buyerInfo.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{post.name}}</td>
-                        <td style="text-align: center; vertical-align: middle" class="panel-body">{{post.date}}
-                        </td>
-                        <td style="text-align: left; vertical-align: middle" class="panel-body"></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">{{post.date}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{post.advname}}</td>
+                        <td style="text-align: left; vertical-align: middle" class="panel-body"></td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{post.amountInUsd}}</td>
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
                         ng-repeat="exp in item.expenses" ng-show="buyerDetails && item.buyerInfo.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.buyer}}</td>
-                        <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.date}}
-                        </td>
-                        <td style="text-align: left; vertical-align: middle" class="panel-body">{{exp.sum}}
-                        </td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.date}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.name}}</td>
+                        <td style="text-align: left; vertical-align: middle" class="panel-body">{{exp.sum}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body"></td>
                     </tr>
 
                     <tr ng-show="buyerDetails && item.buyerInfo.buyerId == id">
-                        <td style="text-align: left; vertical-align: middle" colspan="4">
-                            <strong>Total by buyer: {{item.buyerInfo.buyerId}}</strong></td>
-                        <td style="text-align: center; vertical-align: middle">
-                            <strong>{{item.sources.buyerTotalSpent}}</strong></td>
+                        <td style="text-align: left; vertical-align: middle" colspan="3">
+                            <strong>Total by buyer: {{item.buyerInfo.buyerName}}</strong></td>
+                        <td style="text-align: center; vertical-align: middle"><strong>{{item.sources.buyerTotalSpent}}</strong></td>
+                        <td style="text-align: center; vertical-align: middle"><strong></strong></td>
                     </tr>
                     </tbody>
                     <tfoot>
@@ -216,14 +189,7 @@
                     </tr>
                     </tfoot>
                 </table>
-
-                <div class="panel-footer">
-                    <!--<div class="text-center">-->
-                    <!--<uib-pagination total-items="totalPagination" max-size="5"-->
-                    <!--ng-model="selectedPage" items-per-page="selectedSize"-->
-                    <!--ng-click=""></uib-pagination>-->
-                    <!--</div>-->
-                </div>
+                <div class="panel-footer"></div>
             </div>
         </div>
     </div>

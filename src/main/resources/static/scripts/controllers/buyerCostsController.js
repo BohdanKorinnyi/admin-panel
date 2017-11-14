@@ -10,9 +10,6 @@ Application.controller("buyerSourcesController", function ($scope, $http, dateFa
     $scope.postbacks = [];
     $scope.showsourcesLoader = true;
 
-    $scope.types = [];
-    $scope.selectedTypes = [];
-
     $scope.buyerDetails = false;
 
     $scope.sizeOptions = {
@@ -88,20 +85,6 @@ Application.controller("buyerSourcesController", function ($scope, $http, dateFa
             $scope.buyerNames = response.data;
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading buyers', 'danger');
-        });
-    };
-
-    $scope.getTypes = function () {
-        var url = "/account/types";
-        $http.get(url).then(function success(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                $scope.types.push({
-                    id: i,
-                    name: response.data[i]
-                });
-            }
-        }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading types', 'danger');
         });
     };
 

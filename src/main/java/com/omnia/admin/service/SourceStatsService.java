@@ -7,6 +7,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +27,10 @@ public interface SourceStatsService {
         double sum = sourceStatistics.stream()
                 .mapToDouble(SourceStatistic::getSpent)
                 .sum();
-
+        DecimalFormat twoDForm = new DecimalFormat("#,####");
         BuyerStatistic buyerStatistic = new BuyerStatistic();
         buyerStatistic.setBuyerId(buyerId);
-        buyerStatistic.setBuyerTotalSpent(sum);
+        buyerStatistic.setBuyerTotalSpent(Double.valueOf(twoDForm.format(sum)));
         buyerStatistic.setSourceStatistics(sourceStatistics);
         return buyerStatistic;
     }
