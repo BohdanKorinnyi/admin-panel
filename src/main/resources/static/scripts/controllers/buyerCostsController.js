@@ -1,15 +1,17 @@
 "use strict";
 
-Application.controller("buyerCostsController", function ($scope, $http, dateFactory) {
+Application.controller("buyerSourcesController", function ($scope, $http, dateFactory) {
 
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
 
+    $scope.sources = [];
+    $scope.expenses = [];
+    $scope.postbacks = [];
+    $scope.showsourcesLoader = true;
+
     $scope.types = [];
     $scope.selectedTypes = [];
-
-    $scope.costs = [];
-    $scope.showCostsLoader = true;
 
     $scope.buyerDetails = false;
 
@@ -45,16 +47,18 @@ Application.controller("buyerCostsController", function ($scope, $http, dateFact
         return [year, month, day].join('-');
     }
 
-    $scope.loadCosts = function () {
-        var url = "/statistic/all";
-        $scope.costs = [];
-        $scope.showCostsLoader = true;
+    $scope.loadsources = function () {
+        var url = "/statistic";
+        $scope.sources = [];
+        $scope.showsourcesLoader = true;
         $http.post(url, $scope.getGridDetails()).then(function (response) {
-            $scope.costs = response.data;
-            $scope.showCostsLoader = false;
+            $scope.sources = response.data.sources;
+            $scope.postbacks = response.data.postbacks;
+            $scope.expenses = response.data.expenses;
+            $scope.showsourcesLoader = false;
         }, function () {
-            $scope.showCostsLoader = false;
-            notify('ti-alert', 'Error occurred during loading buyer costs', 'danger');
+            $scope.showsourcesLoader = false;
+            notify('ti-alert', 'Error occurred during loading buyer sources', 'danger');
         });
     };
 
@@ -74,7 +78,6 @@ Application.controller("buyerCostsController", function ($scope, $http, dateFact
 
         return {
             "buyers": $scope.selectedBuyerNames,
-            "types": $scope.selectedTypes,
             "from": fromDate,
             "to": toDate
         };
@@ -89,7 +92,6 @@ Application.controller("buyerCostsController", function ($scope, $http, dateFact
             notify('ti-alert', 'Error occurred during loading buyers', 'danger');
         });
     };
-
 
     $scope.getTypes = function () {
         var url = "/account/types";
@@ -120,10 +122,11 @@ Application.controller("buyerCostsController", function ($scope, $http, dateFact
     $scope.showBuyerDetailsColumn = function (id) {
         if ($scope.id === id) {
             $scope.buyerDetails = false;
+            $scope.id = -1;
         }
         else {
             $scope.buyerDetails = true;
+            $scope.id = id;
         }
-        $scope.id = id;
     };
 });
