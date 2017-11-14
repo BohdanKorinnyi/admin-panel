@@ -1,6 +1,6 @@
 SELECT
   postback.date,
-  affiliates.afname,
+  buyers.name,
   TRUNCATE(sum(postback.sum /
                (SELECT exchange.rate
                 FROM exchange
