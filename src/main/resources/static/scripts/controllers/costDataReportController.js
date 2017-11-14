@@ -120,10 +120,11 @@ Application.controller("costDataReportController", function ($scope, $http, date
     $scope.showBuyerDetailsColumn = function (id) {
         if ($scope.id === id) {
             $scope.buyerDetails = false;
+            $scope.id = -1;
         }
         else {
             $scope.buyerDetails = true;
+            $scope.id = id;
         }
-        $scope.id = id;
     };
 });
