@@ -1,9 +1,13 @@
 package com.omnia.admin.service.impl;
 
 import com.omnia.admin.dto.StatisticFilter;
-import com.omnia.admin.model.*;
+import com.omnia.admin.model.BuyerProjection;
+import com.omnia.admin.model.BuyerStatistic;
+import com.omnia.admin.model.Expenses;
+import com.omnia.admin.model.Stats;
 import com.omnia.admin.service.*;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Log4j
 @Service
 @AllArgsConstructor
 public final class StatisticServiceImpl implements StatisticService {
@@ -22,10 +27,18 @@ public final class StatisticServiceImpl implements StatisticService {
 
     @Override
     public List<Stats> getBuyerStatistics(StatisticFilter filter) {
+        long start = System.currentTimeMillis();
         List<Expenses> expenses = expensesService.getExpenses(filter);
+        log.info("Expenses loading: " + (System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
         List<PostbackStats> stats = postbackService.getStats(filter);
-
+        log.info("Postback loading: " + (System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
         Map<Integer, BuyerStatistic> statistics = sourceStatsService.getAllStatistics(filter);
+        log.info("Buyers loading: " + (System.currentTimeMillis() - start));
+
+        log.info("Grouping start...");
+        start = System.currentTimeMillis();
         Map<Integer, List<Expenses>> expensesByBuyerId = expenses.stream()
                 .collect(Collectors.groupingBy(Expenses::getBuyerId, Collectors.toList()));
         Map<Integer, List<PostbackStats>> postbackByBuyerId = stats.stream()
@@ -61,6 +74,9 @@ public final class StatisticServiceImpl implements StatisticService {
                 allStatistic.put(tmp.getKey(), tmpStats);
             }
         }
+        log.info("Grouping completed: " + (System.currentTimeMillis() - start));
+        log.info("Buyer creation..");
+        start = System.currentTimeMillis();
         List<Stats> result = new ArrayList<>();
         for (Map.Entry<Integer, Stats> statsEntry : allStatistic.entrySet()) {
             String buyerName = buyerService.getBuyerById(statsEntry.getKey());
@@ -69,6 +85,7 @@ public final class StatisticServiceImpl implements StatisticService {
             value.setBuyerInfo(buyerProjection);
             result.add(value);
         }
+        log.info("Buyer creation completed: " + (System.currentTimeMillis() - start));
         return result;
     }
 }
