@@ -10,8 +10,6 @@ public class User {
     private Integer userId;
     private String username;
     private String name;
-    private String firstName;
-    private String secodName;
     @JsonIgnore
     private String password;
 

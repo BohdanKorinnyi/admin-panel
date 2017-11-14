@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @AllArgsConstructor
 public class UserDaoImpl implements UserDao {
 
-    private static final String SELECT_USER_BY_USERNAME = "SELECT user_id,username,password,name,first_name,secod_name,role_id,group_id,buyer_id FROM users WHERE username = ?;";
+    private static final String SELECT_USER_BY_USERNAME = "SELECT user_id,username,password,name,role_id,group_id,buyer_id FROM users WHERE username = ?;";
 
     private final JdbcTemplate jdbcTemplate;
 
