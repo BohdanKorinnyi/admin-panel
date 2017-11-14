@@ -161,15 +161,15 @@
                     </tr>
                     </thead>
                     <tbody ng-repeat="item in sources">
-                    <tr ng-repeat="info in item.sources">
+                    <tr>
                         <td style="text-align: left; vertical-align: middle; cursor:pointer"
-                            colspan="5" data-toggle="collapse" ng-click="showBuyerDetailsColumn(info.buyerId);">
-                            <strong class="panel-heading">Buyer: {{info.buyerName }} <i
+                            colspan="5" data-toggle="collapse" ng-click="showBuyerDetailsColumn(item.buyerInfo.buyerId);">
+                            <strong class="panel-heading">Buyer: {{item.buyerInfo.buyerName}} <i
                                     class="ti-angle-down"></i></strong></td>
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="stat in info.sourceStatistics" ng-show="buyerDetails && item.buyerId == id">
+                        ng-repeat="stat in item.sources.sourceStatistics" ng-show="buyerDetails && item.buyerInfo.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.username}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.date}}
                         </td>
@@ -180,7 +180,7 @@
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="post in item.postbacks" ng-show="buyerDetails && item.buyerId == id">
+                        ng-repeat="post in item.postbacks" ng-show="buyerDetails && item.buyerInfo.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{post.name}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{post.date}}
                         </td>
@@ -190,7 +190,7 @@
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="exp in item.expenses" ng-show="buyerDetails && item.buyerId == id">
+                        ng-repeat="exp in item.expenses" ng-show="buyerDetails && item.buyerInfo.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.buyer}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.date}}
                         </td>
@@ -200,11 +200,11 @@
                         <td style="text-align: center; vertical-align: middle" class="panel-body"></td>
                     </tr>
 
-                    <tr ng-show="buyerDetails && item.buyerId == id">
+                    <tr ng-show="buyerDetails && item.buyerInfo.buyerId == id">
                         <td style="text-align: left; vertical-align: middle" colspan="4">
-                            <strong>Total by buyer: {{item.buyerName}}</strong></td>
+                            <strong>Total by buyer: {{item.buyerInfo.buyerId}}</strong></td>
                         <td style="text-align: center; vertical-align: middle">
-                            <strong>{{item.buyerTotalSpent}}</strong></td>
+                            <strong>{{item.sources.buyerTotalSpent}}</strong></td>
                     </tr>
                     </tbody>
                     <tfoot>
