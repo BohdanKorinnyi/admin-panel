@@ -1,6 +1,7 @@
 SELECT
   postback.date,
   buyers.name,
+  buyers.id as buyerId,
   TRUNCATE(sum(postback.sum /
                (SELECT exchange.rate
                 FROM exchange

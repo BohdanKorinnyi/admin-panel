@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public final class PostbackStats {
+    private Integer buyerId;
     private String date;
     private String name;
     private String advname;
