@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="form-group" ng-init="getTypes();"
-                             style="margin-right:-3px;margin-bottom: 3px; margin-left: 5px;">
+                             style="margin-right:5px;margin-bottom: 3px; margin-left: 5px;">
                             <select class="selectpicker" multiple
                                     data-style="btn-info btn-fill btn-block"
                                     data-size="5"
@@ -161,15 +161,15 @@
                     </tr>
                     </thead>
                     <tbody ng-repeat="item in sources">
-                    <tr>
+                    <tr ng-repeat="info in item.sources">
                         <td style="text-align: left; vertical-align: middle; cursor:pointer"
-                            colspan="5" data-toggle="collapse" ng-click="showBuyerDetailsColumn(item.buyerId);">
-                            <strong class="panel-heading">Buyer: {{item.buyerName }} <i
+                            colspan="5" data-toggle="collapse" ng-click="showBuyerDetailsColumn(info.buyerId);">
+                            <strong class="panel-heading">Buyer: {{info.buyerName }} <i
                                     class="ti-angle-down"></i></strong></td>
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="stat in item.sourceStatistics" ng-show="buyerDetails && item.buyerId == id">
+                        ng-repeat="stat in info.sourceStatistics" ng-show="buyerDetails && item.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.username}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{stat.date}}
                         </td>
@@ -180,7 +180,7 @@
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="post in postbacks" ng-show="buyerDetails && item.buyerId == id">
+                        ng-repeat="post in item.postbacks" ng-show="buyerDetails && item.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{post.name}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{post.date}}
                         </td>
@@ -190,7 +190,7 @@
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="exp in expenses" ng-show="buyerDetails && item.buyerId == id">
+                        ng-repeat="exp in item.expenses" ng-show="buyerDetails && item.buyerId == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.buyer}}</td>
                         <td style="text-align: center; vertical-align: middle" class="panel-body">{{exp.date}}
                         </td>
@@ -210,8 +210,8 @@
                     <tfoot>
                     <tr ng-show="sources.length == 0">
                         <td colspan="5">
-                            <div class="loader" style="text-align: center;" ng-show="showCostsLoader"></div>
-                            <div style="text-align: center;" ng-show="!showCostsLoader">No data</div>
+                            <div class="loader" style="text-align: center;" ng-show="showsourcesLoader"></div>
+                            <div style="text-align: center;" ng-show="!showsourcesLoader">No data</div>
                         </td>
                     </tr>
                     </tfoot>

@@ -52,9 +52,7 @@ Application.controller("buyerSourcesController", function ($scope, $http, dateFa
         $scope.sources = [];
         $scope.showsourcesLoader = true;
         $http.post(url, $scope.getGridDetails()).then(function (response) {
-            $scope.sources = response.data.sources;
-            $scope.postbacks = response.data.postbacks;
-            $scope.expenses = response.data.expenses;
+            $scope.sources = response.data;
             $scope.showsourcesLoader = false;
         }, function () {
             $scope.showsourcesLoader = false;
