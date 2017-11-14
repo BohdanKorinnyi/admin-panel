@@ -508,3 +508,8 @@ datepicker, .datepicker, [datepicker], ._720kb-datepicker-calendar-header,
 .bootstrap-select.btn-group .dropdown-menu{
     min-width: 4%!important;
 }
+
+.buyersCostsTable, .buyersCostsTable > th, .buyersCostsTable > td{
+    text-align: center;
+    vertical-align: middle;
+}
