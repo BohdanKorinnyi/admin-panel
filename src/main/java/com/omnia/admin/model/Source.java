@@ -8,7 +8,7 @@ import lombok.Setter;
 public class Source {
     private int amount;
     private Double spent;
-    private int buyerId;
+    private Integer buyerId;
     private String campaignName;
     private String accountType;
     private String username;

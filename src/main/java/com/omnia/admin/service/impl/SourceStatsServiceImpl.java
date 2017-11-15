@@ -1,6 +1,7 @@
 package com.omnia.admin.service.impl;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.omnia.admin.dao.SourceStatisticDao;
 import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.model.Source;
@@ -34,7 +35,7 @@ public final class SourceStatsServiceImpl implements SourceStatsService {
     }
 
     @Override
-    public Map<Integer, SourcesResult> getAllStatistics(StatisticFilter filter) {
+    public Map<Integer, SourcesResult> getDailyAndGeneralStatistics(StatisticFilter filter) {
         Map<Integer, List<Source>> stats = new HashMap<>();
         List<Source> sources = sourceStatisticDao.getStatistics(filter);
         if (isFilterIncludeToday(filter.getTo())) {
@@ -45,9 +46,18 @@ public final class SourceStatsServiceImpl implements SourceStatsService {
         return groupStats(updateAllStats(stats, allStats));
     }
 
+    @Override
+    public List<Source> getSources(StatisticFilter filter) {
+        List<Source> result = Lists.newArrayList();
+        if (isFilterIncludeToday(filter.getTo())) {
+            result.addAll(sourceStatisticDao.getDailyStatistics(filter));
+        }
+        result.addAll(sourceStatisticDao.getStatistics(filter));
+        return result;
+    }
+
     private Map<Integer, SourcesResult> groupStats(Map<Integer, List<Source>> stats) {
         Map<Integer, SourcesResult> buyerStatistic = new HashMap<>();
-
         for (Map.Entry<Integer, List<Source>> entry : stats.entrySet()) {
             SourcesResult buyerCost = createBuyerStatistic(entry.getKey(), entry.getValue());
             buyerCost.setName(buyerService.getBuyerById(entry.getKey()));

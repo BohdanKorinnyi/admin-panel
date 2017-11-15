@@ -21,17 +21,19 @@ public interface SourceStatsService {
 
     Map<Integer, SourcesResult> getDailyStatistics(StatisticFilter filter);
 
-    Map<Integer, SourcesResult> getAllStatistics(StatisticFilter filter);
+    Map<Integer, SourcesResult> getDailyAndGeneralStatistics(StatisticFilter filter);
+
+    List<Source> getSources(StatisticFilter filter);
 
     default SourcesResult createBuyerStatistic(int buyerId, List<Source> sources) {
         double sum = sources.stream()
                 .mapToDouble(Source::getSpent)
                 .sum();
-        DecimalFormat twoDForm = new DecimalFormat("#,####");
+        DecimalFormat twoDForm = new DecimalFormat("#.####");
         SourcesResult sourcesResult = new SourcesResult();
         sourcesResult.setId(buyerId);
-        sourcesResult.setSpent(Double.valueOf(twoDForm.format(sum)));
-        sourcesResult.setSourceStatistics(sources);
+        sourcesResult.setSum(Double.valueOf(twoDForm.format(sum)));
+        sourcesResult.setData(sources);
         return sourcesResult;
     }
 

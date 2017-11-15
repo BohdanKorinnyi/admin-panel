@@ -35,7 +35,7 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
 
     @Override
     public File create(StatisticFilter filter) {
-        Map<Integer, SourcesResult> stats = sourceStatsService.getAllStatistics(filter);
+        Map<Integer, SourcesResult> stats = sourceStatsService.getDailyAndGeneralStatistics(filter);
         File report = null;
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
             XSSFSheet sheet = workbook.createSheet(SHEET_NAME);
@@ -49,7 +49,7 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
                 SourcesResult sourcesResult = entry.getValue();
                 rowNumber = aheadRow(sheet, sourcesResult.getName(), rowNumber);
                 rowNumber = createRows(sheet, sourcesResult, rowNumber);
-                rowNumber = resultBuyerRow(sheet, sourcesResult.getName(), sourcesResult.getSpent(), rowNumber);
+                rowNumber = resultBuyerRow(sheet, sourcesResult.getName(), sourcesResult.getSum(), rowNumber);
             }
             report = new File("report.xlsx");
             try (FileOutputStream outputStream = new FileOutputStream(report)) {
@@ -62,7 +62,7 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
     }
 
     private int createRows(XSSFSheet sheet, SourcesResult buyerStats, int rowNumber) {
-        for (Source source : buyerStats.getSourceStatistics()) {
+        for (Source source : buyerStats.getData()) {
             XSSFRow row = sheet.createRow(rowNumber);
             rowNumber = fillStatsRow(row, source, rowNumber);
         }
