@@ -48,6 +48,7 @@ public final class StatisticServiceImpl implements StatisticService {
         List<PostbackStats> stats = postbackFuture.get();
         List<Source> sources = sourcesFuture.get();
 
+        long start = System.currentTimeMillis();
         Map<Integer, List<Source>> sourcesByBuyerId = groupByBuyerId(sources, Source::getBuyerId);
         Map<Integer, List<Expenses>> expensesByBuyerId = groupByBuyerId(expenses, Expenses::getBuyerId);
         Map<Integer, List<PostbackStats>> postbackByBuyerId = groupByBuyerId(stats, PostbackStats::getBuyerId);
@@ -61,7 +62,10 @@ public final class StatisticServiceImpl implements StatisticService {
             value.setBuyerInfo(buyerProjection);
             result.add(value);
         }
+        log.info("Grouping by buyers executed in " + (System.currentTimeMillis() - start) + "ms");
+        start = System.currentTimeMillis();
         calculateSums(result);
+        log.info("Calculating sums executed in " + (System.currentTimeMillis() - start) + "ms");
         return result;
     }
 
@@ -98,10 +102,12 @@ public final class StatisticServiceImpl implements StatisticService {
     ) {
         Map<Integer, Stats> allStatistic = new HashMap<>();
         for (Map.Entry<Integer, List<Source>> source : sources.entrySet()) {
+            log.info("Sources for buyerId: " + source.getKey());
             if (allStatistic.containsKey(source.getKey())) {
                 SourcesResult result = allStatistic.get(source.getKey()).getSources();
                 if (isNull(result)) {
                     result = new SourcesResult();
+                    allStatistic.get(source.getKey()).setSources(result);
                 }
                 if (CollectionUtils.isEmpty(result.getData())) {
                     result.setData(source.getValue());
@@ -117,10 +123,12 @@ public final class StatisticServiceImpl implements StatisticService {
             }
         }
         for (Map.Entry<Integer, List<Expenses>> expense : expenses.entrySet()) {
+            log.info("Expenses for buyerId: " + expense.getKey());
             if (allStatistic.containsKey(expense.getKey())) {
                 ExpensesResult result = allStatistic.get(expense.getKey()).getExpenses();
                 if (isNull(result)) {
                     result = new ExpensesResult();
+                    allStatistic.get(expense.getKey()).setExpenses(result);
                 }
                 if (CollectionUtils.isEmpty(result.getData())) {
                     result.setData(expense.getValue());
@@ -136,10 +144,12 @@ public final class StatisticServiceImpl implements StatisticService {
             }
         }
         for (Map.Entry<Integer, List<PostbackStats>> postback : postbacks.entrySet()) {
+            log.info("Postbacks for buyerId: " + postback.getKey());
             if (allStatistic.containsKey(postback.getKey())) {
                 PostbackResult result = allStatistic.get(postback.getKey()).getPostbacks();
                 if (isNull(result)) {
                     result = new PostbackResult();
+                    allStatistic.get(postback.getKey()).setPostbacks(result);
                 }
                 if (CollectionUtils.isEmpty(result.getData())) {
                     result.setData(postback.getValue());
