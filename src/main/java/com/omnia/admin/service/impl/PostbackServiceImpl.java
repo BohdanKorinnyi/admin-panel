@@ -22,7 +22,7 @@ public class PostbackServiceImpl implements PostbackService {
     }
 
     @Override
-    public List<PostbackStats> getStats(StatisticFilter filter) {
+    public List<PostbackStats> getPostbackStats(StatisticFilter filter) {
         return postbackDao.getStats(filter);
     }
 }

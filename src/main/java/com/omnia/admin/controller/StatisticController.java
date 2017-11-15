@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping("statistic")
 @AllArgsConstructor
@@ -16,7 +18,7 @@ public class StatisticController {
     private final StatisticService statisticService;
 
     @PostMapping
-    public ResponseEntity getStatistic(@RequestBody StatisticFilter filter) {
+    public ResponseEntity getStatistic(@RequestBody StatisticFilter filter) throws ExecutionException, InterruptedException {
         return ResponseEntity.ok(statisticService.getBuyerStatistics(filter));
     }
 }

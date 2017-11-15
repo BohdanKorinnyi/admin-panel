@@ -4,6 +4,7 @@ import com.omnia.admin.dao.ExpensesDao;
 import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.model.Expenses;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.StringJoiner;
 
+@Log4j
 @Repository
 @AllArgsConstructor
 public class ExpensesDaoImpl implements ExpensesDao {
@@ -27,6 +29,10 @@ public class ExpensesDaoImpl implements ExpensesDao {
 
     @Override
     public List<Expenses> getExpenses(StatisticFilter filter) {
+        return jdbcTemplate.query(createSql(filter), BeanPropertyRowMapper.newInstance(Expenses.class));
+    }
+
+    private String createSql(StatisticFilter filter) {
         String where = "";
         if (!CollectionUtils.isEmpty(filter.getBuyers())) {
             StringJoiner joiner = new StringJoiner("','", "'", "'");
@@ -43,7 +49,8 @@ public class ExpensesDaoImpl implements ExpensesDao {
         if (!StringUtils.isEmpty(where)) {
             where = "WHERE " + where;
         }
-
-        return jdbcTemplate.query(String.format(SELECT_EXPENSES, where), BeanPropertyRowMapper.newInstance(Expenses.class));
+        String sql = String.format(SELECT_EXPENSES, where);
+        log.info(sql);
+        return sql;
     }
 }

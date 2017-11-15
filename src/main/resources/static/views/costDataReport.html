@@ -156,12 +156,12 @@
                     <tbody ng-repeat="item in costs">
                     <tr>
                         <td style="text-align: left; vertical-align: middle; cursor:pointer"
-                            colspan="5" data-toggle="collapse" ng-click="showBuyerDetailsColumn(item.buyerId);">
-                            <strong class="panel-heading">Buyer: {{item.buyerName }} <i
+                            colspan="5" data-toggle="collapse" ng-click="showBuyerDetailsColumn(item.id);">
+                            <strong class="panel-heading">Buyer: {{item.name }} <i
                                     class="ti-angle-down"></i></strong></td>
                     </tr>
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="stat in item.sourceStatistics" ng-show="buyerDetails && item.buyerId == id">
+                        ng-repeat="stat in item.sources" ng-show="buyerDetails && item.id == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">
                             {{stat.date}}
                         </td>
@@ -178,11 +178,11 @@
                             {{stat.spent}}
                         </td>
                     </tr>
-                    <tr ng-show="buyerDetails && item.buyerId == id">
+                    <tr ng-show="buyerDetails && item.id == id">
                         <td style="text-align: left; vertical-align: middle" colspan="4">
-                            <strong>Total by buyer: {{item.buyerName}}</strong></td>
+                            <strong>Total by buyer: {{item.name}}</strong></td>
                         <td style="text-align: center; vertical-align: middle">
-                            <strong>{{item.buyerTotalSpent}}</strong></td>
+                            <strong>{{item.spent}}</strong></td>
                     </tr>
                     </tbody>
                     <tfoot>

@@ -31,6 +31,6 @@ public class SourceStatisticController {
 
     @PostMapping("all")
     public ResponseEntity getAllStatistic(@RequestBody StatisticFilter filter) {
-        return ResponseEntity.ok(sourceStatsService.getAllStatistics(filter));
+        return ResponseEntity.ok(sourceStatsService.getDailyAndGeneralStatistics(filter));
     }
 }

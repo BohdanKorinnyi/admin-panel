@@ -2,7 +2,7 @@ package com.omnia.admin.dao.impl;
 
 import com.omnia.admin.dao.SourceStatisticDao;
 import com.omnia.admin.dto.StatisticFilter;
-import com.omnia.admin.model.SourceStatistic;
+import com.omnia.admin.model.Source;
 import com.omnia.admin.service.QueryHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -26,13 +26,13 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<SourceStatistic> getStatistics(StatisticFilter filter) {
-        return jdbcTemplate.query(updateWhereClause(SELECT_STATISTIC, filter), BeanPropertyRowMapper.newInstance(SourceStatistic.class));
+    public List<Source> getStatistics(StatisticFilter filter) {
+        return jdbcTemplate.query(updateWhereClause(SELECT_STATISTIC, filter), BeanPropertyRowMapper.newInstance(Source.class));
     }
 
     @Override
-    public List<SourceStatistic> getDailyStatistics(StatisticFilter filter) {
-        return jdbcTemplate.query(updateWhereClause(SELECT_DAILY_STATISTIC, filter), BeanPropertyRowMapper.newInstance(SourceStatistic.class));
+    public List<Source> getDailyStatistics(StatisticFilter filter) {
+        return jdbcTemplate.query(updateWhereClause(SELECT_DAILY_STATISTIC, filter), BeanPropertyRowMapper.newInstance(Source.class));
     }
 
     private String updateWhereClause(String sql, StatisticFilter filter) {

@@ -5,10 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SourceStatistic {
+public class Source {
     private int amount;
     private Double spent;
-    private int buyerId;
+    private Integer buyerId;
     private String campaignName;
     private String accountType;
     private String username;

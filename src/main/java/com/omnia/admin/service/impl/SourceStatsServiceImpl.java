@@ -1,10 +1,11 @@
 package com.omnia.admin.service.impl;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.omnia.admin.dao.SourceStatisticDao;
 import com.omnia.admin.dto.StatisticFilter;
-import com.omnia.admin.model.BuyerStatistic;
-import com.omnia.admin.model.SourceStatistic;
+import com.omnia.admin.model.Source;
+import com.omnia.admin.model.statistic.SourcesResult;
 import com.omnia.admin.service.BuyerService;
 import com.omnia.admin.service.SourceStatsService;
 import lombok.AllArgsConstructor;
@@ -17,40 +18,49 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public final class SourceStatsServiceImpl implements SourceStatsService {
-    public static final Map<Integer, List<SourceStatistic>> EMPTY_STATS_MAP = ImmutableMap.of();
+    public static final Map<Integer, List<Source>> EMPTY_STATS_MAP = ImmutableMap.of();
     private final BuyerService buyerService;
     private final SourceStatisticDao sourceStatisticDao;
 
     @Override
-    public Map<Integer, BuyerStatistic> getStatistics(StatisticFilter filter) {
-        List<SourceStatistic> sourceStatistics = sourceStatisticDao.getStatistics(filter);
-        return groupStats(groupByBuyer(sourceStatistics));
+    public Map<Integer, SourcesResult> getStatistics(StatisticFilter filter) {
+        List<Source> sources = sourceStatisticDao.getStatistics(filter);
+        return groupStats(groupByBuyer(sources));
     }
 
     @Override
-    public Map<Integer, BuyerStatistic> getDailyStatistics(StatisticFilter filter) {
-        List<SourceStatistic> dailySourceStatistics = sourceStatisticDao.getDailyStatistics(filter);
-        return groupStats(groupByBuyer(dailySourceStatistics));
+    public Map<Integer, SourcesResult> getDailyStatistics(StatisticFilter filter) {
+        List<Source> dailySources = sourceStatisticDao.getDailyStatistics(filter);
+        return groupStats(groupByBuyer(dailySources));
     }
 
     @Override
-    public Map<Integer, BuyerStatistic> getAllStatistics(StatisticFilter filter) {
-        Map<Integer, List<SourceStatistic>> stats = new HashMap<>();
-        List<SourceStatistic> sourceStatistics = sourceStatisticDao.getStatistics(filter);
+    public Map<Integer, SourcesResult> getDailyAndGeneralStatistics(StatisticFilter filter) {
+        Map<Integer, List<Source>> stats = new HashMap<>();
+        List<Source> sources = sourceStatisticDao.getStatistics(filter);
         if (isFilterIncludeToday(filter.getTo())) {
-            Map<Integer, List<SourceStatistic>> dailyStats = groupByBuyer(sourceStatisticDao.getDailyStatistics(filter));
+            Map<Integer, List<Source>> dailyStats = groupByBuyer(sourceStatisticDao.getDailyStatistics(filter));
             stats = updateAllStats(stats, dailyStats);
         }
-        Map<Integer, List<SourceStatistic>> allStats = groupByBuyer(sourceStatistics);
+        Map<Integer, List<Source>> allStats = groupByBuyer(sources);
         return groupStats(updateAllStats(stats, allStats));
     }
 
-    private Map<Integer, BuyerStatistic> groupStats(Map<Integer, List<SourceStatistic>> stats) {
-        Map<Integer, BuyerStatistic> buyerStatistic = new HashMap<>();
+    @Override
+    public List<Source> getSources(StatisticFilter filter) {
+        List<Source> result = Lists.newArrayList();
+        if (isFilterIncludeToday(filter.getTo())) {
+            result.addAll(sourceStatisticDao.getDailyStatistics(filter));
+        }
+        result.addAll(sourceStatisticDao.getStatistics(filter));
+        return result;
+    }
 
-        for (Map.Entry<Integer, List<SourceStatistic>> entry : stats.entrySet()) {
-            BuyerStatistic buyerCost = createBuyerStatistic(entry.getKey(), entry.getValue());
-            buyerCost.setBuyerName(buyerService.getBuyerById(entry.getKey()));
+    private Map<Integer, SourcesResult> groupStats(Map<Integer, List<Source>> stats) {
+        Map<Integer, SourcesResult> buyerStatistic = new HashMap<>();
+        for (Map.Entry<Integer, List<Source>> entry : stats.entrySet()) {
+            SourcesResult buyerCost = createBuyerStatistic(entry.getKey(), entry.getValue());
+            buyerCost.setName(buyerService.getBuyerById(entry.getKey()));
             buyerStatistic.put(entry.getKey(), buyerCost);
         }
         return buyerStatistic;
