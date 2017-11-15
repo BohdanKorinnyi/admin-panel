@@ -50,10 +50,6 @@ Application.controller("buyerSourcesController", function ($scope, $http, dateFa
         $scope.showsourcesLoader = true;
         $http.post(url, $scope.getGridDetails()).then(function (response) {
             $scope.sources = response.data;
-            console.log($scope.sources[0]);
-            console.log($scope.sources[1]);
-            console.log($scope.sources[2]);
-            console.log($scope.sources[3]);
             $scope.showsourcesLoader = false;
         }, function () {
             $scope.showsourcesLoader = false;
