@@ -37,11 +37,11 @@ Application.config(function($routeProvider, $locationProvider) {
             //     },
             // }
         })
-        .when('/sources', {
+        .when('/statistic', {
             templateUrl : "views/costDataReport.html",
             controller  : "costDataReportController"
         })
-        .when('/buyersources', {
+        .when('/sources', {
             templateUrl : "views/buyerCosts.html",
             controller  : "buyerSourcesController"
         });

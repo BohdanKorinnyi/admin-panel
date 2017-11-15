@@ -125,7 +125,7 @@
                                 <span ng-show="sortType == '' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Compaign Name
+                                Campaign Name
                             </a>
                         </th>
 
@@ -161,7 +161,7 @@
                                     class="ti-angle-down"></i></strong></td>
                     </tr>
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="stat in item.sources" ng-show="buyerDetails && item.id == id">
+                        ng-repeat="stat in item.data" ng-show="buyerDetails && item.id == id">
                         <td style="text-align: center; vertical-align: middle" class="panel-body">
                             {{stat.date}}
                         </td>
@@ -182,7 +182,7 @@
                         <td style="text-align: left; vertical-align: middle" colspan="4">
                             <strong>Total by buyer: {{item.name}}</strong></td>
                         <td style="text-align: center; vertical-align: middle">
-                            <strong>{{item.spent}}</strong></td>
+                            <strong>{{item.sum}}</strong></td>
                     </tr>
                     </tbody>
                     <tfoot>

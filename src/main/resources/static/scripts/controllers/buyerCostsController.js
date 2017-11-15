@@ -50,6 +50,10 @@ Application.controller("buyerSourcesController", function ($scope, $http, dateFa
         $scope.showsourcesLoader = true;
         $http.post(url, $scope.getGridDetails()).then(function (response) {
             $scope.sources = response.data;
+            console.log($scope.sources[0]);
+            console.log($scope.sources[1]);
+            console.log($scope.sources[2]);
+            console.log($scope.sources[3]);
             $scope.showsourcesLoader = false;
         }, function () {
             $scope.showsourcesLoader = false;
@@ -88,16 +92,6 @@ Application.controller("buyerSourcesController", function ($scope, $http, dateFa
         });
     };
 
-    $scope.export = function () {
-        var args = $scope.getGridDetails();
-        window.location.href = 'report/stats?buyers='
-            + args.buyers.join(',')
-            + '&types=' + args.types.join(',')
-            + '&from=' + args.from
-            + '&to=' + args.to;
-    };
-
-    $scope.currentCostId = [];
     $scope.id = -1;
 
     $scope.showBuyerDetailsColumn = function (id) {
