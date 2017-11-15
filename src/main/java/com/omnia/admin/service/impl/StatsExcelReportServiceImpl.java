@@ -2,8 +2,8 @@ package com.omnia.admin.service.impl;
 
 import com.google.common.collect.ImmutableList;
 import com.omnia.admin.dto.StatisticFilter;
-import com.omnia.admin.model.BuyerStatistic;
-import com.omnia.admin.model.SourceStatistic;
+import com.omnia.admin.model.statistic.SourcesResult;
+import com.omnia.admin.model.Source;
 import com.omnia.admin.service.ExcelReportService;
 import com.omnia.admin.service.SourceStatsService;
 import lombok.AllArgsConstructor;
@@ -35,7 +35,7 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
 
     @Override
     public File create(StatisticFilter filter) {
-        Map<Integer, BuyerStatistic> stats = sourceStatsService.getAllStatistics(filter);
+        Map<Integer, SourcesResult> stats = sourceStatsService.getAllStatistics(filter);
         File report = null;
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
             XSSFSheet sheet = workbook.createSheet(SHEET_NAME);
@@ -45,11 +45,11 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
                 cell.setCellValue(COLUMNS.get(i));
             }
             int rowNumber = 1;
-            for (Map.Entry<Integer, BuyerStatistic> entry : stats.entrySet()) {
-                BuyerStatistic buyerStatistic = entry.getValue();
-                rowNumber = aheadRow(sheet, buyerStatistic.getBuyerName(), rowNumber);
-                rowNumber = createRows(sheet, buyerStatistic, rowNumber);
-                rowNumber = resultBuyerRow(sheet, buyerStatistic.getBuyerName(), buyerStatistic.getBuyerTotalSpent(), rowNumber);
+            for (Map.Entry<Integer, SourcesResult> entry : stats.entrySet()) {
+                SourcesResult sourcesResult = entry.getValue();
+                rowNumber = aheadRow(sheet, sourcesResult.getName(), rowNumber);
+                rowNumber = createRows(sheet, sourcesResult, rowNumber);
+                rowNumber = resultBuyerRow(sheet, sourcesResult.getName(), sourcesResult.getSpent(), rowNumber);
             }
             report = new File("report.xlsx");
             try (FileOutputStream outputStream = new FileOutputStream(report)) {
@@ -61,26 +61,26 @@ public class StatsExcelReportServiceImpl implements ExcelReportService {
         return report;
     }
 
-    private int createRows(XSSFSheet sheet, BuyerStatistic buyerStats, int rowNumber) {
-        for (SourceStatistic sourceStatistic : buyerStats.getSourceStatistics()) {
+    private int createRows(XSSFSheet sheet, SourcesResult buyerStats, int rowNumber) {
+        for (Source source : buyerStats.getSourceStatistics()) {
             XSSFRow row = sheet.createRow(rowNumber);
-            rowNumber = fillStatsRow(row, sourceStatistic, rowNumber);
+            rowNumber = fillStatsRow(row, source, rowNumber);
         }
         return rowNumber;
     }
 
-    private int fillStatsRow(XSSFRow row, SourceStatistic sourceStatistic, int rowNumber) {
+    private int fillStatsRow(XSSFRow row, Source source, int rowNumber) {
         XSSFCell date = row.createCell(0);
         XSSFCell accountType = row.createCell(1);
         XSSFCell campaign = row.createCell(2);
         XSSFCell accountHolder = row.createCell(3);
         XSSFCell spent = row.createCell(4);
 
-        date.setCellValue(sourceStatistic.getDate());
-        accountType.setCellValue(sourceStatistic.getAccountType());
-        campaign.setCellValue(sourceStatistic.getCampaignName());
-        accountHolder.setCellValue(sourceStatistic.getUsername());
-        spent.setCellValue(sourceStatistic.getSpent());
+        date.setCellValue(source.getDate());
+        accountType.setCellValue(source.getAccountType());
+        campaign.setCellValue(source.getCampaignName());
+        accountHolder.setCellValue(source.getUsername());
+        spent.setCellValue(source.getSpent());
 
         return rowNumber + 1;
     }

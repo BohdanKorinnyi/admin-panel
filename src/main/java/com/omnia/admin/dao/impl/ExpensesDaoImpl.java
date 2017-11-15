@@ -16,7 +16,7 @@ import java.util.StringJoiner;
 @Repository
 @AllArgsConstructor
 public class ExpensesDaoImpl implements ExpensesDao {
-    private static final String SELECT_EXPENSES = "SELECT buyers.id as buyerId,buyers.name as buyer,expenses.date," +
+    private static final String SELECT_EXPENSES = "SELECT buyers.id as id,buyers.name as buyer,expenses.date," +
             "expenses.sum,expenses_type.name " +
             "FROM expenses" +
             "  LEFT JOIN buyers ON expenses.buyer_id = buyers.id" +
