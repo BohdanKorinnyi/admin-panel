@@ -1,15 +1,14 @@
 "use strict";
 
-Application.controller("costDataReportController", function ($scope, $http, dateFactory) {
+Application.controller("sourcesController", function ($scope, $http, dateFactory) {
 
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
 
-    $scope.types = [];
-    $scope.selectedTypes = [];
-
-    $scope.costs = [];
-    $scope.showCostsLoader = true;
+    $scope.sources = [];
+    $scope.expenses = [];
+    $scope.postbacks = [];
+    $scope.showsourcesLoader = true;
 
     $scope.buyerDetails = false;
 
@@ -45,16 +44,16 @@ Application.controller("costDataReportController", function ($scope, $http, date
         return [year, month, day].join('-');
     }
 
-    $scope.loadCosts = function () {
-        var url = "/statistic/all";
-        $scope.costs = [];
-        $scope.showCostsLoader = true;
+    $scope.loadsources = function () {
+        var url = "/statistic";
+        $scope.sources = [];
+        $scope.showsourcesLoader = true;
         $http.post(url, $scope.getGridDetails()).then(function (response) {
-            $scope.costs = response.data;
-            $scope.showCostsLoader = false;
+            $scope.sources = response.data;
+            $scope.showsourcesLoader = false;
         }, function () {
-            $scope.showCostsLoader = false;
-            notify('ti-alert', 'Error occurred during loading sources', 'danger');
+            $scope.showsourcesLoader = false;
+            notify('ti-alert', 'Error occurred during loading buyer sources', 'danger');
         });
     };
 
@@ -74,7 +73,6 @@ Application.controller("costDataReportController", function ($scope, $http, date
 
         return {
             "buyers": $scope.selectedBuyerNames,
-            "types": $scope.selectedTypes,
             "from": fromDate,
             "to": toDate
         };
@@ -90,31 +88,6 @@ Application.controller("costDataReportController", function ($scope, $http, date
         });
     };
 
-
-    $scope.getTypes = function () {
-        var url = "/account/types";
-        $http.get(url).then(function success(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                $scope.types.push({
-                    id: i,
-                    name: response.data[i]
-                });
-            }
-        }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading types', 'danger');
-        });
-    };
-
-    $scope.export = function () {
-        var args = $scope.getGridDetails();
-        window.location.href = 'report/stats?buyers='
-            + args.buyers.join(',')
-            + '&types=' + args.types.join(',')
-            + '&from=' + args.from
-            + '&to=' + args.to;
-    };
-
-    $scope.currentCostId = [];
     $scope.id = -1;
 
     $scope.showBuyerDetailsColumn = function (id) {
@@ -128,3 +101,6 @@ Application.controller("costDataReportController", function ($scope, $http, date
         }
     };
 });
+
+
+
