@@ -1,12 +1,12 @@
-<div ng-controller="buyerSourcesController" ng-init="loadsources();">
-    <div class="cardForBuyerCosts">
+<div ng-controller="statisticController" ng-init="loadCosts();">
+    <div class="cardForCostDataReportControl">
         <div class="row">
             <div class="col-md-9">
                 <div class="row">
                     <form class="form-inline">
 
                         <div class="form-group" ng-init="getBuyers();"
-                             style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
+                             style="margin-right:-3px;margin-bottom: 3px; margin-left: 5px;">
                             <select class="selectpicker" multiple
                                     data-style="btn-info btn-fill btn-block"
                                     data-size="5"
@@ -20,13 +20,29 @@
                             </select>
                         </div>
 
+                        <div class="form-group" ng-init="getTypes();"
+                             style="margin-bottom: 3px; margin-left: 5px; margin-right: 5px;">
+                            <select class="selectpicker" multiple
+                                    data-style="btn-info btn-fill btn-block"
+                                    data-size="5"
+                                    data-header="Types"
+                                    selected-header="options selected"
+                                    title="Types"
+                                    ng-model="selectedTypes"
+                                    style="width: 120%;">
+                                <option class="small-font" ng-repeat="t in types"
+                                        data-select-watcher
+                                        data-last="{{$last}}" value="{{t.name}}">{{t.name}}
+                                </option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <select class="form-control" data-ng-model="selectedDate"
                                     data-ng-options="v as k for (k, v) in dateOptions"
                                     style="margin-bottom: 14px;">
                             </select>
                         </div>
-
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6" style="width: 225px">
@@ -60,52 +76,30 @@
                 <div class="row">
                     <div class="col-md-12" style="text-align: right">
                         <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
-                                ng-click="loadsources();">
+                                ng-click="loadCosts();">
                             Apply
                         </button>
-
-                        <!--<div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate"-->
-                             <!--style="width: 72px;">-->
-                            <!--<div class="bootstrap-switch-container" style="width: 122px; margin-left: 0px;">-->
-                            <!--<span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 50px;">-->
-                                <!--ON-->
-                            <!--</span>-->
-                                <!--<span class="bootstrap-switch-label" style="width: 26px;">&nbsp;</span>-->
-                                <!--<span class="bootstrap-switch-handle-off bootstrap-switch-default"-->
-                                      <!--style="width: 50px;">-->
-                                <!--OFF-->
-                            <!--</span>-->
-                                <!--<input type="checkbox" class="switch" checked="false">-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <button class="btn btn-primary btn-md" id="exportBtn" name="export" type="submit"
+                                ng-click="export();">
+                            Export
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="cardForBuyerCostsTable">
+    <div class="cardForCostDataReportTable">
         <div class="row">
             <div class="col-md-12">
-                <table id="table" class="table table-hover table-sm table-bordered buyersCostsTable"
-                       ng-style="tableStyle" style="border-collapse: collapse !important;">
+                <table id="table" class="table table-hover table-sm table-bordered" ng-style="tableStyle"
+                       style="border-collapse: collapse !important;">
                     <thead class="thead-default">
                     <tr style="text-align: center; vertical-align: middle">
-                        <th>
+                        <th style="text-align: center; vertical-align: middle">
                             <a href="" ng-click="sortType = ''">
                                 <span ng-show="sortType == '' && sortReverse == 'ASC'"
                                       class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Name
-                            </a>
-                        </th>
-
-                        <th>
-                            <a href="" ng-click="sortType = ''">
-                                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                                          class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == '' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == '' && sortReverse == ''"></span>
@@ -113,29 +107,40 @@
                             </a>
                         </th>
 
-                        <th>
+                        <th style="text-align: center; vertical-align: middle">
+                            <a href="" ng-click="sortType = ''">
+                                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == '' && sortReverse == ''"></span>
+                                Source
+                            </a>
+                        </th>
+
+                        <th style="text-align: center; vertical-align: middle; width:30%;">
                             <a href="" ng-click="sortType = ''">
                     <span ng-show="sortType == '' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == '' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Description
+                                Campaign Name
                             </a>
                         </th>
 
-                        <th>
+                        <th style="text-align: center; vertical-align: middle">
                             <a href="" ng-click="sortType = ''">
                     <span ng-show="sortType == '' && sortReverse == 'ASC'"
                           class="fa fa-caret-up"></span>
                                 <span ng-show="sortType == '' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Spent
+                                Account Holder
                             </a>
                         </th>
 
-                        <th>
+                        <th style="text-align: center; vertical-align: middle">
                             <a href=""
                                ng-click="sortType = ''">
                             <span ng-show="sortType == '' && sortReverse == 'ASC'"
@@ -143,95 +148,60 @@
                                 <span ng-show="sortType == '' && sortReverse == 'DESC'"
                                       class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Revenue
+                                Spent
                             </a>
                         </th>
                     </tr>
                     </thead>
-                    <tbody ng-repeat="item in sources">
+                    <tbody ng-repeat="item in costs">
                     <tr>
-                        <td style="text-align: left; cursor: pointer;"
-                            colspan="5" data-toggle="collapse"
-                            ng-click="showBuyerDetailsColumn(item.buyerInfo.buyerId);">
-                            <strong class="panel-heading">Buyer: {{item.buyerInfo.buyerName}} <i
+                        <td style="text-align: left; vertical-align: middle; cursor:pointer"
+                            colspan="5" data-toggle="collapse" ng-click="showBuyerDetailsColumn(item.id);">
+                            <strong class="panel-heading">Buyer: {{item.name }} <i
                                     class="ti-angle-down"></i></strong></td>
                     </tr>
-
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id && item.sources !== null">
-                        <td class="panel-body"><strong>Buyer Name</strong></td>
-                        <td class="panel-body"><strong>Date</strong></td>
-                        <td class="panel-body"><strong>Account Type</strong></td>
-                        <td class="panel-body"><strong>Spent</strong></td>
-                        <td class="panel-body"></td>
-                    </tr>
-
-                    <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="stat in item.sources.data"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id">
-                        <td class="panel-body">{{stat.username}}</td>
-                        <td class="panel-body">{{stat.date}}
+                        ng-repeat="stat in item.data" ng-show="buyerDetails && item.id == id">
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">
+                            {{stat.date}}
                         </td>
-                        <td class="panel-body">{{stat.accountType}}</td>
-                        <td class="panel-body">{{stat.spent}}</td>
-                        <td class="panel-body"></td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">
+                            {{stat.accountType}}
+                        </td>
+                        <td style="text-align: left; vertical-align: middle" class="panel-body">
+                            {{stat.campaignName}}
+                        </td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">
+                            {{stat.username}}
+                        </td>
+                        <td style="text-align: center; vertical-align: middle" class="panel-body">
+                            {{stat.spent}}
+                        </td>
                     </tr>
-
-                    <tr style="text-align: center; vertical-align: middle"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id && item.postbacks !== null">
-                        <td class="panel-body"><strong>Buyer Name</strong></td>
-                        <td class="panel-body"><strong>Date</strong></td>
-                        <td class="panel-body"><strong>Adv Name</strong></td>
-                        <td class="panel-body"></td>
-                        <td class="panel-body"><strong>Sum</strong></td>
-                    </tr>
-
-                    <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="post in item.postbacks.data"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id">
-                        <td class="panel-body">{{post.name}}</td>
-                        <td class="panel-body">{{post.date}}</td>
-                        <td class="panel-body">{{post.advname}}</td>
-                        <td class="panel-body"></td>
-                        <td class="panel-body">{{post.amountInUsd}}</td>
-                    </tr>
-
-                    <tr style="text-align: center; vertical-align: middle"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id && item.expenses !== null">
-                        <td class="panel-body"><strong>Buyer Name</strong></td>
-                        <td class="panel-body"><strong>Date</strong></td>
-                        <td class="panel-body"><strong>Exp Name</strong></td>
-                        <td class="panel-body"><strong>Sum</strong></td>
-                        <td class="panel-body"></td>
-                    </tr>
-
-                    <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="exp in item.expenses.date"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id">
-                        <td class="panel-body">{{exp.buyer}}</td>
-                        <td class="panel-body">{{exp.date}}</td>
-                        <td class="panel-body">{{exp.name}}</td>
-                        <td class="panel-body">{{exp.sum}}</td>
-                        <td class="panel-body"></td>
-                    </tr>
-
-                    <tr ng-show="buyerDetails && item.buyerInfo.buyerId == id">
-                        <td style="text-align: left; vertical-align: middle" colspan="3">
-                            <strong>Total by buyer: {{item.buyerInfo.buyerName}}</strong></td>
-                        <td><strong>{{item.sources.sum + item.expenses.sum}}</strong></td>
-                        <td><strong>{{item.postbacks.sum}}</strong></td>
+                    <tr ng-show="buyerDetails && item.id == id">
+                        <td style="text-align: left; vertical-align: middle" colspan="4">
+                            <strong>Total by buyer: {{item.name}}</strong></td>
+                        <td style="text-align: center; vertical-align: middle">
+                            <strong>{{item.sum}}</strong></td>
                     </tr>
                     </tbody>
                     <tfoot>
-                    <tr ng-show="sources.length == 0">
+                    <tr ng-show="costs.length == 0">
                         <td colspan="5">
-                            <div class="loader" style="text-align: center;" ng-show="showsourcesLoader"></div>
-                            <div style="text-align: center;" ng-show="!showsourcesLoader">No data</div>
+                            <div class="loader" style="text-align: center;" ng-show="showCostsLoader"></div>
+                            <div style="text-align: center;" ng-show="!showCostsLoader">No data</div>
                         </td>
                     </tr>
                     </tfoot>
                 </table>
-                <div class="panel-footer"></div>
+
+                <div class="panel-footer">
+                    <!--<div class="text-center">-->
+                    <!--<uib-pagination total-items="totalPagination" max-size="5"-->
+                    <!--ng-model="selectedPage" items-per-page="selectedSize"-->
+                    <!--ng-click=""></uib-pagination>-->
+                    <!--</div>-->
+                </div>
             </div>
         </div>
     </div>

@@ -38,11 +38,11 @@ Application.config(function($routeProvider, $locationProvider) {
             // }
         })
         .when('/statistic', {
-            templateUrl : "views/costDataReport.html",
-            controller  : "costDataReportController"
+            templateUrl : "views/statistic.html",
+            controller  : "statisticController"
         })
         .when('/sources', {
-            templateUrl : "views/buyerCosts.html",
-            controller  : "buyerSourcesController"
+            templateUrl : "views/sources.html",
+            controller  : "sourcesController"
         });
 });
