@@ -3,6 +3,7 @@ package com.omnia.admin.dao.impl;
 import com.omnia.admin.dao.PostbackDao;
 import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.exception.QueryExecutionException;
+import com.omnia.admin.model.BuyerPlan;
 import com.omnia.admin.service.PostbackStats;
 import com.omnia.admin.service.QueryHelper;
 import lombok.AllArgsConstructor;
@@ -14,9 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.StringJoiner;
+import java.util.*;
 
 import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 
@@ -56,5 +55,15 @@ public class PostbackDaoImpl implements PostbackDao {
             dateWhere = " AND date BETWEEN '" + filter.getFrom() + "' AND '" + filter.getTo() + "' ";
         }
         return jdbcTemplate.query(String.format(SELECT_POSTBACK, buyerWhere, dateWhere), BeanPropertyRowMapper.newInstance(PostbackStats.class));
+    }
+
+    @Override
+    public List<BuyerPlan> getBuyerProfitPlan(List<String> months, List<String> buyers) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<BuyerPlan> getBuyerRevenuePlan(List<String> months, List<String> buyers) {
+        return Collections.emptyList();
     }
 }
