@@ -51,18 +51,26 @@
                             <div class="col-md-12">
                                 <form class="form-horizontal">
                                     <div class="form-inline form-group">
+                                        <label for="monthYear" style="width: 15%; margin-left: 16%;">Month/Year</label>
+                                        <select class="form-control" data-ng-model="selectedDate"
+                                                data-ng-options="v as k for (k, v) in dateOptions"
+                                                style="margin-bottom: 14px;" id="monthYear"
+                                                ng-disabled="selectedBuyerIndex === -1">
+                                        </select>
+
+                                        <label for="kpiName" style="width: 15%; margin-left: 10%;">KPI Name</label>
+                                        <select class="form-control" data-ng-model="selectedDate"
+                                                data-ng-options="v as k for (k, v) in dateOptions"
+                                                style="margin-bottom: 14px;" id="kpiName"
+                                                ng-disabled="selectedBuyerIndex === -1">
+                                        </select>
+                                    </div>
+                                    <div class="form-inline form-group">
                                         <label for="buyerName" style="width: 15%">Name</label>
                                         <input type="text" class="form-control" id="buyerName" style="width: 84%"
                                                ng-model="name"
                                                ng-disabled="selectedBuyerIndex === -1"
                                                ng-change="updateBuyerName();"/>
-                                    </div>
-                                    <div class="form-inline form-group">
-                                        <label for="buyerPlanProfit" style="width: 15%">Profit Plan</label>
-                                        <input type="text" class="form-control" id="buyerPlanProfit" style="width: 84%"
-                                               ng-model="planProfit"
-                                               ng-disabled="selectedBuyerIndex === -1"
-                                               ng-change="updateBuyerPlanProfit();"/>
                                     </div>
                                     <div class="form-inline form-group">
                                         <label for="buyerType" style="width: 15%">Type</label>
@@ -72,26 +80,9 @@
                                                ng-change="updateBuyerType();"/>
                                     </div>
                                     <div class="form-inline form-group">
-                                        <label for="buyerPlanProfitOld" style="width: 15%">Old Profit Plan</label>
-                                        <input type="text" class="form-control" id="buyerPlanProfitOld"
-                                               style="width: 84%"
-                                               ng-model="planProfitOld"
-                                               ng-disabled="selectedBuyerIndex === -1"
-                                               ng-change="updateBuyerPlanProfitOld();"/>
-                                    </div>
-                                    <div class="form-inline form-group">
-                                        <label for="buyerPlanRev" style="width: 15%">Plan Rev</label>
-                                        <input type="text" class="form-control" id="buyerPlanRev" style="width: 84%"
-                                               ng-model="planRev"
-                                               ng-disabled="selectedBuyerIndex === -1"
-                                               ng-change="updateBuyerPlanRev();"/>
-                                    </div>
-                                    <div class="form-inline form-group">
-                                        <label for="buyerPlanRevOld" style="width: 15%">Plan Rev Old</label>
-                                        <input type="text" class="form-control" id="buyerPlanRevOld" style="width: 84%"
-                                               ng-model="planRevOld"
-                                               ng-disabled="selectedBuyerIndex === -1"
-                                               ng-change="updateBuyerPlanRevOld();"/>
+                                        <label for="kpiValue" style="width: 15%">KPI Value</label>
+                                        <input type="text" class="form-control" id="kpiValue" style="width: 84%"
+                                               ng-disabled="selectedBuyerIndex === -1"/>
                                     </div>
                                     <div class="form-inline form-group">
                                         <label for="buyerComment" style="width: 15%">Comment</label>
