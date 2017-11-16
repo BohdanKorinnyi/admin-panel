@@ -19,6 +19,14 @@ Application.controller("buyerController", function ($scope, $http) {
     $scope.selectedBuyerIndex = -1;
     $scope.previousBuyerIndex = -1;
 
+
+    $scope.dateOptions = {
+        'Select Month': 'no-date',
+        'This Month': 'thisMonth',
+        'Last Month': 'lastMonth',
+    };
+    $scope.selectedDate = 'no-date';
+
     // functions
     $scope.loadData = function () {
         $scope.initData();
