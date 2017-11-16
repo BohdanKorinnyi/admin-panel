@@ -22,10 +22,21 @@ Application.controller("buyerController", function ($scope, $http) {
 
     $scope.dateOptions = {
         'Select Month': 'no-date',
-        'This Month': 'thisMonth',
-        'Last Month': 'lastMonth',
+        'January': 'January',
+        'February': 'February',
+        'March': 'March',
+        'April': 'April',
+        'May': 'May',
+        'June': 'June',
+        'July': 'July',
+        'August': 'August',
+        'September': 'September',
+        'October': 'October',
+        'November': 'November',
+        'December': 'December'
     };
     $scope.selectedDate = 'no-date';
+    $scope.year = "";
 
     // functions
     $scope.loadData = function () {

@@ -51,17 +51,22 @@
                             <div class="col-md-12">
                                 <form class="form-horizontal">
                                     <div class="form-inline form-group">
-                                        <label for="monthYear" style="width: 15%; margin-left: 16%;">Month/Year</label>
+                                        <label for="monthYear" style="width: 15%;">Month</label>
                                         <select class="form-control" data-ng-model="selectedDate"
                                                 data-ng-options="v as k for (k, v) in dateOptions"
-                                                style="margin-bottom: 14px;" id="monthYear"
+                                                id="monthYear"
                                                 ng-disabled="selectedBuyerIndex === -1">
                                         </select>
 
-                                        <label for="kpiName" style="width: 15%; margin-left: 10%;">KPI Name</label>
+                                        <label for="monthYear" style="width: 5%; margin-left: 1%;">Year</label>
+                                        <input type="text" class="form-control" id="year" placeholder="Year"
+                                               ng-model="year"
+                                               ng-disabled="selectedBuyerIndex === -1"/>
+
+                                        <label for="kpiName" style="width: 10%; margin-left: 2%;">KPI Name</label>
                                         <select class="form-control" data-ng-model="selectedDate"
                                                 data-ng-options="v as k for (k, v) in dateOptions"
-                                                style="margin-bottom: 14px;" id="kpiName"
+                                                id="kpiName"
                                                 ng-disabled="selectedBuyerIndex === -1">
                                         </select>
                                     </div>

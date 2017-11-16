@@ -1,6 +1,6 @@
 "use strict";
 
-Application.controller("plan_by_buyerController", function ($scope, $http, dateFactory) {
+Application.controller("planByBuyerController", function ($scope, $http, dateFactory) {
 
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
@@ -14,7 +14,7 @@ Application.controller("plan_by_buyerController", function ($scope, $http, dateF
         'Select Month': 'no-date',
         'This Month': 'thisMonth',
         'Last Month': 'lastMonth',
-        'Custom Month': 'custom'
+        'Custom Date': 'custom'
     };
     $scope.selectedDate = 'no-date';
     $scope.dpFromDate = "";
