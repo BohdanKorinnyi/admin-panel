@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "buyer")
-@Api(description = "Operations about buyer")
 public class BuyerController {
     private final BuyerService buyerService;
 
@@ -22,7 +21,6 @@ public class BuyerController {
     }
 
     @GetMapping("names")
-    @ApiOperation(value = "Returns list of all buyers")
     public List<String> getBuyersName() {
         return buyerService.getBuyersName();
     }
