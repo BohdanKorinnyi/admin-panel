@@ -2,6 +2,7 @@ package com.omnia.admin.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -10,7 +11,9 @@ import java.time.LocalDate;
 public class BuyerKpi {
     private int id;
     private int buyerId;
-    private LocalDate date;
+    private String date;
     private int kpiName;
     private float kpiValue;
+    private float execution;
+    private String kpiCatalogName;
 }
