@@ -19,6 +19,11 @@ public class BuyerKpiServiceImpl implements BuyerKpiService {
     }
 
     @Override
+    public Object getBuyerPlanInfo() {
+        return null;
+    }
+
+    @Override
     public List<BuyerKpi> getByBuyerId(int buyerId) {
         return buyerKpiDao.findByBuyerId(buyerId);
     }

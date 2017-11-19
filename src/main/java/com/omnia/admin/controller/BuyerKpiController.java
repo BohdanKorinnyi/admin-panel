@@ -24,4 +24,9 @@ public class BuyerKpiController {
     public ResponseEntity getByBuyerId(@RequestParam int buyerId) {
         return ResponseEntity.ok(buyerKpiService.getByBuyerId(buyerId));
     }
+
+    @GetMapping("grop")
+    public ResponseEntity get() {
+        return ResponseEntity.ok().build();
+    }
 }

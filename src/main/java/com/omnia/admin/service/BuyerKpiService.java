@@ -8,4 +8,6 @@ public interface BuyerKpiService {
     List<BuyerKpi> getByBuyerId(int buyerId);
 
     void save(List<BuyerKpi> kpis, int buyerId);
+
+    Object getBuyerPlanInfo();
 }

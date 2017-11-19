@@ -1,8 +1,8 @@
 package com.omnia.admin.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -16,4 +16,9 @@ public class BuyerKpi {
     private float kpiValue;
     private float execution;
     private String kpiCatalogName;
+
+    @JsonIgnore
+    public LocalDate getLocalDate() {
+        return LocalDate.parse(date);
+    }
 }
