@@ -26,18 +26,18 @@ Application.controller("buyerController", function ($scope, $http) {
 
     $scope.dateOptions = {
         'Select Month': 'no-date',
-        'January': 'January',
-        'February': 'February',
-        'March': 'March',
-        'April': 'April',
-        'May': 'May',
-        'June': 'June',
-        'July': 'July',
-        'August': 'August',
-        'September': 'September',
-        'October': 'October',
-        'November': 'November',
-        'December': 'December'
+        'January': '-01-01',
+        'February': '-02-01',
+        'March': '-03-01',
+        'April': '-04-01',
+        'May': '-05-01',
+        'June': '-06-01',
+        'July': '-07-01',
+        'August': '-08-01',
+        'September': '-09-01',
+        'October': '-10-01',
+        'November': '-11-01',
+        'December': '-12-01'
     };
     $scope.selectedDate = 'no-date';
     $scope.year = "";
@@ -50,7 +50,7 @@ Application.controller("buyerController", function ($scope, $http) {
 
     $scope.addKpi = function () {
         $scope.addedKpi.push({
-            date: null, kpiName: null, kpiValue: null
+            date: null, kpiName: null, kpiValue: null, year: null
         });
     };
 
@@ -144,6 +144,10 @@ Application.controller("buyerController", function ($scope, $http) {
 
     $scope.postBuyerKpiById = function () {
         if ($scope.selectedBuyerId !== -1) {
+            for(var i = 0; i<$scope.addedKpi.length; i++){
+                var kpi = $scope.addedKpi[i];
+                kpi.date = kpi.year + kpi.date;
+            }
             $http.post("/buyer/kpi?buyerId=" + $scope.selectedBuyerId, $scope.addedKpi).then(function success(response) {
                 notify('ti-alert', 'Well done! KPI saved.', 'success');
             }, function errorCallback() {

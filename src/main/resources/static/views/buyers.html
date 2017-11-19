@@ -220,13 +220,13 @@
                                    ng-model="kpi.kpiValue"
                                    ng-disabled="selectedBuyerIndex === -1"/>
 
-                            <select class="form-control" data-ng-model="selectedDate"
+                            <select class="form-control" data-ng-model="kpi.date"
                                     data-ng-options="v as k for (k, v) in dateOptions"
                                     ng-disabled="selectedBuyerIndex === -1">
                             </select>
 
                             <input type="text" class="form-control" placeholder="Year"
-                                   ng-model="kpi.date"
+                                   ng-model="kpi.year"
                                    ng-disabled="selectedBuyerIndex === -1"/>
                         </div>
                     </div>
