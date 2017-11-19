@@ -56,14 +56,4 @@ public class PostbackDaoImpl implements PostbackDao {
         }
         return jdbcTemplate.query(String.format(SELECT_POSTBACK, buyerWhere, dateWhere), BeanPropertyRowMapper.newInstance(PostbackStats.class));
     }
-
-    @Override
-    public List<BuyerPlan> getBuyerProfitPlan(List<String> months, List<String> buyers) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<BuyerPlan> getBuyerRevenuePlan(List<String> months, List<String> buyers) {
-        return Collections.emptyList();
-    }
 }

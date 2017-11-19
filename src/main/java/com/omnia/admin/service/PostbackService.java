@@ -10,6 +10,4 @@ public interface PostbackService {
     Optional<String> getFullUrl(Long postbackId);
 
     List<PostbackStats> getPostbackStats(StatisticFilter filter);
-
-    List<BuyerPlan> getBuyerPlan(List<String> months, List<String> buyers);
 }

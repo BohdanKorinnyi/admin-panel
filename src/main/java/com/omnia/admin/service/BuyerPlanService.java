@@ -1,8 +1,10 @@
 package com.omnia.admin.service;
 
+import com.omnia.admin.model.BuyerPlan;
+
 import java.util.List;
 
 @FunctionalInterface
 public interface BuyerPlanService {
-    List<Object> getBuyerPlan(List<String> months, List<String> buyers);
+    List<BuyerPlan> getBuyerPlan();
 }

@@ -1,7 +1,6 @@
 package com.omnia.admin.dao;
 
 import com.omnia.admin.dto.StatisticFilter;
-import com.omnia.admin.model.BuyerPlan;
 import com.omnia.admin.service.PostbackStats;
 
 import java.util.List;
@@ -11,8 +10,4 @@ public interface PostbackDao {
     Optional<String> findFullUrlById(Long postbackId);
 
     List<PostbackStats> getStats(StatisticFilter filter);
-
-    List<BuyerPlan> getBuyerProfitPlan(List<String> months, List<String> buyers);
-
-    List<BuyerPlan> getBuyerRevenuePlan(List<String> months, List<String> buyers);
 }
