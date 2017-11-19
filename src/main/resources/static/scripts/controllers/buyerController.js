@@ -7,6 +7,10 @@ Application.controller("buyerController", function ($scope, $http) {
     $scope.buyersAfids = [];
     $scope.buyersAfidsString = "";
 
+    $scope.kpiNames = [];
+    $scope.addedKpi = [];
+    $scope.buyerKpi = [];
+
     $scope.addedBuyersAfidCount = "";
     $scope.name = "";
     $scope.planProfit = 0;
@@ -41,6 +45,13 @@ Application.controller("buyerController", function ($scope, $http) {
     // functions
     $scope.loadData = function () {
         $scope.initData();
+        $scope.getKpiNames();
+    };
+
+    $scope.addKpi = function () {
+        $scope.addedKpi.push({
+            date: null, kpiName: null, kpiValue: null
+        });
     };
 
     $scope.initData = function () {
@@ -51,6 +62,8 @@ Application.controller("buyerController", function ($scope, $http) {
             notify('ti-alert', 'Error occurred during loading buyers', 'danger');
         });
     };
+
+
 
     $scope.applyClick = function () {
         var toSave = [];
@@ -97,6 +110,7 @@ Application.controller("buyerController", function ($scope, $http) {
 
         $scope.selectedBuyerId = buyer.id;
         $scope.getBuyerAfidById(buyer.id);
+        $scope.getBuyerKpiById(buyer.id);
         $scope.name = buyer.name;
         $scope.planProfit = buyer.planProfit;
         $scope.planProfitOld = buyer.planProfitOld;
@@ -116,6 +130,35 @@ Application.controller("buyerController", function ($scope, $http) {
                 notify('ti-alert', 'Error occurred during loading afids', 'danger');
             });
         }
+    };
+
+    $scope.getBuyerKpiById = function (id) {
+        if (id !== null) {
+            $http.get("/buyer/kpi?buyerId=" + id).then(function success(response) {
+                $scope.buyerKpi = response.data;
+            }, function errorCallback() {
+                notify('ti-alert', 'Error occurred during loading KPI', 'danger');
+            });
+        }
+    };
+
+    $scope.postBuyerKpiById = function () {
+        if ($scope.selectedBuyerId !== -1) {
+            $http.post("/buyer/kpi?buyerId=" + $scope.selectedBuyerId, $scope.addedKpi).then(function success(response) {
+                notify('ti-alert', 'Well done! KPI saved.', 'success');
+            }, function errorCallback() {
+                notify('ti-alert', 'Error occurred during saving KPI', 'danger');
+            });
+        }
+    };
+
+    $scope.getKpiNames = function(){
+        var url = "/catalogs/kpi";
+        $http.get(url).then(function success(response) {
+            $scope.kpiNames = response.data;
+        }, function errorCallback() {
+            notify('ti-alert', 'Error occurred during loading KPI names', 'danger');
+        });
     };
 
     $scope.updateBuyerName = function () {
@@ -187,5 +230,9 @@ Application.controller("buyerController", function ($scope, $http) {
 
     $scope.cancelAfids = function () {
         $scope.addedBuyersAfidCount = "";
+    };
+
+    $scope.cancelKpi = function(){
+        $scope.addedKpi = [];
     };
 });
