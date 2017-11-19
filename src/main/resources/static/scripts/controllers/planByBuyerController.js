@@ -40,7 +40,11 @@ Application.controller("planByBuyerController", function ($scope, $http, dateFac
     };
 
     $scope.filterplans = function () {
-        var joinedBuyerNames = $scope.buyerNames.join(",");
+        var names = [];
+        for(var i = 0; i< $scope.buyerNames.length; i++){
+            names.push($scope.buyerNames[i].name);
+        }
+        var joinedBuyerNames = names.join(",");
         var joinedMonth = $scope.selectedMonth.join(",");
         var url = "/buyer/plan?buyers=" + joinedBuyerNames + "&month=" + joinedMonth;
         $scope.showPlanByBuyerLoader = true;

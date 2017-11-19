@@ -5,7 +5,7 @@
                 <div class="row">
                     <form class="form-inline">
                         <div class="form-group" ng-init="getBuyers();"
-                             style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
+                             style="margin-right:5px;margin-bottom: 3px; margin-left: 15px;">
                             <select class="selectpicker" multiple
                                     data-style="btn-info btn-fill btn-block"
                                     data-size="5"
@@ -130,7 +130,7 @@
                         <td>{{item.buyerName}}</td>
                         <td>{{item.kpiName}}</td>
                         <td>{{item.kpiValue}}</td>
-                        <td>{{item.sum}}</td>
+                        <td>{{item.sum+" "+item.currency}}</td>
                         <td>{{item.execution}}</td>
                     </tr>
 
