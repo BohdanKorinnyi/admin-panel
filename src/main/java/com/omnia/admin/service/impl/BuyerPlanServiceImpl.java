@@ -14,9 +14,9 @@ public class BuyerPlanServiceImpl implements BuyerPlanService {
     private final BuyerPlanDao buyerPlanDao;
 
     @Override
-    public List<BuyerPlan> getBuyerPlan() {
-        List<BuyerPlan> buyerProfitPlan = buyerPlanDao.getBuyerProfitPlan();
-        List<BuyerPlan> buyerRevenuePlan = buyerPlanDao.getBuyerRevenuePlan();
+    public List<BuyerPlan> getBuyerPlan(List<String> buyers, List<String> month) {
+        List<BuyerPlan> buyerProfitPlan = buyerPlanDao.getBuyerProfitPlan(buyers, month);
+        List<BuyerPlan> buyerRevenuePlan = buyerPlanDao.getBuyerRevenuePlan(buyers, month);
         buyerProfitPlan.addAll(buyerRevenuePlan);
         return buyerProfitPlan;
     }

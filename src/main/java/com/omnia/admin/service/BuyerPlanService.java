@@ -6,5 +6,5 @@ import java.util.List;
 
 @FunctionalInterface
 public interface BuyerPlanService {
-    List<BuyerPlan> getBuyerPlan();
+    List<BuyerPlan> getBuyerPlan(List<String> buyers, List<String> month);
 }
