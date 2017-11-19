@@ -45,7 +45,7 @@ Application.config(function($routeProvider, $locationProvider) {
             templateUrl : "views/sources.html",
             controller  : "sourcesController"
         })
-        .when('/buyerplan', {
+        .when('/plan', {
         templateUrl : "views/planByBuyer.html",
         controller  : "planByBuyerController"
     });

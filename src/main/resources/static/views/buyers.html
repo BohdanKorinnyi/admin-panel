@@ -50,26 +50,6 @@
                             <h4 class="title">Buyer Data</h4>
                             <div class="col-md-12">
                                 <form class="form-horizontal">
-                                    <!--<div class="form-inline form-group">-->
-                                    <!--<label for="monthYear" style="width: 15%;">Month</label>-->
-                                    <!--<select class="form-control" data-ng-model="selectedDate"-->
-                                    <!--data-ng-options="v as k for (k, v) in dateOptions"-->
-                                    <!--id="monthYear"-->
-                                    <!--ng-disabled="selectedBuyerIndex === -1">-->
-                                    <!--</select>-->
-
-                                    <!--<label for="monthYear" style="width: 5%; margin-left: 1%;">Year</label>-->
-                                    <!--<input type="text" class="form-control" id="year" placeholder="Year"-->
-                                    <!--ng-model="year"-->
-                                    <!--ng-disabled="selectedBuyerIndex === -1"/>-->
-
-                                    <!--<label for="kpiName" style="width: 10%; margin-left: 2%;">KPI Name</label>-->
-                                    <!--<select class="form-control" data-ng-model="selectedDate"-->
-                                    <!--data-ng-options="v as k for (k, v) in dateOptions"-->
-                                    <!--id="kpiName"-->
-                                    <!--ng-disabled="selectedBuyerIndex === -1">-->
-                                    <!--</select>-->
-                                    <!--</div>-->
                                     <div class="form-inline form-group">
                                         <label for="buyerName" style="width: 15%">Name</label>
                                         <input type="text" class="form-control" id="buyerName" style="width: 84%"
@@ -84,11 +64,6 @@
                                                ng-disabled="selectedBuyerIndex === -1"
                                                ng-change="updateBuyerType();"/>
                                     </div>
-                                    <!--<div class="form-inline form-group">-->
-                                    <!--<label for="kpiValue" style="width: 15%">KPI Value</label>-->
-                                    <!--<input type="text" class="form-control" id="kpiValue" style="width: 84%"-->
-                                    <!--ng-disabled="selectedBuyerIndex === -1"/>-->
-                                    <!--</div>-->
                                     <div class="form-inline form-group">
                                         <label for="buyerComment" style="width: 15%">Comment</label>
                                         <input type="text" class="form-control" id="buyerComment" style="width: 84%"
@@ -119,7 +94,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <p style="cursor:pointer; width: 150px;display:block;word-wrap:break-word;"
+                                        <p style="cursor:pointer; width: 177px;display:block;word-wrap:break-word;"
+                                           class="pre-scrollable"
                                            data-toggle="modal" data-target="#buyerAfid-modal">
                                             {{buyersAfidsString}}</p>
                                     </div>
@@ -166,16 +142,6 @@
                 <form class="form-inline">
                     <div class="form-group" style="width: 100%">
                         <div class="form-inline">
-                            <!--<select class="form-control" ng-model="kpi.kpiName"-->
-                                    <!--style="width: 12%!important;"-->
-                                    <!--disabled>-->
-                                <!--<option value="" disabled selected>KPI Name</option>-->
-                                <!--<option ng-repeat="name in kpiNames"-->
-                                        <!--value="{{name.id}}"-->
-                                        <!--ng-model="kpi.kpiCatalogName">-->
-                                    <!--{{name.name}}-->
-                                <!--</option>-->
-                            <!--</select>-->
                             <input type="text" class="form-control" placeholder="KPI Name"
                                    style="width: 20%; margin-left: 43px;"
                                    ng-model="kpi.kpiCatalogName"
@@ -223,6 +189,7 @@
                             <select class="form-control" data-ng-model="kpi.date"
                                     data-ng-options="v as k for (k, v) in dateOptions"
                                     ng-disabled="selectedBuyerIndex === -1">
+                                <option value="" selected disabled>Select Month</option>
                             </select>
 
                             <input type="text" class="form-control" placeholder="Year"
