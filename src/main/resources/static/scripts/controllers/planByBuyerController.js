@@ -40,11 +40,7 @@ Application.controller("planByBuyerController", function ($scope, $http, dateFac
     };
 
     $scope.filterplans = function () {
-        var names = [];
-        for(var i = 0; i< $scope.buyerNames.length; i++){
-            names.push($scope.buyerNames[i].name);
-        }
-        var joinedBuyerNames = names.join(",");
+        var joinedBuyerNames = $scope.selectedBuyerNames.join(",");
         var joinedMonth = $scope.selectedMonth.join(",");
         var url = "/buyer/plan?buyers=" + joinedBuyerNames + "&month=" + joinedMonth;
         $scope.showPlanByBuyerLoader = true;
@@ -62,6 +58,13 @@ Application.controller("planByBuyerController", function ($scope, $http, dateFac
             "buyers": $scope.selectedBuyerNames,
             "month": $scope.selectedMonth
         };
+    };
+
+    $scope.writeCurrency = function (currency, sum) {
+        if(currency!==null){
+            return sum+" "+currency;
+        }
+        else{return sum+" ";}
     };
 
 
