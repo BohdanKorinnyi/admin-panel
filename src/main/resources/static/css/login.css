@@ -215,7 +215,7 @@ p:focus {
 }
 
 .cardForBuyerPlansTable {
-    margin: 10px 25px 25px;
+    margin: 44px 25px 25px;
     padding-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
@@ -368,6 +368,7 @@ p:focus {
 }
 
 .cardForBuyersAfid {
+    max-height: 400px;
     margin-top: 20px;
     padding-top: 1px;
     padding-left: 20px;
@@ -551,4 +552,8 @@ datepicker, .datepicker, [datepicker], ._720kb-datepicker-calendar-header,
 .buyersCostsTable, .buyersCostsTable > th, .buyersCostsTable > td{
     text-align: center;
     vertical-align: middle;
+}
+
+.pre-scrollable {
+    max-height: 305px!important;
 }

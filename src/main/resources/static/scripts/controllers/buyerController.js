@@ -25,7 +25,6 @@ Application.controller("buyerController", function ($scope, $http) {
 
 
     $scope.dateOptions = {
-        'Select Month': 'no-date',
         'January': '-01-01',
         'February': '-02-01',
         'March': '-03-01',
@@ -39,7 +38,7 @@ Application.controller("buyerController", function ($scope, $http) {
         'November': '-11-01',
         'December': '-12-01'
     };
-    $scope.selectedDate = 'no-date';
+    $scope.selectedDate = '';
     $scope.year = "";
 
     // functions
@@ -150,6 +149,7 @@ Application.controller("buyerController", function ($scope, $http) {
             }
             $http.post("/buyer/kpi?buyerId=" + $scope.selectedBuyerId, $scope.addedKpi).then(function success(response) {
                 notify('ti-alert', 'Well done! KPI saved.', 'success');
+                $scope.getBuyerKpiById($scope.selectedBuyerId);
             }, function errorCallback() {
                 notify('ti-alert', 'Error occurred during saving KPI', 'danger');
             });

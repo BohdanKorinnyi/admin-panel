@@ -1,10 +1,9 @@
-<div ng-controller="planByBuyerController" ng-init="">
-    <div class="cardForBuyerPlans">
+<div ng-controller="planByBuyerController" ng-init="loadplans();">
+    <div class="cardForBuyerPlansTable">
         <div class="row">
             <div class="col-md-9">
                 <div class="row">
                     <form class="form-inline">
-
                         <div class="form-group" ng-init="getBuyers();"
                              style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
                             <select class="selectpicker" multiple
@@ -20,38 +19,19 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <select class="form-control" data-ng-model="selectedDate"
-                                    data-ng-options="v as k for (k, v) in dateOptions"
-                                    style="margin-bottom: 14px;">
+                        <div class="form-group"
+                             style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
+                            <select class="selectpicker" multiple
+                                    data-style="btn-info btn-fill btn-block"
+                                    data-size="5"
+                                    title="Month"
+                                    data-header="Month"
+                                    ng-model="selectedMonth"
+                                    style="width: 130%;margin-left: 5px;">
+                                <option class="small-font" ng-repeat="m in dateOptions" data-select-watcher
+                                        data-last="{{$last}}" value="{{m}}">{{m}}
+                                </option>
                             </select>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6" style="width: 225px">
-                                    <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
-                                        <div class="input-group">
-                                            <input class="form-control" data-ng-model="dpFromDate"
-                                                   ng-disabled="selectedDate !== 'custom'" placeholder="From"/>
-                                            <span class="input-group-addon" style="cursor: pointer">
-                                        <i class="fa fa-lg fa-calendar"></i>
-                                    </span>
-                                        </div>
-                                    </datepicker>
-                                </div>
-                                <div class="col-md-6" style="width:225px; margin-left: -27px">
-                                    <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
-                                        <div class="input-group">
-                                            <input class="form-control" data-ng-model="dpToDate"
-                                                   ng-disabled="selectedDate !== 'custom'" placeholder="To"/>
-                                            <span class="input-group-addon" style="cursor: pointer">
-                                        <i class="fa fa-lg fa-calendar"></i>
-                                    </span>
-                                        </div>
-                                    </datepicker>
-                                </div>
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -60,16 +40,13 @@
                 <div class="row">
                     <div class="col-md-12" style="text-align: right">
                         <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
-                                ng-click="">
+                                ng-click="filterplans();">
                             Apply
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="cardForBuyerPlansTable">
         <div class="row">
             <div class="col-md-12">
                 <table id="table" class="table table-hover table-sm table-bordered buyersCostsTable"
@@ -148,13 +125,13 @@
                     <tbody>
 
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-show="">
-                        <td class="panel-body"><strong></strong></td>
-                        <td class="panel-body"><strong></strong></td>
-                        <td class="panel-body"><strong></strong></td>
-                        <td class="panel-body"><strong></strong></td>
-                        <td class="panel-body"><strong></strong></td>
-                        <td class="panel-body"></td>
+                        ng-show="plans.length != 0" ng-repeat="item in plans">
+                        <td>{{item.monthName}}</td>
+                        <td>{{item.buyerName}}</td>
+                        <td>{{item.kpiName}}</td>
+                        <td>{{item.kpiValue}}</td>
+                        <td>{{item.sum}}</td>
+                        <td>{{item.execution}}</td>
                     </tr>
 
                     </tbody>
