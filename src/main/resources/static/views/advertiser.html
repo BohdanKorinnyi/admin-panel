@@ -38,7 +38,7 @@
                             <select multiple class="form-control" id="selectAdvertisers">
                                 <option ng-repeat="a in advertisers"
                                         ng-click="onAdvertiserClick(a, $index);"
-                                        style="cursor:pointer;">{{a.advname}}
+                                        style="cursor:pointer;">{{a.advshortname}}
                                 </option>
                             </select>
                         </div>
@@ -116,9 +116,16 @@
                                             <input type="text" class="form-control" id="statusName"
                                                    ng-model="status.name" placeholder="Name"
                                                    style="width:30%;"/>
-                                            <input type="text" class="form-control" id="realStatus"
-                                                   ng-model="status.realStatus" placeholder="Real Status"
-                                                   style="width:34%;"/>
+                                            <select class="form-control" ng-model="status.realStatus">
+                                                <option value="" disabled selected>{{status.realStatus}}</option>
+                                                <option ng-repeat="s in advertiserRealStatuses"
+                                                        value={{s}}>
+                                                    {{s}}
+                                                </option>
+                                            </select>
+                                            <!--<input type="text" class="form-control" id="realStatus"-->
+                                                   <!--ng-model="status.realStatus" placeholder="Real Status"-->
+                                                   <!--style="width:34%;"/>-->
                                             <input type="text" class="form-control" id="statusType"
                                                    ng-model="status.type" placeholder="Type"
                                                    style="width:25%;"/>
