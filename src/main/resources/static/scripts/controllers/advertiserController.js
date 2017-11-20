@@ -15,6 +15,8 @@ Application.controller("advertiserController", function ($scope, $http) {
     $scope.advertisers = [];
     $scope.advertiserStatuses = [];
 
+    $scope.advertiserRealStatuses = ["approved", "hold", "declined"];
+
     $scope.statusesForUser = [];
     $scope.statusesForUser['statuses'] = {};
     $scope.statusesForUser.statuses['status'] = [];
@@ -113,8 +115,8 @@ Application.controller("advertiserController", function ($scope, $http) {
         $scope.advertisers[$scope.selectedAdvertiserIndex].advshortname = $scope.advertiserShortName;
     };
 
+
     $scope.addStatusClick = function () {
-        console.log($scope.selectedAdvertiserIndex);
         $scope.advertiserStatuses.push({name: null, realStatus: null, type: null});
     };
 
