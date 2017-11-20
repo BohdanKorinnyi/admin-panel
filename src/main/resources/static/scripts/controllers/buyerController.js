@@ -236,6 +236,10 @@ Application.controller("buyerController", function ($scope, $http) {
         $scope.addedBuyersAfidCount = "";
     };
 
+    $scope.removeRow = function (item) {
+        $scope.addedKpi.splice(item, 1);
+    };
+
     $scope.cancelKpi = function(){
         $scope.addedKpi = [];
     };
