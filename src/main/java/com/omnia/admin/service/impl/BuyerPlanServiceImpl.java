@@ -5,6 +5,7 @@ import com.omnia.admin.dao.BuyerPlanDao;
 import com.omnia.admin.model.BuyerPlan;
 import com.omnia.admin.service.BuyerPlanService;
 import com.omnia.admin.service.CurrencyService;
+import com.omnia.admin.service.ExchangeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class BuyerPlanServiceImpl implements BuyerPlanService {
     private static final String KPI_PROFIT_TYPE = "Profit";
     private static final String KPI_REVENUE_TYPE = "Revenue";
     private final BuyerPlanDao buyerPlanDao;
-    private final CurrencyService currencyService;
+    private final ExchangeService exchangeService;
 
     @Override
     public List<BuyerPlan> getBuyerPlan(List<String> buyers, List<String> month) {
@@ -37,7 +38,7 @@ public class BuyerPlanServiceImpl implements BuyerPlanService {
     private List<BuyerPlan> executeCurrencyExchange(List<BuyerPlan> plans) {
         for (BuyerPlan plan : plans) {
             if (!USD_CURRENCY_CODE.equals(plan.getCurrency())) {
-                float dollars = currencyService.convertToDollar(plan.getCurrency(), plan.getKpiValue());
+                float dollars = exchangeService.convertToDollar(plan.getCurrency(), plan.getKpiValue());
                 plan.setCurrency(USD_CURRENCY_CODE);
                 plan.setSum(dollars);
             }
