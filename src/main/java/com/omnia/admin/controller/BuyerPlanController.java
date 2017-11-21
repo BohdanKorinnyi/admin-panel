@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("buyer")
@@ -17,7 +18,7 @@ public class BuyerPlanController {
     private final BuyerPlanService buyerPlanService;
 
     @GetMapping("plan")
-    public ResponseEntity getPlan(@RequestParam(required = false) List<String> buyers, @RequestParam(required = false) List<String> month) {
+    public ResponseEntity getPlan(@RequestParam(required = false) List<String> buyers, @RequestParam(required = false) List<String> month) throws ExecutionException, InterruptedException {
         return ResponseEntity.ok(buyerPlanService.getBuyerPlan(buyers, month));
     }
 }

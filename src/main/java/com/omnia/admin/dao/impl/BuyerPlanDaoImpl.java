@@ -19,36 +19,43 @@ import java.util.StringJoiner;
 @AllArgsConstructor
 public class BuyerPlanDaoImpl implements BuyerPlanDao {
     private static final String SELECT_BUYER_REVENUE_PLAN = "SELECT " +
-            "  monthname(buyers_kpi.date)                 AS 'month', " +
-            "  buyers.name                                AS 'buyerName', " +
-            "  catalog_kpi.name                           AS 'kpiName', " +
-            "  buyers_kpi.kpi_value                       AS 'kpiValue', " +
-            "  CASE WHEN sum(revenue.sum) IS NULL " +
-            "    THEN 0.0 " +
-            "  ELSE sum(revenue.sum) END                  AS 'sum', " +
-            "  CASE WHEN revenue.currency IS NULL " +
-            "    THEN 'USD' " +
-            "  ELSE revenue.currency END                  AS 'currency', " +
+            "  monthname(buyers_kpi.date)                                       AS 'month', " +
+            "  buyers.name                                                      AS 'buyerName', " +
+            "  catalog_kpi.name                                                 AS 'kpiName', " +
+            "  buyers_kpi.kpi_value                                             AS 'kpiValue', " +
+            "  CASE WHEN TRUNCATE(sum(revenue.sum), 2) IS NULL " +
+            "    THEN TRUNCATE(0.0, 2) " +
+            "  ELSE TRUNCATE(sum(revenue.sum), 2) END                           AS 'sum', " +
             "  CASE WHEN (revenue.sum / buyers_kpi.kpi_value) * 100 IS NULL " +
-            "    THEN 0 " +
-            "  ELSE (revenue.sum / buyers_kpi.kpi_value) * 100 END AS 'performance' " +
+            "    THEN TRUNCATE(0.0, 2) " +
+            "  ELSE TRUNCATE((revenue.sum / buyers_kpi.kpi_value) * 100, 2) END AS 'performance' " +
             "FROM buyers_kpi " +
             "  INNER JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
             "  INNER JOIN buyers ON buyers_kpi.buyer_id = buyers.id " +
             "  LEFT JOIN (SELECT " +
             "               buyers_kpi.id, " +
-            "               postback.currency, " +
             "               MONTH(buyers_kpi.date) AS MONTH, " +
-            "               sum(postback.sum)      AS sum " +
+            "               sum(postback.sum / " +
+            "                   (SELECT exchange.rate " +
+            "                    FROM exchange " +
+            "                    WHERE exchange.id = postback.exchange) * " +
+            "                   (SELECT exchange.count " +
+            "                    FROM exchange " +
+            "                    WHERE exchange.id = postback.exchange) " +
+            "               )                      AS sum " +
             "             FROM buyers_kpi " +
             "               INNER JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
             "               INNER JOIN postback ON MONTH(postback.date) = MONTH(buyers_kpi.date) " +
             "               INNER JOIN buyers ON buyers_kpi.buyer_id = buyers.id " +
             "               INNER JOIN affiliates ON buyers.id = affiliates.buyer_id " +
-            "             WHERE catalog_kpi.name = 'Revenue' AND postback.afid = affiliates.afid %s " +
+            "               INNER JOIN adverts ON adverts.advname = postback.advname " +
+            "               INNER JOIN adv_status ON adverts.id = adv_status.adv_id " +
+            "             WHERE catalog_kpi.name = 'Revenue' AND postback.afid = affiliates.afid AND adv_status.name = 'approved' " +
+            "               %s " +
             "             GROUP BY MONTH(buyers_kpi.date), postback.currency) AS revenue ON buyers_kpi.id = revenue.id " +
-            " WHERE catalog_kpi.name = 'Revenue' %s " +
-            " GROUP BY buyers_kpi.buyer_id, MONTH(buyers_kpi.date), currency ORDER BY MONTH(buyers_kpi.date) ASC;";
+            "WHERE catalog_kpi.name = 'Revenue' %s " +
+            "GROUP BY buyers_kpi.buyer_id, MONTH(buyers_kpi.date) " +
+            "ORDER BY MONTH(buyers_kpi.date) ASC;";
     private static final String SELECT_BUYER_PROFIT_PLAN = "SELECT " +
             "  buyers_kpi.id, " +
             "  monthname(buyers_kpi.date) AS 'month', " +

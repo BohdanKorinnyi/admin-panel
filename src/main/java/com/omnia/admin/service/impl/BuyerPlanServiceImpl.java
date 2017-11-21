@@ -4,16 +4,18 @@ import com.google.common.collect.Lists;
 import com.omnia.admin.dao.BuyerPlanDao;
 import com.omnia.admin.model.BuyerPlan;
 import com.omnia.admin.service.BuyerPlanService;
-import com.omnia.admin.service.CurrencyService;
 import com.omnia.admin.service.ExchangeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -26,24 +28,15 @@ public class BuyerPlanServiceImpl implements BuyerPlanService {
     private final ExchangeService exchangeService;
 
     @Override
-    public List<BuyerPlan> getBuyerPlan(List<String> buyers, List<String> month) {
-        List<BuyerPlan> buyerRevenuePlan = buyerPlanDao.getBuyerRevenuePlan(buyers, month);
-        List<BuyerPlan> revenueWithConvertedCurrency = executeCurrencyExchange(buyerRevenuePlan);
-        List<BuyerPlan> groupedRevenue = groupRevenueByMonthAndBuyer(revenueWithConvertedCurrency);
-        List<BuyerPlan> buyerProfitPlan = buyerPlanDao.getBuyerProfitPlan(buyers, month);
+    public List<BuyerPlan> getBuyerPlan(List<String> buyers, List<String> month) throws ExecutionException, InterruptedException {
+        CompletableFuture<List<BuyerPlan>> revenuePlanFuture = supplyAsync(() -> buyerPlanDao.getBuyerRevenuePlan(buyers, month));
+        CompletableFuture<List<BuyerPlan>> profitPlanFuture = supplyAsync(() -> buyerPlanDao.getBuyerProfitPlan(buyers, month));
+        CompletableFuture.allOf(revenuePlanFuture, profitPlanFuture);
+        List<BuyerPlan> buyerRevenuePlan = revenuePlanFuture.get();
+        List<BuyerPlan> buyerProfitPlan = profitPlanFuture.get();
+        List<BuyerPlan> groupedRevenue = groupRevenueByMonthAndBuyer(buyerRevenuePlan);
         buyerProfitPlan.addAll(groupedRevenue);
         return calculatePerformanceProfit(buyerProfitPlan);
-    }
-
-    private List<BuyerPlan> executeCurrencyExchange(List<BuyerPlan> plans) {
-        for (BuyerPlan plan : plans) {
-            if (!USD_CURRENCY_CODE.equals(plan.getCurrency())) {
-                float dollars = exchangeService.convertToDollar(plan.getCurrency(), plan.getSum());
-                plan.setCurrency(USD_CURRENCY_CODE);
-                plan.setSum(dollars);
-            }
-        }
-        return plans;
     }
 
     private List<BuyerPlan> groupRevenueByMonthAndBuyer(List<BuyerPlan> plans) {
