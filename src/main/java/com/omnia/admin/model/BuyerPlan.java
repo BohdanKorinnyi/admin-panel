@@ -9,8 +9,9 @@ import java.time.Month;
 @Getter
 @Setter
 public class BuyerPlan {
+    private Integer kpiId;
     @JsonIgnore
-    private int month;
+    private Integer month;
     private String buyerName;
     private String kpiName;
     private Float kpiValue;
