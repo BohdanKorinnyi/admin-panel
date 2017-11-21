@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.omnia.admin.dao.BuyerPlanDao;
 import com.omnia.admin.model.BuyerPlan;
 import com.omnia.admin.service.BuyerPlanService;
-import com.omnia.admin.service.CurrencyService;
 import com.omnia.admin.service.ExchangeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -84,7 +83,8 @@ public class BuyerPlanServiceImpl implements BuyerPlanService {
         for (BuyerPlan plan : plans) {
             if (KPI_PROFIT_TYPE.equals(plan.getKpiName())) {
                 Float revenue = getRevenueSumByMonth(plans, plan.getMonth());
-                plan.setPerformance(calculatePerformance(plan.getKpiValue(), revenue - plan.getSum()));
+                plan.setSum(revenue - plan.getSum());
+                plan.setPerformance(calculatePerformance(plan.getKpiValue(), plan.getSum()));
             }
         }
         return plans;
