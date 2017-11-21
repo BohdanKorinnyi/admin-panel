@@ -425,19 +425,19 @@ fieldset[disabled] .btn-info.focus, fieldset[disabled] .btn-info:active, fieldse
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th
 {
-    min-width: 20px!important;
-    max-width: 108px!important;
+    min-width: 10px!important;
+    max-width: 102px!important;
 }
 
 .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td
 {
-    min-width: 20px!important;
-    max-width: 90px!important;
+    min-width: 10px!important;
+    max-width: 100px!important;
 }
 
 .table > thead > tr > th > a
 {
-    min-width: 20px!important;
+    min-width: 10px!important;
     width: 60px!important;
     max-width: 100px!important;
 }
