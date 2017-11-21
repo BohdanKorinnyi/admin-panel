@@ -38,7 +38,7 @@ public class BuyerPlanServiceImpl implements BuyerPlanService {
     private List<BuyerPlan> executeCurrencyExchange(List<BuyerPlan> plans) {
         for (BuyerPlan plan : plans) {
             if (!USD_CURRENCY_CODE.equals(plan.getCurrency())) {
-                float dollars = exchangeService.convertToDollar(plan.getCurrency(), plan.getKpiValue());
+                float dollars = exchangeService.convertToDollar(plan.getCurrency(), plan.getSum());
                 plan.setCurrency(USD_CURRENCY_CODE);
                 plan.setSum(dollars);
             }

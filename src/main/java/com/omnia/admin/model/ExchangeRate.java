@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ExchangeRate {
-    private int rate;
-    private float count;
+    private float rate;
+    private int count;
 }
