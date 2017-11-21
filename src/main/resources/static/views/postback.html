@@ -517,6 +517,11 @@
                             </td>
                             <td style="text-align: center; vertical-align: middle">{{item.duplicate}}</td>
                         </tr>
+                        <tr ng-show="postbacks.length != 0">
+                            <td style="text-align: left; vertical-align: middle" colspan="28">
+                                Total by postbacks:
+                            </td>
+                        </tr>
                         <tr ng-show="postbacks.length == 0">
                             <td colspan="28">
                                 <div class="loader" style="text-align: center;" ng-show="showLoader"></div>

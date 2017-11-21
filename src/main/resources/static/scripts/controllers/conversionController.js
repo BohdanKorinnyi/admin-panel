@@ -24,6 +24,18 @@ Application.controller('conversionController', function ($scope, $http, dateFact
         'Offer Name': 'offerName'
     };
 
+    $scope.buyerNames = [];
+    $scope.selectedBuyerNames = [];
+
+    $scope.utcValues = ["UTC","UTC+1","UTC+2","UTC+3","UTC+5","UTC+6","UTC+7","UTC+8","UTC+9",
+        "UTC+10","UTC+11","UTC-3","UTC-4","UTC-5","UTC-6","UTC-7","UTC-8","UTC-9",
+        "UTC-10","UTC-11"];
+    $scope.selectedUtcValues =[];
+    //TODO: move utc to filter
+
+    $scope.buyerAfids = [];
+    $scope.selectedBuyerAfids = [];
+
     $scope.selectedFilter = 'selectedFilter';
     $scope.selectedBuyerValue = '';
     $scope.selectedAfIdValue = '';
@@ -82,8 +94,8 @@ Application.controller('conversionController', function ($scope, $http, dateFact
                 parameters.filter['to'] = formatDate(dateFactory.pickDateTo($scope.selectedDate));
             }
         }
-        if ($scope.selectedBuyerValue !== '') {
-            parameters.filter['arbitratorName'] = $scope.selectedBuyerValue;
+        if ($scope.selectedBuyerNames !== []) {
+            parameters.filter['arbitratorName'] = $scope.selectedBuyerNames.join();
         }
         if ($scope.selectedAffNetworkValue !== '') {
             parameters.filter['advertiserName'] = $scope.selectedAffNetworkValue;
@@ -106,6 +118,29 @@ Application.controller('conversionController', function ($scope, $http, dateFact
             parameters.sortingDetails['order'] = $scope.sortReverse;
         }
         return parameters;
+    };
+
+    $scope.initBuyerNames = function () {
+        var url = '/buyer/names';
+        $http.get(url).then(function successCallback(response) {
+            for (var i = 0; i < response.data.length; i++) {
+                $scope.buyerNames.push({
+                    id: i,
+                    name: response.data[i]
+                });
+            }
+        });
+    };
+
+    $scope.initBuyerAfids = function () {
+        var url = '';
+        $http.get(url).then(function successCallback(response) {
+            $scope.buyerAfids = response.data;
+        });
+    };
+
+    $scope.clickRow = function (payroll) {
+      //TODO:show something
     };
 });
 
