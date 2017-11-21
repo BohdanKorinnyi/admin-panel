@@ -14,7 +14,7 @@
                                     ng-model="selectedBuyerNames"
                                     style="width: 130%;margin-left: 5px;">
                                 <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
-                                        data-last="{{$last}}" value="{{b.name}}">{{b.name}}
+                                        data-last="{{$last}}" value="{{b.id}}">{{b.name}}
                                 </option>
                             </select>
                         </div>
@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="col-md-12" style="text-align: right">
                         <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
-                                ng-click="filterplans();">
+                                ng-click="filterPlans();">
                             Apply
                         </button>
                     </div>
@@ -55,70 +55,27 @@
                     <tr style="text-align: center; vertical-align: middle">
 
                         <th>
-                            <a href="" ng-click="sortType = ''">
-                                <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                                      class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Month
-                            </a>
+                            <a href="">Month</a>
                         </th>
 
                         <th>
-                            <a href="" ng-click="sortType = ''">
-                                <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                                      class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Buyer Name
-                            </a>
+                            <a href="">Buyer Name</a>
                         </th>
 
                         <th>
-                            <a href="" ng-click="sortType = ''">
-                                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                                          class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                KPI Name
-                            </a>
+                            <a href="">KPI Name</a>
                         </th>
 
                         <th>
-                            <a href="" ng-click="sortType = ''">
-                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                          class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                KPI Value
-                            </a>
+                            <a href="">KPI Value</a>
                         </th>
 
                         <th>
-                            <a href="" ng-click="sortType = ''">
-                    <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                          class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                Executed Amount
-                            </a>
+                            <a href="">Executed Amount</a>
                         </th>
 
                         <th>
-                            <a href=""
-                               ng-click="sortType = ''">
-                            <span ng-show="sortType == '' && sortReverse == 'ASC'"
-                                  class="fa fa-caret-up"></span>
-                                <span ng-show="sortType == '' && sortReverse == 'DESC'"
-                                      class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '' && sortReverse == ''"></span>
-                                % Performance
-                            </a>
+                            <a href="">% Performance</a>
                         </th>
                     </tr>
                     </thead>
@@ -126,12 +83,12 @@
 
                     <tr style="text-align: center; vertical-align: middle"
                         ng-show="plans.length != 0" ng-repeat="item in plans">
-                        <td>{{item.monthName}}</td>
+                        <td>{{item.month}}</td>
                         <td>{{item.buyerName}}</td>
                         <td>{{item.kpiName}}</td>
                         <td>{{item.kpiValue}}</td>
                         <td>{{writeCurrency(item.currency, item.sum)}}</td>
-                        <td>{{item.execution}}</td>
+                        <td>{{item.performance}}</td>
                     </tr>
 
                     </tbody>

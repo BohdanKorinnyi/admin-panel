@@ -18,4 +18,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     public List<Currency> getCurrencies() {
         return currencyDao.getAllCurrency();
     }
+
+    @Override
+    public float convertToDollar(String currencyCode, float sum) {
+        return 0;
+    }
 }
