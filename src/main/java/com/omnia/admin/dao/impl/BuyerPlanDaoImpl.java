@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.time.Month;
 import java.util.List;
@@ -50,8 +49,8 @@ public class BuyerPlanDaoImpl implements BuyerPlanDao {
             "               INNER JOIN affiliates ON buyers.id = affiliates.buyer_id " +
             "               INNER JOIN adverts ON adverts.advname = postback.advname " +
             "               INNER JOIN adv_status ON adverts.id = adv_status.adv_id " +
-            "             WHERE catalog_kpi.name = 'Revenue' AND postback.afid = affiliates.afid AND adv_status.name = 'approved' " +
-            "               %s " +
+            "             WHERE catalog_kpi.name = 'Revenue' AND postback.afid = affiliates.afid AND adv_status.name = 'approved' AND " +
+            "                   postback.status = adv_status.name %s " +
             "             GROUP BY MONTH(buyers_kpi.date), postback.currency) AS revenue ON buyers_kpi.id = revenue.id " +
             "WHERE catalog_kpi.name = 'Revenue' %s " +
             "GROUP BY buyers_kpi.buyer_id, MONTH(buyers_kpi.date) " +
@@ -117,15 +116,17 @@ public class BuyerPlanDaoImpl implements BuyerPlanDao {
         if (!CollectionUtils.isEmpty(month)) {
             whereClause += getMonth(month);
         }
-        return jdbcTemplate.query(String.format(SELECT_BUYER_REVENUE_PLAN, whereClause, whereClause), BeanPropertyRowMapper.newInstance(BuyerPlan.class));
+        String revenueSql = String.format(SELECT_BUYER_REVENUE_PLAN, whereClause, whereClause);
+        log.info("revenue sql=" + revenueSql);
+        return jdbcTemplate.query(revenueSql, BeanPropertyRowMapper.newInstance(BuyerPlan.class));
     }
-
 
     @Override
     public List<BuyerPlan> getBuyerProfitPlan(List<String> buyers, List<String> month) {
         String sql = String.format(SELECT_BUYER_PROFIT_PLAN, getWhereClause(buyers, month), getWhereClause(buyers, month),
                 getWhereClause(buyers, month), getWhereClause(buyers, month)
         );
+        log.info("profit sql=" + sql);
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(BuyerPlan.class));
     }
 

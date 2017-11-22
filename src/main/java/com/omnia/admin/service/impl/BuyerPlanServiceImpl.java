@@ -21,11 +21,9 @@ import static java.util.stream.Collectors.toList;
 @Service
 @AllArgsConstructor
 public class BuyerPlanServiceImpl implements BuyerPlanService {
-    private static final String USD_CURRENCY_CODE = "USD";
     private static final String KPI_PROFIT_TYPE = "Profit";
     private static final String KPI_REVENUE_TYPE = "Revenue";
     private final BuyerPlanDao buyerPlanDao;
-    private final ExchangeService exchangeService;
 
     @Override
     public List<BuyerPlan> getBuyerPlan(List<String> buyers, List<String> month) throws ExecutionException, InterruptedException {
@@ -85,8 +83,7 @@ public class BuyerPlanServiceImpl implements BuyerPlanService {
 
     private float getRevenueSumByMonth(List<BuyerPlan> plans, String month) {
         return plans.stream()
-                .filter(plan -> KPI_REVENUE_TYPE.equals(plan.getKpiName()))
-                .filter(plan -> plan.getMonth().equals(month))
+                .filter(plan -> KPI_REVENUE_TYPE.equals(plan.getKpiName()) && plan.getMonth().equals(month))
                 .findFirst()
                 .map(BuyerPlan::getSum)
                 .orElse(0F);
