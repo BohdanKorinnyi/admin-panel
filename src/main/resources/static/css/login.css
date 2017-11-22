@@ -188,7 +188,7 @@ p:focus {
 .cardForCostDataReportControl, .cardForCostDataReportTable,
 .cardForBuyerCosts, .cardForBuyerCostsTable,
 .cardForBuyerPlans, .cardForBuyerPlansTable,
-.cardForKPIControl{
+.cardForKPIControl, .buyerDetailsCard{
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -215,6 +215,17 @@ p:focus {
 }
 
 .cardForBuyerPlansTable {
+    margin: 44px 25px 25px;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-clip: padding-box;
+    background: white;
+}
+
+.buyerDetailsCard{
     margin: 44px 25px 25px;
     padding-top: 15px;
     padding-left: 15px;
