@@ -24,6 +24,16 @@ public class BuyerKpiServiceImpl implements BuyerKpiService {
     }
 
     @Override
+    public Float getBuyerRevenuePlan(Integer buyerId) {
+        return buyerKpiDao.getBuyerRevenuePlan(buyerId);
+    }
+
+    @Override
+    public Float getBuyerProfitPlan(Integer buyerId) {
+        return buyerKpiDao.getBuyerProfitPlan(buyerId);
+    }
+
+    @Override
     public List<BuyerKpi> getByBuyerId(int buyerId) {
         return buyerKpiDao.findByBuyerId(buyerId);
     }

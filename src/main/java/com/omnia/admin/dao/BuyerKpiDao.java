@@ -8,4 +8,8 @@ public interface BuyerKpiDao {
     List<BuyerKpi> findByBuyerId(int buyerId);
 
     void save(List<BuyerKpi> kpis, int buyerId);
+
+    Float getBuyerRevenuePlan(Integer buyerId);
+
+    Float getBuyerProfitPlan(Integer buyerId);
 }

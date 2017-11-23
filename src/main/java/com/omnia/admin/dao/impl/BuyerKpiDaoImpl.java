@@ -24,6 +24,11 @@ public class BuyerKpiDaoImpl implements BuyerKpiDao {
             "  LEFT JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
             "WHERE buyer_id = ?;";
     private static final String INSERT_BUYER_KPI = "INSERT INTO buyers_kpi (buyer_id, date, kpi_name, kpi_value) VALUES (?, ?, ?, ?);";
+    private static final String SELECT_BUYER_PLAN = "SELECT kpi_value " +
+            "FROM buyers_kpi " +
+            "  LEFT JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
+            "WHERE buyer_id = ? AND month(date) = month(now()) AND catalog_kpi.name = ?';";
+    
     private final JdbcTemplate jdbcTemplate;
 
     @Override
@@ -47,5 +52,15 @@ public class BuyerKpiDaoImpl implements BuyerKpiDao {
                 return kpis.size();
             }
         });
+    }
+
+    @Override
+    public Float getBuyerRevenuePlan(Integer buyerId) {
+        return jdbcTemplate.queryForObject(SELECT_BUYER_KPI_BY_BUYER_ID, Float.class, buyerId, "Revenue");
+    }
+
+    @Override
+    public Float getBuyerProfitPlan(Integer buyerId) {
+        return jdbcTemplate.queryForObject(SELECT_BUYER_KPI_BY_BUYER_ID, Float.class, buyerId, "Profit");
     }
 }
