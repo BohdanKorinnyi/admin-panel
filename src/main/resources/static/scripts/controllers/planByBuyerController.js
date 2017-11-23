@@ -61,8 +61,8 @@ Application.controller("planByBuyerController", function ($scope, $http, dateFac
         };
     };
 
-    $scope.writePerformance = function (performance) {
-        return performance.toFixed(2);
+    $scope.writePerformance = function (performance, sum) {
+        return sum < 0 ? 0 : performance.toFixed(2);
     };
 
 
