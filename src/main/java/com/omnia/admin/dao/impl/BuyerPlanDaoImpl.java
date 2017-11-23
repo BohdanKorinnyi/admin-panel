@@ -27,7 +27,7 @@ public class BuyerPlanDaoImpl implements BuyerPlanDao {
             "  ELSE TRUNCATE(sum(revenue.sum), 2) END                           AS 'sum', " +
             "  CASE WHEN (revenue.sum / buyers_kpi.kpi_value) * 100 IS NULL " +
             "    THEN TRUNCATE(0.0, 2) " +
-            "  ELSE TRUNCATE((revenue.sum / buyers_kpi.kpi_value) * 100, 2) END AS 'performance' " +
+            "  ELSE TRUNCATE((sum(revenue.sum) / buyers_kpi.kpi_value) * 100, 2) END AS 'performance' " +
             "FROM buyers_kpi " +
             "  INNER JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
             "  INNER JOIN buyers ON buyers_kpi.buyer_id = buyers.id " +
