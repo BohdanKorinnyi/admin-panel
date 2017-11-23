@@ -79,9 +79,10 @@ public class BuyerPlanDaoImpl implements BuyerPlanDao {
             "               'USD'                              AS 'currency' " +
             "             FROM buyers_kpi " +
             "               INNER JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
-            "               INNER JOIN source_statistics_today ON source_statistics_today.buyer_id = buyers_kpi.buyer_id " +
+            "               INNER JOIN affiliates ON buyers_kpi.buyer_id = affiliates.buyer_id  " +
+            "               INNER JOIN source_statistics_today ON source_statistics_today.afid = affiliates.afid " +
             "             WHERE catalog_kpi.name = 'Profit' AND MONTH(source_statistics_today.date) = MONTH(buyers_kpi.date) %s " +
-            "             GROUP BY MONTH(buyers_kpi.date) " +
+            "             GROUP BY buyers_kpi.buyer_id, MONTH(buyers_kpi.date) " +
             "             UNION (SELECT " +
             "                      buyers_kpi.id                AS 'id', " +
             "                      monthname(buyers_kpi.date)   AS 'month', " +
@@ -89,9 +90,10 @@ public class BuyerPlanDaoImpl implements BuyerPlanDao {
             "                      'USD'                        AS 'currency' " +
             "                    FROM buyers_kpi " +
             "                      INNER JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
-            "                      INNER JOIN source_statistics ON source_statistics.buyer_id = buyers_kpi.buyer_id " +
+            "                      INNER JOIN affiliates ON buyers_kpi.buyer_id = affiliates.buyer_id " +
+            "                      INNER JOIN source_statistics ON source_statistics.afid = affiliates.afid " +
             "                    WHERE catalog_kpi.name = 'Profit' AND MONTH(source_statistics.date) = MONTH(buyers_kpi.date) %s " +
-            "                    GROUP BY MONTH(buyers_kpi.date)) " +
+            "                    GROUP BY buyers_kpi.buyer_id,MONTH(buyers_kpi.date)) " +
             "             UNION (SELECT " +
             "                      buyers_kpi.id              AS 'id', " +
             "                      monthname(buyers_kpi.date) AS 'month', " +
@@ -101,7 +103,7 @@ public class BuyerPlanDaoImpl implements BuyerPlanDao {
             "                      INNER JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
             "                      INNER JOIN expenses ON expenses.buyer_id = buyers_kpi.buyer_id " +
             "                    WHERE catalog_kpi.name = 'Profit' AND MONTH(expenses.date) = MONTH(buyers_kpi.date) %s " +
-            "                    GROUP BY MONTH(buyers_kpi.date))) AS profit ON profit.id = buyers_kpi.id " +
+            "                    GROUP BY buyers_kpi.buyer_id,MONTH(buyers_kpi.date))) AS profit ON profit.id = buyers_kpi.id " +
             "WHERE catalog_kpi.name = 'Profit' %s " +
             "GROUP BY buyers_kpi.buyer_id, MONTH(buyers_kpi.date) ORDER BY MONTH(buyers_kpi.date) ASC;";
 
