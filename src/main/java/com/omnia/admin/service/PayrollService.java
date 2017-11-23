@@ -10,6 +10,8 @@ public interface PayrollService {
 
     List<Payroll> findPayrolls(Page page);
 
+    List<Payroll> findPayrollsByBuyerId(Integer buyerId);
+
     void update(Payroll payroll);
 
     void save(List<Payroll> payrolls);

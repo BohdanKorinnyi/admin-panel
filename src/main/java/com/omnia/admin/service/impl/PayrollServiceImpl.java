@@ -25,6 +25,11 @@ public class PayrollServiceImpl implements PayrollService {
     }
 
     @Override
+    public List<Payroll> findPayrollsByBuyerId(Integer buyerId) {
+        return payrollDao.findPayrollsByBuyerId(buyerId);
+    }
+
+    @Override
     public void update(Payroll payroll) {
         payrollDao.update(payroll);
     }

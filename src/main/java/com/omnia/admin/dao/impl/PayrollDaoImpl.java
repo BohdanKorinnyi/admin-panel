@@ -51,6 +51,11 @@ public class PayrollDaoImpl implements PayrollDao {
     }
 
     @Override
+    public List<Payroll> findPayrollsByBuyerId(Integer buyerId) {
+        return jdbcTemplate.query(SELECT_PAYROLLS + " WHERE buyer_id = ?", new BeanPropertyRowMapper<>(Payroll.class), buyerId);
+    }
+
+    @Override
     @Transactional
     public void update(Payroll payroll) {
         jdbcTemplate.update(UPDATE_PAYROLL, payroll.getBuyerId(), payroll.getDate(), payroll.getDescription(),
