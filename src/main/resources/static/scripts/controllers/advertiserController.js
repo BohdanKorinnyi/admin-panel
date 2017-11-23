@@ -2,6 +2,7 @@
 
 Application.controller("advertiserController", function ($scope, $http) {
 
+    $scope.advertiserApiKey = "";
     $scope.advertiserUrl = "";
     $scope.advertiserName = "";
     $scope.advertiserRisk = "";
@@ -51,6 +52,7 @@ Application.controller("advertiserController", function ($scope, $http) {
         $scope.advertiserRisk = advertiser.risk;
         $scope.advertiserShortName = advertiser.advshortname;
         $scope.advertiserSecretName = advertiser.secretKey;
+        $scope.advertiserApiKey = advertiser.apiKey;
     };
 
     $scope.getAdvertiserStatusesById = function (advertiserId, advertiserIndex) {
@@ -114,6 +116,10 @@ Application.controller("advertiserController", function ($scope, $http) {
     $scope.updateAdvertiserShortName = function () {
         $scope.advertisers[$scope.selectedAdvertiserIndex].advshortname = $scope.advertiserShortName;
     };
+    $scope.updateAdvertiserApiKey = function () {
+        $scope.advertisers[$scope.selectedAdvertiserIndex].apiKey = $scope.advertiserApiKey;
+    };
+
 
 
     $scope.addStatusClick = function () {
@@ -146,6 +152,7 @@ Application.controller("advertiserController", function ($scope, $http) {
         $scope.advertiserRisk = '';
         $scope.advertiserShortName = '';
         $scope.advertiserSecretName = '';
+        $scope.advertiserApiKey = '';
         $http.get("advertiser/all").then(function successCallback(response) {
             $scope.advertisers = response.data;
         });
@@ -160,7 +167,8 @@ Application.controller("advertiserController", function ($scope, $http) {
             advshortname: '',
             secretKey: '',
             risk: '',
-            url: ''
+            url: '',
+            apiKey: ''
         });
         $scope.advertisersStatuses[$scope.advertisers.length - 1] = [];
     };
