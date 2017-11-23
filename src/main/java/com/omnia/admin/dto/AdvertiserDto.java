@@ -13,6 +13,7 @@ public class AdvertiserDto {
     private String advshortname;
     private String secretKey;
     private String url;
+    private String apiKey;
     private Integer risk;
     private List<AdvertiserStatusDto> statuses;
 }
