@@ -48,5 +48,9 @@ Application.config(function($routeProvider, $locationProvider) {
         .when('/plan', {
         templateUrl : "views/planByBuyer.html",
         controller  : "planByBuyerController"
-    });
+        })
+        .when('/details', {
+            templateUrl : "views/buyerDetails.html",
+            controller  : "buyerDetailsController"
+        });
 });
