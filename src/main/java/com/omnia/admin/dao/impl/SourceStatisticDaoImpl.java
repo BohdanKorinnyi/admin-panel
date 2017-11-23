@@ -49,7 +49,7 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
 
     @Override
     public Float getProfitByBuyerId(int buyerId) {
-        return jdbcTemplate.queryForObject(SELECT_PROFIT, Float.class, buyerId);
+        return jdbcTemplate.queryForObject(SELECT_PROFIT, Float.class, buyerId, buyerId, buyerId);
     }
 
     private String updateWhereClause(String sql, StatisticFilter filter) {
