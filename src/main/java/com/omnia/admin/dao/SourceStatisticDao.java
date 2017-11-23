@@ -9,4 +9,6 @@ public interface SourceStatisticDao {
     List<Source> getStatistics(StatisticFilter filter);
 
     List<Source> getDailyStatistics(StatisticFilter filter);
+
+    Float getProfitByBuyerId(int buyerId);
 }

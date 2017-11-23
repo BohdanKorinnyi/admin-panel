@@ -9,9 +9,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@FunctionalInterface
 public interface StatisticService {
     List<Stats> getBuyerStatistics(StatisticFilter filter) throws ExecutionException, InterruptedException;
+
+    Float getProfitByBuyer(int buyerId);
 
     default <T> Map<Integer, List<T>> groupByBuyerId(List<T> list, Function<T, Integer> groupingBy) {
         return list.stream().collect(Collectors.groupingBy(groupingBy, Collectors.toList()));

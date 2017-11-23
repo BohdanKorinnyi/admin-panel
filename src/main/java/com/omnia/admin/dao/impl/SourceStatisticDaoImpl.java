@@ -22,6 +22,18 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
 
     private static final String SELECT_STATISTIC = QueryHelper.loadQueryFromFile("statistic.sql");
     private static final String SELECT_DAILY_STATISTIC = QueryHelper.loadQueryFromFile("statistic_daily.sql");
+    private static final String SELECT_PROFIT = "SELECT sum(result.sum) AS profit " +
+            "FROM (SELECT sum(spent) AS sum " +
+            "      FROM source_statistics_today " +
+            "        INNER JOIN affiliates ON affiliates.afid = source_statistics_today.afid " +
+            "      WHERE affiliates.buyer_id = ? AND month(source_statistics_today.date) = month(now()) " +
+            "      UNION (SELECT sum(spent) AS sum " +
+            "             FROM source_statistics " +
+            "               INNER JOIN affiliates ON affiliates.afid = source_statistics.afid " +
+            "             WHERE affiliates.buyer_id = ? AND month(source_statistics.date) = month(now())) " +
+            "      UNION (SELECT sum(expenses.sum) AS sum " +
+            "             FROM expenses " +
+            "             WHERE expenses.buyer_id = ? AND month(expenses.date) = month(now()))) AS result;";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -33,6 +45,11 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
     @Override
     public List<Source> getDailyStatistics(StatisticFilter filter) {
         return jdbcTemplate.query(updateWhereClause(SELECT_DAILY_STATISTIC, filter), BeanPropertyRowMapper.newInstance(Source.class));
+    }
+
+    @Override
+    public Float getProfitByBuyerId(int buyerId) {
+        return jdbcTemplate.queryForObject(SELECT_PROFIT, Float.class, buyerId);
     }
 
     private String updateWhereClause(String sql, StatisticFilter filter) {

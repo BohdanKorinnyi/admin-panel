@@ -69,6 +69,11 @@ public final class StatisticServiceImpl implements StatisticService {
         return result;
     }
 
+    @Override
+    public Float getProfitByBuyer(int buyerId) {
+        return sourceStatsService.getProfitByBuyerId(buyerId);
+    }
+
     private void calculateSums(List<Stats> stats) {
         DecimalFormat decimalFormat = new DecimalFormat("#.####");
         for (Stats stat : stats) {

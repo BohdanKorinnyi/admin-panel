@@ -25,6 +25,8 @@ public interface SourceStatsService {
 
     List<Source> getSources(StatisticFilter filter);
 
+    Float getProfitByBuyerId(int buyerId);
+
     default SourcesResult createBuyerStatistic(int buyerId, List<Source> sources) {
         double sum = sources.stream()
                 .mapToDouble(Source::getSpent)

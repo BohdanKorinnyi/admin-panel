@@ -56,6 +56,11 @@ public final class SourceStatsServiceImpl implements SourceStatsService {
         return result;
     }
 
+    @Override
+    public Float getProfitByBuyerId(int buyerId) {
+        return sourceStatisticDao.getProfitByBuyerId(buyerId);
+    }
+
     private Map<Integer, SourcesResult> groupStats(Map<Integer, List<Source>> stats) {
         Map<Integer, SourcesResult> buyerStatistic = new HashMap<>();
         for (Map.Entry<Integer, List<Source>> entry : stats.entrySet()) {
