@@ -10,5 +10,3 @@ mvnw.cmd
 target/
 /report.xlsx
 /log.log/spring.log
-/log.log/
-!/log.log/spring.log

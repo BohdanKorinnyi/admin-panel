@@ -29,16 +29,6 @@ public class PayrollController {
         return ResponseEntity.ok(new PageResponse(total, page.getNumber(), payrolls));
     }
 
-    @GetMapping("buyers")
-    public ResponseEntity getPayrollByBuyer(HttpServletRequest request) {
-        if (request.getUserPrincipal() instanceof UsernamePasswordAuthenticationToken) {
-            UsernamePasswordAuthenticationToken userPrincipal = (UsernamePasswordAuthenticationToken) request.getUserPrincipal();
-            CurrentUser currentUser = (CurrentUser) userPrincipal.getPrincipal();
-            return ResponseEntity.ok(payrollService.findPayrollsByBuyerId(currentUser.getBuyerId()));
-        }
-        return ResponseEntity.ok(Collections.emptyList());
-    }
-
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void update(@RequestBody Payroll payrolls) {
