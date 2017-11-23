@@ -3,7 +3,6 @@ package com.omnia.admin.dao.impl;
 import com.omnia.admin.dao.PostbackDao;
 import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.exception.QueryExecutionException;
-import com.omnia.admin.model.BuyerPlan;
 import com.omnia.admin.service.PostbackStats;
 import com.omnia.admin.service.QueryHelper;
 import lombok.AllArgsConstructor;
@@ -15,7 +14,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.StringJoiner;
 
 import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 
@@ -25,6 +26,10 @@ import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 public class PostbackDaoImpl implements PostbackDao {
     private static final String SELECT_POSTBACK = QueryHelper.loadQueryFromFile("postback.sql");
     private static final String SELECT_FULL_URL_BY_ID = "SELECT fullurl FROM postback WHERE id = ?;";
+    private static final String SELECT_BUYER_REVENUE = "SELECT TRUNCATE(sum(postback.sum), 2) AS revenue " +
+            "FROM postback " +
+            "  INNER JOIN affiliates ON affiliates.buyer_id = postback.afid " +
+            "WHERE month(postback.date) = month(now()) AND affiliates.buyer_id = ?;";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -55,5 +60,10 @@ public class PostbackDaoImpl implements PostbackDao {
             dateWhere = " AND date BETWEEN '" + filter.getFrom() + "' AND '" + filter.getTo() + "' ";
         }
         return jdbcTemplate.query(String.format(SELECT_POSTBACK, buyerWhere, dateWhere), BeanPropertyRowMapper.newInstance(PostbackStats.class));
+    }
+
+    @Override
+    public float getRevenueByBuyer(int buyerId) {
+        return jdbcTemplate.queryForObject(SELECT_BUYER_REVENUE, Float.class, buyerId);
     }
 }

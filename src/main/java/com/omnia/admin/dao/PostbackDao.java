@@ -10,4 +10,6 @@ public interface PostbackDao {
     Optional<String> findFullUrlById(Long postbackId);
 
     List<PostbackStats> getStats(StatisticFilter filter);
+
+    float getRevenueByBuyer(int buyerId);
 }

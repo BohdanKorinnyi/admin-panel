@@ -24,4 +24,9 @@ public class PostbackServiceImpl implements PostbackService {
     public List<PostbackStats> getPostbackStats(StatisticFilter filter) {
         return postbackDao.getStats(filter);
     }
+
+    @Override
+    public float getRevenueByBuyer(int buyerId) {
+        return 0;
+    }
 }
