@@ -51,7 +51,7 @@ public class BuyerPlanDaoImpl implements BuyerPlanDao {
             "               INNER JOIN adv_status ON adverts.id = adv_status.adv_id " +
             "             WHERE catalog_kpi.name = 'Revenue' AND postback.afid = affiliates.afid AND adv_status.real_status = 'approved' AND " +
             "                   postback.status = adv_status.name %s " +
-            "             GROUP BY MONTH(buyers_kpi.date), postback.currency) AS revenue ON buyers_kpi.id = revenue.id " +
+            "             GROUP BY MONTH(buyers_kpi.date), postback.currency, buyers_kpi.buyer_id) AS revenue ON buyers_kpi.id = revenue.id " +
             "WHERE catalog_kpi.name = 'Revenue' %s " +
             "GROUP BY buyers_kpi.buyer_id, MONTH(buyers_kpi.date) " +
             "ORDER BY MONTH(buyers_kpi.date) ASC;";
