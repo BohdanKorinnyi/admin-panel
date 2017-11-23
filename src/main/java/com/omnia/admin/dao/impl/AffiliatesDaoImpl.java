@@ -1,7 +1,9 @@
 package com.omnia.admin.dao.impl;
 
 import com.omnia.admin.dao.AffiliatesDao;
+import com.omnia.admin.model.Affiliates;
 import lombok.AllArgsConstructor;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +14,12 @@ import java.util.List;
 public class AffiliatesDaoImpl implements AffiliatesDao {
 
     private final JdbcTemplate jdbcTemplate;
+
+    @Override
+    public List<Affiliates> findAffiliates() {
+        return jdbcTemplate.query("SELECT afid,afname FROM affiliates ORDER BY afname DESC, afid ASC;",
+                BeanPropertyRowMapper.newInstance(Affiliates.class));
+    }
 
     @Override
     public List<Long> getAffiliatesIdsByBuyerId(long buyerId) {
