@@ -26,7 +26,7 @@ public class AdvertiserController {
 
     @GetMapping(path = "all")
     @ApiOperation(value = "Returns list of all advertisers")
-    public List<Advertiser> getAllAdvertisers(HttpServletRequest request) {
+    public List<Advertiser> getAllAdvertisers() {
         return advertiserService.getAllAdvertisers();
     }
 

@@ -11,5 +11,6 @@ public class Advertiser {
     private String advshortname;
     private String secretKey;
     private String url;
+    private String apiKey;
     private Long risk;
 }
