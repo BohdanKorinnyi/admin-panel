@@ -74,16 +74,17 @@ public class BuyerPlanServiceImpl implements BuyerPlanService {
     private List<BuyerPlan> calculatePerformanceProfit(List<BuyerPlan> plans) {
         for (BuyerPlan plan : plans) {
             if (KPI_PROFIT_TYPE.equals(plan.getKpiName())) {
-                Float revenue = getRevenueSumByMonth(plans, plan.getMonth());
-                plan.setPerformance(calculatePerformance(plan.getKpiValue(), revenue - plan.getSum()));
+                Float revenue = getRevenueSumByMonth(plans, plan.getMonth(), plan.getBuyerName());
+                plan.setSum(revenue - plan.getSum());
+                plan.setPerformance(calculatePerformance(plan.getKpiValue(), plan.getSum()));
             }
         }
         return plans;
     }
 
-    private float getRevenueSumByMonth(List<BuyerPlan> plans, String month) {
+    private float getRevenueSumByMonth(List<BuyerPlan> plans, String month, String buyerName) {
         return plans.stream()
-                .filter(plan -> KPI_REVENUE_TYPE.equals(plan.getKpiName()) && plan.getMonth().equals(month))
+                .filter(plan -> KPI_REVENUE_TYPE.equals(plan.getKpiName()) && plan.getMonth().equals(month) && plan.getBuyerName().equals(buyerName))
                 .findFirst()
                 .map(BuyerPlan::getSum)
                 .orElse(0F);

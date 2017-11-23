@@ -61,11 +61,8 @@ Application.controller("planByBuyerController", function ($scope, $http, dateFac
         };
     };
 
-    $scope.writeCurrency = function (currency, sum) {
-        if(currency!==null){
-            return sum+" "+currency;
-        }
-        else{return sum+" ";}
+    $scope.writePerformance = function (performance, sum) {
+        return sum < 0 ? 0 : performance.toFixed(2);
     };
 
 
