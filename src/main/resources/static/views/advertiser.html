@@ -83,6 +83,12 @@
                                                ng-model="advertiserUrl" ng-disabled="selectedAdvertiserIndex === -1"
                                                ng-change="updateAdvertiserUrl();"/>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="advApiKey">Advertiser api_key</label>
+                                        <input type="text" class="form-control" id="advApiKey"
+                                               ng-model="advertiserApiKey" ng-disabled="selectedAdvertiserIndex === -1"
+                                               maxlength="200" ng-change="updateAdvertiserApiKey();"/>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -105,7 +111,7 @@
                             </div>
                         </div>
                         <br/>
-                        <div class="row" style="height: 280px;overflow-y: auto;">
+                        <div class="row" style="height: 315px;overflow-y: auto;">
                             <div class="col-md-12" ng-repeat="status in advertiserStatuses track by $index">
                                 <form class="form-inline">
                                     <div class="form-group">

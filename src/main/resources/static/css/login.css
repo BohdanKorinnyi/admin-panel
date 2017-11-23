@@ -320,7 +320,7 @@ p:focus {
 
 .cardForAdvertisers {
     margin-top: 20px;
-    height: 400px;
+    height: 460px;
     padding-top: 1px;
     padding-left: 10px;
     padding-right: 10px;
@@ -344,7 +344,7 @@ p:focus {
 
 .cardForAdvertisersData {
     margin-top: 20px;
-    height: 400px;
+    height: 460px;
     padding-top: 1px;
     padding-left: 25px;
     padding-right: 25px;
@@ -371,7 +371,7 @@ p:focus {
     padding-top: 1px;
     padding-left: 20px;
     padding-right: 20px;
-    height: 400px;
+    height: 460px;
     box-sizing: border-box;
     border-radius: 2px;
     background-clip: padding-box;
@@ -488,7 +488,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 }
 
 #selectAdvertisers {
-    height: 275px;
+    height: 335px;
     width: 100%;
 }
 
