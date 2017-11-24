@@ -20,6 +20,7 @@ public class DashboardServiceImpl implements DashboardService {
     private final PayrollService payrollService;
     private final StatisticService statisticService;
     private final BuyerKpiService buyerKpiService;
+    private final BuyerService buyerService;
 
     @Override
     public Map<String, Object> getDashboardData(Integer buyerId) throws ExecutionException, InterruptedException {
@@ -34,6 +35,7 @@ public class DashboardServiceImpl implements DashboardService {
         Float revenue = revenueFuture.get();
         Float profit = profitFuture.get();
         response.put("revenue", revenue);
+        response.put("buyerName", buyerService.getBuyerById(buyerId));
         response.put("revenuePlan", revenuePlanFuture.get());
         response.put("profit", revenue - profit);
         response.put("profitPlan", profitPlanFuture.get());

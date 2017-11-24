@@ -49,7 +49,7 @@ Application.config(function($routeProvider, $locationProvider) {
         templateUrl : "views/planByBuyer.html",
         controller  : "planByBuyerController"
         })
-        .when('/details', {
+        .when('/', {
             templateUrl : "views/buyerDetails.html",
             controller  : "buyerDetailsController"
         });
