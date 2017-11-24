@@ -50,7 +50,7 @@ Application.config(function($routeProvider, $locationProvider) {
         controller  : "planByBuyerController"
         })
         .when('/', {
-            templateUrl : "views/buyerDetails.html",
-            controller  : "buyerDetailsController"
+            templateUrl : "views/dashboard.html",
+            controller  : "dashboardController"
         });
 });
