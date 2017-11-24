@@ -17,7 +17,7 @@ public class ConversionFilterDto {
     private final String from;
     private final String to;
     private final String arbitratorName;
-    private final String arbitratorId;
+    private final String afids;
     private final String advertiserName;
     private final String status;
     private final String prefix;
@@ -32,8 +32,8 @@ public class ConversionFilterDto {
         if (!StringUtils.isEmpty(arbitratorName)) {
             fields.add(ConversionFilterColumn.ARBITRATOR_NAME);
         }
-        if (!StringUtils.isEmpty(arbitratorId)) {
-            fields.add(ConversionFilterColumn.ARBITRATOR_ID);
+        if (!StringUtils.isEmpty(afids)) {
+            fields.add(ConversionFilterColumn.AFFILIATES_ID);
         }
         if (!StringUtils.isEmpty(advertiserName)) {
             fields.add(ConversionFilterColumn.ADVERTISER_NAME);
@@ -59,8 +59,8 @@ public class ConversionFilterDto {
                 return from + SPACE + to;
             case ARBITRATOR_NAME:
                 return arbitratorName;
-            case ARBITRATOR_ID:
-                return arbitratorId;
+            case AFFILIATES_ID:
+                return afids;
             case ADVERTISER_NAME:
                 return advertiserName;
             case STATUS:

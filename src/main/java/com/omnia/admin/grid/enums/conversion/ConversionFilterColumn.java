@@ -4,7 +4,7 @@ public enum ConversionFilterColumn {
     DEFAULT,
     DATE,
     ARBITRATOR_NAME,
-    ARBITRATOR_ID,
+    AFFILIATES_ID,
     ADVERTISER_NAME,
     STATUS,
     PREFIX,

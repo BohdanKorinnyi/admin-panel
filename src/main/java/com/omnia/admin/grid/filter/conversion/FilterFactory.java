@@ -22,7 +22,7 @@ public final class FilterFactory {
         conversionFilters.put(DEFAULT, new DefaultFilter());
         conversionFilters.put(DATE, new DateFilter());
         conversionFilters.put(ARBITRATOR_NAME, new ArbitratorNameFilter());
-        conversionFilters.put(ARBITRATOR_ID, new ArbitratorIdFilter());
+        conversionFilters.put(AFFILIATES_ID, new AffiliatesIdFilter());
         conversionFilters.put(ADVERTISER_NAME, new AdvertiserNameFilter());
         conversionFilters.put(STATUS, new StatusFilter());
         conversionFilters.put(PREFIX, new PrefixFilter());

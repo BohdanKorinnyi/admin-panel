@@ -16,9 +16,11 @@ import org.springframework.util.StringUtils;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static com.omnia.admin.grid.filter.FilterConstant.*;
 import static java.util.Objects.nonNull;
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 @Log4j
 @Repository
@@ -61,14 +63,16 @@ public class ConversionGridDaoImpl implements ConversionGridDao {
         }
         String whereWithSortQuery = whereQuery + getOrderBy(filterDetails.getSortingDetails());
         String sql = SELECT_CONVERSIONS + whereWithSortQuery + getLimit(filterDetails);
-        long start = System.currentTimeMillis();
-        List<ConversionDto> conversionDtos = jdbcTemplate.query(sql, new ConversionDtoRowMapper());
-        log.info("Select conversions executed in " + (System.currentTimeMillis() - start) + "ms, sql=" + sql);
         String sizeSql = COUNT_CONVERSIONS + whereWithSortQuery;
-        start = System.currentTimeMillis();
-        Integer size = jdbcTemplate.queryForObject(sizeSql, Integer.class);
-        log.info("Select quantity of conversions executed in " + (System.currentTimeMillis() - start) + "ms, sql=" + sizeSql);
-        return new ConversionList(size, conversionDtos);
+        CompletableFuture<List<ConversionDto>> conversions = supplyAsync(() -> jdbcTemplate.query(sql, new ConversionDtoRowMapper()));
+        CompletableFuture<Integer> size = supplyAsync(() -> jdbcTemplate.queryForObject(sizeSql, Integer.class));
+        CompletableFuture.allOf(conversions, size);
+        try {
+            return new ConversionList(size.get(), conversions.get());
+        } catch (Exception e) {
+            log.error("error occurred during loading conversions", e);
+        }
+        return null;
     }
 
     private String getLimit(ConversionGridFilterDetails filterDetails) {
