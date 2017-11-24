@@ -1,6 +1,6 @@
 "use strict";
 
-Application.controller("buyerDetailsController", function ($scope, $http) {
+Application.controller("dashboardController", function ($scope, $http) {
 
     $scope.payroll = [];
     $scope.revenue = "";

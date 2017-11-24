@@ -66,6 +66,15 @@ Application.controller('conversionController', function ($scope, $http, dateFact
         }
     };
 
+    $scope.loadAfids = function () {
+      var url = "/affiliates/get";
+      $http.get(url).then(function success(response) {
+          $scope.buyerAfids = response.data;
+      }, function errorCallback() {
+          notify('ti-alert', 'Error occurred during loading buyers afids', 'danger');
+      });
+    };
+
     $scope.loadConversions = function () {
         $scope.conversions = [];
         $scope.showConversionLoader = true;
@@ -100,8 +109,8 @@ Application.controller('conversionController', function ($scope, $http, dateFact
         if ($scope.selectedAffNetworkValue !== '') {
             parameters.filter['advertiserName'] = $scope.selectedAffNetworkValue;
         }
-        if ($scope.selectedAfIdValue !== '') {
-            parameters.filter['arbitratorId'] = $scope.selectedAfIdValue;
+        if ($scope.selectedBuyerAfids !== '') {
+            parameters.filter['afids'] = $scope.selectedBuyerAfids.join();
         }
         if ($scope.selectedStatusValue !== '') {
             parameters.filter['status'] = $scope.selectedStatusValue;
@@ -129,13 +138,6 @@ Application.controller('conversionController', function ($scope, $http, dateFact
                     name: response.data[i]
                 });
             }
-        });
-    };
-
-    $scope.initBuyerAfids = function () {
-        var url = '';
-        $http.get(url).then(function successCallback(response) {
-            $scope.buyerAfids = response.data;
         });
     };
 
