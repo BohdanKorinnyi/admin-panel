@@ -14,6 +14,11 @@ import java.util.List;
 public class SourceStatisticController {
     private final SourceStatsService sourceStatsService;
 
+    @GetMapping("date")
+    public ResponseEntity getSourceStatByBuyer(@RequestParam Integer buyerId, @RequestParam String date) {
+        return ResponseEntity.ok(sourceStatsService.getSourceStatByDate(buyerId, date));
+    }
+
     @GetMapping("buyers")
     public ResponseEntity getSourceStat(@RequestParam(required = false) List<Integer> buyerIds,
                                         @RequestParam(required = false) String from,

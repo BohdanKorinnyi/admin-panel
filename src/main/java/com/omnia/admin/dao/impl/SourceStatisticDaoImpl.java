@@ -22,6 +22,7 @@ import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 public class SourceStatisticDaoImpl implements SourceStatisticDao {
 
     private static final String SELECT_STATISTIC = QueryHelper.loadQueryFromFile("statistic.sql");
+    private static final String SELECT_DETAILED_SOURCE_STATISTIC = QueryHelper.loadQueryFromFile("detailed_source_statistic.sql");
     private static final String SELECT_SOURCE_STATISTIC = QueryHelper.loadQueryFromFile("source_statistic.sql");
     private static final String SELECT_DAILY_STATISTIC = QueryHelper.loadQueryFromFile("statistic_daily.sql");
     private static final String SELECT_PROFIT = "SELECT sum(result.sum) AS profit " +
@@ -66,9 +67,9 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
         String dateClause3 = EMPTY;
         String dateClause4 = EMPTY;
         if (!StringUtils.isEmpty(from) && !StringUtils.isEmpty(to)) {
-            dateClause1 = " AND expenses.date BETWEEN '" + from + "' AND '" + to+ "'";
-            dateClause2 = " AND source_statistics.date BETWEEN '" + from + "' AND '" + to+ "'";
-            dateClause3 = " AND source_statistics_today.date BETWEEN '" + from + "' AND '" + to+ "'";
+            dateClause1 = " AND expenses.date BETWEEN '" + from + "' AND '" + to + "'";
+            dateClause2 = " AND source_statistics.date BETWEEN '" + from + "' AND '" + to + "'";
+            dateClause3 = " AND source_statistics_today.date BETWEEN '" + from + "' AND '" + to + "'";
             dateClause4 = " AND postback.date BETWEEN '" + from + "' AND '" + to + "'";
         }
         return jdbcTemplate.query(
@@ -79,6 +80,14 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
                         buyerClause + dateClause4
                 ),
                 BeanPropertyRowMapper.newInstance(SourceStat.class)
+        );
+    }
+
+    @Override
+    public List<SourceStat> getSourceStatByDate(Integer buyerId, String date) {
+        return jdbcTemplate.query(SELECT_DETAILED_SOURCE_STATISTIC, BeanPropertyRowMapper.newInstance(SourceStat.class),
+                date, buyerId, date, buyerId,
+                date, buyerId, date, buyerId
         );
     }
 

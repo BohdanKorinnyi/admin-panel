@@ -14,4 +14,6 @@ public interface SourceStatisticDao {
     Float getProfitByBuyerId(int buyerId);
 
     List<SourceStat> getSourceStat(List<Integer> buyerIds, String from, String to);
+
+    List<SourceStat> getSourceStatByDate(Integer buyerId, String date);
 }

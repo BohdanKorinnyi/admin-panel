@@ -28,6 +28,8 @@ public interface SourceStatsService {
 
     Map<String, List<SourceStat>> getSourceStat(List<Integer> buyerIds, String from, String to);
 
+    List<SourceStat> getSourceStatByDate(Integer buyerId, String date);
+
     Float getProfitByBuyerId(int buyerId);
 
     default SourcesResult createBuyerStatistic(int buyerId, List<Source> sources) {

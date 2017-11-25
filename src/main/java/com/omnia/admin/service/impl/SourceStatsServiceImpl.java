@@ -68,6 +68,11 @@ public final class SourceStatsServiceImpl implements SourceStatsService {
     }
 
     @Override
+    public List<SourceStat> getSourceStatByDate(Integer buyerId, String date) {
+        return sourceStatisticDao.getSourceStatByDate(buyerId, date);
+    }
+
+    @Override
     public Float getProfitByBuyerId(int buyerId) {
         return sourceStatisticDao.getProfitByBuyerId(buyerId);
     }
