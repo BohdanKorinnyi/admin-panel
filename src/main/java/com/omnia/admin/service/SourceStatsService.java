@@ -2,6 +2,8 @@ package com.omnia.admin.service;
 
 import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.model.Source;
+import com.omnia.admin.model.SourceStat;
+import com.omnia.admin.model.statistic.BuyerDetails;
 import com.omnia.admin.model.statistic.SourcesResult;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -24,6 +26,8 @@ public interface SourceStatsService {
     Map<Integer, SourcesResult> getDailyAndGeneralStatistics(StatisticFilter filter);
 
     List<Source> getSources(StatisticFilter filter);
+
+    Map<BuyerDetails, List<SourceStat>> getSourceStat(StatisticFilter filter);
 
     Float getProfitByBuyerId(int buyerId);
 

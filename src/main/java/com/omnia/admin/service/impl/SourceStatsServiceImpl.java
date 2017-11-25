@@ -5,6 +5,8 @@ import com.google.common.collect.Lists;
 import com.omnia.admin.dao.SourceStatisticDao;
 import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.model.Source;
+import com.omnia.admin.model.SourceStat;
+import com.omnia.admin.model.statistic.BuyerDetails;
 import com.omnia.admin.model.statistic.SourcesResult;
 import com.omnia.admin.service.BuyerService;
 import com.omnia.admin.service.SourceStatsService;
@@ -14,6 +16,10 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @AllArgsConstructor
@@ -54,6 +60,19 @@ public final class SourceStatsServiceImpl implements SourceStatsService {
         }
         result.addAll(sourceStatisticDao.getStatistics(filter));
         return result;
+    }
+
+    @Override
+    public Map<BuyerDetails, List<SourceStat>> getSourceStat(StatisticFilter filter) {
+        List<SourceStat> sourceStat = sourceStatisticDao.getSourceStat(filter);
+        Function<SourceStat, BuyerDetails> detailsFunction = source -> {
+            BuyerDetails detail = new BuyerDetails();
+            detail.setName(source.getBuyer());
+            detail.setId(source.getBuyerId());
+            return detail;
+        };
+        return sourceStat.stream()
+                .collect(Collectors.groupingBy(detailsFunction, toList()));
     }
 
     @Override

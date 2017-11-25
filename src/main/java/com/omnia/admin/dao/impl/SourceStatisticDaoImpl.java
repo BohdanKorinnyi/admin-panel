@@ -3,6 +3,7 @@ package com.omnia.admin.dao.impl;
 import com.omnia.admin.dao.SourceStatisticDao;
 import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.model.Source;
+import com.omnia.admin.model.SourceStat;
 import com.omnia.admin.service.QueryHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -21,6 +22,7 @@ import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 public class SourceStatisticDaoImpl implements SourceStatisticDao {
 
     private static final String SELECT_STATISTIC = QueryHelper.loadQueryFromFile("statistic.sql");
+    private static final String SELECT_SOURCE_STATISTIC = QueryHelper.loadQueryFromFile("source_statistic.sql");
     private static final String SELECT_DAILY_STATISTIC = QueryHelper.loadQueryFromFile("statistic_daily.sql");
     private static final String SELECT_PROFIT = "SELECT sum(result.sum) AS profit " +
             "FROM (SELECT sum(spent) AS sum " +
@@ -36,6 +38,11 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
             "             WHERE expenses.buyer_id = ? AND month(expenses.date) = month(now()))) AS result;";
 
     private final JdbcTemplate jdbcTemplate;
+
+    @Override
+    public List<SourceStat> getSourceStat(StatisticFilter filter) {
+        return jdbcTemplate.query(SELECT_SOURCE_STATISTIC, BeanPropertyRowMapper.newInstance(SourceStat.class));
+    }
 
     @Override
     public List<Source> getStatistics(StatisticFilter filter) {

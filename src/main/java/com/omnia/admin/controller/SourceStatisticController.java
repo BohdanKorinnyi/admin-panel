@@ -1,23 +1,21 @@
 package com.omnia.admin.controller;
 
 import com.omnia.admin.dto.StatisticFilter;
-import com.omnia.admin.service.ExcelReportService;
 import com.omnia.admin.service.SourceStatsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("statistic")
 public class SourceStatisticController {
-
     private final SourceStatsService sourceStatsService;
-    private final ExcelReportService excelReportService;
 
+    @GetMapping("buyers")
+    public ResponseEntity getSourceStat() {
+        return ResponseEntity.ok(sourceStatsService.getSourceStat(null));
+    }
 
     @PostMapping("old")
     public ResponseEntity getStatistic(@RequestBody StatisticFilter filter) {
