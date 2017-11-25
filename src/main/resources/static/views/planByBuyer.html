@@ -6,13 +6,14 @@
                     <form class="form-inline">
                         <div class="form-group" ng-init="getBuyers();"
                              style="margin-right:5px;margin-bottom: 3px; margin-left: 15px;">
-                            <select class="selectpicker" multiple
+                            <select id="buyerSelectPicker"
+                                    class="selectpicker" multiple
                                     data-style="btn-info btn-fill btn-block"
                                     data-size="5"
                                     title="Buyer"
                                     data-header="Buyers"
                                     ng-model="selectedBuyerNames"
-                                    style="width: 130%;margin-left: 5px;">
+                                    style="width: 180%;margin-left: 5px;">
                                 <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
                                         data-last="{{$last}}" value="{{b.id}}">{{b.name}}
                                 </option>
@@ -21,7 +22,8 @@
 
                         <div class="form-group"
                              style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
-                            <select class="selectpicker" multiple
+                            <select id="monthSelectPicker"
+                                    class="selectpicker" multiple
                                     data-style="btn-info btn-fill btn-block"
                                     data-size="5"
                                     title="Month"

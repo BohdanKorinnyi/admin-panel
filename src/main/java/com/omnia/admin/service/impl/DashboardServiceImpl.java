@@ -34,14 +34,15 @@ public class DashboardServiceImpl implements DashboardService {
         CompletableFuture.allOf(revenueFuture, payrolls, profitFuture, revenuePlanFuture, profitPlanFuture);
         Float revenue = revenueFuture.get();
         Float profit = profitFuture.get();
+        Float realProfit = revenue - profit;
         response.put("revenue", revenue);
         response.put("buyerName", buyerService.getBuyerById(buyerId));
         response.put("revenuePlan", revenuePlanFuture.get());
-        response.put("profit", revenue - profit);
+        response.put("profit", realProfit);
         response.put("profitPlan", profitPlanFuture.get());
         response.put("payroll", payrolls.get());
         response.put("totalPaid", payrolls.get().parallelStream().mapToDouble(Payroll::getSum).sum());
-        response.put("bonus", profit > 0 ? profit * 0.2 : 0);
+        response.put("bonus", realProfit > 0 ? realProfit * 0.2 : 0);
         return response;
     }
 }

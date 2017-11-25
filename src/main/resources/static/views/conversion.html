@@ -90,9 +90,19 @@
                             </option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <input type="text" placeholder="AfId" class="form-control" ng-model="selectedAfIdValue"
-                               style=" width: 150px;"/>
+                    <div class="form-group" ng-init="loadAfids();"
+                         style="margin-top:10px;">
+                        <select class="selectpicker" multiple
+                                data-style="btn-info btn-fill btn-block"
+                                data-size="5"
+                                title="Afids"
+                                data-header="Afids"
+                                ng-model="selectedBuyerAfids"
+                                style="width: 130%;margin-left: 5px;">
+                            <option class="small-font" ng-repeat="a in buyerAfids" data-select-watcher
+                                    data-last="{{$last}}" value="{{a.afid}}">{{a.afname}} ({{a.afid}})
+                            </option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <input type="text" placeholder="Aff.network" class="form-control"

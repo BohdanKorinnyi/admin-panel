@@ -546,9 +546,19 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
     }
 }
 
+#buyerSelectPicker > .dropdown-toggle{
+    width: 210px!important;
+}
+
+#monthSelectPicker > .dropdown-toggle{
+    width: 150px!important;
+}
+
 .bootstrap-select > .dropdown-toggle{
     width: 110px!important;
 }
+
+
 
 datepicker, .datepicker, [datepicker], ._720kb-datepicker-calendar-header,
 ._720kb-datepicker-calendar-body, ._720kb-datepicker-calendar-days-header,
