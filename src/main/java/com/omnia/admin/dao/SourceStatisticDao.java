@@ -7,11 +7,11 @@ import com.omnia.admin.model.SourceStat;
 import java.util.List;
 
 public interface SourceStatisticDao {
-    List<SourceStat> getSourceStat(StatisticFilter filter);
-
     List<Source> getStatistics(StatisticFilter filter);
 
     List<Source> getDailyStatistics(StatisticFilter filter);
 
     Float getProfitByBuyerId(int buyerId);
+
+    List<SourceStat> getSourceStat(List<Integer> buyerIds, String from, String to);
 }

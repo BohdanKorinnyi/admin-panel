@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("statistic")
@@ -13,8 +15,11 @@ public class SourceStatisticController {
     private final SourceStatsService sourceStatsService;
 
     @GetMapping("buyers")
-    public ResponseEntity getSourceStat() {
-        return ResponseEntity.ok(sourceStatsService.getSourceStat(null));
+    public ResponseEntity getSourceStat(@RequestParam(required = false) List<Integer> buyerIds,
+                                        @RequestParam(required = false) String from,
+                                        @RequestParam(required = false) String to
+    ) {
+        return ResponseEntity.ok(sourceStatsService.getSourceStat(buyerIds, from, to));
     }
 
     @PostMapping("old")

@@ -40,11 +40,6 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<SourceStat> getSourceStat(StatisticFilter filter) {
-        return jdbcTemplate.query(SELECT_SOURCE_STATISTIC, BeanPropertyRowMapper.newInstance(SourceStat.class));
-    }
-
-    @Override
     public List<Source> getStatistics(StatisticFilter filter) {
         return jdbcTemplate.query(updateWhereClause(SELECT_STATISTIC, filter), BeanPropertyRowMapper.newInstance(Source.class));
     }
@@ -57,6 +52,34 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
     @Override
     public Float getProfitByBuyerId(int buyerId) {
         return jdbcTemplate.queryForObject(SELECT_PROFIT, Float.class, buyerId, buyerId, buyerId);
+    }
+
+    @Override
+    public List<SourceStat> getSourceStat(List<Integer> buyerIds, String from, String to) {
+        String buyerClause = EMPTY;
+        if (!CollectionUtils.isEmpty(buyerIds)) {
+            String ids = StringUtils.collectionToCommaDelimitedString(buyerIds);
+            buyerClause = " AND buyers.id IN (" + ids + ")";
+        }
+        String dateClause1 = EMPTY;
+        String dateClause2 = EMPTY;
+        String dateClause3 = EMPTY;
+        String dateClause4 = EMPTY;
+        if (!StringUtils.isEmpty(from) && !StringUtils.isEmpty(to)) {
+            dateClause1 = " AND expenses.date BETWEEN '" + from + "' AND '" + to+ "'";
+            dateClause2 = " AND source_statistics.date BETWEEN '" + from + "' AND '" + to+ "'";
+            dateClause3 = " AND source_statistics_today.date BETWEEN '" + from + "' AND '" + to+ "'";
+            dateClause4 = " AND postback.date BETWEEN '" + from + "' AND '" + to + "'";
+        }
+        return jdbcTemplate.query(
+                String.format(SELECT_SOURCE_STATISTIC,
+                        buyerClause + dateClause1,
+                        buyerClause + dateClause2,
+                        buyerClause + dateClause3,
+                        buyerClause + dateClause4
+                ),
+                BeanPropertyRowMapper.newInstance(SourceStat.class)
+        );
     }
 
     private String updateWhereClause(String sql, StatisticFilter filter) {
