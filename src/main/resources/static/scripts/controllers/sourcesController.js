@@ -1,6 +1,6 @@
 "use strict";
 
-Application.controller("sourcesController", function ($scope, $http, dateFactory) {
+Application.controller("sourcesController", function ($scope, $http, dateFactory, sourcesDatesService) {
 
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
@@ -11,6 +11,8 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
     $scope.showsourcesLoader = true;
 
     $scope.buyerDetails = false;
+    $scope.dateDetails = false;
+    $scope.buyerDetailsByDate = [];
 
     $scope.sizeOptions = {
         50: 50,
@@ -57,6 +59,32 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
         });
     };
 
+    $scope.initsources = function () {
+        var url = "/statistic/buyers";
+        $scope.sources = [];
+        $scope.showsourcesLoader = true;
+        $http.get(url).then(function (response) {
+            $scope.sources = response.data;
+            $scope.showsourcesLoader = false;
+        }, function () {
+            $scope.showsourcesLoader = false;
+            notify('ti-alert', 'Error occurred during loading buyer sources', 'danger');
+        });
+    };
+
+    $scope.getDataDetails = function (buyerId, date) {
+        var dateDetailsDataPromise = sourcesDatesService.getData(buyerId, date);
+        dateDetailsDataPromise.then(function(result) {
+
+            // this is only run after getData() resolves
+            $scope.buyerDetailsByDate = result;
+            for(var i=0; i< 2; i++){
+                console.log($scope.buyerDetailsByDate[i]);
+            }
+        });
+
+    };
+
     $scope.getGridDetails = function () {
         var fromDate = "";
         var toDate = "";
@@ -77,7 +105,6 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
             "to": toDate
         };
     };
-
 
     $scope.getBuyers = function () {
         var url = "/buyer";
@@ -100,7 +127,41 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
             $scope.id = id;
         }
     };
+
+    $scope.buyerDate = "";
+
+    $scope.showBuyerByDateDetailsColumn = function (id, date) {
+        if ($scope.buyerDate === date) {
+            $scope.dateDetails = false;
+            $scope.buyerDate = "";
+        }
+        else {
+            $scope.dateDetails = true;
+            $scope.buyerDate = date;
+        }
+
+        $scope.getDataDetails(id, date);
+    };
 });
+
+
+Application.factory('sourcesDatesService', function($http) {
+
+    var getData = function(id, date) {
+
+        // Angular $http() and then() both return promises themselves
+        return $http({method:"GET", url:"/statistic/date?buyerId="+id+"&date="+date}).then(function(result){
+
+            // What we return here is the data that will be accessible
+            // to us after the promise resolves
+            return result.data;
+        });
+    };
+
+
+    return { getData: getData };
+});
+
 
 
 
