@@ -1,13 +1,25 @@
 Application.run(function ($http, $q) {
         console.log("getting role.....");
-
-        $q.all($http.get("/user/me")).then(function () {
-            console.warn("ff");
+        $http.get("/user/me").then(function (response) {
+            localStorage.setItem('role', response.data.authorities[0].authority);
         });
-        var r = localStorage.getItem('role');
-        console.log(r);
     }
 ).config(function ($routeProvider) {
+    var role = localStorage.getItem('role');
+    console.log(role);
+    if (role === 'BUYER') {
+        $routeProvider
+            .when('/dashboard', {
+                templateUrl: "views/dashboard.html",
+                controller: "dashboardController"
+            })
+    } else {
+        $routeProvider
+            .when('/dashboard', {
+                templateUrl: "views/adminDashboard.html",
+                controller: "adminDashboardController"
+            });
+    }
     $routeProvider
         .when('/login', {
             templateUrl: "views/login.html",
@@ -57,13 +69,13 @@ Application.run(function ($http, $q) {
         .when('/plan', {
             templateUrl: "views/planByBuyer.html",
             controller: "planByBuyerController"
-        })
-        .when('/', {
-            templateUrl: "views/dashboard.html",
-            controller: "dashboardController"
-        })
-        .when('/admin/dashboard', {
-            templateUrl: "views/adminDashboard.html",
-            controller: "adminDashboardController"
         });
+        // .when('/dashboard', {
+        //     templateUrl: "views/dashboard.html",
+        //     controller: "dashboardController"
+        // })
+        // .when('/admin/dashboard', {
+        //     templateUrl: "views/adminDashboard.html",
+        //     controller: "adminDashboardController"
+        // });
 });
