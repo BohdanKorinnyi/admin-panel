@@ -1,5 +1,6 @@
 package com.omnia.admin.service;
 
+import com.omnia.admin.controller.BuyerSource;
 import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.model.Source;
 import com.omnia.admin.model.SourceStat;
@@ -26,7 +27,7 @@ public interface SourceStatsService {
 
     List<Source> getSources(StatisticFilter filter);
 
-    Map<String, List<SourceStat>> getSourceStat(List<Integer> buyerIds, String from, String to);
+    List<BuyerSource> getSourceStat(List<Integer> buyerIds, String from, String to);
 
     List<SourceStat> getSourceStatByDate(Integer buyerId, String date);
 

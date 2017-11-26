@@ -2,6 +2,7 @@ package com.omnia.admin.service.impl;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.omnia.admin.controller.BuyerSource;
 import com.omnia.admin.dao.SourceStatisticDao;
 import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.model.Source;
@@ -11,6 +12,7 @@ import com.omnia.admin.service.BuyerService;
 import com.omnia.admin.service.SourceStatsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,10 +63,21 @@ public final class SourceStatsServiceImpl implements SourceStatsService {
     }
 
     @Override
-    public Map<String, List<SourceStat>> getSourceStat(List<Integer> buyerIds, String from, String to) {
+    public List<BuyerSource> getSourceStat(List<Integer> buyerIds, String from, String to) {
         List<SourceStat> sourceStat = sourceStatisticDao.getSourceStat(buyerIds, from, to);
-        return sourceStat.stream()
+        Map<String, List<SourceStat>> collect = sourceStat.stream()
                 .collect(Collectors.groupingBy(SourceStat::getBuyer, toList()));
+        List<BuyerSource> sources = Lists.newArrayList();
+        for (Map.Entry<String, List<SourceStat>> entry : collect.entrySet()) {
+            BuyerSource buyerSource = new BuyerSource();
+            buyerSource.setBuyer(entry.getKey());
+            buyerSource.setData(entry.getValue());
+            if (!CollectionUtils.isEmpty(entry.getValue())) {
+                buyerSource.setBuyerId(entry.getValue().get(0).getBuyerId());
+            }
+            sources.add(buyerSource);
+        }
+        return sources;
     }
 
     @Override
