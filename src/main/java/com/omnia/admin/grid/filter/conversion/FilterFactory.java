@@ -27,7 +27,7 @@ public final class FilterFactory {
         conversionFilters.put(STATUS, new StatusFilter());
         conversionFilters.put(PREFIX, new PrefixFilter());
         conversionFilters.put(TIME_ZONE, new TimeZoneFilter());
-        conversionFilters.put(OFFER_NAME, new OfferNameFilter());
+        conversionFilters.put(OFFER_NAME, new BuyerFilter());
     }
 
     public Filter getFilter(ConversionFilterColumn field) {

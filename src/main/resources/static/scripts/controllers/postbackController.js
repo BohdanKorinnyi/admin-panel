@@ -102,12 +102,12 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
         });
     };
     $scope.initBuyerNames = function () {
-        var url = '/buyer/names';
+        var url = '/buyer';
         $http.get(url).then(function successCallback(response) {
             for (var i = 0; i < response.data.length; i++) {
                 $scope.buyerNames.push({
-                    id: i,
-                    name: response.data[i]
+                    id: response.data[i].id,
+                    name: response.data[i].name
                 });
             }
         });

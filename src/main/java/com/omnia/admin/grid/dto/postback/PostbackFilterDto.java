@@ -27,7 +27,6 @@ public class PostbackFilterDto {
     private String statusFromOfferName;
     private String duplicate;
 
-
     public List<PostbackFilterColumn> getFields() {
         List<PostbackFilterColumn> fields = new ArrayList<>();
         if (!StringUtils.isEmpty(from) && !StringUtils.isEmpty(to)) {

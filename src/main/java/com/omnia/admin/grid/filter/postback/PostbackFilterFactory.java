@@ -20,7 +20,7 @@ public class PostbackFilterFactory {
     public void init() {
         postbackFilters.put(DEFAULT, new DefaultFilter());
         postbackFilters.put(DATE, new PostbackDateFilter());
-        postbackFilters.put(BAYER, new OfferNameFilter());
+        postbackFilters.put(BAYER, new BuyerFilter());
         postbackFilters.put(AFID, new PostbackAfIdFilter());
         postbackFilters.put(AFF_NET, new PostbackAfNetFilter());
         postbackFilters.put(STATUS, new PostbackStatusFilter());

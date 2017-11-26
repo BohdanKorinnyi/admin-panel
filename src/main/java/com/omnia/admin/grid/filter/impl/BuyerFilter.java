@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 
 import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 
-public class OfferNameFilter implements Filter {
+public class BuyerFilter implements Filter {
     private static final String COLUMN = "buyers.name";
 
     @Override
@@ -14,6 +14,5 @@ public class OfferNameFilter implements Filter {
             return EMPTY;
         }
         return COLUMN + " IN ('" + value.replaceAll(",", "','") + "')";
-//        return COLUMN + String.format(LIKE, value);
     }
 }

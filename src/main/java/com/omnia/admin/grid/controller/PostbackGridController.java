@@ -15,14 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "grid/postback")
-@Api(value = "/grid/postback", description = "Operations about postback grid")
 public class PostbackGridController {
     private final PostbackGridService postbackGridService;
 
     @PostMapping("get")
-    @ApiOperation(value = "Returns postback list according to applied filter")
-    public PostbackList getPostbackList(@ApiParam(value = "Filter object, size & page are required", required = true)
-                                        @RequestBody PostbackGridFilterDetails filterDetails) {
+    public PostbackList getPostbackList(@RequestBody PostbackGridFilterDetails filterDetails) {
         return postbackGridService.getPostbackList(filterDetails);
     }
 }
