@@ -1,36 +1,36 @@
-Application.config(function($routeProvider, $locationProvider) {
+Application.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/login', {
-            templateUrl : "views/login.html",
-            controller  : "loginController"
+            templateUrl: "views/login.html",
+            controller: "loginController"
         })
         .when('/advertiser', {
-            templateUrl : "views/advertiser.html",
-            controller  : "advertiserController"
+            templateUrl: "views/advertiser.html",
+            controller: "advertiserController"
         })
         .when('/conversions', {
-            templateUrl : "views/conversion.html",
-            controller  : "conversionController"
+            templateUrl: "views/conversion.html",
+            controller: "conversionController"
         })
         .when('/postback', {
-            templateUrl : "views/postback.html",
-            controller  : "postbackController"
+            templateUrl: "views/postback.html",
+            controller: "postbackController"
         })
         .when('/payroll', {
-            templateUrl : "views/payroll.html",
-            controller  : "payrollController"
+            templateUrl: "views/payroll.html",
+            controller: "payrollController"
         })
         .when('/buyers', {
-            templateUrl : "views/buyers.html",
-            controller  : "buyerController"
+            templateUrl: "views/buyers.html",
+            controller: "buyerController"
         })
         .when('/cbo', {
-            templateUrl : "views/arbitratorExecutive.html",
-            controller  : "arbitratorExecutiveController"
+            templateUrl: "views/arbitratorExecutive.html",
+            controller: "arbitratorExecutiveController"
         })
         .when('/arbitrator', {
-            templateUrl : "views/arbitratorHomeScreen.html",
-            controller  : "arbitratorController"
+            templateUrl: "views/arbitratorHomeScreen.html",
+            controller: "arbitratorController"
             // resolve: {
             //     permission: function(authorizationService, $route) {
             //         return authorizationService.permissionCheck([roles.BUYER, roles.ADMIN]);
@@ -38,19 +38,23 @@ Application.config(function($routeProvider, $locationProvider) {
             // }
         })
         .when('/statistic', {
-            templateUrl : "views/statistic.html",
-            controller  : "statisticController"
+            templateUrl: "views/statistic.html",
+            controller: "statisticController"
         })
         .when('/sources', {
-            templateUrl : "views/sources.html",
-            controller  : "sourcesController"
+            templateUrl: "views/sources.html",
+            controller: "sourcesController"
         })
         .when('/plan', {
-        templateUrl : "views/planByBuyer.html",
-        controller  : "planByBuyerController"
+            templateUrl: "views/planByBuyer.html",
+            controller: "planByBuyerController"
         })
         .when('/', {
-            templateUrl : "views/dashboard.html",
-            controller  : "dashboardController"
+            templateUrl: "views/dashboard.html",
+            controller: "dashboardController"
+        })
+        .when('/admin/dashboard', {
+            templateUrl: "views/adminDashboard.html",
+            controller: "adminDashboardController"
         });
 });

@@ -1,4 +1,4 @@
-<div ng-controller="sourcesController" ng-init="loadsources();">
+<div ng-controller="sourcesController" ng-init="initsources();">
     <div class="cardForBuyerCosts">
         <div class="row">
             <div class="col-md-9">
@@ -137,67 +137,33 @@
                     <tr>
                         <td style="text-align: left; cursor: pointer;"
                             colspan="5" data-toggle="collapse"
-                            ng-click="showBuyerDetailsColumn(item.buyerInfo.buyerId);">
-                            <strong class="panel-heading">Buyer: {{item.buyerInfo.buyerName}} <i
+                            ng-click="showBuyerDetailsColumn(item.buyerId);">
+                            <strong class="panel-heading">Buyer: {{item.buyer}} <i
                                     class="ti-angle-down"></i></strong></td>
                     </tr>
 
-                    <tr style="text-align: center; vertical-align: middle"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id && item.sources !== null">
-                        <td class="panel-body"><strong>Buyer Name</strong></td>
-                        <td class="panel-body"><strong>Date</strong></td>
-                        <td class="panel-body"><strong>Account Type</strong></td>
-                        <td class="panel-body"><strong>Spent</strong></td>
-                        <td class="panel-body"></td>
+                    <tr style="text-align: left; vertical-align: middle"
+                        ng-show="buyerDetails && item.buyerId == id"
+                        ng-repeat="d in item.data">
+                        <td style="cursor: pointer; text-align: left;" class="panel-body"
+                            data-toggle="collapse" colspan="3"
+                            ng-click="showBuyerByDateDetailsColumn(item.buyerId, d.date);">
+                            <strong class="panel-heading" style="text-align: left!important;">Date: {{d.date}}
+                                <i class="ti-angle-down"></i></strong>
+
+                           </td>
+                        <td style="text-align: center;"><strong>{{d.spent}}</strong></td>
+                        <td style="text-align: center;"><strong>{{d.revenue}}</strong></td>
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="stat in item.sources.data"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id">
-                        <td class="panel-body">{{stat.username}}</td>
-                        <td class="panel-body">{{stat.date}}
-                        </td>
-                        <td class="panel-body">{{stat.accountType}}</td>
-                        <td class="panel-body">{{stat.spent}}</td>
-                        <td class="panel-body"></td>
-                    </tr>
-
-                    <tr style="text-align: center; vertical-align: middle"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id && item.postbacks !== null">
-                        <td class="panel-body"><strong>Buyer Name</strong></td>
-                        <td class="panel-body"><strong>Date</strong></td>
-                        <td class="panel-body"><strong>Adv Name</strong></td>
-                        <td class="panel-body"></td>
-                        <td class="panel-body"><strong>Sum</strong></td>
-                    </tr>
-
-                    <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="post in item.postbacks.data"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id">
-                        <td class="panel-body">{{post.name}}</td>
-                        <td class="panel-body">{{post.date}}</td>
-                        <td class="panel-body">{{post.advname}}</td>
-                        <td class="panel-body"></td>
-                        <td class="panel-body">{{post.amountInUsd}}</td>
-                    </tr>
-
-                    <tr style="text-align: center; vertical-align: middle"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id && item.expenses !== null">
-                        <td class="panel-body"><strong>Buyer Name</strong></td>
-                        <td class="panel-body"><strong>Date</strong></td>
-                        <td class="panel-body"><strong>Exp Name</strong></td>
-                        <td class="panel-body"><strong>Sum</strong></td>
-                        <td class="panel-body"></td>
-                    </tr>
-
-                    <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="exp in item.expenses.date"
-                        ng-show="buyerDetails && item.buyerInfo.buyerId == id">
-                        <td class="panel-body">{{exp.buyer}}</td>
-                        <td class="panel-body">{{exp.date}}</td>
-                        <td class="panel-body">{{exp.name}}</td>
-                        <td class="panel-body">{{exp.sum}}</td>
-                        <td class="panel-body"></td>
+                        ng-repeat="details in buyerDetailsByDate"
+                        ng-show="dateDetails && item.buyerId == id">
+                        <td class="panel-body">{{details.buyer}}</td>
+                        <td class="panel-body">{{details.date}}</td>
+                        <td class="panel-body">{{details.type}}</td>
+                        <td class="panel-body">{{details.spent}}</td>
+                        <td class="panel-body">{{details.revenue}}</td>
                     </tr>
 
                     <tr ng-show="buyerDetails && item.buyerInfo.buyerId == id">
