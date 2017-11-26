@@ -29,9 +29,9 @@ public class SourceStatisticController {
                                         @RequestParam(required = false) String from,
                                         @RequestParam(required = false) String to
     ) {
-//        if (UserPrincipalUtils.isRole(request, Role.BUYER)) {
-//            return ResponseEntity.ok(sourceStatsService.getSourceStat(Collections.singletonList(UserPrincipalUtils.getBuyerId(request)), from, to));
-//        }
+        if (UserPrincipalUtils.isRole(request, Role.BUYER)) {
+            return ResponseEntity.ok(sourceStatsService.getSourceStat(Collections.singletonList(UserPrincipalUtils.getBuyerId(request)), from, to));
+        }
         return ResponseEntity.ok(sourceStatsService.getSourceStat(buyerIds, from, to));
     }
 
