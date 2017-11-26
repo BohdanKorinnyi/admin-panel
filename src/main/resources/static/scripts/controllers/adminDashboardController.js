@@ -8,14 +8,14 @@ Application.controller("adminDashboardController", function ($scope, $http, date
     $scope.spentYesterday = "";
 
     $scope.dateOptions = {
-        'Select date': 'no-date',
+        'All time': 'all_time',
         'Today': 'today',
         'Yesterday': 'yesterday',
         'Last 7 days': 'lastWeek',
         'This Month': 'thisMonth',
         'Last Month': 'lastMonth'
     };
-    $scope.selectedDate = 'no-date';
+    $scope.selectedDate = 'all_time';
 
 
     //$scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
