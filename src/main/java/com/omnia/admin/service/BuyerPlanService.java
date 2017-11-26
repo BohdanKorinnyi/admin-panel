@@ -7,5 +7,5 @@ import java.util.concurrent.ExecutionException;
 
 @FunctionalInterface
 public interface BuyerPlanService {
-    List<BuyerPlan> getBuyerPlan(List<String> buyers, List<String> month) throws ExecutionException, InterruptedException;
+    List<BuyerPlan> getBuyerPlan(List<Integer> buyers, List<String> month) throws ExecutionException, InterruptedException;
 }

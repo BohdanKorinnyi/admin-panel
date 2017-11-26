@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.omnia.admin.dao.BuyerPlanDao;
 import com.omnia.admin.model.BuyerPlan;
 import com.omnia.admin.service.BuyerPlanService;
-import com.omnia.admin.service.ExchangeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +25,7 @@ public class BuyerPlanServiceImpl implements BuyerPlanService {
     private final BuyerPlanDao buyerPlanDao;
 
     @Override
-    public List<BuyerPlan> getBuyerPlan(List<String> buyers, List<String> month) throws ExecutionException, InterruptedException {
+    public List<BuyerPlan> getBuyerPlan(List<Integer> buyers, List<String> month) throws ExecutionException, InterruptedException {
         CompletableFuture<List<BuyerPlan>> revenuePlanFuture = supplyAsync(() -> buyerPlanDao.getBuyerRevenuePlan(buyers, month));
         CompletableFuture<List<BuyerPlan>> profitPlanFuture = supplyAsync(() -> buyerPlanDao.getBuyerProfitPlan(buyers, month));
         CompletableFuture.allOf(revenuePlanFuture, profitPlanFuture);

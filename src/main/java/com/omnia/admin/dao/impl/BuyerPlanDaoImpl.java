@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.time.Month;
 import java.util.List;
@@ -110,7 +111,7 @@ public class BuyerPlanDaoImpl implements BuyerPlanDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<BuyerPlan> getBuyerRevenuePlan(List<String> buyers, List<String> month) {
+    public List<BuyerPlan> getBuyerRevenuePlan(List<Integer> buyers, List<String> month) {
         String whereClause = "";
         if (!CollectionUtils.isEmpty(buyers)) {
             whereClause += getBuyers(buyers);
@@ -119,20 +120,18 @@ public class BuyerPlanDaoImpl implements BuyerPlanDao {
             whereClause += getMonth(month);
         }
         String revenueSql = String.format(SELECT_BUYER_REVENUE_PLAN, whereClause, whereClause);
-        log.info("revenue sql=" + revenueSql);
         return jdbcTemplate.query(revenueSql, BeanPropertyRowMapper.newInstance(BuyerPlan.class));
     }
 
     @Override
-    public List<BuyerPlan> getBuyerProfitPlan(List<String> buyers, List<String> month) {
+    public List<BuyerPlan> getBuyerProfitPlan(List<Integer> buyers, List<String> month) {
         String sql = String.format(SELECT_BUYER_PROFIT_PLAN, getWhereClause(buyers, month), getWhereClause(buyers, month),
                 getWhereClause(buyers, month), getWhereClause(buyers, month)
         );
-        log.info("profit sql=" + sql);
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(BuyerPlan.class));
     }
 
-    private String getWhereClause(List<String> buyers, List<String> months) {
+    private String getWhereClause(List<Integer> buyers, List<String> months) {
         String whereClause = "";
         if (!CollectionUtils.isEmpty(buyers)) {
             whereClause += getBuyers(buyers);
@@ -152,9 +151,7 @@ public class BuyerPlanDaoImpl implements BuyerPlanDao {
         return " AND MONTH(buyers_kpi.date) IN(" + joiner.toString() + ")";
     }
 
-    private String getBuyers(List<String> buyers) {
-        StringJoiner joiner = new StringJoiner("','", "'", "'");
-        buyers.forEach(joiner::add);
-        return " AND buyers_kpi.buyer_id IN(" + joiner.toString() + ")";
+    private String getBuyers(List<Integer> buyers) {
+        return " AND buyers_kpi.buyer_id IN(" + StringUtils.collectionToCommaDelimitedString(buyers) + ")";
     }
 }
