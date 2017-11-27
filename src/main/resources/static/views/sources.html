@@ -143,17 +143,16 @@
                     </tr>
 
                     <tr style="text-align: left; vertical-align: middle"
-                        ng-show="buyerDetails && item.buyerId == id"
-                        ng-repeat="d in item.data">
-                        <td style="cursor: pointer; text-align: left;" class="panel-body"
+                        ng-repeat="d in item.data"
+                        ng-show="buyerDetails && item.buyerId == id">
+                        <td style="cursor: pointer; text-align: left;"
                             data-toggle="collapse" colspan="3"
                             ng-click="showBuyerByDateDetailsColumn(item.buyerId, d.date);">
                             <strong class="panel-heading" style="text-align: left!important;">Date: {{d.date}}
                                 <i class="ti-angle-down"></i></strong>
-
                            </td>
-                        <td style="text-align: center;"><strong>{{d.spent}}</strong></td>
-                        <td style="text-align: center;"><strong>{{d.revenue}}</strong></td>
+                        <td style="text-align: center;" class="panel-body"><strong>{{d.spent}}</strong></td>
+                        <td style="text-align: center;" class="panel-body"><strong>{{d.revenue}}</strong></td>
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"

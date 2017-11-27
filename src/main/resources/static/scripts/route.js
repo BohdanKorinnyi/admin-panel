@@ -1,25 +1,4 @@
-Application.run(function ($http, $q) {
-        console.log("getting role.....");
-        $http.get("/user/me").then(function (response) {
-            localStorage.setItem('role', response.data.authorities[0].authority);
-        });
-    }
-).config(function ($routeProvider) {
-    var role = localStorage.getItem('role');
-    console.log(role);
-    // if (role === 'BUYER') {
-    //     $routeProvider
-    //         .when('/dashboard', {
-    //             templateUrl: "views/dashboard.html",
-    //             controller: "dashboardController"
-    //         })
-    // } else {
-    //     $routeProvider
-    //         .when('/dashboard', {
-    //             templateUrl: "views/adminDashboard.html",
-    //             controller: "adminDashboardController"
-    //         });
-    // }
+Application.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/login', {
             templateUrl: "views/login.html",
@@ -52,11 +31,6 @@ Application.run(function ($http, $q) {
         .when('/arbitrator', {
             templateUrl: "views/arbitratorHomeScreen.html",
             controller: "arbitratorController"
-            // resolve: {
-            //     permission: function(authorizationService, $route) {
-            //         return authorizationService.permissionCheck([roles.BUYER, roles.ADMIN]);
-            //     },
-            // }
         })
         .when('/statistic', {
             templateUrl: "views/statistic.html",
@@ -70,12 +44,37 @@ Application.run(function ($http, $q) {
             templateUrl: "views/planByBuyer.html",
             controller: "planByBuyerController"
         })
-        .when('/', {
+        .when('/buyer/dashboard', {
             templateUrl: "views/dashboard.html",
-            controller: "dashboardController"
+            controller: "dashboardController",
+            resolve: {
+                factory: checkRouting
+            }
         })
         .when('/admin/dashboard', {
             templateUrl: "views/adminDashboard.html",
             controller: "adminDashboardController"
+
         });
-});
+}]);
+
+
+var checkRouting = function ($q, $rootScope, $location, $http) {
+    var request = new XMLHttpRequest();
+    request.open('GET', '/user/me', false);  // `false` makes the request synchronous
+    request.send(null);
+
+    if (request.status === 200) {
+        var z = JSON.parse(request.response);
+        var role = z.authorities[0].authority;
+        if(role === "ADMIN"){
+            $location.path('/admin/dashboard');
+        }
+        else if(role === "BUYER"){
+            $location.path('/buyer/dashboard');
+        }
+        else{
+            $location.path('/');
+        }
+    }
+};

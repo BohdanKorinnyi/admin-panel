@@ -11,11 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UserPrincipalUtils {
+    private static final int DUMMY_BUYER_ID = -1;
+
     public static int getBuyerId(HttpServletRequest request) {
         if (request.getUserPrincipal() instanceof UsernamePasswordAuthenticationToken) {
             UsernamePasswordAuthenticationToken userPrincipal = (UsernamePasswordAuthenticationToken) request.getUserPrincipal();
-            CurrentUser currentUser = (CurrentUser) userPrincipal.getPrincipal();
-            return currentUser.getBuyerId();
+            if (userPrincipal.getPrincipal() instanceof CurrentUser) {
+                return (((CurrentUser) userPrincipal.getPrincipal())).getBuyerId();
+            }
+            return DUMMY_BUYER_ID;
         }
         throw new RuntimeException();
     }
@@ -23,8 +27,11 @@ public final class UserPrincipalUtils {
     public static boolean isRole(HttpServletRequest request, Role role) {
         if (request.getUserPrincipal() instanceof UsernamePasswordAuthenticationToken) {
             UsernamePasswordAuthenticationToken userPrincipal = (UsernamePasswordAuthenticationToken) request.getUserPrincipal();
-            CurrentUser currentUser = (CurrentUser) userPrincipal.getPrincipal();
-            return Lists.newArrayList(currentUser.getAuthorities()).get(0).getAuthority().equals(role.toString());
+            if (userPrincipal.getPrincipal() instanceof CurrentUser) {
+                CurrentUser currentUser = (CurrentUser) userPrincipal.getPrincipal();
+                return Lists.newArrayList(currentUser.getAuthorities()).get(0).getAuthority().equals(role.toString());
+            }
+            return Role.ADMIN.equals(role);
         }
         throw new RuntimeException();
     }

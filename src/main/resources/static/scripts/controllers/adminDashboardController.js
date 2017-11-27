@@ -25,6 +25,10 @@ Application.controller("adminDashboardController", function ($scope, $http, date
             $scope.from = "";
             $scope.to = "";
         }
+        else if($scope.selectedDate === "yesterday"){
+            $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
+            $scope.to = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
+        }
         else{
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
             $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
