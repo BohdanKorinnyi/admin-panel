@@ -74,7 +74,7 @@ public class PostbackDaoImpl implements PostbackDao {
     }
 
     @Override
-    public float getRevenueByBuyer(int buyerId) {
+    public Float getRevenueByBuyer(int buyerId) {
         return jdbcTemplate.queryForObject(SELECT_BUYER_REVENUE, Float.class, buyerId);
     }
 }

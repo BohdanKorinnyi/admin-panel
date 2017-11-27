@@ -11,5 +11,5 @@ public interface PostbackService {
 
     List<PostbackStats> getPostbackStats(StatisticFilter filter);
 
-    float getRevenueByBuyer(int buyerId);
+    Float getRevenueByBuyer(int buyerId);
 }

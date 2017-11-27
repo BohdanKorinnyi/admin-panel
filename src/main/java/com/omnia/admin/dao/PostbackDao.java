@@ -11,5 +11,5 @@ public interface PostbackDao {
 
     List<PostbackStats> getStats(StatisticFilter filter);
 
-    float getRevenueByBuyer(int buyerId);
+    Float getRevenueByBuyer(int buyerId);
 }

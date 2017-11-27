@@ -26,7 +26,7 @@ public class PostbackServiceImpl implements PostbackService {
     }
 
     @Override
-    public float getRevenueByBuyer(int buyerId) {
+    public Float getRevenueByBuyer(int buyerId) {
         return postbackDao.getRevenueByBuyer(buyerId);
     }
 }
