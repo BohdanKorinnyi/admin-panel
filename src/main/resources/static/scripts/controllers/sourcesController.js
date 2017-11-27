@@ -46,18 +46,18 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
         return [year, month, day].join('-');
     }
 
-    $scope.loadsources = function () {
-        var url = "/statistic";
-        $scope.sources = [];
-        $scope.showsourcesLoader = true;
-        $http.post(url, $scope.getGridDetails()).then(function (response) {
-            $scope.sources = response.data;
-            $scope.showsourcesLoader = false;
-        }, function () {
-            $scope.showsourcesLoader = false;
-            notify('ti-alert', 'Error occurred during loading buyer sources', 'danger');
-        });
-    };
+    // $scope.loadsources = function () {
+    //     var url = "/statistic";
+    //     $scope.sources = [];
+    //     $scope.showsourcesLoader = true;
+    //     $http.post(url, $scope.getGridDetails()).then(function (response) {
+    //         $scope.sources = response.data;
+    //         $scope.showsourcesLoader = false;
+    //     }, function () {
+    //         $scope.showsourcesLoader = false;
+    //         notify('ti-alert', 'Error occurred during loading buyer sources', 'danger');
+    //     });
+    // };
 
     $scope.initsources = function () {
         var url = "/statistic/buyers";
@@ -75,14 +75,9 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
     $scope.getDataDetails = function (buyerId, date) {
         var dateDetailsDataPromise = sourcesDatesService.getData(buyerId, date);
         dateDetailsDataPromise.then(function(result) {
-
             // this is only run after getData() resolves
             $scope.buyerDetailsByDate = result;
-            for(var i=0; i< 2; i++){
-                console.log($scope.buyerDetailsByDate[i]);
-            }
         });
-
     };
 
     $scope.getGridDetails = function () {
