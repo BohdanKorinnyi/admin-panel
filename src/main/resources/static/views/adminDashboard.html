@@ -1,4 +1,4 @@
-<div ng-controller="adminDashboardController">
+<div ng-controller="adminDashboardController" ng-init="initData();">
     <div class="adminDashboardCard">
         <div class="row">
             <div class="col-md-6">
@@ -9,16 +9,37 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="row">
-                    <div class="col-md-4">
-                        <h5><strong>Revenue today</strong></h5>
-                        <h5><strong>Revenue yesterday</strong></h5>
+                    <div class="col-md-3">
+                        <h5><strong>Revenue today:</strong></h5>
                     </div>
-                    <div class="col-md-4">
-                        <h5><strong>Spent today</strong></h5>
-                        <h5><strong>Spent yesterday</strong></h5>
+                    <div class="col-md-2">
+                        <h5><strong>{{revenueToday}}</strong></h5>
                     </div>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-3">
+                        <h5><strong>Spent today:</strong></h5>
+                    </div>
+                    <div class="col-md-2">
+                        <h5><strong>{{spentToday}}</strong></h5>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5><strong>Revenue yesterday:</strong></h5>
+                    </div>
+                    <div class="col-md-2">
+                        <h5><strong>{{revenueYesterday}}</strong></h5>
+                    </div>
+                    <div class="col-md-3">
+                        <h5><strong>Spent yesterday:</strong></h5>
+                    </div>
+                    <div class="col-md-2">
+                        <h5><strong>{{spentYesterday}}</strong></h5>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+
                 <br>
                 <p style="border-bottom: 1px solid rgba(0,0,0,0.11); margin-bottom: 20px; width:135%;"></p>
                 <div class="row">
@@ -26,7 +47,8 @@
                         <div class="form-group">
                             <select class="form-control" data-ng-model="selectedDate"
                                     data-ng-options="v as k for (k, v) in dateOptions"
-                                    style="margin-bottom: 14px;">
+                                    style="margin-bottom: 14px;"
+                                    ng-change="initData();">
                             </select>
                         </div>
                     </div>
@@ -60,11 +82,12 @@
                             </thead>
 
                             <tbody>
-                            <tr style="text-align: center; vertical-align: middle">
-                                <td>buyer</td>
-                                <td>revenue</td>
-                                <td>spent</td>
-                                <td>profit</td>
+                            <tr style="text-align: center; vertical-align: middle"
+                                ng-repeat="item in adminDashboardData">
+                                <td>{{item.buyer}}</td>
+                                <td>{{item.revenue}}</td>
+                                <td>{{item.spent}}</td>
+                                <td>{{item.profit}}</td>
                             </tr>
                             </tbody>
                         </table>

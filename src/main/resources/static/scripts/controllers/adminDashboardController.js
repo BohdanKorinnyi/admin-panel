@@ -2,6 +2,7 @@
 
 Application.controller("adminDashboardController", function ($scope, $http, dateFactory) {
 
+    $scope.adminDashboardData = [];
     $scope.revenueToday = "";
     $scope.revenueYesterday = "";
     $scope.spentToday = "";
@@ -16,17 +17,27 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         'Last Month': 'lastMonth'
     };
     $scope.selectedDate = 'all_time';
-
-
-    //$scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
-    //$scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
+    $scope.from = "";
+    $scope.to = "";
 
     $scope.initData = function () {
-        var url = "/dashboard/get";
+        if($scope.selectedDate === "all_time"){
+            $scope.from = "";
+            $scope.to = "";
+        }
+        else{
+            $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
+            $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
+        }
+        var url = "/admin/dashboard?from="+$scope.from+"&to="+$scope.to;
         $http.get(url).then(function success(response) {
-
+            $scope.adminDashboardData = response.data.data;
+            $scope.spentToday = response.data.today.spent;
+            $scope.revenueToday = response.data.today.revenue;
+            $scope.spentYesterday = response.data.yesterday.spent;
+            $scope.revenueYesterday = response.data.yesterday.revenue;
         }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading buyers', 'danger');
+            notify('ti-alert', 'Error occurred during loading dashboard info', 'danger');
         });
     };
 });
