@@ -26,10 +26,21 @@ import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 public class PostbackDaoImpl implements PostbackDao {
     private static final String SELECT_POSTBACK = QueryHelper.loadQueryFromFile("postback.sql");
     private static final String SELECT_FULL_URL_BY_ID = "SELECT fullurl FROM postback WHERE id = ?;";
-    private static final String SELECT_BUYER_REVENUE = "SELECT TRUNCATE(sum(postback.sum), 2) AS revenue " +
+    private static final String SELECT_BUYER_REVENUE = "SELECT " +
+            "  TRUNCATE(sum(postback.sum / " +
+            "               (SELECT exchange.rate " +
+            "                FROM exchange " +
+            "                WHERE exchange.id = postback.exchange) * " +
+            "               (SELECT exchange.count " +
+            "                FROM exchange " +
+            "                WHERE exchange.id = postback.exchange)), 2) AS 'revenue'"+
             "FROM postback " +
-            "  INNER JOIN affiliates ON affiliates.buyer_id = postback.afid " +
-            "WHERE month(postback.date) = month(now()) AND affiliates.buyer_id = ?;";
+            "  INNER JOIN affiliates ON affiliates.afid = postback.afid " +
+            "  INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
+            "  INNER JOIN adverts ON adverts.advname = postback.advname " +
+            "  INNER JOIN adv_status ON adv_status.adv_id = adverts.id " +
+            "WHERE " +
+            "  adv_status.real_status = 'approved' AND postback.status = adv_status.name AND postback.sum != 0 AND buyers.id = ? AND month(postback.date) = month(now())";
 
     private final JdbcTemplate jdbcTemplate;
 
