@@ -1,4 +1,25 @@
-Application.config(function ($routeProvider, $locationProvider) {
+Application.run(function ($http, $q) {
+        console.log("getting role.....");
+        $http.get("/user/me").then(function (response) {
+            localStorage.setItem('role', response.data.authorities[0].authority);
+        });
+    }
+).config(function ($routeProvider) {
+    var role = localStorage.getItem('role');
+    console.log(role);
+    // if (role === 'BUYER') {
+    //     $routeProvider
+    //         .when('/dashboard', {
+    //             templateUrl: "views/dashboard.html",
+    //             controller: "dashboardController"
+    //         })
+    // } else {
+    //     $routeProvider
+    //         .when('/dashboard', {
+    //             templateUrl: "views/adminDashboard.html",
+    //             controller: "adminDashboardController"
+    //         });
+    // }
     $routeProvider
         .when('/login', {
             templateUrl: "views/login.html",
