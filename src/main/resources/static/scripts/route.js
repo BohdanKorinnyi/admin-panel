@@ -46,14 +46,15 @@ Application.config(['$routeProvider', function($routeProvider) {
         })
         .when('/buyer/dashboard', {
             templateUrl: "views/dashboard.html",
-            controller: "dashboardController"
-        })
-        .when('/admin/dashboard', {
-            templateUrl: "views/adminDashboard.html",
-            controller: "adminDashboardController",
+            controller: "dashboardController",
             resolve: {
                 factory: checkRouting
             }
+        })
+        .when('/admin/dashboard', {
+            templateUrl: "views/adminDashboard.html",
+            controller: "adminDashboardController"
+
         });
 }]);
 

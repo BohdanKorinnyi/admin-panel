@@ -16,7 +16,6 @@ public class AdminDashboardController {
     private final AdminDashboardService adminDashboardService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('TEAM_LEADER','CBO','MENTOR','CFO','DIRECTOR','ADMIN')")
     public ResponseEntity getData(@RequestParam String from, @RequestParam String to) {
         return ResponseEntity.ok(adminDashboardService.getData(from, to));
     }
