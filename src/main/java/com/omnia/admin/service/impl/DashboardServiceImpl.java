@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import static java.util.Objects.isNull;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 @Service
@@ -34,7 +35,7 @@ public class DashboardServiceImpl implements DashboardService {
         CompletableFuture.allOf(revenueFuture, payrolls, profitFuture, revenuePlanFuture, profitPlanFuture);
         Float revenue = revenueFuture.get();
         Float profit = profitFuture.get();
-        Float realProfit = revenue - profit;
+        Float realProfit = (isNull(revenue) ? 0F : revenue) - (isNull(profit) ? 0F : profit);
         response.put("revenue", revenue);
         response.put("buyerName", buyerService.getBuyerById(buyerId));
         response.put("revenuePlan", revenuePlanFuture.get());

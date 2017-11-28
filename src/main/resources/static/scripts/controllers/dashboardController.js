@@ -30,7 +30,7 @@ Application.controller("dashboardController", function ($scope, $http) {
             $scope.profitCompleted = (($scope.profit/$scope.profitPlan)*100).toFixed(2);
 
         }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading buyers', 'danger');
+            notify('ti-alert', 'Error occurred during loading buyer\'s statistic', 'danger');
         });
     };
 });
