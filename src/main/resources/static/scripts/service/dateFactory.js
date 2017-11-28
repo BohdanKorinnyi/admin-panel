@@ -32,7 +32,8 @@ Application.factory('dateFactory', function () {
                 return new Date();
                 break;
             case 'yesterday':
-                return new Date();
+                var previousDay = new Date(today);
+                return previousDay.setDate(today.getDate() - 1);
                 break;
             case 'lastWeek':
                 return new Date();
