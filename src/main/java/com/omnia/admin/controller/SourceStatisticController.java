@@ -36,7 +36,11 @@ public class SourceStatisticController {
     }
 
     @PostMapping("all")
-    public ResponseEntity getAllStatistic(@RequestBody StatisticFilter filter) {
+    public ResponseEntity getAllStatistic(HttpServletRequest request, @RequestBody StatisticFilter filter) {
+        if (UserPrincipalUtils.isRole(request, Role.BUYER)) {
+            filter.setBuyers(Collections.singletonList(UserPrincipalUtils.getBuyerId(request)));
+            return ResponseEntity.ok(sourceStatsService.getDailyAndGeneralStatistics(filter));
+        }
         return ResponseEntity.ok(sourceStatsService.getDailyAndGeneralStatistics(filter));
     }
 }
