@@ -35,16 +35,6 @@ public class SourceStatisticController {
         return ResponseEntity.ok(sourceStatsService.getSourceStat(buyerIds, from, to));
     }
 
-    @PostMapping("old")
-    public ResponseEntity getStatistic(@RequestBody StatisticFilter filter) {
-        return ResponseEntity.ok(sourceStatsService.getStatistics(filter));
-    }
-
-    @PostMapping("daily")
-    public ResponseEntity getDailyStatistic(@RequestBody StatisticFilter filter) {
-        return ResponseEntity.ok(sourceStatsService.getDailyStatistics(filter));
-    }
-
     @PostMapping("all")
     public ResponseEntity getAllStatistic(@RequestBody StatisticFilter filter) {
         return ResponseEntity.ok(sourceStatsService.getDailyAndGeneralStatistics(filter));

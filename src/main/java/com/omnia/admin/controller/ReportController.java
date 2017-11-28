@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
+
+import static com.omnia.admin.grid.filter.FilterConstant.COMMA;
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("report")
@@ -31,12 +35,13 @@ public class ReportController {
                                               @RequestParam String to,
                                               @RequestParam String types) throws IOException {
         StatisticFilter statisticFilter = new StatisticFilter();
-        statisticFilter.setBuyers(Lists.newArrayList(StringUtils.commaDelimitedListToSet(buyers)));
+        statisticFilter.setBuyers(Arrays.stream(buyers.split(COMMA)).map(Integer::parseInt).collect(toList()));
         statisticFilter.setTypes(Lists.newArrayList(StringUtils.commaDelimitedListToSet(types)));
         statisticFilter.setFrom(from);
         statisticFilter.setTo(to);
         return fileResponse(excelReportService.create(statisticFilter));
     }
+
 
     private ResponseEntity fileResponse(File report) throws IOException {
         InputStreamResource resource = new InputStreamResource(new FileInputStream(report));

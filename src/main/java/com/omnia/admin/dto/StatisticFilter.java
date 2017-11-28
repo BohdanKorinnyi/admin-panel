@@ -14,7 +14,7 @@ import java.util.List;
 public class StatisticFilter {
     private  int page;
     private  int size;
-    private  List<String> buyers;
+    private  List<Integer> buyers;
     private  List<String> types;
     private  String from;
     private  String to;

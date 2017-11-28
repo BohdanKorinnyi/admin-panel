@@ -63,9 +63,7 @@ public class PostbackDaoImpl implements PostbackDao {
         String buyerWhere = EMPTY;
         String dateWhere = EMPTY;
         if (!CollectionUtils.isEmpty(filter.getBuyers())) {
-            StringJoiner joiner = new StringJoiner("','", "'", "'");
-            filter.getBuyers().forEach(joiner::add);
-            buyerWhere = " AND buyers.name IN (" + joiner.toString() + ") ";
+            buyerWhere = " AND buyers.id IN (" + StringUtils.collectionToCommaDelimitedString(filter.getBuyers()) + ") ";
         }
         if (!StringUtils.isEmpty(filter.getFrom()) && !StringUtils.isEmpty(filter.getTo())) {
             dateWhere = " AND date BETWEEN '" + filter.getFrom() + "' AND '" + filter.getTo() + "' ";

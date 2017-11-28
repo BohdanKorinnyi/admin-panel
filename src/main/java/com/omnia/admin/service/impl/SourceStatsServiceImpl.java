@@ -29,18 +29,6 @@ public final class SourceStatsServiceImpl implements SourceStatsService {
     private final SourceStatisticDao sourceStatisticDao;
 
     @Override
-    public Map<Integer, SourcesResult> getStatistics(StatisticFilter filter) {
-        List<Source> sources = sourceStatisticDao.getStatistics(filter);
-        return groupStats(groupByBuyer(sources));
-    }
-
-    @Override
-    public Map<Integer, SourcesResult> getDailyStatistics(StatisticFilter filter) {
-        List<Source> dailySources = sourceStatisticDao.getDailyStatistics(filter);
-        return groupStats(groupByBuyer(dailySources));
-    }
-
-    @Override
     public Map<Integer, SourcesResult> getDailyAndGeneralStatistics(StatisticFilter filter) {
         Map<Integer, List<Source>> stats = new HashMap<>();
         List<Source> sources = sourceStatisticDao.getStatistics(filter);

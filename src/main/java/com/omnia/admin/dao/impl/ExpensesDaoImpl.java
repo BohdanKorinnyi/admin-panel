@@ -35,9 +35,7 @@ public class ExpensesDaoImpl implements ExpensesDao {
     private String createSql(StatisticFilter filter) {
         String where = "";
         if (!CollectionUtils.isEmpty(filter.getBuyers())) {
-            StringJoiner joiner = new StringJoiner("','", "'", "'");
-            filter.getBuyers().forEach(joiner::add);
-            where += " buyers.name IN (" + joiner.toString() + ") ";
+            where += " buyers.id IN (" + StringUtils.collectionToCommaDelimitedString(filter.getBuyers()) + ") ";
         }
         if (!StringUtils.isEmpty(filter.getFrom()) && !StringUtils.isEmpty(filter.getTo())) {
             if (!StringUtils.isEmpty(where)) {

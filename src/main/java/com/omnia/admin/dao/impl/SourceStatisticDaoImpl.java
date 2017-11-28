@@ -94,9 +94,7 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
     private String updateWhereClause(String sql, StatisticFilter filter) {
         String where = EMPTY;
         if (!CollectionUtils.isEmpty(filter.getBuyers())) {
-            StringJoiner joiner = new StringJoiner("','", "'", "'");
-            filter.getBuyers().forEach(joiner::add);
-            where += " AND buyers.name IN (" + joiner.toString() + ") ";
+            where += " AND buyers.id IN (" + StringUtils.collectionToCommaDelimitedString(filter.getBuyers()) + ") ";
         }
         if (!CollectionUtils.isEmpty(filter.getTypes())) {
             StringJoiner joiner = new StringJoiner("','", "'", "'");

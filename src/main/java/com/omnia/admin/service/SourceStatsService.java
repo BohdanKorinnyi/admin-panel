@@ -5,6 +5,7 @@ import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.model.Source;
 import com.omnia.admin.model.SourceStat;
 import com.omnia.admin.model.statistic.SourcesResult;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -19,10 +20,6 @@ import static com.omnia.admin.service.impl.SourceStatsServiceImpl.EMPTY_STATS_MA
 import static java.util.Objects.isNull;
 
 public interface SourceStatsService {
-    Map<Integer, SourcesResult> getStatistics(StatisticFilter filter);
-
-    Map<Integer, SourcesResult> getDailyStatistics(StatisticFilter filter);
-
     Map<Integer, SourcesResult> getDailyAndGeneralStatistics(StatisticFilter filter);
 
     List<Source> getSources(StatisticFilter filter);
@@ -37,10 +34,9 @@ public interface SourceStatsService {
         double sum = sources.stream()
                 .mapToDouble(Source::getSpent)
                 .sum();
-        DecimalFormat twoDForm = new DecimalFormat("#.####");
         SourcesResult sourcesResult = new SourcesResult();
         sourcesResult.setId(buyerId);
-        sourcesResult.setSum(Double.valueOf(twoDForm.format(sum)));
+        sourcesResult.setSum(sum);
         sourcesResult.setData(sources);
         return sourcesResult;
     }
@@ -63,7 +59,7 @@ public interface SourceStatsService {
     }
 
     default Map<Integer, List<Source>> updateAllStats(Map<Integer, List<Source>> stats, Map<Integer, List<Source>> newStats) {
-        if (isNull(newStats) || newStats.isEmpty()) {
+        if (MapUtils.isEmpty(newStats)) {
             return stats;
         }
         if (stats.isEmpty()) {
