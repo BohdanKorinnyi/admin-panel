@@ -54,7 +54,10 @@ Application.config(['$routeProvider', function ($routeProvider) {
         .when('/admin/dashboard', {
             templateUrl: 'views/adminDashboard.html',
             controller: 'adminDashboardController'
-
+        })
+        .when('/cost/management', {
+            templateUrl: 'views/costManagement.html',
+            controller: 'costManagementController'
         });
 }]);
 
