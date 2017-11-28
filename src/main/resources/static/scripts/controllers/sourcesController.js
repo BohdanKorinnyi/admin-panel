@@ -78,6 +78,19 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
         });
     };
 
+    $scope.applySources = function () {
+        var url = "/statistic/buyers?buyerIds="+ $scope.getGridDetails();
+        $scope.sources = [];
+        $scope.showsourcesLoader = true;
+        $http.get(url).then(function (response) {
+            $scope.sources = response.data;
+            $scope.showsourcesLoader = false;
+        }, function () {
+            $scope.showsourcesLoader = false;
+            notify('ti-alert', 'Error occurred during loading buyer sources', 'danger');
+        });
+    };
+
 
     $scope.getDataDetails = function (buyerId, date) {
         var url = "/statistic/date?buyerId=" + buyerId + "&date=" + date;
@@ -113,11 +126,7 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
             }
         }
 
-        return {
-            "buyers": $scope.selectedBuyerNames,
-            "from": fromDate,
-            "to": toDate
-        };
+        return $scope.selectedBuyerNames+"&from="+fromDate+"&to="+toDate;
     };
 
     $scope.getBuyers = function () {
