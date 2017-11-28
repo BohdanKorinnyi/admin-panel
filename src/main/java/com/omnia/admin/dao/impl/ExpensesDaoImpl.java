@@ -25,7 +25,7 @@ public class ExpensesDaoImpl implements ExpensesDao {
             "  expenses.buyer_id AS buyerId," +
             "  expenses.date," +
             "  expenses.sum," +
-            "  expenses_type.name" +
+            "  expenses_type.name " +
             "FROM expenses" +
             "  LEFT JOIN expenses_type ON expenses.type_id = expenses_type.id " +
             "WHERE expenses.sum != 0 %s" +

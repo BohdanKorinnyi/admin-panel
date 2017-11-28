@@ -21,8 +21,10 @@ public class ExpensesController {
 
     @PostMapping
     public ResponseEntity getExpenses(HttpServletRequest request,
-                                      @RequestBody Page page, @RequestParam(required = false) List<Integer> buyerIds,
-                                      @RequestParam(required = false) String from, @RequestParam(required = false) String to) {
+                                      @RequestBody Page page,
+                                      @RequestParam(required = false) List<Integer> buyerIds,
+                                      @RequestParam(required = false) String from,
+                                      @RequestParam(required = false) String to) {
         if (UserPrincipalUtils.isRole(request, Role.BUYER)) {
             int buyerId = UserPrincipalUtils.getBuyerId(request);
             return ResponseEntity.ok(expensesService.getExpenses(page, Collections.singletonList(buyerId), from, to));
