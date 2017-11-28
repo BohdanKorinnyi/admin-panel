@@ -6,7 +6,7 @@ import com.omnia.admin.model.Expenses;
 import java.util.List;
 
 public interface ExpensesDao {
-    List<Expenses> getExpenses(Page page, List<Integer> buyerIds, String from, String to);
+    List<Expenses> getExpenses(Page page, List<Integer> buyerIds,List<Integer> expensesType, String from, String to);
 
     void update(Expenses expenses);
 }

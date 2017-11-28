@@ -23,13 +23,14 @@ public class ExpensesController {
     public ResponseEntity getExpenses(HttpServletRequest request,
                                       @RequestBody Page page,
                                       @RequestParam(required = false) List<Integer> buyerIds,
+                                      @RequestParam(required = false) List<Integer> expensesType,
                                       @RequestParam(required = false) String from,
                                       @RequestParam(required = false) String to) {
         if (UserPrincipalUtils.isRole(request, Role.BUYER)) {
             int buyerId = UserPrincipalUtils.getBuyerId(request);
-            return ResponseEntity.ok(expensesService.getExpenses(page, Collections.singletonList(buyerId), from, to));
+            return ResponseEntity.ok(expensesService.getExpenses(page, Collections.singletonList(buyerId), expensesType, from, to));
         }
-        return ResponseEntity.ok(expensesService.getExpenses(page, buyerIds, from, to));
+        return ResponseEntity.ok(expensesService.getExpenses(page, buyerIds, expensesType, from, to));
     }
 
     @PutMapping

@@ -15,8 +15,8 @@ public final class ExpensesServiceImpl implements ExpensesService {
     private final ExpensesDao expensesDao;
 
     @Override
-    public List<Expenses> getExpenses(Page page, List<Integer> buyerIds, String from, String to) {
-        return expensesDao.getExpenses(page, buyerIds, from, to);
+    public List<Expenses> getExpenses(Page page, List<Integer> buyerIds, List<Integer> expensesType, String from, String to) {
+        return expensesDao.getExpenses(page, buyerIds, expensesType, from, to);
     }
 
     @Override

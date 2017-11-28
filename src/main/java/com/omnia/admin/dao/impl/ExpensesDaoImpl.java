@@ -15,7 +15,6 @@ import java.util.List;
 
 import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 import static org.springframework.util.StringUtils.collectionToCommaDelimitedString;
-import static org.springframework.util.StringUtils.replace;
 
 @Log4j
 @Repository
@@ -34,8 +33,8 @@ public class ExpensesDaoImpl implements ExpensesDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Expenses> getExpenses(Page page, List<Integer> buyerIds, String from, String to) {
-        String sql = createSql(buyerIds, from, to);
+    public List<Expenses> getExpenses(Page page, List<Integer> buyerIds, List<Integer> expensesType, String from, String to) {
+        String sql = createSql(buyerIds, expensesType, from, to);
         return jdbcTemplate.query(sql + page.limit(), BeanPropertyRowMapper.newInstance(Expenses.class));
     }
 
@@ -44,10 +43,13 @@ public class ExpensesDaoImpl implements ExpensesDao {
 
     }
 
-    private String createSql(List<Integer> buyerIds, String from, String to) {
+    private String createSql(List<Integer> buyerIds, List<Integer> expensesType, String from, String to) {
         String where = EMPTY;
         if (!CollectionUtils.isEmpty(buyerIds)) {
             where = " AND expenses.buyer_id IN (" + collectionToCommaDelimitedString(buyerIds) + ") ";
+        }
+        if (!CollectionUtils.isEmpty(expensesType)) {
+            where = " AND expenses_type.id IN (" + collectionToCommaDelimitedString(expensesType) + ") ";
         }
         if (!StringUtils.isEmpty(from) && !StringUtils.isEmpty(to)) {
             where += " AND date BETWEEN '" + from + "' AND '" + to + "' ";
