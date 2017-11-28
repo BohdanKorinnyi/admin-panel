@@ -6,6 +6,4 @@ import java.util.List;
 
 public interface CurrencyService {
     List<Currency> getCurrencies();
-
-    float convertToDollar(String currencyCode, float sum);
 }

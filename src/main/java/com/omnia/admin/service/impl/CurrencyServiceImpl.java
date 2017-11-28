@@ -11,16 +11,10 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class CurrencyServiceImpl implements CurrencyService {
-
     private final CurrencyDao currencyDao;
 
     @Override
     public List<Currency> getCurrencies() {
         return currencyDao.getAllCurrency();
-    }
-
-    @Override
-    public float convertToDollar(String currencyCode, float sum) {
-        return 0;
     }
 }

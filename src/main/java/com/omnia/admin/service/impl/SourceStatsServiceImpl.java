@@ -41,16 +41,6 @@ public final class SourceStatsServiceImpl implements SourceStatsService {
     }
 
     @Override
-    public List<Source> getSources(StatisticFilter filter) {
-        List<Source> result = Lists.newArrayList();
-        if (isFilterIncludeToday(filter.getTo())) {
-            result.addAll(sourceStatisticDao.getDailyStatistics(filter));
-        }
-        result.addAll(sourceStatisticDao.getStatistics(filter));
-        return result;
-    }
-
-    @Override
     public List<BuyerSource> getSourceStat(List<Integer> buyerIds, String from, String to) {
         List<SourceStat> sourceStat = sourceStatisticDao.getSourceStat(buyerIds, from, to);
         Map<String, List<SourceStat>> collect = sourceStat.stream()

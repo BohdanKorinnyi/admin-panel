@@ -31,7 +31,6 @@ public class AdvertiserStatusServiceImpl implements AdvertiserStatusService {
 
     @Override
     public void update(List<AdvertiserStatusDto> advertiserStatus, long advertiserId) {
-//        advertiserStatusDao.deleteAdvertiserStatuses(advertiserId);
         for (AdvertiserStatusDto status : advertiserStatus) {
             if (isNull(status.getId())) {
                 advertiserStatusDao.save(status, advertiserId);

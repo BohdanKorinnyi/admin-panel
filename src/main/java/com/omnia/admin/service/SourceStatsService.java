@@ -22,8 +22,6 @@ import static java.util.Objects.isNull;
 public interface SourceStatsService {
     Map<Integer, SourcesResult> getDailyAndGeneralStatistics(StatisticFilter filter);
 
-    List<Source> getSources(StatisticFilter filter);
-
     List<BuyerSource> getSourceStat(List<Integer> buyerIds, String from, String to);
 
     List<SourceStat> getSourceStatByDate(Integer buyerId, String date);

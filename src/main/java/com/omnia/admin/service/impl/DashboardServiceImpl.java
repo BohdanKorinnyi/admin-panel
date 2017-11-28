@@ -19,7 +19,7 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 public class DashboardServiceImpl implements DashboardService {
     private final PostbackService postbackService;
     private final PayrollService payrollService;
-    private final StatisticService statisticService;
+    private final SourceStatsService sourceStatsService;
     private final BuyerKpiService buyerKpiService;
     private final BuyerService buyerService;
 
@@ -28,7 +28,7 @@ public class DashboardServiceImpl implements DashboardService {
         HashMap<String, Object> response = new HashMap<>();
         CompletableFuture<Float> revenueFuture = supplyAsync(() -> postbackService.getRevenueByBuyer(buyerId));
         CompletableFuture<List<Payroll>> payrolls = supplyAsync(() -> payrollService.findPayrollsByBuyerId(buyerId));
-        CompletableFuture<Float> profitFuture = supplyAsync(() -> statisticService.getProfitByBuyer(buyerId));
+        CompletableFuture<Float> profitFuture = supplyAsync(() -> sourceStatsService.getProfitByBuyerId(buyerId));
         CompletableFuture<Float> revenuePlanFuture = supplyAsync(() -> buyerKpiService.getBuyerProfitPlan(buyerId));
         CompletableFuture<Float> profitPlanFuture = supplyAsync(() -> buyerKpiService.getBuyerRevenuePlan(buyerId));
 

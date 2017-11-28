@@ -9,8 +9,6 @@ public interface BuyerKpiService {
 
     void save(List<BuyerKpi> kpis, int buyerId);
 
-    Object getBuyerPlanInfo();
-
     Float getBuyerRevenuePlan(Integer buyerId);
 
     Float getBuyerProfitPlan(Integer buyerId);

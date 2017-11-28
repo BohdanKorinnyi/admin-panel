@@ -12,17 +12,21 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.StringJoiner;
+
+import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 
 @Log4j
 @Repository
 @AllArgsConstructor
 public class ExpensesDaoImpl implements ExpensesDao {
-    private static final String SELECT_EXPENSES = "SELECT buyers.id as buyerId,buyers.name as buyer,expenses.date," +
-            "expenses.sum,expenses_type.name " +
+    private static final String SELECT_EXPENSES = "SELECT" +
+            "  expenses.buyer_id AS buyerId," +
+            "  expenses.date," +
+            "  expenses.sum," +
+            "  expenses_type.name" +
             "FROM expenses" +
-            "  LEFT JOIN buyers ON expenses.buyer_id = buyers.id" +
-            "  LEFT JOIN expenses_type ON expenses.type_id = expenses_type.id %s" +
+            "  LEFT JOIN expenses_type ON expenses.type_id = expenses_type.id " +
+            "WHERE expenses.sum != 0 %s" +
             "ORDER BY date DESC";
 
     private final JdbcTemplate jdbcTemplate;
@@ -33,22 +37,13 @@ public class ExpensesDaoImpl implements ExpensesDao {
     }
 
     private String createSql(StatisticFilter filter) {
-        String where = "";
+        String where = EMPTY;
         if (!CollectionUtils.isEmpty(filter.getBuyers())) {
-            where += " buyers.id IN (" + StringUtils.collectionToCommaDelimitedString(filter.getBuyers()) + ") ";
+            where = " AND expenses.buyer_id IN (" + StringUtils.collectionToCommaDelimitedString(filter.getBuyers()) + ") ";
         }
         if (!StringUtils.isEmpty(filter.getFrom()) && !StringUtils.isEmpty(filter.getTo())) {
-            if (!StringUtils.isEmpty(where)) {
-                where += "AND";
-            }
-            where += " date BETWEEN '" + filter.getFrom() + "' AND '" + filter.getTo() + "' ";
+            where += " AND date BETWEEN '" + filter.getFrom() + "' AND '" + filter.getTo() + "' ";
         }
-
-        if (!StringUtils.isEmpty(where)) {
-            where = "WHERE " + where;
-        }
-        String sql = String.format(SELECT_EXPENSES, where);
-        log.info(sql);
-        return sql;
+        return String.format(SELECT_EXPENSES, where);
     }
 }
