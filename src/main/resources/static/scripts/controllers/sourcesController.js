@@ -1,14 +1,18 @@
 "use strict";
 
-Application.controller("sourcesController", function ($scope, $http, dateFactory, sourcesDatesService) {
+Application.controller("sourcesController", function ($scope, $http, dateFactory) {
 
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
+
+
 
     $scope.sources = [];
     $scope.expenses = [];
     $scope.postbacks = [];
     $scope.showsourcesLoader = true;
+    $scope.hideBuyerSelect = false;
+    $scope.role = "";
 
     $scope.buyerDetails = false;
     $scope.dateDetails = false;
@@ -44,25 +48,28 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
         if (day.length < 2) day = '0' + day;
 
         return [year, month, day].join('-');
-    }
+    };
 
-    // $scope.loadsources = function () {
-    //     var url = "/statistic";
-    //     $scope.sources = [];
-    //     $scope.showsourcesLoader = true;
-    //     $http.post(url, $scope.getGridDetails()).then(function (response) {
-    //         $scope.sources = response.data;
-    //         $scope.showsourcesLoader = false;
-    //     }, function () {
-    //         $scope.showsourcesLoader = false;
-    //         notify('ti-alert', 'Error occurred during loading buyer sources', 'danger');
-    //     });
-    // };
+    $scope.getRole = function () {
+        var request = new XMLHttpRequest();
+        request.open('GET', '/user/me', false);  // `false` makes the request synchronous
+        request.send(null);
+
+        if (request.status === 200) {
+            var z = JSON.parse(request.response);
+            $scope.role = z.authorities[0].authority;
+            //localStorage.setItem('role', $scope.role);
+        }
+    };
 
     $scope.initsources = function () {
         var url = "/statistic/buyers";
+        $scope.getRole();
         $scope.sources = [];
         $scope.showsourcesLoader = true;
+        if($scope.role === "BUYER"){
+            $scope.hideBuyerSelect = true;
+        }
         $http.get(url).then(function (response) {
             $scope.sources = response.data;
             $scope.showsourcesLoader = false;
@@ -72,11 +79,11 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
         });
     };
 
+
     $scope.getDataDetails = function (buyerId, date) {
-        var dateDetailsDataPromise = sourcesDatesService.getData(buyerId, date);
-        dateDetailsDataPromise.then(function(result) {
-            // this is only run after getData() resolves
-            $scope.buyerDetailsByDate = result;
+        var url = "/statistic/date?buyerId="+buyerId+"&date="+date;
+        $http.get(url).then(function(result){
+            $scope.buyerDetailsByDate = result.data;
         });
     };
 
@@ -133,28 +140,9 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
         else {
             $scope.dateDetails = true;
             $scope.buyerDate = date;
+            $scope.getDataDetails(id, date);
         }
-
-        $scope.getDataDetails(id, date);
     };
-});
-
-
-Application.factory('sourcesDatesService', function($http) {
-
-    var getData = function(id, date) {
-
-        // Angular $http() and then() both return promises themselves
-        return $http({method:"GET", url:"/statistic/date?buyerId="+id+"&date="+date}).then(function(result){
-
-            // What we return here is the data that will be accessible
-            // to us after the promise resolves
-            return result.data;
-        });
-    };
-
-
-    return { getData: getData };
 });
 
 

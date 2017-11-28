@@ -33,6 +33,9 @@ Application.controller("statisticController", function ($scope, $http, dateFacto
     $scope.dpFromDate = "";
     $scope.dpToDate = "";
 
+    $scope.hideBuyerSelect = false;
+
+
     function formatDate(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -45,10 +48,26 @@ Application.controller("statisticController", function ($scope, $http, dateFacto
         return [year, month, day].join('-');
     }
 
+    $scope.getRole = function () {
+        var request = new XMLHttpRequest();
+        request.open('GET', '/user/me', false);  // `false` makes the request synchronous
+        request.send(null);
+
+        if (request.status === 200) {
+            var z = JSON.parse(request.response);
+            $scope.role = z.authorities[0].authority;
+            //localStorage.setItem('role', $scope.role);
+        }
+    };
+
     $scope.loadCosts = function () {
         var url = "/statistic/all";
         $scope.costs = [];
         $scope.showCostsLoader = true;
+        $scope.getRole();
+        if($scope.role === "BUYER"){
+            $scope.hideBuyerSelect = true;
+        }
         $http.post(url, $scope.getGridDetails()).then(function (response) {
             $scope.costs = response.data;
             $scope.showCostsLoader = false;

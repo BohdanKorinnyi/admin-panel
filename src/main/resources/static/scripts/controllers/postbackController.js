@@ -64,6 +64,8 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
     };
     $scope.selectedDate = 'no-date';
 
+    $scope.hideBuyerSelect = false;
+
     $scope.export = function () {
         notify('ti-alert', 'Postback export in development', 'info');
     };
@@ -113,9 +115,25 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
         });
     };
 
+    $scope.getRole = function () {
+        var request = new XMLHttpRequest();
+        request.open('GET', '/user/me', false);  // `false` makes the request synchronous
+        request.send(null);
+
+        if (request.status === 200) {
+            var z = JSON.parse(request.response);
+            $scope.role = z.authorities[0].authority;
+            //localStorage.setItem('role', $scope.role);
+        }
+    };
+
     $scope.loadPostbacks = function () {
         $scope.postbacks = [];
         $scope.showLoader = true;
+        $scope.getRole();
+        if($scope.role === "BUYER"){
+            $scope.hideBuyerSelect = true;
+        }
         $http.post('grid/postback/get', $scope.getFilterParameters())
             .then(function successCallback(response) {
                 $scope.postbacks = response.data.postbacks;
