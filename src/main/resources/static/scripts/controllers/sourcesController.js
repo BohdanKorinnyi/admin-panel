@@ -79,21 +79,6 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
     };
 
 
-    // $scope.getDataDetails = function (buyerId, date) {
-    //     var url = "/statistic/date?buyerId=" + buyerId + "&date=" + date;
-    //     $http.get(url).then(function (result) {
-    //         $scope.buyerDetailsByDate = result.data;
-    //         for(var i = 0; i<$scope.sources.length; i++){
-    //             if($scope.sources[i].buyerId === buyerId){
-    //                 for(var j = 0; i<$scope.sources[i].data.length; j++){
-    //                     if($scope.sources[i].data[j].date === date){
-    //                         $scope.sources[i].data[j].push($scope.buyerDetailsByDate);
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     });
-    // };
     $scope.getDataDetails = function (buyerId, date) {
         var url = "/statistic/date?buyerId=" + buyerId + "&date=" + date;
         var request = new XMLHttpRequest();
@@ -170,17 +155,6 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
             $scope.buyerDate = date;
         }
     };
-
-    // $scope.associate = {};
-    // for(var i = 0; i<$scope.jsonData.length; i++){
-    //     $scope.associate[$scope.jsonData[i].buyerId] = new Array();
-    //     for(var j = 0; j < $scope.jsonData[i].data.length; j++){
-    //         for(var e = 0; e< $scope.jsonData[i].data[j].dateDetails.length; e++){
-    //             $scope.associate[$scope.jsonData[i].buyerId].push($scope.jsonData[i].data[j].dateDetails[e]);
-    //         }
-    //     }
-    // }
-    // console.log($scope.associate);
 });
 
 
