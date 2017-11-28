@@ -3,6 +3,7 @@ package com.omnia.admin.dao.impl;
 import com.omnia.admin.dao.BuyerKpiDao;
 import com.omnia.admin.model.BuyerKpi;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,22 +14,23 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+@Log4j
 @Repository
 @AllArgsConstructor
 public class BuyerKpiDaoImpl implements BuyerKpiDao {
-    private static final String SELECT_BUYER_KPI_BY_BUYER_ID = 
+    private static final String SELECT_BUYER_KPI_BY_BUYER_ID =
             "SELECT " +
-            "  buyers_kpi.*, " +
-            "  catalog_kpi.name AS 'kpi_catalog_name' " +
-            "FROM buyers_kpi " +
-            "  LEFT JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
-            "WHERE buyer_id = ?;";
+                    "  buyers_kpi.*, " +
+                    "  catalog_kpi.name AS 'kpi_catalog_name' " +
+                    "FROM buyers_kpi " +
+                    "  LEFT JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
+                    "WHERE buyer_id = ?;";
     private static final String INSERT_BUYER_KPI = "INSERT INTO buyers_kpi (buyer_id, date, kpi_name, kpi_value) VALUES (?, ?, ?, ?);";
     private static final String SELECT_BUYER_PLAN = "SELECT kpi_value " +
             "FROM buyers_kpi " +
             "  LEFT JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
             "WHERE buyer_id = ? AND month(date) = month(now()) AND catalog_kpi.name = ?;";
-    
+
     private final JdbcTemplate jdbcTemplate;
 
     @Override
@@ -56,11 +58,21 @@ public class BuyerKpiDaoImpl implements BuyerKpiDao {
 
     @Override
     public Float getBuyerRevenuePlan(Integer buyerId) {
-        return jdbcTemplate.queryForObject(SELECT_BUYER_PLAN, Float.class, buyerId, "Revenue");
+        try {
+            return jdbcTemplate.queryForObject(SELECT_BUYER_PLAN, Float.class, buyerId, "Revenue");
+        } catch (Exception e) {
+            log.error("Error occurred during getting revenue by buyerId=" + buyerId, e);
+        }
+        return 0F;
     }
 
     @Override
     public Float getBuyerProfitPlan(Integer buyerId) {
-        return jdbcTemplate.queryForObject(SELECT_BUYER_PLAN, Float.class, buyerId, "Profit");
+        try {
+            return jdbcTemplate.queryForObject(SELECT_BUYER_PLAN, Float.class, buyerId, "Profit");
+        } catch (Exception e) {
+            log.error("Error occurred during getting profit by buyerId=" + buyerId, e);
+        }
+        return 0F;
     }
 }
