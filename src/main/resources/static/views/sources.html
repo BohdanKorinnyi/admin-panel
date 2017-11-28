@@ -144,29 +144,30 @@
                     </tr>
 
                     <tr style="text-align: left; vertical-align: middle"
-                        ng-repeat="d in item.data"
+                        ng-repeat-start="d in item.data"
                         ng-show="buyerDetails && item.buyerId == id">
                         <td style="cursor: pointer; text-align: left;"
                             data-toggle="collapse" colspan="3"
                             ng-click="showBuyerByDateDetailsColumn(item.buyerId, d.date);">
                             <strong style="text-align: left!important;">Date: {{d.date}}
                                 <i class="ti-angle-down"></i></strong>
-                           </td>
+                        </td>
                         <td style="text-align: center;"><strong>{{d.spent}}</strong></td>
                         <td style="text-align: center;"><strong>{{d.revenue}}</strong></td>
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
-                        ng-repeat="details in buyerDetailsByDate"
-                        ng-show="dateDetails && item.buyerId == id">
-                        <td>{{details.buyer}}</td>
-                        <td>{{details.date}}</td>
-                        <td>{{details.type}}</td>
-                        <td>{{details.spent}}</td>
-                        <td>{{details.revenue}}</td>
+                        ng-repeat="det in d.dateDetails"
+                        ng-show="dateDetails && det.date == buyerDate && det.buyerId == id">
+                        <td>{{det.buyer}}</td>
+                        <td>{{det.date}}</td>
+                        <td>{{det.type}}</td>
+                        <td>{{det.spent}}</td>
+                        <td>{{det.revenue}}</td>
                     </tr>
 
-                    <tr ng-show="buyerDetails && item.buyerInfo.buyerId == id">
+                    <tr ng-repeat-end
+                            ng-show="buyerDetails && item.buyerInfo.buyerId == id">
                         <td style="text-align: left; vertical-align: middle" colspan="3">
                             <strong>Total by buyer: {{item.buyerInfo.buyerName}}</strong></td>
                         <td><strong>{{item.sources.sum + item.expenses.sum}} USD</strong></td>

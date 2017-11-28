@@ -6,7 +6,6 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
     $scope.selectedBuyerNames = [];
 
 
-
     $scope.sources = [];
     $scope.expenses = [];
     $scope.postbacks = [];
@@ -15,7 +14,7 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
     $scope.role = "";
 
     $scope.buyerDetails = false;
-    $scope.dateDetails = false;
+    $scope.dateDetails = true;
     $scope.buyerDetailsByDate = [];
 
     $scope.sizeOptions = {
@@ -67,7 +66,7 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
         $scope.getRole();
         $scope.sources = [];
         $scope.showsourcesLoader = true;
-        if($scope.role === "BUYER"){
+        if ($scope.role === "BUYER") {
             $scope.hideBuyerSelect = true;
         }
         $http.get(url).then(function (response) {
@@ -81,10 +80,23 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
 
 
     $scope.getDataDetails = function (buyerId, date) {
-        var url = "/statistic/date?buyerId="+buyerId+"&date="+date;
-        $http.get(url).then(function(result){
-            $scope.buyerDetailsByDate = result.data;
-        });
+        var url = "/statistic/date?buyerId=" + buyerId + "&date=" + date;
+        var request = new XMLHttpRequest();
+        request.open('GET', url, false);
+        request.send(null);
+        if (request.status === 200) {
+            var z = JSON.parse(request.response);
+            for (var i = 0; i < $scope.sources.length; i++) {
+                if($scope.sources[i].buyerId === buyerId){
+                    for(var j = 0; j<$scope.sources[i].data.length; j++){
+                        if ($scope.sources[i].data[j].date === date) {
+                            $scope.sources[i].data[j].dateDetails = z;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     };
 
     $scope.getGridDetails = function () {
@@ -138,9 +150,9 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
             $scope.buyerDate = "";
         }
         else {
+            $scope.getDataDetails(id, date);
             $scope.dateDetails = true;
             $scope.buyerDate = date;
-            $scope.getDataDetails(id, date);
         }
     };
 });
