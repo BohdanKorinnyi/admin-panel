@@ -66,7 +66,8 @@ var checkRouting = function ($q, $rootScope, $location) {
         var z = JSON.parse(request.response);
         var role = z.authorities[0].authority;
         localStorage.setItem('role', role);
-        if (role === 'ADMIN' || role === 'ROLE_ADMIN') {
+        if (role === 'ADMIN' || role === 'ROLE_ADMIN'
+            || role === 'DIRECTOR' || role === 'CFO' || role === 'CBO') {
             $location.path('/admin/dashboard');
         }
         else if (role === 'BUYER') {

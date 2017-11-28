@@ -12,8 +12,7 @@ public class User {
     private String name;
     @JsonIgnore
     private String password;
-
-    private Integer roleId;
+    private String role;
     private Integer groupId;
     private Integer buyerId;
 }

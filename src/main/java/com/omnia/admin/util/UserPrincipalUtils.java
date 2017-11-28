@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UserPrincipalUtils {
@@ -32,6 +33,19 @@ public final class UserPrincipalUtils {
                 return Lists.newArrayList(currentUser.getAuthorities()).get(0).getAuthority().equals(role.toString());
             }
             return Role.ADMIN.equals(role);
+        }
+        throw new RuntimeException();
+    }
+
+    public static boolean hasRole(HttpServletRequest request, Set<Role> roles) {
+        if (request.getUserPrincipal() instanceof UsernamePasswordAuthenticationToken) {
+            UsernamePasswordAuthenticationToken userPrincipal = (UsernamePasswordAuthenticationToken) request.getUserPrincipal();
+            if (userPrincipal.getPrincipal() instanceof CurrentUser) {
+                CurrentUser currentUser = (CurrentUser) userPrincipal.getPrincipal();
+                String role = Lists.newArrayList(currentUser.getAuthorities()).get(0).getAuthority();
+                return roles.contains(Role.valueOf(role));
+            }
+            return false;
         }
         throw new RuntimeException();
     }

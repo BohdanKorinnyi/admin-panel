@@ -9,7 +9,7 @@ public class CurrentUser extends org.springframework.security.core.userdetails.U
     private Integer buyerId;
     public CurrentUser(User user) {
         super(user.getUsername(), user.getPassword(),
-                createAuthorityList(Role.parse(user.getRoleId()).toString())
+                createAuthorityList(Role.parse(user.getRole()).toString())
         );
         this.buyerId = user.getBuyerId();
     }

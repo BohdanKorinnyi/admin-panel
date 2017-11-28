@@ -3,26 +3,29 @@ package com.omnia.admin.model;
 import com.omnia.admin.exception.UnknownRoleException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 @Getter
 @AllArgsConstructor
 public enum Role {
-    BUYER(1),
-    TEAM_LEADER(2),
-    CBO(3),//Media Buyer Director
-    MENTOR(4),
-    CFO(5),//Chief Finance Office
-    DIRECTOR(6),
-    ADMIN(7);
+    BUYER("Buyer"),
+    TEAM_LEADER("Team Leader"),
+    CBO("CBO"),
+    MENTOR("Mentor"),
+    CFO("CFO"),
+    DIRECTOR("Director"),
+    ADMIN("Administrator");
 
-    private int value;
+    private String value;
 
-    public static Role parse(int value) {
+    public static Role parse(String value) {
         for (Role role : Role.values()) {
-            if (role.getValue() == value) {
+            if (role.getValue().equals(value)) {
                 return role;
             }
         }
+        log.error("UnknownRole=" + value);
         throw new UnknownRoleException();
     }
 }
