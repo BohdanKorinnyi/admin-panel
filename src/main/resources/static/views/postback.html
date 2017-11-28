@@ -67,7 +67,8 @@
                 <form class="form-inline">
                     <div class="form-group" ng-init="initBuyerNames();"
                          style="margin-top:10px;">
-                        <select class="selectpicker" multiple
+                        <select ng-hide="hideBuyerSelect"
+                                class="selectpicker" multiple
                                 data-style="btn-info btn-fill btn-block"
                                 data-size="5"
                                 title="Buyer"

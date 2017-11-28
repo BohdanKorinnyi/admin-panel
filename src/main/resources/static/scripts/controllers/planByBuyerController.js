@@ -26,10 +26,29 @@ Application.controller("planByBuyerController", function ($scope, $http, dateFac
     ];
     $scope.selectedMonth = [];
 
+    $scope.hideBuyerSelect = false;
+
+
+    $scope.getRole = function () {
+        var request = new XMLHttpRequest();
+        request.open('GET', '/user/me', false);  // `false` makes the request synchronous
+        request.send(null);
+
+        if (request.status === 200) {
+            var z = JSON.parse(request.response);
+            $scope.role = z.authorities[0].authority;
+            //localStorage.setItem('role', $scope.role);
+        }
+    };
+
     $scope.loadplans = function () {
         var url = "/buyer/plan";
         $scope.plans = [];
         $scope.showPlanByBuyerLoader = true;
+        $scope.getRole();
+        if($scope.role === "BUYER"){
+            $scope.hideBuyerSelect = true;
+        }
         $http.get(url).then(function (response) {
             $scope.plans = response.data;
             $scope.showPlanByBuyerLoader = false;

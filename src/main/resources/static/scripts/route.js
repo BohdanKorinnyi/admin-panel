@@ -67,6 +67,7 @@ var checkRouting = function ($q, $rootScope, $location, $http) {
     if (request.status === 200) {
         var z = JSON.parse(request.response);
         var role = z.authorities[0].authority;
+        localStorage.setItem('role', role);
         if(role === "ADMIN"){
             $location.path('/admin/dashboard');
         }

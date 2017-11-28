@@ -7,7 +7,8 @@
 
                         <div class="form-group" ng-init="getBuyers();"
                              style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
-                            <select class="selectpicker" multiple
+                            <select ng-hide="hideBuyerSelect"
+                                    class="selectpicker" multiple
                                     data-style="btn-info btn-fill btn-block"
                                     data-size="5"
                                     title="Buyer"
@@ -148,21 +149,21 @@
                         <td style="cursor: pointer; text-align: left;"
                             data-toggle="collapse" colspan="3"
                             ng-click="showBuyerByDateDetailsColumn(item.buyerId, d.date);">
-                            <strong class="panel-heading" style="text-align: left!important;">Date: {{d.date}}
+                            <strong style="text-align: left!important;">Date: {{d.date}}
                                 <i class="ti-angle-down"></i></strong>
                            </td>
-                        <td style="text-align: center;" class="panel-body"><strong>{{d.spent}}</strong></td>
-                        <td style="text-align: center;" class="panel-body"><strong>{{d.revenue}}</strong></td>
+                        <td style="text-align: center;"><strong>{{d.spent}}</strong></td>
+                        <td style="text-align: center;"><strong>{{d.revenue}}</strong></td>
                     </tr>
 
                     <tr style="text-align: center; vertical-align: middle"
                         ng-repeat="details in buyerDetailsByDate"
                         ng-show="dateDetails && item.buyerId == id">
-                        <td class="panel-body">{{details.buyer}}</td>
-                        <td class="panel-body">{{details.date}}</td>
-                        <td class="panel-body">{{details.type}}</td>
-                        <td class="panel-body">{{details.spent}}</td>
-                        <td class="panel-body">{{details.revenue}}</td>
+                        <td>{{details.buyer}}</td>
+                        <td>{{details.date}}</td>
+                        <td>{{details.type}}</td>
+                        <td>{{details.spent}}</td>
+                        <td>{{details.revenue}}</td>
                     </tr>
 
                     <tr ng-show="buyerDetails && item.buyerInfo.buyerId == id">
