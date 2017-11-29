@@ -22,8 +22,8 @@ UNION (SELECT
          INNER JOIN accounts ON accounts.account_id = source_statistics.account_id
        WHERE source_statistics.spent != 0 AND source_statistics.date = ? AND buyers.id = ?)
 UNION (SELECT
-         0                                          AS 'revenue',
          TRUNCATE(source_statistics_today.spent, 2) AS 'spent',
+         0                                          AS 'revenue',
          buyers.id                                  AS 'buyerId',
          buyers.name                                AS 'buyer',
          source_statistics_today.date               AS 'date',
@@ -34,17 +34,23 @@ UNION (SELECT
          INNER JOIN accounts ON accounts.account_id = source_statistics_today.account_id
        WHERE source_statistics_today.spent != 0 AND source_statistics_today.date = ? AND buyers.id = ?)
 UNION (SELECT
-         0                         AS 'spent',
-         TRUNCATE(postback.sum, 2) AS 'revenue',
-         buyers.id                 AS 'buyerId',
-         buyers.name               AS 'buyer',
-         postback.date             AS 'date',
-         'no-type'                 AS 'type'
+         0                                                         AS 'spent',
+         TRUNCATE(sum(postback.sum /
+                      (SELECT exchange.rate
+                       FROM exchange
+                       WHERE exchange.id = postback.exchange) *
+                      (SELECT exchange.count
+                       FROM exchange
+                       WHERE exchange.id = postback.exchange)), 2) AS 'revenue',
+         buyers.id                                                 AS 'buyerId',
+         buyers.name                                               AS 'buyer',
+         postback.date                                             AS 'date',
+         adverts.advname                                           AS 'type'
        FROM postback
          INNER JOIN affiliates ON affiliates.afid = postback.afid
          INNER JOIN buyers ON affiliates.buyer_id = buyers.id
          INNER JOIN adverts ON adverts.advname = postback.advname
          INNER JOIN adv_status ON adv_status.adv_id = adverts.id
        WHERE postback.sum != 0 AND (postback.duplicate != 'FULL' OR postback.duplicate IS NULL) AND
-         adv_status.real_status = 'approved' AND postback.status = adv_status.name AND postback.date = ? AND
-         buyers.id = ?);
+             adv_status.real_status = 'approved' AND postback.status = adv_status.name AND postback.date = ? AND
+             buyers.id = ?);

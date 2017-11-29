@@ -63,7 +63,7 @@ FROM (SELECT
           buyers.id                                                 AS 'buyerId',
           buyers.name                                               AS 'buyer',
           postback.date                                             AS 'date',
-          'no type'                                                 AS 'type'
+          adverts.advname                                           AS 'type'
         FROM postback
           INNER JOIN affiliates ON affiliates.afid = postback.afid
           INNER JOIN buyers ON affiliates.buyer_id = buyers.id
