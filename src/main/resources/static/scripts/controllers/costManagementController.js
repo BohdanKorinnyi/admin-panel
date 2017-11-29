@@ -31,6 +31,10 @@ Application.controller("costManagementController", function ($scope, $http, date
 
     $scope.tableSpent = "";
 
+    $scope.selectedPage = 1;
+    $scope.totalPagination = 1;
+    $scope.noOfPages = 1;
+
     //functions
     $scope.getRole = function () {
         var request = new XMLHttpRequest();
@@ -41,6 +45,54 @@ Application.controller("costManagementController", function ($scope, $http, date
             var z = JSON.parse(request.response);
             $scope.role = z.authorities[0].authority;
         }
+    };
+
+
+    $scope.loadCosts = function () {
+        $scope.costs = [];
+        $scope.showCostManagementLoader = true;
+        $scope.getRole();
+        if($scope.role === "BUYER"){
+            $scope.hideBuyerSelect = true;
+        }
+
+        var url = "/expenses?buyerIds="+ $scope.getFilterDetails();
+
+        $http.post(url, $scope.getSizeAndNumberFilter())
+            .then(function successCallback(response) {
+                $scope.costs = response.data;
+                $scope.showCostManagementLoader = false;
+                $scope.totalPagination = response.data.size;
+                $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
+            }, function errorCallback(response) {
+                $scope.showLoader = false;
+                notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
+            });
+    };
+
+
+    $scope.getFilterDetails = function () {
+        var fromDate = "";
+        var toDate = "";
+        if ($scope.selectedDate !== 'no-date') {
+            if ($scope.selectedDate === 'custom') {
+                fromDate = $scope.dpFromDate;
+                toDate = $scope.dpToDate;
+            }
+            else {
+                fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
+                toDate = formatDate(dateFactory.pickDateTo($scope.selectedDate));
+            }
+        }
+
+        return $scope.selectedBuyerNames+"&expensesType="+$scope.selectedTypes+"&from="+fromDate+"&to="+toDate;
+    };
+
+    $scope.getSizeAndNumberFilter = function () {
+        var parameters = {};
+        parameters.page = $scope.selectedPage;
+        parameters.size = $scope.selectedSize;
+        return parameters;
     };
 
 
@@ -55,14 +107,9 @@ Application.controller("costManagementController", function ($scope, $http, date
 
 
     $scope.getTypes = function () {
-        var url = "/account/types";
+        var url = "expenses/type/all";
         $http.get(url).then(function success(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                $scope.types.push({
-                    id: i,
-                    name: response.data[i]
-                });
-            }
+            $scope.types = response.data;
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading types', 'danger');
         });
