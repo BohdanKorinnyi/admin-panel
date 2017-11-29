@@ -23,7 +23,7 @@ import static org.springframework.util.StringUtils.collectionToCommaDelimitedStr
 @AllArgsConstructor
 public class ExpensesDaoImpl implements ExpensesDao {
     private static final String SELECT_COUNT_EXPENSES = "SELECT" +
-            "  COUNT(id) " +
+            "  COUNT(expenses.id) " +
             "FROM expenses" +
             "  LEFT JOIN expenses_type ON expenses.type_id = expenses_type.id " +
             "WHERE expenses.sum != 0 %s" +
