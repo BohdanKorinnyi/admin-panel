@@ -45,7 +45,7 @@ public class ExpensesDaoImpl implements ExpensesDao {
         Map<String, Object> result = new HashMap<>();
         String whereClause = createWhereClause(buyerIds, expensesType, from, to);
         result.put("data", jdbcTemplate.query(String.format(SELECT_EXPENSES, whereClause) + page.limit(), BeanPropertyRowMapper.newInstance(Expenses.class)));
-        result.put("size", jdbcTemplate.query(String.format(SELECT_COUNT_EXPENSES, whereClause), BeanPropertyRowMapper.newInstance(Expenses.class)));
+        result.put("size", jdbcTemplate.queryForObject(String.format(SELECT_COUNT_EXPENSES, whereClause), Integer.class));
         return result;
     }
 
