@@ -65,7 +65,7 @@ Application.controller("costManagementController", function ($scope, $http, date
                 $scope.totalPagination = response.data.size;
                 $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
             }, function errorCallback(response) {
-                $scope.showLoader = false;
+                $scope.showCostManagementLoader = false;
                 notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
             });
     };
