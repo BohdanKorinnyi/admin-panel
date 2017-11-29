@@ -90,9 +90,8 @@ Application.controller("costManagementController", function ($scope, $http, date
 
     $scope.getSizeAndNumberFilter = function () {
         var parameters = {};
-        parameters.size = $scope.selectedSize;
         parameters.number = $scope.selectedPage;
-        
+        parameters.size = $scope.selectedSize;
         return parameters;
     };
 
