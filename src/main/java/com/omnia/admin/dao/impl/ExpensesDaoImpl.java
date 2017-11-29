@@ -65,6 +65,6 @@ public class ExpensesDaoImpl implements ExpensesDao {
         if (!StringUtils.isEmpty(from) && !StringUtils.isEmpty(to)) {
             where += " AND date BETWEEN '" + from + "' AND '" + to + "' ";
         }
-        return String.format(SELECT_EXPENSES, where);
+        return where;
     }
 }
