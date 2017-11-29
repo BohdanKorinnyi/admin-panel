@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 import static org.springframework.util.StringUtils.collectionToCommaDelimitedString;
@@ -20,6 +22,12 @@ import static org.springframework.util.StringUtils.collectionToCommaDelimitedStr
 @Repository
 @AllArgsConstructor
 public class ExpensesDaoImpl implements ExpensesDao {
+    private static final String SELECT_COUNT_EXPENSES = "SELECT" +
+            "  COUNT(id) " +
+            "FROM expenses" +
+            "  LEFT JOIN expenses_type ON expenses.type_id = expenses_type.id " +
+            "WHERE expenses.sum != 0 %s" +
+            "ORDER BY date DESC ";
     private static final String SELECT_EXPENSES = "SELECT" +
             "  expenses.buyer_id AS buyerId," +
             "  expenses.date," +
@@ -33,9 +41,12 @@ public class ExpensesDaoImpl implements ExpensesDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Expenses> getExpenses(Page page, List<Integer> buyerIds, List<Integer> expensesType, String from, String to) {
-        String sql = createSql(buyerIds, expensesType, from, to);
-        return jdbcTemplate.query(sql + page.limit(), BeanPropertyRowMapper.newInstance(Expenses.class));
+    public Map<String, Object> getExpenses(Page page, List<Integer> buyerIds, List<Integer> expensesType, String from, String to) {
+        Map<String, Object> result = new HashMap<>();
+        String whereClause = createWhereClause(buyerIds, expensesType, from, to);
+        result.put("data", jdbcTemplate.query(String.format(SELECT_EXPENSES, whereClause) + page.limit(), BeanPropertyRowMapper.newInstance(Expenses.class)));
+        result.put("size", jdbcTemplate.query(String.format(SELECT_COUNT_EXPENSES, whereClause), BeanPropertyRowMapper.newInstance(Expenses.class)));
+        return result;
     }
 
     @Override
@@ -43,7 +54,7 @@ public class ExpensesDaoImpl implements ExpensesDao {
 
     }
 
-    private String createSql(List<Integer> buyerIds, List<Integer> expensesType, String from, String to) {
+    private String createWhereClause(List<Integer> buyerIds, List<Integer> expensesType, String from, String to) {
         String where = EMPTY;
         if (!CollectionUtils.isEmpty(buyerIds)) {
             where = " AND expenses.buyer_id IN (" + collectionToCommaDelimitedString(buyerIds) + ") ";

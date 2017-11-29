@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -15,7 +16,7 @@ public final class ExpensesServiceImpl implements ExpensesService {
     private final ExpensesDao expensesDao;
 
     @Override
-    public List<Expenses> getExpenses(Page page, List<Integer> buyerIds, List<Integer> expensesType, String from, String to) {
+    public Map<String, Object> getExpenses(Page page, List<Integer> buyerIds, List<Integer> expensesType, String from, String to) {
         return expensesDao.getExpenses(page, buyerIds, expensesType, from, to);
     }
 

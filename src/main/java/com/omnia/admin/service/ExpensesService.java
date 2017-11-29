@@ -4,9 +4,10 @@ import com.omnia.admin.grid.Page;
 import com.omnia.admin.model.Expenses;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ExpensesService {
-    List<Expenses> getExpenses(Page page, List<Integer> buyerIds, List<Integer> expensesTypes, String from, String to);
+    Map<String, Object> getExpenses(Page page, List<Integer> buyerIds, List<Integer> expensesTypes, String from, String to);
 
     void updateExpenses(Expenses expenses);
 }
