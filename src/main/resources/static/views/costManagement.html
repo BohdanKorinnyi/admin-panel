@@ -124,22 +124,24 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr ng-repeat="c in costs | filter:searchFilter">
                         <td style="text-align: left!important;">
                             <a data-toggle="modal" data-target="#confirmDeletingModal">
-                                <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                                <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
                             </a>
+                            {{c.buyer}}
                         </td>
-                        <td></td>
+                        <td>{{c.date}}</td>
                         <td>
                             <input type="number" class="form-control" placeholder="Spent"
-                                   ng-model="tableSpent"
+                                   ng-model="c.sum"
                                    disabled/>
                         </td>
                         <td></td>
                         <td style="text-align: right!important;">
+                            {{c.name}}
                             <a data-toggle="modal" data-target="#addTypeModal">
-                                <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+                                <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
                             </a>
                         </td>
                         <td></td>
@@ -154,9 +156,10 @@
                     </tbody>
                 </table>
                 <div class="panel-footer">
-                    <div class="text-center">
+                    <div class="text-center" ng-show="costs.length != 0">
                         <uib-pagination total-items="totalPagination" max-size="5"
-                                        ng-model="selectedPage" items-per-page="selectedSize">
+                                        ng-model="selectedPage" items-per-page="selectedSize"
+                                        ng-click="loadPostbacks();" style="margin: 5px 0px !important;">
                         </uib-pagination>
                     </div>
                 </div>

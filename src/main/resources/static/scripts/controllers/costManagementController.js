@@ -60,7 +60,7 @@ Application.controller("costManagementController", function ($scope, $http, date
 
         $http.post(url, $scope.getSizeAndNumberFilter())
             .then(function successCallback(response) {
-                $scope.costs = response.data;
+                $scope.costs = response.data.data;
                 $scope.showCostManagementLoader = false;
                 $scope.totalPagination = response.data.size;
                 $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
@@ -90,8 +90,9 @@ Application.controller("costManagementController", function ($scope, $http, date
 
     $scope.getSizeAndNumberFilter = function () {
         var parameters = {};
-        parameters.number = $scope.selectedPage;
         parameters.size = $scope.selectedSize;
+        parameters.number = $scope.selectedPage;
+
         return parameters;
     };
 
