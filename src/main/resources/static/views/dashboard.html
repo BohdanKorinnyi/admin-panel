@@ -22,8 +22,8 @@
                     <div class="card-content">
                         <div class="row">
                             <div class="col-xs-3">
-                                <div class="icon-big icon-success text-center">
-                                    <i class="ti-pulse"></i>
+                                <div class="icon-big icon-warning text-center">
+                                    <i class="ti-server"></i>
                                 </div>
                             </div>
                             <div class="col-xs-9">
@@ -42,7 +42,7 @@
                         <div class="row">
                             <div class="col-xs-3">
                                 <div class="icon-big icon-warning text-center">
-                                    <i class="ti-pulse"></i>
+                                    <i class="ti-server"></i>
                                 </div>
                             </div>
                             <div class="col-xs-9">
@@ -59,12 +59,12 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-5">
                                 <div class="icon-big icon-success text-center">
-                                    <i class="ti-money"></i>
+                                    <i class="ti-wallet"></i>
                                 </div>
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-7">
                                 <div class="numbers">
                                     <p>Bonus</p>
                                     $ {{bonus}}
@@ -80,12 +80,12 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-5">
                                 <div class="icon-big icon-danger text-center">
-                                    <i class="ti-target"></i>
+                                    <i class="ti-pulse"></i>
                                 </div>
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-7">
                                 <div class="numbers">
                                     <p>Plan Revenue</p>
                                     $ {{revenuePlan}}
@@ -99,12 +99,12 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-5">
                                 <div class="icon-big icon-info text-center">
-                                    <i class="ti-dashboard"></i>
+                                    <i class="ti-twitter-alt"></i>
                                 </div>
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-7">
                                 <div class="numbers">
                                     <p>Completed Revenue Plan</p>
                                     {{revenueCompleted}}%
@@ -118,12 +118,12 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="row">
-                            <div class="col-xs-3">
-                                <div class="icon-big icon-danger text-center">
-                                    <i class="ti-target"></i>
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-info text-center">
+                                    <i class="ti-twitter-alt"></i>
                                 </div>
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-7">
                                 <div class="numbers">
                                     <p>Plan Profit</p>
                                     $ {{profitPlan}}
@@ -137,12 +137,12 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-5">
                                 <div class="icon-big icon-info text-center">
-                                    <i class="ti-dashboard"></i>
+                                    <i class="ti-twitter-alt"></i>
                                 </div>
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-7">
                                 <div class="numbers">
                                     <p>Completed Plan Profit</p>
                                     {{profitCompleted}}%
@@ -158,15 +158,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="pull-right">
-                            <h4 class="card-title">Total Paid ${{totalPaid}}</h4>
-                        </div>
-                        <h4 class="card-title">Settlement Slip</h4>
+                        <h4 class="card-title">Settlement slip</h4>
                         <p class="category">{{buyerName}}</p>
                     </div>
                     <div class="card-content">
                         <div class="card-content table-responsive table-full-width">
-                            <table class="table">
+                            <table class="table"
+                                   ng-style="tableStyle" style="border-collapse: collapse !important;">
                                 <thead>
                                 <tr style="text-align: center; vertical-align: middle">
                                     <th>
@@ -182,16 +180,16 @@
                                     </th>
                                 </tr>
                                 </thead>
+
                                 <tbody>
-                                <tr style="text-align: center; vertical-align: middle" ng-show="payroll.length == 0">
-                                    <td colspan="3">No data</td>
-                                </tr>
-                                <tr style="text-align: center; vertical-align: middle" ng-repeat="p in payroll"
-                                    ng-show="payroll.length != 0">
-                                    <td>{{p.date}}</td>
-                                    <td>{{p.sum}}</td>
-                                    <td>{{p.description}}</td>
-                                </tr>
+                                    <tr style="text-align: center; vertical-align: middle" ng-repeat="p in payroll" ng-show="payroll.length != 0">
+                                        <td>{{p.date}}</td>
+                                        <td>{{p.sum}}</td>
+                                        <td>{{p.description}}</td>
+                                    </tr>
+                                    <tr style="text-align: center; vertical-align: middle" ng-repeat="p in payroll" ng-show="payroll.length == 0">
+                                        <td colspan="3">No data</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

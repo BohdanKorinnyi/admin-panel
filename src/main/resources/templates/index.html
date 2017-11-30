@@ -24,10 +24,18 @@
     </style>
 </head>
 
-<body style="background-color: #f4f3ef">
+<body>
 <div class="sidebar" data-background-color="white" data-active-color="warning">
+    <!--
+        Tip 1: you can change the color of the sidebar's background using: data-background-color="white | brown"
+        Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+    -->
     <div class="logo">
-        <a class="simple-text logo-normal" style="text-align: center">
+        <a class="simple-text logo-mini">
+            OM
+        </a>
+
+        <a class="simple-text logo-normal">
             OMNI-A
         </a>
     </div>
@@ -278,8 +286,10 @@
         </ul>
     </div>
 </div>
+
 <div ng-view=""></div>
-<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
 <script src="scripts/angular.js"></script>
 <script src="scripts//angular-route.js"></script>
 <script src="scripts//bootstrap.min.js"></script>
@@ -314,9 +324,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.2/angular-resource.js"></script>
 
 <script>
+    var menuFlag = true;
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
+    //minimizeSidebar
 </script>
 </body>
 </html>
