@@ -86,7 +86,7 @@ Application.controller("costManagementController", function ($scope, $http, date
     $scope.onApplyClick = function () {
         $scope.findAddedRows();
         $scope.findNotAddedRows();
-        
+
         if($scope.deletedRows.length !== 0){
             var deleteUrl = "/expenses?expensesIds=" + $scope.deletedRows.join();
             $http.delete(deleteUrl).then(function success() {
@@ -99,7 +99,7 @@ Application.controller("costManagementController", function ($scope, $http, date
         }
 
         var putUrl = "/expenses";
-        $http.put(putUrl, $scope.costs).then(function success() {
+        $http.put(putUrl, $scope.editedRows).then(function success() {
             $scope.loadCosts();
             notify('ti-alert', 'Editing successful', 'success');
         }, function errorCallback(response) {
