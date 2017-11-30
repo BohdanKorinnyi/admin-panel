@@ -54,6 +54,11 @@ public class ExpensesDaoImpl implements ExpensesDao {
 
     }
 
+    @Override
+    public void delete(List<Integer> ids) {
+
+    }
+
     private String createWhereClause(List<Integer> buyerIds, List<Integer> expensesType, String from, String to) {
         String where = EMPTY;
         if (!CollectionUtils.isEmpty(buyerIds)) {

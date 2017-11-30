@@ -34,7 +34,11 @@ public class ExpensesController {
     }
 
     @PutMapping
-    public void updateExpenses(HttpServletRequest request, @RequestBody Expenses expenses) {
-        expensesService.updateExpenses(expenses);
+    public void updateExpenses(HttpServletRequest request, @RequestBody List<Expenses> expenses) {
+
+    }
+
+    @DeleteMapping
+    public void deleteExpenses(HttpServletRequest request, @RequestParam List<Integer> expensesIds) {
     }
 }

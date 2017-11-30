@@ -9,5 +9,7 @@ import java.util.Map;
 public interface ExpensesDao {
     Map<String, Object> getExpenses(Page page, List<Integer> buyerIds, List<Integer> expensesType, String from, String to);
 
-    void update(Expenses expenses);
+    void update(List<Expenses> expenses);
+
+    void delete(List<Integer> ids);
 }

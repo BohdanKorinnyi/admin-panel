@@ -21,7 +21,12 @@ public final class ExpensesServiceImpl implements ExpensesService {
     }
 
     @Override
-    public void updateExpenses(Expenses expenses) {
+    public void updateExpenses(List<Expenses> expenses) {
         expensesDao.update(expenses);
+    }
+
+    @Override
+    public void delete(List<Integer> ids) {
+        expensesDao.delete(ids);
     }
 }
