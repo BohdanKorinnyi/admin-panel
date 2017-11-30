@@ -15,8 +15,8 @@ Application.controller("costManagementController", function ($scope, $http, date
 
     $scope.selectedSize = 50;
 
-    $scope.dateOptions = {
-        'Select Date': 'no-date',
+    $scope.dateInterval = {
+        'All time': 'allTime',
         'Today': 'today',
         'Yesterday': 'yesterday',
         'Last 7 days': 'lastWeek',
@@ -24,7 +24,7 @@ Application.controller("costManagementController", function ($scope, $http, date
         'Last Month': 'lastMonth',
         'Custom Range': 'custom'
     };
-    $scope.selectedDate = 'custom';
+    $scope.selectedInterval = 'allTime';
     $scope.dpFromDate = "";
     $scope.dpToDate = "";
 
@@ -115,7 +115,7 @@ Application.controller("costManagementController", function ($scope, $http, date
     $scope.getFilterDetails = function () {
         var fromDate = "";
         var toDate = "";
-        if ($scope.selectedDate !== 'no-date') {
+        if ($scope.selectedDate !== 'allTime') {
             if ($scope.selectedDate === 'custom') {
                 fromDate = $scope.dpFromDate;
                 toDate = $scope.dpToDate;
