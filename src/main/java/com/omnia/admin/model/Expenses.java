@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public final class Expenses {
+    private Long id;
     private Integer buyerId;
     private String buyer;
     private String date;

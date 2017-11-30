@@ -29,6 +29,7 @@ public class ExpensesDaoImpl implements ExpensesDao {
             "WHERE expenses.sum != 0 %s" +
             "ORDER BY date DESC ";
     private static final String SELECT_EXPENSES = "SELECT" +
+            "  expenses.id," +
             "  expenses.buyer_id AS buyerId," +
             "  expenses.date," +
             "  expenses.sum," +
@@ -50,7 +51,7 @@ public class ExpensesDaoImpl implements ExpensesDao {
     }
 
     @Override
-    public void update(Expenses expenses) {
+    public void update(List<Expenses> expenses) {
 
     }
 
