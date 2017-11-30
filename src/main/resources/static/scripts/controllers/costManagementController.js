@@ -2,6 +2,8 @@
 
 Application.controller("costManagementController", function ($scope, $http, dateFactory) {
 
+    $scope.editedRows = [];
+    $scope.addedRows = [];
     $scope.selectedRowId = '';
     $scope.deletedRows = [];
     $scope.costs = [];
@@ -82,6 +84,9 @@ Application.controller("costManagementController", function ($scope, $http, date
 
 
     $scope.onApplyClick = function () {
+        $scope.findAddedRows();
+        $scope.findNotAddedRows();
+        
         if($scope.deletedRows.length !== 0){
             var deleteUrl = "/expenses?expensesIds=" + $scope.deletedRows.join();
             $http.delete(deleteUrl).then(function success() {
@@ -101,6 +106,18 @@ Application.controller("costManagementController", function ($scope, $http, date
             $scope.showCostManagementLoader = false;
             notify('ti-alert', 'Error occurred during editing costs', 'danger');
         });
+
+        if($scope.addedRows.length !== 0){
+            var saveUrl = "/expenses/save";
+            $http.post(saveUrl, $scope.addedRows).then(function success() {
+                $scope.loadCosts();
+                notify('ti-alert', 'Saving successful', 'success');
+            }, function errorCallback(response) {
+                $scope.showCostManagementLoader = false;
+                notify('ti-alert', 'Error occurred during saving costs', 'danger');
+            });
+        }
+
     };
 
     $scope.addCost = function () {
@@ -155,6 +172,22 @@ Application.controller("costManagementController", function ($scope, $http, date
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading types', 'danger');
         });
+    };
+
+    $scope.findAddedRows = function () {
+        for(var i=0; i<$scope.costs.length; i++){
+            if($scope.costs[i].id === null){
+                $scope.addedRows.push($scope.costs[i]);
+            }
+        }
+    };
+
+    $scope.findNotAddedRows = function () {
+        for(var i=0; i<$scope.costs.length; i++){
+            if($scope.costs[i].id !== null){
+                $scope.editedRows.push($scope.costs[i]);
+            }
+        }
     };
 
 
