@@ -1,198 +1,125 @@
-<div ng-controller="dashboardController" ng-init="initData();" class="main-panel">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-minimize">
-                <button id="minimizeSidebar" class="btn btn-fill btn-icon"><i class="ti-menu"></i></button>
+<div ng-controller="dashboardController" ng-init="initData();">
+    <div class="buyerDetailsCard">
+        <div class="row">
+            <div class="col-md-6">
+                <h5><strong>Settlement slip</strong></h5>
             </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle">
-                    <span class="sr-only">Toggle navigation</span>
-                </button>
-                <a class="navbar-brand" href="#Dashboard">
-                    Buyer Dashboard
-                </a>
-            </div>
+            <div class="col-md-6"></div>
         </div>
-    </nav>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Buyer: {{buyerName}}</h5>
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h4><strong>Paid out</strong></h4>
+                    </div>
+                    <div class="col-md-7"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-11">
+                        <table id="table" class="table table-hover table-sm table-bordered"
+                               ng-style="tableStyle" style="border-collapse: collapse !important;">
+                            <thead class="thead-default">
+                            <tr style="text-align: center; vertical-align: middle">
+                                <th>
+                                    <a href="">Date</a>
+                                </th>
 
-    <div class="content">
-        <div class="row" style="margin-left: 15px; margin-right: 15px; margin-top: 25px">
-            <div class="col-lg-4 col-sm-6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <div class="icon-big icon-warning text-center">
-                                    <i class="ti-server"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="numbers">
-                                    <p>Revenue by current month</p>
-                                    $ {{revenue}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <div class="icon-big icon-warning text-center">
-                                    <i class="ti-server"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="numbers">
-                                    <p>Plan revenue by current month</p>
-                                    $ {{revenuePlan}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-success text-center">
-                                    <i class="ti-wallet"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Bonus</p>
-                                    $ {{bonus}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="margin-left: 15px; margin-right: 15px">
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-danger text-center">
-                                    <i class="ti-pulse"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Plan Revenue</p>
-                                    $ {{revenuePlan}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-info text-center">
-                                    <i class="ti-twitter-alt"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Completed Revenue Plan</p>
-                                    {{revenueCompleted}}%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-info text-center">
-                                    <i class="ti-twitter-alt"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Plan Profit</p>
-                                    $ {{profitPlan}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-info text-center">
-                                    <i class="ti-twitter-alt"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Completed Plan Profit</p>
-                                    {{profitCompleted}}%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                <th>
+                                    <a href="">Amount</a>
+                                </th>
 
-        <div class="row" style="margin-right: 15px;margin-left: 15px">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Settlement slip</h4>
-                        <p class="category">{{buyerName}}</p>
+                                <th>
+                                    <a href="">Description</a>
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr style="text-align: center; vertical-align: middle"
+                                ng-repeat="p in payroll">
+                                <td>{{p.date}}</td>
+                                <td>{{p.sum}}</td>
+                                <td>{{p.description}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="card-content">
-                        <div class="card-content table-responsive table-full-width">
-                            <table class="table"
-                                   ng-style="tableStyle" style="border-collapse: collapse !important;">
-                                <thead>
-                                <tr style="text-align: center; vertical-align: middle">
-                                    <th>
-                                        <a href="">Date</a>
-                                    </th>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h4><strong>Total paid: {{totalPaid}}</strong></h4>
+                    </div>
+                    <div class="col-md-7"></div>
+                </div>
+            </div>
+            <div class="col-md-6" style="border-left: 1px solid rgba(0,0,0,0.11); margin-bottom: 20px;">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5><strong>Bonus by current month:</strong></h5>
+                    </div>
+                    <div class="col-md-4">
+                        <h5><strong>{{bonus}} USD</strong></h5>
+                    </div>
+                </div>
 
-                                    <th>
-                                        <a href="">Amount</a>
-                                    </th>
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5><strong>Revenue by current month:</strong></h5>
+                    </div>
+                    <div class="col-md-4">
+                        <h5><strong>{{revenue}} USD</strong></h5>
+                    </div>
+                </div>
 
-                                    <th>
-                                        <a href="">Description</a>
-                                    </th>
-                                </tr>
-                                </thead>
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5><strong>Profit by current month:</strong></h5>
+                    </div>
+                    <div class="col-md-4">
+                        <h5><strong>{{profit}} USD</strong></h5>
+                    </div>
+                </div>
 
-                                <tbody>
-                                    <tr style="text-align: center; vertical-align: middle" ng-repeat="p in payroll" ng-show="payroll.length != 0">
-                                        <td>{{p.date}}</td>
-                                        <td>{{p.sum}}</td>
-                                        <td>{{p.description}}</td>
-                                    </tr>
-                                    <tr style="text-align: center; vertical-align: middle" ng-repeat="p in payroll" ng-show="payroll.length == 0">
-                                        <td colspan="3">No data</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5><strong>Plan revenue by current month:</strong></h5>
+                    </div>
+                    <div class="col-md-4">
+                        <h5><strong>{{revenuePlan}} USD</strong></h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5><strong>Сompleted:</strong></h5>
+                    </div>
+                    <div class="col-md-4">
+                        <h5><strong>{{revenueCompleted}}%</strong></h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5><strong>Plan profit by current month:</strong></h5>
+                    </div>
+                    <div class="col-md-4">
+                        <h5><strong>{{profitPlan}} USD</strong></h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5><strong>Сompleted:</strong></h5>
+                    </div>
+                    <div class="col-md-4">
+                        <h5><strong>{{profitCompleted}}%</strong></h5>
                     </div>
                 </div>
             </div>

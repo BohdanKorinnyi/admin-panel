@@ -1,0 +1,173 @@
+<!--<!DOCTYPE html>-->
+<!--<html ng-app="Application">-->
+
+<!--<head>-->
+    <!--<meta charset="utf-8"/>-->
+    <!--<title>Conversion Panel</title>-->
+    <!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"-->
+          <!--integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"-->
+          <!--crossorigin="anonymous"/>-->
+    <!--<link href="css/angular-datepicker.css" rel="stylesheet" type="text/css"/>-->
+    <!--<link href="css/authenticate.css" rel="stylesheet" type="text/css"/>-->
+    <!--<link href="http://demos.creative-tim.com/paper-dashboard-pro/assets/css/bootstrap.min.css" rel="stylesheet"/>-->
+    <!--<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'/>-->
+    <!--<link href="http://demos.creative-tim.com/paper-dashboard-pro/assets/css/themify-icons.css" rel="stylesheet"/>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<header>-->
+    <!--<nav id="navbarCustom" class="navbar navbar-fixed-top">-->
+        <!--<div class="container-fluid">-->
+            <!--<ul class="nav navbar-nav" id="navbar">-->
+                <!--<li>-->
+                    <!--<a style="color:white" href="/">Home</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a style="color:white">Finance</a>-->
+                <!--</li>-->
+                <!--<li class="dropdown">-->
+                    <!--<a class="dropdown-toggle" data-toggle="dropdown" role="button"-->
+                       <!--aria-expanded="false" style="color:white">-->
+                        <!--Reports-->
+                        <!--<span class="caret"></span>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu" role="menu">-->
+                        <!--<li><a href="#">Conversions</a></li>-->
+                        <!--<li><a href="#">Postbacks</a></li>-->
+                        <!--<li><a href="#">Aff network’s</a></li>-->
+                        <!--<li><a href="#">Buyers</a></li>-->
+                        <!--<li><a href="#">Sources</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li class="dropdown">-->
+                    <!--<a class="dropdown-toggle" data-toggle="dropdown" role="button"-->
+                       <!--aria-expanded="false" style="color:white">-->
+                        <!--Catalogs-->
+                        <!--<span class="caret"></span>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu" role="menu">-->
+                        <!--<li><a href="#">Conversions</a></li>-->
+                        <!--<li><a href="#">Postbacks</a></li>-->
+                        <!--<li><a href="#!advertiser">Aff network’s and status</a></li>-->
+                        <!--<li><a href="#">Offers</a></li>-->
+                        <!--<li><a href="#">Buyers and afid</a></li>-->
+                        <!--<li><a href="#">Trackers and prefix</a></li>-->
+                        <!--<li><a href="#">Sources</a></li>-->
+                        <!--<li><a href="#">Currency and rate</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a style="color:white">Users</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--<li>-->
+                    <!--<a style="color:white; margin-top: -10px">Logout</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</nav>-->
+<!--</header>-->
+
+<!--<div class="row" style="margin-top: 50px">-->
+    <!--<div class="col-md-10"></div>-->
+    <!--<div class="col-md-2">-->
+        <!--<div class="row">-->
+            <!--<div class="col-md-3"></div>-->
+            <!--<div class="col-md-9">-->
+                <!--<div class="btn-group">-->
+                    <!--<button type="button" class="btn btn-primary">Apply</button>-->
+                    <!--<button type="button" class="btn btn-primary">Cancel</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+    <!--<div class="col-md-1"></div>-->
+    <!--<div class="col-md-10">-->
+        <!--<div class="row">-->
+            <!--<div class="col-md-2">-->
+                <!--<hr/>-->
+                <!--<div class="btn-group btn-group-justified">-->
+                    <!--<a href="#" class="btn btn-info btn-sm">Apply</a>-->
+                    <!--<a href="#" class="btn btn-info btn-sm">Cancel</a>-->
+                <!--</div>-->
+
+                <!--<div>-->
+                    <!--<h5>Advertiser 1</h5>-->
+                    <!--<h5>Advertiser 2</h5>-->
+                    <!--<h5>Advertiser 3</h5>-->
+                    <!--<h5>Advertiser 4</h5>-->
+                    <!--<h5>Advertiser 5</h5>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-6">-->
+                <!--<hr/>-->
+                <!--<form class="form-inline">-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="advertiserName">Advertiser name</label>-->
+                        <!--<input type="text" class="form-control" id="advertiserName"/>-->
+                    <!--</div>-->
+                <!--</form>-->
+                <!--<form class="form-inline">-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="advertiserShortName">Advertiser short name</label>-->
+                        <!--<input type="text" class="form-control" id="advertiserShortName"/>-->
+                    <!--</div>-->
+                <!--</form>-->
+                <!--<form class="form-inline">-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="advertiserSecretName">Advertiser secret name</label>-->
+                        <!--<input type="text" class="form-control" id="advertiserSecretName"/>-->
+                    <!--</div>-->
+                <!--</form>-->
+                <!--<form class="form-inline">-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="risk">RISK</label>-->
+                        <!--<input type="text" class="form-control" id="risk"/>-->
+                    <!--</div>-->
+                <!--</form>-->
+                <!--<form class="form-inline">-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="advertiserUrl">Advertiser Url</label>-->
+                        <!--<input type="text" class="form-control" id="advertiserUrl"/>-->
+                    <!--</div>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div class="col-md-4">-->
+                <!--<hr/>-->
+                <!--<div class="btn-group btn-group-justified">-->
+                    <!--<a href="#" class="btn btn-info btn-sm">Add</a>-->
+                    <!--<a href="#" class="btn btn-info btn-sm">Delete</a>-->
+                <!--</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+        <!--<hr/>-->
+    <!--</div>-->
+    <!--<div class="col-md-1"></div>-->
+<!--</div>-->
+
+<!--<script src="https://code.angularjs.org/1.6.2/angular.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.2/angular-route.js"></script>-->
+<!--<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="-->
+        <!--crossorigin="anonymous"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
+        <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"-->
+        <!--crossorigin="anonymous"></script>-->
+<!--<script data-require="ui-bootstrap@2.2.0" data-semver="2.2.0"-->
+        <!--src="https://cdn.rawgit.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-tpls-2.2.0.js"></script>-->
+<!--<script data-require="ui-bootstrap-tpls@1.2.5" data-semver="1.2.5"-->
+        <!--src="https://cdn.rawgit.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-tpls-1.2.5.js"></script>-->
+<!--<script src="scripts/angular-datepicker.js"></script>-->
+
+
+<!--<script src="scripts/app.js"></script>-->
+<!--<script src="scripts/route.js"></script>-->
+<!--<script src="scripts/controllers/loginController.js"></script>-->
+<!--<script src="scripts/controllers/conversionController.js"></script>-->
+<!--<script src="scripts/service/dateFactory.js"></script>-->
+<!--</body>-->
+
+<!--</html>-->

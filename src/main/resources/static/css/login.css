@@ -175,6 +175,14 @@ td {
     transition: 0.1s linear all;
 }
 
+p:hover {
+    background-color: lightgrey !important;
+}
+
+p:focus {
+    background-color: lightgrey !important;
+}
+
 .cardForAdvertisers, .cardForAdvertisersData, .cardForAdvertisersStatus,
 .cardForConversions, .cardForPayrollsControl, .cardForPayrollsTable,
 .cardForBuyers, .cardForBuyersData, .cardForBuyersAfid,
