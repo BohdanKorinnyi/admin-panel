@@ -28,7 +28,7 @@ import static org.springframework.util.StringUtils.collectionToCommaDelimitedStr
 public class ExpensesDaoImpl implements ExpensesDao {
     private static final String INSERT_EXPENSES = "INSERT INTO expenses (" +
             "buyer_id, type_id, sum, date, description, date_create, date_change) " +
-            "VALUES (?,?,?,?,?,?,?);";
+            "VALUES (?,?,?,?,?,now(),now());";
     private static final String UPDATE_EXPENSES = "UPDATE expenses " +
             "SET buyer_id = ?, date = ?, sum = ?, type_id = ? WHERE id = ?;";
     private static final String DELETE_EXPENSES = "DELETE FROM expenses WHERE id IN (%s)";
@@ -66,8 +66,6 @@ public class ExpensesDaoImpl implements ExpensesDao {
                 preparedStatement.setFloat(3, expenses.get(i).getSum());
                 preparedStatement.setDate(4, Date.valueOf(expenses.get(i).getDate()));
                 preparedStatement.setString(5, expenses.get(i).getDescription());
-                preparedStatement.setDate(6, Date.valueOf(expenses.get(i).getCreate()));
-                preparedStatement.setDate(7, Date.valueOf(expenses.get(i).getUpdate()));
             }
 
             @Override
