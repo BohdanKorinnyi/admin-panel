@@ -101,7 +101,6 @@ Application.controller("costManagementController", function ($scope, $http, date
         var putUrl = "/expenses";
         $http.put(putUrl, $scope.editedRows).then(function success() {
             $scope.loadCosts();
-            notify('ti-alert', 'Editing successful', 'success');
         }, function errorCallback(response) {
             $scope.showCostManagementLoader = false;
             notify('ti-alert', 'Error occurred during editing costs', 'danger');
@@ -177,6 +176,11 @@ Application.controller("costManagementController", function ($scope, $http, date
     $scope.findAddedRows = function () {
         for(var i=0; i<$scope.costs.length; i++){
             if($scope.costs[i].id === null){
+                for(var j=0; j<$scope.buyerNames.length; j++){
+                    if($scope.buyerNames[j].name === $scope.costs[i].buyer){
+                        $scope.costs[i].buyerId = $scope.buyerNames[j].id;
+                    }
+                }
                 $scope.addedRows.push($scope.costs[i]);
             }
         }
