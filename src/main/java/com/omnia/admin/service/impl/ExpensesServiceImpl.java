@@ -21,6 +21,11 @@ public final class ExpensesServiceImpl implements ExpensesService {
     }
 
     @Override
+    public void save(List<Expenses> expenses) {
+        expensesDao.save(expenses);
+    }
+
+    @Override
     public void updateExpenses(List<Expenses> expenses) {
         expensesDao.update(expenses);
     }

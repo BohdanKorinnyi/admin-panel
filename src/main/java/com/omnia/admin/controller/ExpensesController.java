@@ -33,12 +33,18 @@ public class ExpensesController {
         return ResponseEntity.ok(expensesService.getExpenses(page, buyerIds, expensesType, from, to));
     }
 
+    @PostMapping("save")
+    public void saveExpenses(@RequestBody List<Expenses> expenses) {
+        expensesService.save(expenses);
+    }
+
     @PutMapping
     public void updateExpenses(HttpServletRequest request, @RequestBody List<Expenses> expenses) {
-
+        expensesService.updateExpenses(expenses);
     }
 
     @DeleteMapping
     public void deleteExpenses(HttpServletRequest request, @RequestParam List<Integer> expensesIds) {
+        expensesService.delete(expensesIds);
     }
 }
