@@ -2,6 +2,8 @@
 
 Application.controller("costManagementController", function ($scope, $http, dateFactory) {
 
+    $scope.selectedRowId = '';
+    $scope.deletedRows = [];
     $scope.costs = [];
 
     $scope.buyerNames = [];
@@ -79,10 +81,33 @@ Application.controller("costManagementController", function ($scope, $http, date
     };
 
 
+    $scope.onApplyClick = function () {
+        if($scope.deletedRows.length !== 0){
+            var deleteUrl = "/expenses?expensesIds=" + $scope.deletedRows.join();
+            $http.delete(deleteUrl).then(function success() {
+                $scope.loadCosts();
+                notify('ti-alert', 'Deleted successful', 'success');
+            }, function errorCallback(response) {
+                $scope.showCostManagementLoader = false;
+                notify('ti-alert', 'Error occurred during deleting costs', 'danger');
+            });
+        }
+
+        var putUrl = "/expenses";
+        $http.put(putUrl, $scope.costs).then(function success() {
+            $scope.loadCosts();
+            notify('ti-alert', 'Editing successful', 'success');
+        }, function errorCallback(response) {
+            $scope.showCostManagementLoader = false;
+            notify('ti-alert', 'Error occurred during editing costs', 'danger');
+        });
+    };
+
     $scope.addCost = function () {
         $scope.costs.unshift({
-            buyer: null, date: formatDate(new Date()), name: null,
-            sum: null
+            buyer: null, buyerId: null, create: null,
+            date: formatDate(new Date()), description: null,
+            id: null, name: null, sum: null, typeId: null, update: null
         });
     };
 
@@ -132,6 +157,19 @@ Application.controller("costManagementController", function ($scope, $http, date
         });
     };
 
+
+    $scope.selectRow = function (id) {
+       $scope.selectedRowId = id;
+    };
+
+    $scope.deleteRow = function(){
+        $scope.deletedRows.push($scope.selectedRowId);
+        for(var i=0; i<$scope.costs.length; i++){
+            if($scope.selectedRowId === $scope.costs[i].id){
+                $scope.costs.splice($scope.costs[i], 1);
+            }
+        }
+    };
 
 });
 
