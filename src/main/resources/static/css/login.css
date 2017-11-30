@@ -113,19 +113,20 @@ td {
     text-align: center;
 }
 
-.tokens{
-    min-width: 40px!important;
-    width:50px!important;
-    max-width: 60px!important;
+.tokens {
+    min-width: 40px !important;
+    width: 50px !important;
+    max-width: 60px !important;
 }
 
-#payrollDatePicker{
-    width: 150px!important;
+#payrollDatePicker {
+    width: 150px !important;
 }
 
 #advertiserName {
     width: 99%;
 }
+
 #buyerName {
     width: 99%;
 }
@@ -134,7 +135,7 @@ td {
     width: 70%;
 }
 
-#buyerPlanProfit, #buyerType{
+#buyerPlanProfit, #buyerType {
     width: 70%;
 }
 
@@ -182,7 +183,7 @@ td {
 .cardForBuyerPlans, .cardForBuyerPlansTable,
 .cardForKPIControl, .buyerDetailsCard,
 .adminDashboardCard, .cardForCostManagementControl,
-.cardForCostManagementTable{
+.cardForCostManagementTable {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -219,7 +220,7 @@ td {
     background: white;
 }
 
-.buyerDetailsCard{
+.buyerDetailsCard {
     margin: 44px 25px 25px;
     padding-top: 15px;
     padding-left: 15px;
@@ -230,7 +231,7 @@ td {
     background: white;
 }
 
-.adminDashboardCard{
+.adminDashboardCard {
     margin: 44px 25px 25px;
     padding-top: 15px;
     padding-left: 15px;
@@ -275,7 +276,7 @@ td {
     background: white;
 }
 
-.cardForCostManagementControl{
+.cardForCostManagementControl {
     margin: 55px 25px 25px;
     padding-top: 15px;
     padding-left: 15px;
@@ -288,9 +289,9 @@ td {
 }
 
 .cardForKPIControl {
-    margin-left:10px;
-    margin-right:10px;
-    margin-top:20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 20px;
 
     padding-top: 15px;
     padding-left: 15px;
@@ -303,17 +304,6 @@ td {
 }
 
 .cardForCostDataReportControl {
-     margin: 55px 25px 25px;
-     padding-top: 15px;
-     padding-left: 15px;
-     padding-right: 15px;
-     box-sizing: border-box;
-     border-radius: 2px;
-     background-clip: padding-box;
-     background: white;
- }
-
-.cardForBuyerCosts{
     margin: 55px 25px 25px;
     padding-top: 15px;
     padding-left: 15px;
@@ -324,7 +314,18 @@ td {
     background: white;
 }
 
-.cardForBuyerPlans{
+.cardForBuyerCosts {
+    margin: 55px 25px 25px;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-clip: padding-box;
+    background: white;
+}
+
+.cardForBuyerPlans {
     margin: 55px 25px 25px;
     padding-top: 15px;
     padding-left: 15px;
@@ -462,28 +463,26 @@ fieldset[disabled] .btn-info.focus, fieldset[disabled] .btn-info:active, fieldse
     padding: 6px 12px !important;
 }
 
-.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th
-{
-    min-width: 10px!important;
-    max-width: 102px!important;
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th {
+    min-width: 10px !important;
+    max-width: 102px !important;
 }
 
-.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td
-{
-    min-width: 10px!important;
-    max-width: 100px!important;
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    min-width: 10px !important;
+    max-width: 100px !important;
 }
 
-.table > thead > tr > th > a
-{
-    min-width: 10px!important;
-    width: 60px!important;
-    max-width: 100px!important;
+.table > thead > tr > th > a {
+    min-width: 10px !important;
+    width: 60px !important;
+    max-width: 100px !important;
 }
 
-.table > tbody > td{
+.table > tbody > td {
     max-width: 100px;
 }
+
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th,
 .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     white-space: nowrap;
@@ -492,9 +491,9 @@ fieldset[disabled] .btn-info.focus, fieldset[disabled] .btn-info:active, fieldse
 
 .table > thead > tr > th#offerNameHeader,
 .table > tbody > tr > th#offerNameHeader,
-.table > tfoot > tr > th#offerNameHeader{
-    min-width: 20px!important;
-    max-width: 130px!important;
+.table > tfoot > tr > th#offerNameHeader {
+    min-width: 20px !important;
+    max-width: 130px !important;
 }
 
 .table > thead > tr > td#buyerRow,
@@ -505,10 +504,9 @@ fieldset[disabled] .btn-info.focus, fieldset[disabled] .btn-info:active, fieldse
 .table > tfoot > tr > td#offerNameRow,
 .table > thead > tr > td.tokenTRow,
 .table > tbody > tr > td.tokenTRow,
-.table > tfoot > tr > td.tokenTRow
-{
-    min-width: 20px!important;
-    max-width: 140px!important;
+.table > tfoot > tr > td.tokenTRow {
+    min-width: 20px !important;
+    max-width: 140px !important;
 }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
@@ -574,35 +572,41 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
     }
 }
 
-#buyerSelectPicker > .dropdown-toggle{
-    width: 210px!important;
+#buyerSelectPicker > .dropdown-toggle {
+    width: 210px !important;
 }
 
-#monthSelectPicker > .dropdown-toggle{
-    width: 150px!important;
+#monthSelectPicker > .dropdown-toggle {
+    width: 150px !important;
 }
 
-.bootstrap-select > .dropdown-toggle{
-    width: 110px!important;
+.bootstrap-select > .dropdown-toggle {
+    width: 110px !important;
 }
-
-
 
 datepicker, .datepicker, [datepicker], ._720kb-datepicker-calendar-header,
 ._720kb-datepicker-calendar-body, ._720kb-datepicker-calendar-days-header,
-._720kb-datepicker-calendar-years-pagination-pages{
-    float:none!important;
+._720kb-datepicker-calendar-years-pagination-pages {
+    float: none !important;
 }
 
-.bootstrap-select.btn-group .dropdown-menu{
-    min-width: 4%!important;
+.bootstrap-select.btn-group .dropdown-menu {
+    min-width: 4% !important;
 }
 
-.buyersCostsTable, .buyersCostsTable > th, .buyersCostsTable > td{
+.buyersCostsTable, .buyersCostsTable > th, .buyersCostsTable > td {
     text-align: center;
     vertical-align: middle;
 }
 
 .pre-scrollable {
-    max-height: 305px!important;
+    max-height: 305px !important;
+}
+
+datepicker,
+.datepicker, [datepicker],
+._720kb-datepicker-calendar-header, ._720kb-datepicker-calendar-body,
+._720kb-datepicker-calendar-days-header,
+._720kb-datepicker-calendar-years-pagination-pages {
+    width: 18%!important;
 }
