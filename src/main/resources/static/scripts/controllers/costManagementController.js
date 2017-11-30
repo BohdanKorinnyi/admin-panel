@@ -22,7 +22,7 @@ Application.controller("costManagementController", function ($scope, $http, date
         'Last Month': 'lastMonth',
         'Custom Range': 'custom'
     };
-    $scope.selectedDate = 'no-date';
+    $scope.selectedDate = 'custom';
     $scope.dpFromDate = "";
     $scope.dpToDate = "";
 
