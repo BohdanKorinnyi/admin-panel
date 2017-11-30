@@ -1,84 +1,198 @@
-<div ng-controller="payrollController" ng-init="getBuyers(); getCurrency(); getDescription();loadPayrolls();">
+<div ng-controller="payrollController" ng-init="getBuyers(); getCurrency(); getDescription();loadPayrolls();"
+     class="main-panel">
 
-    <div class="cardForPayrollsControl">
-        <div class="row">
-            <div class="col-md-9" style="text-align: left">
-                <a ng-click="addPayroll();" style="margin-left: 8px;"><i class="fa fa-plus fa-2x"
-                                                                         aria-hidden="true"></i></a>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-minimize">
+                <button id="minimizeSidebar" class="btn btn-fill btn-icon"><i class="ti-menu"></i></button>
             </div>
-            <div class="col-md-3">
-                <div class="row">
-                    <div class="col-md-12" style="text-align: right">
-                        <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
-                                ng-click="applyPayroll();">
-                            Apply
-                        </button>
-                        <button class="btn btn-primary btn-md" id="postBtn" name="postback" type="submit"
-                                ng-click="cancelClick()">
-                            Cancel
-                        </button>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="#Dashboard">
+                    Payrolls
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="row" style="margin-left: 15px; margin-right: 15px">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="pull-right">
+                            <button class="btn btn-primary btn-md" ng-click="applyPayroll();"
+                                    style="z-index: 10000; position: relative">
+                                Apply
+                            </button>
+                            <button class="btn btn-primary btn-md" style="z-index: 10000; position: relative"
+                                    ng-click="cancelClick()">
+                                Cancel
+                            </button>
+                        </div>
+                        <h4 class="card-title">Add Payrolls</h4>
+                        <p class="category">New Payroll</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="col-md-12 container-fluid" ng-repeat="p in addedPayrolls track by $index">
+                            <form class="form-inline">
+                                <div class="form-group" style="width: 100%">
+                                    <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
+                                        <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                                    </button>
+                                    <select class="form-control" ng-model="p.id"
+                                            style="width: 17%!important;">
+                                        <option value="" disabled selected>Buyer</option>
+                                        <option ng-repeat="b in buyerOptions"
+                                                value="{{b.id}}">
+                                            {{b.name}}
+                                        </option>
+                                    </select>
+                                    <datepicker date-format="yyyy-MM-dd" selector="form-control"
+                                                id="payrollDatePicker">
+                                        <div class="input-group" style="margin-top: 14px;">
+                                            <input class="form-control" data-ng-model="p.date"
+                                                   placeholder="Date"/>
+                                            <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+                                        </div>
+                                    </datepicker>
+                                    <select class="form-control" ng-model="p.type"
+                                            style="width: 11%!important;">
+                                        <option value="" disabled selected>Type</option>
+                                        <option ng-repeat="t in typeValues"
+                                                value="{{t.value}}">
+                                            {{t.name}}
+                                        </option>
+                                    </select>
+                                    <input type="text" class="form-control" id="payrollSum"
+                                           ng-model="p.sum" placeholder="Sum"
+                                           style="width: 10%!important;"/>
+                                    <select class="form-control" ng-model="p.currencyId"
+                                            style="width: 11%!important;">
+                                        <option value="" disabled selected>Currency</option>
+                                        <option ng-repeat="c in currencyOptions"
+                                                value="{{c.id}}">
+                                            {{c.code}}
+                                        </option>
+                                    </select>
+                                    <select class="form-control" ng-model="p.description"
+                                            style="width: 26%!important;">
+                                        <option value="" disabled selected>Description</option>
+                                        <option ng-repeat="d in descriptionOptions"
+                                                value="{{d}}">
+                                            {{d}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row" style="margin-top: 10px;">
-            <div class="col-md-12 container-fluid" ng-repeat="p in addedPayrolls track by $index">
-                <form class="form-inline">
-                    <div class="form-group" style="width: 100%">
-                        <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
-                            <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
-                        </button>
-                        <select class="form-control" ng-model="p.id"
-                                style="width: 17%!important;">
-                            <option value="" disabled selected>Buyer</option>
-                            <option ng-repeat="b in buyerOptions"
-                                    value="{{b.id}}">
-                                {{b.name}}
-                            </option>
-                        </select>
-                            <datepicker date-format="yyyy-MM-dd" selector="form-control"
-                                        id="payrollDatePicker">
-                                <div class="input-group" style="margin-top: 14px;">
-                                    <input class="form-control" data-ng-model="p.date"
-                                           placeholder="Date"/>
-                                    <span class="input-group-addon" style="cursor: pointer">
-                                        <i class="fa fa-lg fa-calendar"></i>
-                                    </span>
-                                </div>
-                            </datepicker>
-                        <select class="form-control" ng-model="p.type"
-                                style="width: 11%!important;">
-                            <option value="" disabled selected>Type</option>
-                            <option ng-repeat="t in typeValues"
-                                    value="{{t.value}}">
-                                {{t.name}}
-                            </option>
-                        </select>
-                        <input type="text" class="form-control" id="payrollSum"
-                               ng-model="p.sum" placeholder="Sum"
-                               style="width: 10%!important;"/>
-                        <select class="form-control" ng-model="p.currencyId"
-                                style="width: 11%!important;">
-                            <option value="" disabled selected>Currency</option>
-                            <option ng-repeat="c in currencyOptions"
-                                    value="{{c.id}}">
-                                {{c.code}}
-                            </option>
-                        </select>
-                        <select class="form-control" ng-model="p.description"
-                                style="width: 26%!important;">
-                            <option value="" disabled selected>Description</option>
-                            <option ng-repeat="d in descriptionOptions"
-                                    value="{{d}}">
-                                {{d}}
-                            </option>
-                        </select>
+    <div class="content">
+        <div class="row" style="margin-left: 15px; margin-right: 15px">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="pull-right">
+                            <select class="form-control" data-ng-model="selectedSize"
+                                    data-ng-options="v as k for (k, v) in sizeOptions"
+                                    style="z-index: 10000; position: relative">
+                            </select>
+                        </div>
+                        <h4 class="card-title">All Payrolls</h4>
                     </div>
-                </form>
+                    <div class="card-content">
+                        <div class="card-content table-responsive table-full-width">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th><a href="">#</a></th>
+                                    <th>
+                                        <a href="" ng-click="sortColumn = 'buyer_id';changeOrder();loadPayrolls();">
+                                    <span ng-show="sortColumn == 'buyer_id' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                            <span ng-show="sortColumn == 'buyer_id' && sortReverse == 'DESC'"
+                                                  class="fa fa-caret-down"></span>
+                                            <span ng-show="sortColumn == 'buyer_id' && sortReverse == ''"></span>
+                                            Buyer
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="sortColumn = 'date';changeOrder();loadPayrolls();">
+                                <span ng-show="sortColumn == 'date' && sortReverse == 'ASC'"
+                                      class="fa fa-caret-up"></span>
+                                            <span ng-show="sortColumn == 'date' && sortReverse == 'DESC'"
+                                                  class="fa fa-caret-down"></span>
+                                            <span ng-show="sortColumn == 'date' && sortReverse == ''"></span>
+                                            Date
+                                        </a>
+                                    </th>
+                                    <th><a>Type</a></th>
+                                    <th><a>Sum</a></th>
+                                    <th><a>Currency</a></th>
+                                    <th><a>Description</a></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-show="payrolls.length != 0" ng-repeat="item in payrolls"
+                                    ng-click="clickRow(item)" data-toggle="modal" data-target="#payroll-modal">
+
+                                    <td>{{$index+1}}</td>
+                                    <td>{{item.bayerName}}</td>
+                                    <td>{{item.date}}</td>
+                                    <td>{{item.typeName}}</td>
+                                    <td>{{item.sum}}</td>
+                                    <td>{{item.code}}</td>
+                                    <td>{{item.description}}</td>
+                                </tr>
+                                <tr ng-show="payrolls.length == 0">
+                                    <td colspan="7">
+                                        <div class="loader" style="text-align: center;"
+                                             ng-show="showPayrollsLoader"></div>
+                                        <div style="text-align: center;" ng-show="!showPayrollsLoader">No data</div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="fixed-table-pagination">
+                            <div class="pull-left pagination-detail"><span class="pagination-info"></span><span
+                                    class="page-list"><span class="btn-group dropup"><button type="button"
+                                                                                             class="btn btn-default  dropdown-toggle"
+                                                                                             data-toggle="dropdown"><span
+                                    class="page-size">8</span> <span class="caret"></span></button><ul class="dropdown-menu"
+                                                                                                       role="menu"><li
+                                    class="active"><a href="javascript:void(0)">8</a></li><li><a
+                                    href="javascript:void(0)">10</a></li><li><a href="javascript:void(0)">25</a></li></ul></span> rows visible</span>
+                            </div>
+                            <div class="pull-right pagination">
+                                <ul class="pagination">
+                                    <li class="page-first disabled"><a href="javascript:void(0)"><i class="fa fa-angle-double-left"
+                                                                                                    aria-hidden="true"></i></a></li>
+                                    <li class="page-pre disabled"><a href="javascript:void(0)">‹</a></li>
+                                    <li class="page-number active"><a href="javascript:void(0)">1</a></li>
+                                    <li class="page-number"><a href="javascript:void(0)">2</a></li>
+                                    <li class="page-number"><a href="javascript:void(0)">3</a></li>
+                                    <li class="page-next"><a href="javascript:void(0)">›</a></li>
+                                    <li class="page-last"><a href="javascript:void(0)"><i class="fa fa-angle-double-right"
+                                                                                          aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="cardForPayrollsTable">
         <div class="row">
             <div class="col-md-1">
