@@ -1,101 +1,150 @@
-<div ng-controller="adminDashboardController" ng-init="initData();">
-    <div class="adminDashboardCard">
-        <div class="row">
-            <div class="col-md-6">
-                <h5><strong>Settlement slip</strong></h5>
+<div ng-controller="adminDashboardController" ng-init="initData();" class="main-panel">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-minimize">
+                <button id="minimizeSidebar" class="btn btn-fill btn-icon"><i class="ti-menu"></i></button>
             </div>
-            <div class="col-md-6"></div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="#Dashboard">
+                    Admin Dashboard
+                </a>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-md-9">
-                <div class="row">
-                    <div class="col-md-3">
-                        <h5><strong>Revenue today:</strong></h5>
-                    </div>
-                    <div class="col-md-2">
-                        <h5><strong>{{revenueToday}}</strong></h5>
-                    </div>
-                    <div class="col-md-3">
-                        <h5><strong>Spent today:</strong></h5>
-                    </div>
-                    <div class="col-md-2">
-                        <h5><strong>{{spentToday}}</strong></h5>
-                    </div>
-                    <div class="col-md-2"></div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-3">
-                        <h5><strong>Revenue yesterday:</strong></h5>
-                    </div>
-                    <div class="col-md-2">
-                        <h5><strong>{{revenueYesterday}}</strong></h5>
-                    </div>
-                    <div class="col-md-3">
-                        <h5><strong>Spent yesterday:</strong></h5>
-                    </div>
-                    <div class="col-md-2">
-                        <h5><strong>{{spentYesterday}}</strong></h5>
-                    </div>
-                    <div class="col-md-2"></div>
-                </div>
-
-                <br>
-                <p style="border-bottom: 1px solid rgba(0,0,0,0.11); margin-bottom: 20px; width:135%;"></p>
-                <div class="row">
-                    <div class="col-md-3" style="margin-left: 20px;">
-                        <div class="form-group">
-                            <select class="form-control" data-ng-model="selectedDate"
-                                    data-ng-options="v as k for (k, v) in dateOptions"
-                                    style="margin-bottom: 14px;"
-                                    ng-change="initData();">
-                            </select>
+    </nav>
+    <div class="content">
+        <div class="row" style="margin-left: 15px; margin-right: 15px; margin-top: 25px">
+            <div class="row" style="margin-left: 15px; margin-right: 15px; margin-top: 25px">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="icon-big icon-success text-center">
+                                        <i class="ti-stats-up"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="numbers">
+                                        <p>Revenue Today</p>
+                                        $ {{revenueToday}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4" style="margin-left: 20px;">
-                        <h5><strong>Period : <u>{{selectedDate}}</u></strong></h5>
-                    </div>
-                    <div class="col-md-5"></div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table id="table" class="table table-hover table-sm table-bordered"
-                               ng-style="tableStyle" style="border-collapse: collapse !important;">
-                            <thead class="thead-default">
-                            <tr style="text-align: center; vertical-align: middle">
-                                <th>
-                                    <a href="">Buyer</a>
-                                </th>
-
-                                <th>
-                                    <a href="">Revenue</a>
-                                </th>
-
-                                <th>
-                                    <a href="">Spent</a>
-                                </th>
-
-                                <th>
-                                    <a href="">Profit</a>
-                                </th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            <tr style="text-align: center; vertical-align: middle"
-                                ng-repeat="item in adminDashboardData">
-                                <td>{{item.buyer}}</td>
-                                <td>{{item.revenue}}</td>
-                                <td>{{item.spent}}</td>
-                                <td>{{item.profit}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="icon-big icon-warning text-center">
+                                        <i class="ti-stats-up"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="numbers">
+                                        <p>Revenue Yesterday</p>
+                                        $ {{revenueYesterday}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-1"></div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="icon-big icon-success text-center">
+                                        <i class="ti-stats-down"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="numbers">
+                                        <p>Spent today</p>
+                                        $ {{spentToday}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="icon-big icon-warning text-center">
+                                        <i class="ti-stats-down"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="numbers">
+                                        <p>Spent yesterday</p>
+                                        $ {{spentYesterday}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3">
+        </div>
+
+        <div class="row" style="margin-right: 15px;margin-left: 15px">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="pull-right">
+                            <select class="form-control" data-ng-model="selectedDate" ng-change="initData();"
+                                    data-ng-options="v as k for (k, v) in dateOptions"
+                                    style="z-index: 10000; position: relative">
+                            </select>
+                        </div>
+                        <h4 class="card-title">Settlement Slip</h4>
+                        <p class="category">{{buyerName}}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-content table-responsive table-full-width">
+                            <table class="table">
+                                <thead>
+                                <tr style="text-align: center; vertical-align: middle">
+                                    <th>
+                                        <a href="">Buyer</a>
+                                    </th>
+
+                                    <th>
+                                        <a href="">Revenue</a>
+                                    </th>
+
+                                    <th>
+                                        <a href="">Spent</a>
+                                    </th>
+
+                                    <th>
+                                        <a href="">Profit</a>
+                                    </th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr style="text-align: center; vertical-align: middle"
+                                    ng-repeat="item in adminDashboardData">
+                                    <td>{{item.buyer}}</td>
+                                    <td>{{item.revenue}}</td>
+                                    <td>{{item.spent}}</td>
+                                    <td>{{item.profit}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
