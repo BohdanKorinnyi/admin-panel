@@ -23,98 +23,268 @@
     </style>
 </head>
 
-<body style="background: #f4f3ef">
-<header>
-    <nav id="navbarCustom" class="navbar navbar-fixed-top">
-        <div class="container-fluid">
-            <ul class="nav navbar-nav" id="navbar" style="font-size:12pt;">
-                <li>
-                    <a style="color:white;" href="">Home</a>
-                </li>
+<body>
+<div class="sidebar" data-background-color="white" data-active-color="warning">
+    <!--
+        Tip 1: you can change the color of the sidebar's background using: data-background-color="white | brown"
+        Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+    -->
+    <div class="logo">
+        <a class="simple-text logo-mini">
+            OM
+        </a>
 
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false" style="color:white; ">
-                        Finance
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" style="">
-                        <li><a href="#!payroll">Payrolls</a></li>
-                        <li><a href="#">Team Leader Finance</a></li>
-                        <li><a href="#">Income management</a></li>
-                        <li><a href="#">Receivables</a></li>
-                        <li><a href="#">Salary</a></li>
-                        <li><a href="#!/cost/management">Cost management</a></li>
-                    </ul>
-                </li>
+        <a class="simple-text logo-normal">
+            OMNI-A
+        </a>
+    </div>
+    <div class="sidebar-wrapper">
+        <div class="user">
+            <div class="info">
+                <div class="photo">
+                    <img src="img/default_user.png"/>
+                </div>
 
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false" style="color:white; ">
-                        Buyer
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" style="">
-                        <li><a href="#!plan">Plan by buyer</a></li>
-                        <li><a href="#">Get AfID</a></li>
-                        <li><a href="#">Personal finance</a></li>
-                    </ul>
-                </li>
+                <a data-toggle="collapse" href="#username" class="collapsed">
+	                        <span>
+                                Username
+		                        <b class="caret"></b>
+							</span>
+                </a>
+                <div class="clearfix"></div>
 
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false" style="color:white; ">
-                        Reports
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" style="">
-                        <li><a href="#!conversions">Conversions</a></li>
-                        <li><a href="#!postback">Postbacks</a></li>
-                        <li><a href="#!sources">Revenue|spent</a></li>
-                        <li><a href="#!statistic">Spent by sources</a></li>
-                        <li><a href="#">Advertisers</a></li>
+                <div class="collapse" id="username">
+                    <ul class="nav">
+                        <li>
+                            <a href="#">
+                                <span class="sidebar-mini">Mp</span>
+                                <span class="sidebar-normal">Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="sidebar-mini">CP</span>
+                                <span class="sidebar-normal">Change Password</span>
+                            </a>
+                        </li>
                     </ul>
-                </li>
-
-                <li>
-                    <a style="color:white;" href="#!/buyer/dashboard">Dashboard</a>
-                </li>
-
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false" style="color:white; ">
-                        Catalogs
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" style="">
-                        <li><a href="#">Postbacks Edit</a></li>
-                        <li><a href="#!advertiser">Advertisers and Status</a></li>
-                        <li><a href="#!buyers">Buyers and afid</a></li>
-                        <li><a href="#">Trackers and prefix</a></li>
-                        <li><a href="#">Currency and rate</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false" style="color:white; ">
-                        Users
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" style="">
-                        <li><a href="#">Change password</a></li>
-                        <li><a href="#">Users and rights</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right" id="navForLogout" style="font-size:13pt;">
-                <li>
-                    <a href="/logout" style="color:white;">Logout</a>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
-    </nav>
-</header>
-
+        <ul class="nav">
+            <li>
+                <a href="#!/">
+                    <i class="ti-home"></i>
+                    <p>Home</p>
+                </a>
+            </li>
+            <li>
+                <a data-toggle="collapse" href="#finance">
+                    <i class="ti-money"></i>
+                    <p>Finance
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="finance">
+                    <ul class="nav">
+                        <li>
+                            <a href="#!payroll">
+                                <span class="sidebar-mini">P</span>
+                                <span class="sidebar-normal">Payrolls</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">TLF</span>
+                                <span class="sidebar-normal">Team Leader Finance</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">IM</span>
+                                <span class="sidebar-normal">Income management</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">R</span>
+                                <span class="sidebar-normal">Receivables</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">S</span>
+                                <span class="sidebar-normal">Salary</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!/cost/management">
+                                <span class="sidebar-mini">CM</span>
+                                <span class="sidebar-normal">Cost management</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a data-toggle="collapse" href="#buyer">
+                    <i class="ti-wallet"></i>
+                    <p>
+                        Buyer
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="buyer">
+                    <ul class="nav">
+                        <li>
+                            <a href="#!plan">
+                                <span class="sidebar-mini">PB</span>
+                                <span class="sidebar-normal">Plan by buyer</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">AfID</span>
+                                <span class="sidebar-normal">Get AfID</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">PF</span>
+                                <span class="sidebar-normal">Personal finance</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a data-toggle="collapse" href="#reports">
+                    <i class="ti-files"></i>
+                    <p>
+                        Reports
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="reports">
+                    <ul class="nav">
+                        <li>
+                            <a href="#!conversions">
+                                <span class="sidebar-mini">C</span>
+                                <span class="sidebar-normal">Conversions</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!postback">
+                                <span class="sidebar-mini">P</span>
+                                <span class="sidebar-normal">Postbacks</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!sources">
+                                <span class="sidebar-mini">RS</span>
+                                <span class="sidebar-normal">Revenue|Spent</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!statistic">
+                                <span class="sidebar-mini">SS</span>
+                                <span class="sidebar-normal">Spent by sources</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">A</span>
+                                <span class="sidebar-normal">Advertisers</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="#!/buyer/dashboard">
+                    <i class="ti-layout"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li>
+                <a data-toggle="collapse" href="#catalogs">
+                    <i class="ti-folder"></i>
+                    <p>
+                        Catalogs
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="catalogs">
+                    <ul class="nav">
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">PE</span>
+                                <span class="sidebar-normal">Postbacks Edit</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!advertiser">
+                                <span class="sidebar-mini">AS</span>
+                                <span class="sidebar-normal">Advertisers and Status</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!buyers">
+                                <span class="sidebar-mini">BA</span>
+                                <span class="sidebar-normal">Buyers and AfID</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">TP</span>
+                                <span class="sidebar-normal">Trackers and prefix</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">CR</span>
+                                <span class="sidebar-normal">Currency and rate</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a data-toggle="collapse" href="#users">
+                    <i class="ti-user"></i>
+                    <p>
+                        Users
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="users">
+                    <ul class="nav">
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">CP</span>
+                                <span class="sidebar-normal">Change password</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!/">
+                                <span class="sidebar-mini">UR</span>
+                                <span class="sidebar-normal">Users and rights</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <br/>
+            <hr/>
+            <li>
+                <a href="/logout">
+                    <i class="ti-calendar"></i>
+                    <p>Logout</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <div ng-view=""></div>
 <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
@@ -152,9 +322,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.2/angular-resource.js"></script>
 
 <script>
+    var menuFlag = true;
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
+    //minimizeSidebar
 </script>
 </body>
 </html>
