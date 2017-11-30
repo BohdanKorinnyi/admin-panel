@@ -62,14 +62,13 @@ Application.controller("costManagementController", function ($scope, $http, date
         $http.post(url, $scope.getSizeAndNumberFilter())
             .then(function successCallback(response) {
                 $scope.costs = response.data.data;
-                for(var i = 0; i<$scope.costs.length; i++){
-                    for(var j = 0; j<$scope.buyerNames.length; j++){
-                        if($scope.costs[i].buyerId === $scope.buyerNames[j].id){
+                for(var i = 0; i<$scope.costs.length; i++) {
+                    for (var j = 0; j < $scope.buyerNames.length; j++) {
+                        if ($scope.costs[i].buyerId === $scope.buyerNames[j].id) {
                             $scope.costs[i].buyer = $scope.buyerNames[j].name;
                         }
                     }
                 }
-                console.log($scope.costs);
                 $scope.showCostManagementLoader = false;
                 $scope.totalPagination = response.data.size;
                 $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
