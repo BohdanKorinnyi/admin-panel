@@ -6,6 +6,7 @@ Application.controller("costManagementController", function ($scope, $http, date
 
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
+    $scope.selectedBuyerName = "";
 
     $scope.types = [];
     $scope.selectedTypes = [];
@@ -61,6 +62,14 @@ Application.controller("costManagementController", function ($scope, $http, date
         $http.post(url, $scope.getSizeAndNumberFilter())
             .then(function successCallback(response) {
                 $scope.costs = response.data.data;
+                for(var i = 0; i<$scope.costs.length; i++){
+                    for(var j = 0; j<$scope.buyerNames.length; j++){
+                        if($scope.costs[i].buyerId === $scope.buyerNames[j].id){
+                            $scope.costs[i].buyer = $scope.buyerNames[j].name;
+                        }
+                    }
+                }
+                console.log($scope.costs);
                 $scope.showCostManagementLoader = false;
                 $scope.totalPagination = response.data.size;
                 $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
@@ -68,6 +77,14 @@ Application.controller("costManagementController", function ($scope, $http, date
                 $scope.showCostManagementLoader = false;
                 notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
             });
+    };
+
+
+    $scope.addCost = function () {
+        $scope.costs.unshift({
+            buyer: null, date: formatDate(new Date()), name: null,
+            sum: null
+        });
     };
 
 

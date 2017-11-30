@@ -104,7 +104,7 @@
                     <thead class="thead-default">
                     <tr>
                         <th style="text-align: left!important;">
-                            <a>
+                            <a ng-click="addCost();">
                                 <i class="fa fa-plus fa-1x" aria-hidden="true"
                                    style="vertical-align: middle!important;">
                                 </i>
@@ -126,26 +126,89 @@
                     <tbody>
                     <tr ng-repeat="c in costs | filter:searchFilter">
                         <td style="text-align: left!important;">
-                            <a data-toggle="modal" data-target="#confirmDeletingModal">
-                                <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
-                            </a>
-                            {{c.buyer}}
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <a data-toggle="modal" data-target="#confirmDeletingModal">
+                                        <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" ng-model="c.buyer"
+                                            style="width: 90%!important;">
+                                        <option ng-repeat="b in buyerNames"
+                                                value="{{b.name}}">
+                                            {{b.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </form>
                         </td>
-                        <td>{{c.date}}</td>
+                        <td>
+                            <div style="width:100%; margin-bottom: -15px;">
+                                <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
+                                    <div class="input-group">
+                                        <input class="form-control" data-ng-model="c.date"
+                                               placeholder="Date"/>
+                                        <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+                                    </div>
+                                </datepicker>
+                            </div>
+                        </td>
                         <td>
                             <input type="number" class="form-control" placeholder="Spent"
                                    ng-model="c.sum"
                                    disabled/>
                         </td>
                         <td></td>
-                        <td style="text-align: right!important;">
-                            {{c.name}}
-                            <a data-toggle="modal" data-target="#addTypeModal">
-                                <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
-                            </a>
+                        <td style="text-align: right!important; padding-right: 10px!important;">
+                            <form class="form-inline">
+                                <div class="row">
+                                    <div class="form-group col-md-10">
+                                        <select class="form-control" ng-model="c.name"
+                                                style="width: 115%!important;">
+                                            <option ng-repeat="t in types"
+                                                    value="{{t.name}}">
+                                                {{t.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2"
+                                         style="margin-left: -5px; vertical-align: middle!important;">
+                                        <a data-toggle="modal" data-target="#addTypeModal">
+                                            <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
                         </td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <div style="width:100%; margin-bottom: -15px;">
+                            <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
+                                <div class="input-group">
+                                    <input class="form-control" data-ng-model="c.date"
+                                           ng-disabled="true" placeholder="Date"/>
+                                    <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </datepicker>
+                        </div>
+                        </td>
+                        <td>
+                            <div style="width:100%; margin-bottom: -15px;">
+                                <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
+                                    <div class="input-group">
+                                        <input class="form-control" data-ng-model="c.date"
+                                               ng-disabled="true" placeholder="Date"/>
+                                        <span class="input-group-addon" style="cursor: pointer">
+                                        <i class="fa fa-lg fa-calendar"></i>
+                                    </span>
+                                    </div>
+                                </datepicker>
+                            </div>
+                        </td>
                     </tr>
                     <tr ng-show="costs.length == 0">
                         <td colspan="7">
