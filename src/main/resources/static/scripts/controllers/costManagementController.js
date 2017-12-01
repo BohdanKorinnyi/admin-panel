@@ -89,6 +89,7 @@ Application.controller("costManagementController", function ($scope, $http, date
 
         $scope.findAddedRows();
         $scope.findNotAddedRows();
+        $scope.matchEditedTypesAndBuyers();
 
         if($scope.deletedRows.length !== 0){
             var deleteUrl = "/expenses?expensesIds=" + $scope.deletedRows.join();
@@ -101,17 +102,9 @@ Application.controller("costManagementController", function ($scope, $http, date
             });
         }
 
-        $http.put(putUrl, $scope.editedRows).then(function success() {
-            $scope.loadCosts();
-        }, function errorCallback(response) {
-            $scope.showCostManagementLoader = false;
-            notify('ti-alert', 'Error occurred during editing costs', 'danger');
-        });
-
         if($scope.addedRows.length !== 0){
             var saveUrl = "/expenses/save";
             $http.post(saveUrl, $scope.addedRows).then(function success() {
-                $scope.addedRows = [];
                 $scope.loadCosts();
                 notify('ti-alert', 'Saving successful', 'success');
             }, function errorCallback(response) {
@@ -120,6 +113,17 @@ Application.controller("costManagementController", function ($scope, $http, date
             });
         }
 
+        $http.put(putUrl, $scope.editedRows).then(function success() {
+            $scope.loadCosts();
+        }, function errorCallback(response) {
+            $scope.showCostManagementLoader = false;
+            notify('ti-alert', 'Error occurred during editing costs', 'danger');
+        });
+
+
+        $scope.deletedRows = [];
+        $scope.addedRows = [];
+        $scope.editedRows = [];
     };
 
     $scope.addCost = function () {
@@ -203,13 +207,31 @@ Application.controller("costManagementController", function ($scope, $http, date
         }
     };
 
+
+    $scope.matchEditedTypesAndBuyers = function () {
+        for(var i=0; i<$scope.costs.length; i++){
+            for(var j = 0; j<$scope.buyerNames.length; j++){
+                if($scope.costs[i].buyer === $scope.buyerNames[j].name){
+                    $scope.costs[i].buyerId = $scope.buyerNames[j].id;
+                }
+            }
+
+            for(var f = 0; f<$scope.types.length; f++){
+                if($scope.costs[i].name === $scope.types[f].name){
+                    $scope.costs[i].typeId = $scope.types[f].id;
+                }
+            }
+
+        }
+    };
+
     $scope.addType = function () {
         var val = $scope.newTypeValue;
         if(val !== ""){
             var typeSaveUrl = "/expenses/type/save?name="+val;
             $http.post(typeSaveUrl, val).then(function success() {
-                $scope.loadCosts();
                 $scope.getTypes();
+                $scope.loadCosts();
             }, function errorCallback(response) {
                 notify('ti-alert', 'Error occurred during saving types', 'danger');
             });
@@ -225,12 +247,14 @@ Application.controller("costManagementController", function ($scope, $http, date
     $scope.deleteRow = function(){
         $scope.deletedRows.push($scope.selectedRowId);
         for(var i=0; i<$scope.costs.length; i++){
-            if($scope.selectedRowId === $scope.costs[i].id){
-                $scope.costs.splice($scope.costs[i], 1);
+            for(var j = 0; j<$scope.deletedRows.length; j++){
+                if($scope.deletedRows[j] === $scope.costs[i].id){
+                    $scope.costs.splice(i, 1);
+                }
             }
+
         }
     };
-
 });
 
 function formatDate(date) {
