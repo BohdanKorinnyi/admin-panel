@@ -128,16 +128,7 @@
                         </th>
                         <th><a>Spent</a></th>
                         <th><a>Description</a></th>
-                        <th>
-                            <form class="form-inline">
-                                <div class="form-group"><a>Type</a></div>
-                                <div class="form-group">
-                                    <a data-toggle="modal" data-target="#addTypeModal">
-                                        <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </form>
-                        </th>
+                        <th><a>Type</a></th>
                         <th><a>Create date</a></th>
                         <th><a>Update date</a></th>
                     </tr>
@@ -198,18 +189,23 @@
                         </td>
                         <td style="text-align: right!important; padding-right: 10px!important;">
                             <form class="form-inline">
-                                <div class="row">
-                                    <div class="form-group col-md-10">
-                                        <select class="form-control" ng-model="c.name"
-                                                ng-change="updateType(c.id);"
-                                                style="width: 125%!important;">
-                                            <option ng-repeat="t in types"
-                                                    value="{{t.name}}">
-                                                {{t.name}}
-                                            </option>
-                                        </select>
-                                    </div>
+                                <div class="form-group col-md-10">
+                                    <select class="form-control" ng-model="c.name"
+                                            ng-change="updateType(c.id);"
+                                            style="width: 145%!important; margin-left: -20px;">
+                                        <option ng-repeat="t in types"
+                                                value="{{t.name}}">
+                                            {{t.name}}
+                                        </option>
+                                    </select>
                                 </div>
+                                <div class="form-group">
+                                    <a data-toggle="modal" data-target="#addTypeModal"
+                                        ng-click="clickAddNewType(c.id);">
+                                        <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </form>
                             </form>
                         </td>
                         <td>
@@ -275,13 +271,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Type of expenses</h4>
+                    <h4 class="modal-title">Confirm Deleting Row</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-inline">
                         <div class="form-group">
                             <label>
-                                <h5>Confirm deleting please, are u sure u want delete this row?</h5>
+                                <h5>Confirm deleting please, are you sure you want delete this row?</h5>
                             </label>
                         </div>
                     </form>

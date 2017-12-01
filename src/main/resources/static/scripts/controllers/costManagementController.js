@@ -13,6 +13,7 @@ Application.controller("costManagementController", function ($scope, $http, date
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
     $scope.selectedBuyerName = "";
+    $scope.rowIdForNewType = "";
 
     $scope.types = [];
     $scope.selectedTypes = [];
@@ -234,12 +235,24 @@ Application.controller("costManagementController", function ($scope, $http, date
             var typeSaveUrl = "/expenses/type/save?name=" + val;
             $http.post(typeSaveUrl, val).then(function success() {
                 $scope.getTypes();
-                $scope.loadCosts();
+
+                for(var i=0; i<$scope.costs.length; i++){
+                    if($scope.costs[i].id === $scope.rowIdForNewType){
+                        $scope.costs[i].name = val;
+
+                        for(var j = 0; j<$scope.types.length; j++){
+                            if(val === $scope.types[j].name){
+                                $scope.costs[i].typeId = $scope.types[j].id;
+                            }
+                        }
+                    }
+                }
+
+
             }, function errorCallback(response) {
                 notify('ti-alert', 'Error occurred during saving types', 'danger');
             });
         }
-
     };
 
 
@@ -314,6 +327,10 @@ Application.controller("costManagementController", function ($scope, $http, date
                 }
             }
         }
+    };
+
+    $scope.clickAddNewType = function (id) {
+        $scope.rowIdForNewType = id;
     };
 });
 
