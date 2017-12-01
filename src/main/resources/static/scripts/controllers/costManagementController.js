@@ -8,6 +8,8 @@ Application.controller("costManagementController", function ($scope, $http, date
     $scope.deletedRows = [];
     $scope.costs = [];
 
+    $scope.addedTypes = [];
+    $scope.addedType = '';
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
     $scope.selectedBuyerName = "";
@@ -198,6 +200,20 @@ Application.controller("costManagementController", function ($scope, $http, date
                 $scope.editedRows.push($scope.costs[i]);
             }
         }
+    };
+
+    $scope.addType = function () {
+        if($scope.addedType!== null){
+            var typeSaveUrl = "/expenses/type/save?name="+$scope.addedType;
+            $http.save(typeSaveUrl).then(function success() {
+                $scope.getTypes();
+                $scope.loadCosts();
+            }, function errorCallback(response) {
+                $scope.showCostManagementLoader = false;
+                notify('ti-alert', 'Error occurred during saving types', 'danger');
+            });
+        }
+
     };
 
 
