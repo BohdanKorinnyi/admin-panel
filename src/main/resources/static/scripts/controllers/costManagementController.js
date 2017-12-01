@@ -181,6 +181,12 @@ Application.controller("costManagementController", function ($scope, $http, date
                         $scope.costs[i].buyerId = $scope.buyerNames[j].id;
                     }
                 }
+
+                for(var f=0; f<$scope.types.length; f++){
+                    if($scope.types[f].name === $scope.costs[i].name){
+                        $scope.costs[i].typeId = $scope.types[f].id;
+                    }
+                }
                 $scope.addedRows.push($scope.costs[i]);
             }
         }
