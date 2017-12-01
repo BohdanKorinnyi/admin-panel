@@ -1,9 +1,9 @@
-<div ng-controller="costManagementController" ng-init="loadCosts();">
+<div ng-controller="costManagementController" ng-init="loadCosts(); getBuyers(); getTypes();">
     <div class="cardForCostManagementControl">
         <div class="row">
             <div class="col-md-10" style="text-align: left">
                 <form class="form-inline">
-                    <div class="form-group" ng-init="getBuyers();"
+                    <div class="form-group"
                          style="margin-right:-3px;margin-bottom: 3px; margin-left: 5px;">
                         <select ng-hide="hideBuyerSelect"
                                 class="selectpicker" multiple
@@ -19,7 +19,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group" ng-init="getTypes();"
+                    <div class="form-group"
                          style="margin-bottom: 3px; margin-left: 5px; margin-right: 5px;">
                         <select class="selectpicker" multiple
                                 data-style="btn-info btn-fill btn-block"
@@ -255,7 +255,7 @@
                     </button>
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            ng-click="">Cancel
+                            ng-click="loadCosts();">Cancel
                     </button>
                 </div>
             </div>
