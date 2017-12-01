@@ -119,8 +119,8 @@ Application.controller("costManagementController", function ($scope, $http, date
         $scope.addedRows = [];
         $scope.editedRows = [];
         $scope.editedRowsIds = [];
-
         $scope.disableDescription = true;
+        $scope.loadCosts();
     };
 
     $scope.addCost = function () {
