@@ -1,4 +1,4 @@
-<div ng-controller="costManagementController" ng-init="loadCosts(); getBuyers(); getTypes();">
+<div ng-controller="costManagementController" ng-init="loadCosts(); getBuyers(); getTypes(); initRole();">
     <div class="cardForCostManagementControl">
         <div class="row">
             <div class="col-md-10" style="text-align: left">
@@ -128,7 +128,16 @@
                         </th>
                         <th><a>Spent</a></th>
                         <th><a>Description</a></th>
-                        <th><a>Type</a></th>
+                        <th>
+                            <form class="form-inline">
+                                <div class="form-group"><a>Type</a></div>
+                                <div class="form-group">
+                                    <a data-toggle="modal" data-target="#addTypeModal">
+                                        <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </form>
+                        </th>
                         <th><a>Create date</a></th>
                         <th><a>Update date</a></th>
                     </tr>
@@ -139,12 +148,13 @@
                             <form class="form-inline">
                                 <div class="form-group">
                                     <a data-toggle="modal" data-target="#confirmDeletingModal"
-                                        ng-click="selectRow(c.id)">
+                                       ng-click="selectRow(c.id)">
                                         <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
                                     </a>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" ng-model="c.buyer"
+                                            ng-change="updateBuyerName(c.id);"
                                             style="width: 90%!important;">
                                         <option ng-repeat="b in buyerNames"
                                                 value="{{b.name}}">
@@ -160,7 +170,8 @@
                                     <div class="input-group">
                                         <input class="datepicker form-control" type="text"
                                                data-ng-model="c.date"
-                                                style="width: 97%!important;"/>
+                                               ng-change="updateDate(c.id);"
+                                               style="width: 97%!important;"/>
                                         <span class="input-group-addon" style="cursor: pointer">
                                         <i class="fa fa-lg fa-calendar"></i>
                                     </span>
@@ -176,29 +187,27 @@
                         </td>
                         <td>
                             <input type="number" class="form-control" placeholder="Spent"
-                                   ng-model="c.sum"/>
+                                   ng-model="c.sum"
+                                   ng-change="updateSum(c.id);"/>
                         </td>
                         <td>
                             <input type="text" class="form-control" placeholder="Description"
-                                   ng-model="c.description"/>
+                                   ng-model="c.description"
+                                   style="border: 1px solid white; background-color: white;"
+                                   ng-disabled="disableDescription"/>
                         </td>
                         <td style="text-align: right!important; padding-right: 10px!important;">
                             <form class="form-inline">
                                 <div class="row">
                                     <div class="form-group col-md-10">
                                         <select class="form-control" ng-model="c.name"
-                                                style="width: 115%!important;">
+                                                ng-change="updateType(c.id);"
+                                                style="width: 125%!important;">
                                             <option ng-repeat="t in types"
                                                     value="{{t.name}}">
                                                 {{t.name}}
                                             </option>
                                         </select>
-                                    </div>
-                                    <div class="form-group col-md-2"
-                                         style="margin-left: -5px; vertical-align: middle!important;">
-                                        <a data-toggle="modal" data-target="#addTypeModal">
-                                            <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
-                                        </a>
                                     </div>
                                 </div>
                             </form>

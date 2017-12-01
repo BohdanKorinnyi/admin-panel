@@ -2,7 +2,9 @@
 
 Application.controller("costManagementController", function ($scope, $http, dateFactory) {
 
+    $scope.disableDescription = true;
     $scope.editedRows = [];
+    $scope.editedRowsIds = [];
     $scope.addedRows = [];
     $scope.selectedRowId = '';
     $scope.deletedRows = [];
@@ -53,14 +55,17 @@ Application.controller("costManagementController", function ($scope, $http, date
         }
     };
 
-
-    $scope.loadCosts = function () {
-        $scope.costs = [];
-        $scope.showCostManagementLoader = true;
+    $scope.initRole = function () {
         $scope.getRole();
         if($scope.role === "BUYER"){
             $scope.hideBuyerSelect = true;
         }
+    };
+
+
+    $scope.loadCosts = function () {
+        $scope.costs = [];
+        $scope.showCostManagementLoader = true;
 
         var url = "/expenses?buyerIds="+ $scope.getFilterDetails();
 
@@ -85,10 +90,8 @@ Application.controller("costManagementController", function ($scope, $http, date
 
 
     $scope.onApplyClick = function () {
-        var putUrl = "/expenses";
-
         $scope.findAddedRows();
-        $scope.findNotAddedRows();
+        $scope.findEditedRows();
         $scope.matchEditedTypesAndBuyers();
 
         if($scope.deletedRows.length !== 0){
@@ -113,20 +116,27 @@ Application.controller("costManagementController", function ($scope, $http, date
             });
         }
 
-        $http.put(putUrl, $scope.editedRows).then(function success() {
-            $scope.loadCosts();
-        }, function errorCallback(response) {
-            $scope.showCostManagementLoader = false;
-            notify('ti-alert', 'Error occurred during editing costs', 'danger');
-        });
-
+        if($scope.editedRows.length !== 0){
+            var putUrl = "/expenses";
+            $http.put(putUrl, $scope.editedRows).then(function success() {
+                $scope.loadCosts();
+                notify('ti-alert', 'Editing successful', 'success');
+            }, function errorCallback(response) {
+                $scope.showCostManagementLoader = false;
+                notify('ti-alert', 'Error occurred during editing costs', 'danger');
+            });
+        }
 
         $scope.deletedRows = [];
         $scope.addedRows = [];
         $scope.editedRows = [];
+        $scope.editedRowsIds = [];
+
+        $scope.disableDescription = true;
     };
 
     $scope.addCost = function () {
+        $scope.disableDescription = false;
         $scope.costs.unshift({
             buyer: null, buyerId: null, create: null,
             date: formatDate(new Date()), description: null,
@@ -199,10 +209,16 @@ Application.controller("costManagementController", function ($scope, $http, date
         }
     };
 
-    $scope.findNotAddedRows = function () {
-        for(var i=0; i<$scope.costs.length; i++){
-            if($scope.costs[i].id !== null){
-                $scope.editedRows.push($scope.costs[i]);
+    $scope.findEditedRows = function () {
+        if($scope.editedRowsIds.length !== 0){
+            for(var i=0; i<$scope.costs.length; i++){
+                if($scope.costs[i].id !== null){
+                    for(var j=0; j<$scope.editedRowsIds.length; j++){
+                        if($scope.costs[i].id === $scope.editedRowsIds[j]){
+                            $scope.editedRows.push($scope.costs[i]);
+                        }
+                    }
+                }
             }
         }
     };
@@ -253,6 +269,59 @@ Application.controller("costManagementController", function ($scope, $http, date
                 }
             }
 
+        }
+    };
+
+
+    $scope.updateBuyerName = function (id) {
+        if($scope.editedRowsIds.length === 0){
+            $scope.editedRowsIds.push(id);
+        }
+        else {
+            for(var i=0; i<$scope.editedRowsIds.length; i++){
+                if($scope.editedRowsIds[i] !== id){
+                    $scope.editedRowsIds.push(id);
+                }
+            }
+        }
+    };
+
+    $scope.updateDate = function (id) {
+        if($scope.editedRowsIds.length === 0){
+            $scope.editedRowsIds.push(id);
+        }
+        else {
+            for(var i=0; i<$scope.editedRowsIds.length; i++){
+                if($scope.editedRowsIds[i] !== id){
+                    $scope.editedRowsIds.push(id);
+                }
+            }
+        }
+    };
+
+    $scope.updateSum = function (id) {
+        if($scope.editedRowsIds.length === 0){
+            $scope.editedRowsIds.push(id);
+        }
+        else {
+            for(var i=0; i<$scope.editedRowsIds.length; i++){
+                if($scope.editedRowsIds[i] !== id){
+                    $scope.editedRowsIds.push(id);
+                }
+            }
+        }
+    };
+
+    $scope.updateType = function (id) {
+        if($scope.editedRowsIds.length === 0){
+            $scope.editedRowsIds.push(id);
+        }
+        else {
+            for(var i=0; i<$scope.editedRowsIds.length; i++){
+                if($scope.editedRowsIds[i] !== id){
+                    $scope.editedRowsIds.push(id);
+                }
+            }
         }
     };
 });
