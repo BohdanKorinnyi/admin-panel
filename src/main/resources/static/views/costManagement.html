@@ -169,7 +169,7 @@
                                 <div class="controls">
                                     <div class="input-group">
                                         <input class="datepicker form-control" type="text"
-                                               data-ng-model="c.date"
+                                               ng-model="c.date"
                                                ng-change="updateDate(c.id);"
                                                style="width: 97%!important;"/>
                                         <span class="input-group-addon" style="cursor: pointer">
@@ -250,7 +250,6 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <label>
-                                <p>{{newTypeValue}}</p>
                                 <input type="text" class="form-control"
                                        ng-model="newTypeValue" placeholder="Type"
                                        style="width: 100%!important;"/>

@@ -7,7 +7,6 @@ Application.controller("costManagementController", function ($scope, $http, date
     $scope.editedRowsIds = [];
     $scope.addedRows = [];
     $scope.selectedRowId = '';
-    $scope.deletedRows = [];
     $scope.costs = [];
 
     $scope.newTypeValue = "";
@@ -57,7 +56,7 @@ Application.controller("costManagementController", function ($scope, $http, date
 
     $scope.initRole = function () {
         $scope.getRole();
-        if($scope.role === "BUYER"){
+        if ($scope.role === "BUYER") {
             $scope.hideBuyerSelect = true;
         }
     };
@@ -67,12 +66,12 @@ Application.controller("costManagementController", function ($scope, $http, date
         $scope.costs = [];
         $scope.showCostManagementLoader = true;
 
-        var url = "/expenses?buyerIds="+ $scope.getFilterDetails();
+        var url = "/expenses?buyerIds=" + $scope.getFilterDetails();
 
         $http.post(url, $scope.getSizeAndNumberFilter())
             .then(function successCallback(response) {
                 $scope.costs = response.data.data;
-                for(var i = 0; i<$scope.costs.length; i++) {
+                for (var i = 0; i < $scope.costs.length; i++) {
                     for (var j = 0; j < $scope.buyerNames.length; j++) {
                         if ($scope.costs[i].buyerId === $scope.buyerNames[j].id) {
                             $scope.costs[i].buyer = $scope.buyerNames[j].name;
@@ -94,18 +93,7 @@ Application.controller("costManagementController", function ($scope, $http, date
         $scope.findEditedRows();
         $scope.matchEditedTypesAndBuyers();
 
-        if($scope.deletedRows.length !== 0){
-            var deleteUrl = "/expenses?expensesIds=" + $scope.deletedRows.join();
-            $http.delete(deleteUrl).then(function success() {
-                $scope.loadCosts();
-                notify('ti-alert', 'Deleted successful', 'success');
-            }, function errorCallback(response) {
-                $scope.showCostManagementLoader = false;
-                notify('ti-alert', 'Error occurred during deleting costs', 'danger');
-            });
-        }
-
-        if($scope.addedRows.length !== 0){
+        if ($scope.addedRows.length !== 0) {
             var saveUrl = "/expenses/save";
             $http.post(saveUrl, $scope.addedRows).then(function success() {
                 $scope.loadCosts();
@@ -116,7 +104,7 @@ Application.controller("costManagementController", function ($scope, $http, date
             });
         }
 
-        if($scope.editedRows.length !== 0){
+        if ($scope.editedRows.length !== 0) {
             var putUrl = "/expenses";
             $http.put(putUrl, $scope.editedRows).then(function success() {
                 $scope.loadCosts();
@@ -127,7 +115,6 @@ Application.controller("costManagementController", function ($scope, $http, date
             });
         }
 
-        $scope.deletedRows = [];
         $scope.addedRows = [];
         $scope.editedRows = [];
         $scope.editedRowsIds = [];
@@ -159,7 +146,7 @@ Application.controller("costManagementController", function ($scope, $http, date
             }
         }
 
-        return $scope.selectedBuyerNames+"&expensesType="+$scope.selectedTypes+"&from="+fromDate+"&to="+toDate;
+        return $scope.selectedBuyerNames + "&expensesType=" + $scope.selectedTypes + "&from=" + fromDate + "&to=" + toDate;
     };
 
     $scope.getSizeAndNumberFilter = function () {
@@ -191,16 +178,16 @@ Application.controller("costManagementController", function ($scope, $http, date
     };
 
     $scope.findAddedRows = function () {
-        for(var i=0; i<$scope.costs.length; i++){
-            if($scope.costs[i].id === null){
-                for(var j=0; j<$scope.buyerNames.length; j++){
-                    if($scope.buyerNames[j].name === $scope.costs[i].buyer){
+        for (var i = 0; i < $scope.costs.length; i++) {
+            if ($scope.costs[i].id === null) {
+                for (var j = 0; j < $scope.buyerNames.length; j++) {
+                    if ($scope.buyerNames[j].name === $scope.costs[i].buyer) {
                         $scope.costs[i].buyerId = $scope.buyerNames[j].id;
                     }
                 }
 
-                for(var f=0; f<$scope.types.length; f++){
-                    if($scope.types[f].name === $scope.costs[i].name){
+                for (var f = 0; f < $scope.types.length; f++) {
+                    if ($scope.types[f].name === $scope.costs[i].name) {
                         $scope.costs[i].typeId = $scope.types[f].id;
                     }
                 }
@@ -210,11 +197,11 @@ Application.controller("costManagementController", function ($scope, $http, date
     };
 
     $scope.findEditedRows = function () {
-        if($scope.editedRowsIds.length !== 0){
-            for(var i=0; i<$scope.costs.length; i++){
-                if($scope.costs[i].id !== null){
-                    for(var j=0; j<$scope.editedRowsIds.length; j++){
-                        if($scope.costs[i].id === $scope.editedRowsIds[j]){
+        if ($scope.editedRowsIds.length !== 0) {
+            for (var i = 0; i < $scope.costs.length; i++) {
+                if ($scope.costs[i].id !== null) {
+                    for (var j = 0; j < $scope.editedRowsIds.length; j++) {
+                        if ($scope.costs[i].id === $scope.editedRowsIds[j]) {
                             $scope.editedRows.push($scope.costs[i]);
                         }
                     }
@@ -225,15 +212,15 @@ Application.controller("costManagementController", function ($scope, $http, date
 
 
     $scope.matchEditedTypesAndBuyers = function () {
-        for(var i=0; i<$scope.costs.length; i++){
-            for(var j = 0; j<$scope.buyerNames.length; j++){
-                if($scope.costs[i].buyer === $scope.buyerNames[j].name){
+        for (var i = 0; i < $scope.costs.length; i++) {
+            for (var j = 0; j < $scope.buyerNames.length; j++) {
+                if ($scope.costs[i].buyer === $scope.buyerNames[j].name) {
                     $scope.costs[i].buyerId = $scope.buyerNames[j].id;
                 }
             }
 
-            for(var f = 0; f<$scope.types.length; f++){
-                if($scope.costs[i].name === $scope.types[f].name){
+            for (var f = 0; f < $scope.types.length; f++) {
+                if ($scope.costs[i].name === $scope.types[f].name) {
                     $scope.costs[i].typeId = $scope.types[f].id;
                 }
             }
@@ -243,8 +230,8 @@ Application.controller("costManagementController", function ($scope, $http, date
 
     $scope.addType = function () {
         var val = $scope.newTypeValue;
-        if(val !== ""){
-            var typeSaveUrl = "/expenses/type/save?name="+val;
+        if (val !== "") {
+            var typeSaveUrl = "/expenses/type/save?name=" + val;
             $http.post(typeSaveUrl, val).then(function success() {
                 $scope.getTypes();
                 $scope.loadCosts();
@@ -257,29 +244,33 @@ Application.controller("costManagementController", function ($scope, $http, date
 
 
     $scope.selectRow = function (id) {
-       $scope.selectedRowId = id;
+        $scope.selectedRowId = id;
     };
 
-    $scope.deleteRow = function(){
-        $scope.deletedRows.push($scope.selectedRowId);
-        for(var i=0; i<$scope.costs.length; i++){
-            for(var j = 0; j<$scope.deletedRows.length; j++){
-                if($scope.deletedRows[j] === $scope.costs[i].id){
-                    $scope.costs.splice(i, 1);
-                }
+    $scope.deleteRow = function () {
+        for (var i = 0; i < $scope.costs.length; i++) {
+            if ($scope.selectedRowId === $scope.costs[i].id) {
+                $scope.costs.splice(i, 1);
             }
-
         }
+
+        var deleteUrl = "/expenses?expensesIds=" + $scope.selectedRowId;
+        $http.delete(deleteUrl).then(function success() {
+            notify('ti-alert', 'Deleted successful', 'success');
+        }, function errorCallback(response) {
+            $scope.showCostManagementLoader = false;
+            notify('ti-alert', 'Error occurred during deleting costs', 'danger');
+        });
     };
 
 
     $scope.updateBuyerName = function (id) {
-        if($scope.editedRowsIds.length === 0){
+        if ($scope.editedRowsIds.length === 0) {
             $scope.editedRowsIds.push(id);
         }
         else {
-            for(var i=0; i<$scope.editedRowsIds.length; i++){
-                if($scope.editedRowsIds[i] !== id){
+            for (var i = 0; i < $scope.editedRowsIds.length; i++) {
+                if ($scope.editedRowsIds[i] !== id) {
                     $scope.editedRowsIds.push(id);
                 }
             }
@@ -287,12 +278,12 @@ Application.controller("costManagementController", function ($scope, $http, date
     };
 
     $scope.updateDate = function (id) {
-        if($scope.editedRowsIds.length === 0){
+        if ($scope.editedRowsIds.length === 0) {
             $scope.editedRowsIds.push(id);
         }
         else {
-            for(var i=0; i<$scope.editedRowsIds.length; i++){
-                if($scope.editedRowsIds[i] !== id){
+            for (var i = 0; i < $scope.editedRowsIds.length; i++) {
+                if ($scope.editedRowsIds[i] !== id) {
                     $scope.editedRowsIds.push(id);
                 }
             }
@@ -300,12 +291,12 @@ Application.controller("costManagementController", function ($scope, $http, date
     };
 
     $scope.updateSum = function (id) {
-        if($scope.editedRowsIds.length === 0){
+        if ($scope.editedRowsIds.length === 0) {
             $scope.editedRowsIds.push(id);
         }
         else {
-            for(var i=0; i<$scope.editedRowsIds.length; i++){
-                if($scope.editedRowsIds[i] !== id){
+            for (var i = 0; i < $scope.editedRowsIds.length; i++) {
+                if ($scope.editedRowsIds[i] !== id) {
                     $scope.editedRowsIds.push(id);
                 }
             }
@@ -313,12 +304,12 @@ Application.controller("costManagementController", function ($scope, $http, date
     };
 
     $scope.updateType = function (id) {
-        if($scope.editedRowsIds.length === 0){
+        if ($scope.editedRowsIds.length === 0) {
             $scope.editedRowsIds.push(id);
         }
         else {
-            for(var i=0; i<$scope.editedRowsIds.length; i++){
-                if($scope.editedRowsIds[i] !== id){
+            for (var i = 0; i < $scope.editedRowsIds.length; i++) {
+                if ($scope.editedRowsIds[i] !== id) {
                     $scope.editedRowsIds.push(id);
                 }
             }
