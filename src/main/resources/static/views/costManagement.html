@@ -1,4 +1,4 @@
-<div ng-controller="adminDashboardController" ng-init="loadCosts();">
+<div ng-controller="costManagementController" ng-init="loadCosts();">
     <div class="cardForCostManagementControl">
         <div class="row">
             <div class="col-md-10" style="text-align: left">
@@ -241,8 +241,9 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <label>
+                                <p>{{newTypeValue}}</p>
                                 <input type="text" class="form-control"
-                                       ng-model="addedType" placeholder="Type"
+                                       ng-model="newTypeValue" placeholder="Type"
                                        style="width: 100%!important;"/>
                             </label>
                         </div>
