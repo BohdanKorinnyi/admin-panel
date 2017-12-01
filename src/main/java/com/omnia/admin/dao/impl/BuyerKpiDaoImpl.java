@@ -4,6 +4,7 @@ import com.omnia.admin.dao.BuyerKpiDao;
 import com.omnia.admin.model.BuyerKpi;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -60,6 +61,8 @@ public class BuyerKpiDaoImpl implements BuyerKpiDao {
     public Float getBuyerRevenuePlan(Integer buyerId) {
         try {
             return jdbcTemplate.queryForObject(SELECT_BUYER_PLAN, Float.class, buyerId, "Revenue");
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Not found any data about buyer revenue plan by buyerId=" + buyerId);
         } catch (Exception e) {
             log.error("Error occurred during getting revenue by buyerId=" + buyerId, e);
         }
@@ -70,6 +73,8 @@ public class BuyerKpiDaoImpl implements BuyerKpiDao {
     public Float getBuyerProfitPlan(Integer buyerId) {
         try {
             return jdbcTemplate.queryForObject(SELECT_BUYER_PLAN, Float.class, buyerId, "Profit");
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Not found any data about buyer profit plan by buyerId=" + buyerId);
         } catch (Exception e) {
             log.error("Error occurred during getting profit by buyerId=" + buyerId, e);
         }

@@ -1,13 +1,3 @@
-var menuFlag = true;
-$('#minimizeSidebar').on('click', function () {
-    if (menuFlag) {
-        $('body').addClass("sidebar-mini");
-    } else {
-        $('body').removeClass("sidebar-mini");
-    }
-    menuFlag = !menuFlag;
-});
-
 var Application = angular.module("Application", [
     "ngRoute",
     "ngResource",

@@ -2,13 +2,13 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-minimize">
-                <button id="minimizeSidebar" class="btn btn-fill btn-icon"><i class="ti-menu"></i></button>
+                <button id="minimizeSidebar" class="btn btn-fill btn-icon" onclick="sidebarChange()"><i class="ti-menu"></i></button>
             </div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle">
                     <span class="sr-only">Toggle navigation</span>
                 </button>
-                <a class="navbar-brand" href="#Dashboard">
+                <a class="navbar-brand">
                     Buyer Dashboard
                 </a>
             </div>
@@ -186,8 +186,7 @@
                                 <tr style="text-align: center; vertical-align: middle" ng-show="payroll.length == 0">
                                     <td colspan="3">No data</td>
                                 </tr>
-                                <tr style="text-align: center; vertical-align: middle" ng-repeat="p in payroll"
-                                    ng-show="payroll.length != 0">
+                                <tr style="text-align: center; vertical-align: middle" ng-repeat="p in payroll" ng-show="payroll.length != 0">
                                     <td>{{p.date}}</td>
                                     <td>{{p.sum}}</td>
                                     <td>{{p.description}}</td>
