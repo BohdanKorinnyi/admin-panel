@@ -35,7 +35,7 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.addPayroll = function () {
         $scope.addedPayrolls.push({
-            buyerId: null, date: null, type: null,
+            buyerId: null, date: formatDate(new Date()), type: null,
             sum: null, currencyId: null, description: null
         });
     };
@@ -100,7 +100,7 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.clickRow = function (payroll) {
         $scope.selectedPayrollItem = payroll;
-        $scope.selectedDate = payroll.date;
+        $scope.selectedDate = formatDate(payroll.date);
         $scope.selectedSum = payroll.sum;
         if (payroll.type === 0) {
             $scope.selectedTypeValue = 'Accrual';
@@ -134,8 +134,8 @@ Application.controller('payrollController', function ($scope, $http) {
         params.id = $scope.selectedPayrollItem.id;
         params.description = $scope.selectedDescriptionValue;
 
-        params.date = $scope.selectedDate;
-        params.sum = $scope.selectedSum;
+        params.date = formatDate($scope.selectedDate);
+        params.sum = formatDate($scope.selectedSum);
 
         if ($scope.selectedTypeValue === 'Accrual') {
             $scope.selectedTypeId = 0;
@@ -228,4 +228,16 @@ function notify(icon, message, type) {
             align: 'right'
         }
     });
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
 }

@@ -1,7 +1,6 @@
 var Application = angular.module("Application", [
     "ngRoute",
     "ngResource",
-    "720kb.datepicker",
     "ui.bootstrap",
     "nya.bootstrap.select",
     "ngMaterial",

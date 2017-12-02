@@ -54,14 +54,16 @@
                         <div class="row">
                             <div class="col-md-6" style="width: 225px; margin-bottom: 15px;">
                                 <md-datepicker ng-model="dpFromDate"
+                                               date-format="yyyy-MM-dd"
                                                ng-disabled="selectedInterval !== 'custom'"
-                                               md-placeholder="Enter date"></md-datepicker>
+                                               md-placeholder="From"></md-datepicker>
                             </div>
 
                             <div class="col-md-6" style="width: 225px; margin-left: -25px;margin-bottom: 15px;">
                                 <md-datepicker ng-model="dpToDate"
+                                               date-format="yyyy-MM-dd"
                                                ng-disabled="selectedInterval !== 'custom'"
-                                               md-placeholder="Enter date"></md-datepicker>
+                                               md-placeholder="To"></md-datepicker>
                             </div>
                         </div>
                     </div>
@@ -137,6 +139,7 @@
                         <td>
                             <div style="width:100%; margin-left: -10px;">
                                 <md-datepicker ng-model="c.date"
+                                               date-format="yyyy-MM-dd"
                                                ng-change="updateDate(c.id);"
                                                md-placeholder="Enter date"></md-datepicker>
                             </div>
