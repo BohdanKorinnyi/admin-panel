@@ -41,10 +41,10 @@ Application.controller('payrollController', function ($scope, $http) {
     };
 
     $scope.applyPayroll = function () {
-        $http.post('payroll/save', $scope.addedPayrolls).then(function successCallback(response) {
+        $http.post('payroll/save', $scope.addedPayrolls).then(function successCallback() {
             $scope.cancelClick();
             $scope.loadPayrolls();
-        }, function errorCallback(response) {
+        }, function errorCallback() {
             notify('ti-alert', 'Error occurred during saving payroll', 'danger');
         });
     };
