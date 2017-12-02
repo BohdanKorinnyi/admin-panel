@@ -3,7 +3,9 @@ var Application = angular.module("Application", [
     "ngResource",
     "720kb.datepicker",
     "ui.bootstrap",
-    "nya.bootstrap.select"
+    "nya.bootstrap.select",
+    "ngMaterial",
+    "ngMessages"
 ]);
 
 Application.constant("routeForUnauthorizedAccess", "/");

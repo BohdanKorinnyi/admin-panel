@@ -1,6 +1,7 @@
 "use strict";
 
 Application.controller("costManagementController", function ($scope, $http, dateFactory) {
+    this.isOpen = false;
 
     $scope.disableDescription = true;
     $scope.editedRows = [];
@@ -136,15 +137,19 @@ Application.controller("costManagementController", function ($scope, $http, date
     $scope.getFilterDetails = function () {
         var fromDate = "";
         var toDate = "";
-        if ($scope.selectedDate !== 'allTime') {
-            if ($scope.selectedDate === 'custom') {
-                fromDate = $scope.dpFromDate;
-                toDate = $scope.dpToDate;
+        if ($scope.selectedInterval !== 'allTime') {
+            if ($scope.selectedInterval === 'custom') {
+                fromDate = formatDate($scope.dpFromDate);
+                toDate = formatDate($scope.dpToDate);
             }
             else {
-                fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
-                toDate = formatDate(dateFactory.pickDateTo($scope.selectedDate));
+                fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedInterval));
+                toDate = formatDate(dateFactory.pickDateTo($scope.selectedInterval));
             }
+        }
+
+        else{
+            return $scope.selectedBuyerNames + "&expensesType=" + $scope.selectedTypes + "&from=" + "&to=";
         }
 
         return $scope.selectedBuyerNames + "&expensesType=" + $scope.selectedTypes + "&from=" + fromDate + "&to=" + toDate;
@@ -195,6 +200,10 @@ Application.controller("costManagementController", function ($scope, $http, date
                 $scope.addedRows.push($scope.costs[i]);
             }
         }
+
+        for(var e = 0; e < $scope.addedRows.length; e++){
+            $scope.addedRows[e].date = formatDate($scope.addedRows[e].date);
+        }
     };
 
     $scope.findEditedRows = function () {
@@ -207,6 +216,10 @@ Application.controller("costManagementController", function ($scope, $http, date
                         }
                     }
                 }
+            }
+
+            for(var e = 0; e < $scope.editedRows.length; e++){
+                $scope.editedRows[e].date = formatDate($scope.editedRows[e].date);
             }
         }
     };

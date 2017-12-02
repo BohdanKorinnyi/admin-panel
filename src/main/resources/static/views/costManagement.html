@@ -52,43 +52,22 @@
 
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-6" style="width: 225px">
-                                <div class="controls">
-                                    <div class="input-group">
-                                        <input class="datepicker form-control" type="text"
-                                               data-ng-model="dpFromDate" placeholder="From"
+                            <div class="col-md-6" style="width: 225px; margin-bottom: 15px;">
+                                <md-datepicker ng-model="dpFromDate"
                                                ng-disabled="selectedInterval !== 'custom'"
-                                               style="width: 97%!important;"/>
-                                        <span class="input-group-addon" style="cursor: pointer">
-                                        <i class="fa fa-lg fa-calendar"></i>
-                                    </span>
-                                    </div>
-                                </div>
+                                               md-placeholder="Enter date"></md-datepicker>
                             </div>
 
-                            <div class="col-md-6" style="width: 225px; margin-left: -25px;">
-                                <div class="controls">
-                                    <div class="input-group">
-                                        <input class="datepicker form-control" type="text"
+                            <div class="col-md-6" style="width: 225px; margin-left: -25px;margin-bottom: 15px;">
+                                <md-datepicker ng-model="dpToDate"
                                                ng-disabled="selectedInterval !== 'custom'"
-                                               data-ng-model="dpToDate" placeholder="To"
-                                               style="width: 97%!important;"/>
-                                        <span class="input-group-addon" style="cursor: pointer">
-                                        <i class="fa fa-lg fa-calendar"></i>
-                                    </span>
-                                    </div>
-                                </div>
+                                               md-placeholder="Enter date"></md-datepicker>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-            <script type="text/javascript">
-                $('.datepicker').datepicker({
-                    weekStart: 1,
-                    color: 'red'
-                });
-            </script>
+
             <div class="col-md-2">
                 <div class="row">
                     <div class="col-md-12" style="text-align: right">
@@ -156,24 +135,10 @@
                             </form>
                         </td>
                         <td>
-                            <div style="width:100%; margin-bottom: -15px;">
-                                <div class="controls">
-                                    <div class="input-group">
-                                        <input class="datepicker form-control" type="text"
-                                               ng-model="c.date"
+                            <div style="width:100%; margin-left: -10px;">
+                                <md-datepicker ng-model="c.date"
                                                ng-change="updateDate(c.id);"
-                                               style="width: 97%!important;"/>
-                                        <span class="input-group-addon" style="cursor: pointer">
-                                        <i class="fa fa-lg fa-calendar"></i>
-                                    </span>
-                                    </div>
-                                    <script type="text/javascript">
-                                        $('.datepicker').datepicker({
-                                            weekStart: 1,
-                                            color: 'red'
-                                        });
-                                    </script>
-                                </div>
+                                               md-placeholder="Enter date"></md-datepicker>
                             </div>
                         </td>
                         <td>
@@ -201,7 +166,7 @@
                                 </div>
                                 <div class="form-group">
                                     <a data-toggle="modal" data-target="#addTypeModal"
-                                        ng-click="clickAddNewType(c.id);">
+                                       ng-click="clickAddNewType(c.id);">
                                         <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
                                     </a>
                                 </div>

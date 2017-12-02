@@ -618,3 +618,7 @@ datepicker,
 ._720kb-datepicker-calendar-years-pagination-pages {
     width: 18%!important;
 }
+
+.md-icon-button+.md-datepicker-input-container{
+    margin-left: -2px!important;
+}
