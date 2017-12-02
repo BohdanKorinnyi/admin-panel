@@ -165,14 +165,14 @@
                                         </tr>
                                         <tr ng-show="payrolls.length == 0">
                                             <td colspan="7">
-                                                <div class="text-center" ng-show="showPayrollsLoader"></div>
+                                                <div class="loader text-center" ng-show="showPayrollsLoader"></div>
                                                 <div class="text-center" ng-show="!showPayrollsLoader">No data</div>
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="fixed-table-pagination text-center">
+                                <div class="fixed-table-pagination text-center" ng-show="payrolls.length != 0">
                                     <div class="pagination">
                                         <uib-pagination total-items="totalPagination" max-size="5"
                                                         ng-model="selectedPage" items-per-page="selectedSize">
