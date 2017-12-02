@@ -1,110 +1,132 @@
-<div ng-controller="planByBuyerController" ng-init="loadplans();">
-    <div class="cardForBuyerPlansTable">
-        <div class="row">
-            <div class="col-md-9">
-                <div class="row">
-                    <form class="form-inline">
-                        <div class="form-group" ng-init="getBuyers();"
-                             style="margin-right:5px;margin-bottom: 3px; margin-left: 15px;">
-                            <select ng-hide="hideBuyerSelect"
-                                    id="buyerSelectPicker"
-                                    class="selectpicker" multiple
-                                    data-style="btn-info btn-fill btn-block"
-                                    data-size="5"
-                                    title="Buyer"
-                                    data-header="Buyers"
-                                    ng-model="selectedBuyerNames"
-                                    style="width: 180%;margin-left: 5px;">
-                                <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
-                                        data-last="{{$last}}" value="{{b.id}}">{{b.name}}
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="form-group"
-                             style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
-                            <select id="monthSelectPicker"
-                                    class="selectpicker" multiple
-                                    data-style="btn-info btn-fill btn-block"
-                                    data-size="5"
-                                    title="Month"
-                                    data-header="Month"
-                                    ng-model="selectedMonth"
-                                    style="width: 130%;margin-left: 5px;">
-                                <option class="small-font" ng-repeat="m in dateOptions" data-select-watcher
-                                        data-last="{{$last}}" value="{{m}}">{{m}}
-                                </option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
+<div ng-controller="planByBuyerController" ng-init="loadplans();" class="main-panel">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-minimize">
+                <button class="btn btn-fill btn-icon" onclick="sidebarChange()"><i class="ti-menu"></i></button>
             </div>
-            <div class="col-md-3">
-                <div class="row">
-                    <div class="col-md-12" style="text-align: right">
-                        <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
-                                ng-click="filterPlans();">
-                            Apply
-                        </button>
-                    </div>
-                </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand">
+                    Plan By Buyer
+                </a>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <table id="table" class="table table-hover table-sm table-bordered buyersCostsTable"
-                       ng-style="tableStyle" style="border-collapse: collapse !important;">
-                    <thead class="thead-default">
-                    <tr style="text-align: center; vertical-align: middle">
+    </nav>
 
-                        <th>
-                            <a href="">Month</a>
-                        </th>
+    <div class="content content-backdown">
+        <div class="row margin-backdown">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Plan</h4>
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="row">
+                                <form class="form-inline">
+                                    <div class="form-group" ng-init="getBuyers();"
+                                         style="margin-right:5px;margin-bottom: 3px; margin-left: 15px;">
+                                        <select ng-hide="hideBuyerSelect"
+                                                id="buyerSelectPicker"
+                                                class="selectpicker" multiple
+                                                data-style="btn-info btn-fill btn-block"
+                                                data-size="5"
+                                                title="Buyer"
+                                                data-header="Buyers"
+                                                ng-model="selectedBuyerNames"
+                                                style="width: 180%;margin-left: 5px;">
+                                            <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
+                                                    data-last="{{$last}}" value="{{b.id}}">{{b.name}}
+                                            </option>
+                                        </select>
+                                    </div>
 
-                        <th>
-                            <a href="">Buyer Name</a>
-                        </th>
+                                    <div class="form-group"
+                                         style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
+                                        <select id="monthSelectPicker"
+                                                class="selectpicker" multiple
+                                                data-style="btn-info btn-fill btn-block"
+                                                data-size="5"
+                                                title="Month"
+                                                data-header="Month"
+                                                ng-model="selectedMonth"
+                                                style="width: 130%;margin-left: 5px;">
+                                            <option class="small-font" ng-repeat="m in dateOptions" data-select-watcher
+                                                    data-last="{{$last}}" value="{{m}}">{{m}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: right">
+                                    <button class="btn btn-primary btn-md" id="applyBtn" name="apply" type="submit"
+                                            ng-click="filterPlans();">
+                                        Apply
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content table-responsive table-full-width">
+                        <table class="table">
+                            <thead class="thead-default">
+                            <tr style="text-align: center; vertical-align: middle">
 
-                        <th>
-                            <a href="">KPI Name</a>
-                        </th>
+                                <th>
+                                    <a href="">Month</a>
+                                </th>
 
-                        <th>
-                            <a href="">KPI Value</a>
-                        </th>
+                                <th>
+                                    <a href="">Buyer Name</a>
+                                </th>
 
-                        <th>
-                            <a href="">Executed Amount</a>
-                        </th>
+                                <th>
+                                    <a href="">KPI Name</a>
+                                </th>
 
-                        <th>
-                            <a href="">% Performance</a>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                                <th>
+                                    <a href="">KPI Value</a>
+                                </th>
 
-                    <tr style="text-align: center; vertical-align: middle"
-                        ng-show="plans.length != 0" ng-repeat="item in plans">
-                        <td>{{item.month}}</td>
-                        <td>{{item.buyerName}}</td>
-                        <td>{{item.kpiName}}</td>
-                        <td>{{item.kpiValue}}</td>
-                        <td style="text-align: right">{{item.sum}} USD</td>
-                        <td style="text-align: right">{{writePerformance(item.performance, item.sum)}}</td>
-                    </tr>
+                                <th>
+                                    <a href="">Executed Amount</a>
+                                </th>
 
-                    </tbody>
-                    <tfoot>
-                    <tr ng-show="plans.length == 0">
-                        <td colspan="6">
-                            <div class="loader" style="text-align: center;" ng-show="showPlanByBuyerLoader"></div>
-                            <div style="text-align: center;" ng-show="!showPlanByBuyerLoader">No data</div>
-                        </td>
-                    </tr>
-                    </tfoot>
-                </table>
-                <div class="panel-footer"></div>
+                                <th>
+                                    <a href="">% Performance</a>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr style="text-align: center; vertical-align: middle"
+                                ng-show="plans.length != 0" ng-repeat="item in plans">
+                                <td>{{item.month}}</td>
+                                <td>{{item.buyerName}}</td>
+                                <td>{{item.kpiName}}</td>
+                                <td>{{item.kpiValue}}</td>
+                                <td >{{item.sum}} USD</td>
+                                <td >{{writePerformance(item.performance, item.sum)}}</td>
+                            </tr>
+
+                            </tbody>
+                            <tfoot>
+                            <tr ng-show="plans.length == 0">
+                                <td colspan="6">
+                                    <div class="loader" style="text-align: center;"
+                                         ng-show="showPlanByBuyerLoader"></div>
+                                    <div style="text-align: center;" ng-show="!showPlanByBuyerLoader">No data</div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

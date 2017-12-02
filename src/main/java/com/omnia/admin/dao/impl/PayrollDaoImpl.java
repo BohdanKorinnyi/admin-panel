@@ -105,9 +105,6 @@ public class PayrollDaoImpl implements PayrollDao {
     }
 
     private boolean isValidSortDetails(ColumnOrder columnOrder) {
-        if (nonNull(columnOrder) && columnOrder.isValid()) {
-            return SORTED_PAYROLL_COLUMNS.contains(columnOrder.getColumn());
-        }
-        return false;
+        return nonNull(columnOrder) && columnOrder.isValid() && SORTED_PAYROLL_COLUMNS.contains(columnOrder.getColumn());
     }
 }
