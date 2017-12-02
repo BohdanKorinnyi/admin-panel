@@ -40,7 +40,7 @@
                         <p class="category">New Payroll</p>
                     </div>
                     <div class="card-content">
-                        <div class="col-md-12 container-fluid" ng-repeat="p in addedPayrolls track by $index">
+                        <div class="row" ng-repeat="p in addedPayrolls track by $index">
                             <form class="form-inline">
                                 <div class="form-group" style="width: 100%">
                                     <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
@@ -54,16 +54,15 @@
                                             {{b.name}}
                                         </option>
                                     </select>
-                                    <datepicker date-format="yyyy-MM-dd" selector="form-control"
-                                                id="payrollDatePicker">
+                                    <!-- <datepicker date-format="yyyy-MM-dd" selector="form-control" id="payrollDatePicker">
                                         <div class="input-group" style="margin-top: 14px;">
-                                            <input class="form-control" data-ng-model="p.date"
-                                                   placeholder="Date"/>
+                                            <input class="form-control" data-ng-model="p.date" placeholder="Date"/>
                                             <span class="input-group-addon" style="cursor: pointer">
-                                        <i class="fa fa-lg fa-calendar"></i>
-                                    </span>
+                                                <i class="fa fa-lg fa-calendar"></i>
+                                            </span>
                                         </div>
-                                    </datepicker>
+                                    </datepicker> -->
+                                    <input type="date" data-ng-model="p.date"/>
                                     <select class="form-control" ng-model="p.type"
                                             style="width: 11%!important;">
                                         <option value="" disabled selected>Type</option>
