@@ -54,15 +54,10 @@
                                             {{b.name}}
                                         </option>
                                     </select>
-                                    <!-- <datepicker date-format="yyyy-MM-dd" selector="form-control" id="payrollDatePicker">
-                                        <div class="input-group" style="margin-top: 14px;">
-                                            <input class="form-control" data-ng-model="p.date" placeholder="Date"/>
-                                            <span class="input-group-addon" style="cursor: pointer">
-                                                <i class="fa fa-lg fa-calendar"></i>
-                                            </span>
-                                        </div>
-                                    </datepicker> -->
-                                    <input type="date" data-ng-model="p.date"/>
+                                    <md-datepicker ng-model="p.date"
+                                                   id="payrollDatePicker"
+                                                   date-format="yyyy-MM-dd"
+                                                   md-placeholder="Date"></md-datepicker>
                                     <select class="form-control" ng-model="p.type"
                                             style="width: 11%!important;">
                                         <option value="" disabled selected>Type</option>

@@ -96,8 +96,8 @@ Application.controller('conversionController', function ($scope, $http, dateFact
         parameters['filter'] = {};
         if ($scope.selectedDate !== 'no-date') {
             if ($scope.selectedDate === 'custom') {
-                parameters.filter['from'] = $scope.dpFromDate;
-                parameters.filter['to'] = $scope.dpToDate;
+                parameters.filter['from'] = formatDate($scope.dpFromDate);
+                parameters.filter['to'] = formatDate($scope.dpToDate);
             } else {
                 parameters.filter['from'] = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
                 parameters.filter['to'] = formatDate(dateFactory.pickDateTo($scope.selectedDate));

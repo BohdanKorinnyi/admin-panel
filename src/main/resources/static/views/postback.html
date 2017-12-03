@@ -20,27 +20,18 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-6" style="width: 225px">
-                                    <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
-                                        <div class="input-group">
-                                            <input class="form-control" data-ng-model="dpFromDate"
-                                                   ng-disabled="selectedDate !== 'custom'" placeholder="From"/>
-                                            <span class="input-group-addon" style="cursor: pointer">
-                                        <i class="fa fa-lg fa-calendar"></i>
-                                    </span>
-                                        </div>
-                                    </datepicker>
+                                <div class="col-md-6" style="width: 225px; margin-bottom: 15px;">
+                                    <md-datepicker ng-model="dpFromDate"
+                                                   date-format="yyyy-MM-dd"
+                                                   ng-disabled="selectedDate !== 'custom'"
+                                                   md-placeholder="From"></md-datepicker>
                                 </div>
-                                <div class="col-md-6" style="width:225px; margin-left: 10px">
-                                    <datepicker date-format="yyyy-MM-dd" selector="form-control" style="width:225px;">
-                                        <div class="input-group">
-                                            <input class="form-control" data-ng-model="dpToDate"
-                                                   ng-disabled="selectedDate !== 'custom'" placeholder="To"/>
-                                            <span class="input-group-addon" style="cursor: pointer">
-                                        <i class="fa fa-lg fa-calendar"></i>
-                                    </span>
-                                        </div>
-                                    </datepicker>
+
+                                <div class="col-md-6" style="width:225px; margin-left: -27px; margin-bottom: 15px;">
+                                    <md-datepicker ng-model="dpToDate"
+                                                   date-format="yyyy-MM-dd"
+                                                   ng-disabled="selectedDate !== 'custom'"
+                                                   md-placeholder="To"></md-datepicker>
                                 </div>
                             </div>
                         </div>
@@ -514,7 +505,7 @@
                             </td>
                             <td style="text-align: center; vertical-align: middle">
                                 <a href="" data-toggle="tooltip" title="{{item.transactionid}}"
-                                    style="color:#66615b;">{{item.transactionid}}</a>
+                                   style="color:#66615b;">{{item.transactionid}}</a>
                             </td>
                             <td style="text-align: center; vertical-align: middle">{{item.duplicate}}</td>
                         </tr>
