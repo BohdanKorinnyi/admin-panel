@@ -1,0 +1,11 @@
+div > .modal-backdrop fade{
+    display: none!important;
+}
+
+body .modal-open{
+    display: none!important;
+}
+
+div .modal .fade{
+    display: none!important;
+}

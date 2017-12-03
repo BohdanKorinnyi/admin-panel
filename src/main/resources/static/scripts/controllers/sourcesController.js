@@ -117,8 +117,8 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
         var toDate = "";
         if ($scope.selectedDate !== 'no-date') {
             if ($scope.selectedDate === 'custom') {
-                fromDate = $scope.dpFromDate;
-                toDate = $scope.dpToDate;
+                fromDate = formatDate($scope.dpFromDate);
+                toDate = formatDate($scope.dpToDate);
             }
             else {
                 fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
