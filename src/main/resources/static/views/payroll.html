@@ -33,12 +33,11 @@
                                 style="width: 17%!important;">
                             <option value="" disabled selected>Buyer</option>
                             <option ng-repeat="b in buyerOptions"
-                                    ng-model="selectedBuyerIdForSave"
-                                    value="{{p.id}}">
+                                    value="{{b.id}}">
                                 {{b.name}}
                             </option>
                         </select>
-                        <md-datepicker ng-model="p.date;"
+                        <md-datepicker ng-model="p.date"
                                        id="payrollDatePicker"
                                        date-format="yyyy-MM-dd"
                                        md-placeholder="Date"></md-datepicker>
