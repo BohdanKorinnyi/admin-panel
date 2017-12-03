@@ -66,8 +66,6 @@ public class ExpensesDaoImpl implements ExpensesDao {
                 preparedStatement.setFloat(3, expenses.get(i).getSum());
                 preparedStatement.setDate(4, Date.valueOf(expenses.get(i).getDate()));
                 preparedStatement.setString(5, expenses.get(i).getDescription());
-                preparedStatement.setDate(6, Date.valueOf(expenses.get(i).getCreate()));
-                preparedStatement.setDate(7, Date.valueOf(expenses.get(i).getUpdate()));
             }
 
             @Override
