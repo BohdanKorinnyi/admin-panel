@@ -1,20 +1,28 @@
 "use strict";
 
 Application.controller("costManagementController", function ($scope, $http, dateFactory) {
+    this.isOpen = false;
 
+    $scope.disableDescription = true;
+    $scope.editedRows = [];
+    $scope.editedRowsIds = [];
+    $scope.addedRows = [];
+    $scope.selectedRowId = '';
     $scope.costs = [];
 
+    $scope.newTypeValue = "";
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
     $scope.selectedBuyerName = "";
+    $scope.rowIdForNewType = "";
 
     $scope.types = [];
     $scope.selectedTypes = [];
 
     $scope.selectedSize = 50;
 
-    $scope.dateOptions = {
-        'Select Date': 'no-date',
+    $scope.dateInterval = {
+        'All time': 'allTime',
         'Today': 'today',
         'Yesterday': 'yesterday',
         'Last 7 days': 'lastWeek',
@@ -22,7 +30,7 @@ Application.controller("costManagementController", function ($scope, $http, date
         'Last Month': 'lastMonth',
         'Custom Range': 'custom'
     };
-    $scope.selectedDate = 'custom';
+    $scope.selectedInterval = 'allTime';
     $scope.dpFromDate = "";
     $scope.dpToDate = "";
 
@@ -48,21 +56,24 @@ Application.controller("costManagementController", function ($scope, $http, date
         }
     };
 
+    $scope.initRole = function () {
+        $scope.getRole();
+        if ($scope.role === "BUYER") {
+            $scope.hideBuyerSelect = true;
+        }
+    };
+
 
     $scope.loadCosts = function () {
         $scope.costs = [];
         $scope.showCostManagementLoader = true;
-        $scope.getRole();
-        if($scope.role === "BUYER"){
-            $scope.hideBuyerSelect = true;
-        }
 
-        var url = "/expenses?buyerIds="+ $scope.getFilterDetails();
+        var url = "/expenses?buyerIds=" + $scope.getFilterDetails();
 
         $http.post(url, $scope.getSizeAndNumberFilter())
             .then(function successCallback(response) {
                 $scope.costs = response.data.data;
-                for(var i = 0; i<$scope.costs.length; i++) {
+                for (var i = 0; i < $scope.costs.length; i++) {
                     for (var j = 0; j < $scope.buyerNames.length; j++) {
                         if ($scope.costs[i].buyerId === $scope.buyerNames[j].id) {
                             $scope.costs[i].buyer = $scope.buyerNames[j].name;
@@ -79,10 +90,46 @@ Application.controller("costManagementController", function ($scope, $http, date
     };
 
 
+    $scope.onApplyClick = function () {
+        $scope.findAddedRows();
+        $scope.findEditedRows();
+        $scope.matchEditedTypesAndBuyers();
+
+        if ($scope.addedRows.length !== 0) {
+            var saveUrl = "/expenses/save";
+            $http.post(saveUrl, $scope.addedRows).then(function success() {
+                $scope.loadCosts();
+                notify('ti-alert', 'Saving successful', 'success');
+            }, function errorCallback(response) {
+                $scope.showCostManagementLoader = false;
+                notify('ti-alert', 'Error occurred during saving costs', 'danger');
+            });
+        }
+
+        if ($scope.editedRows.length !== 0) {
+            var putUrl = "/expenses";
+            $http.put(putUrl, $scope.editedRows).then(function success() {
+                $scope.loadCosts();
+                notify('ti-alert', 'Editing successful', 'success');
+            }, function errorCallback(response) {
+                $scope.showCostManagementLoader = false;
+                notify('ti-alert', 'Error occurred during editing costs', 'danger');
+            });
+        }
+
+        $scope.addedRows = [];
+        $scope.editedRows = [];
+        $scope.editedRowsIds = [];
+        $scope.disableDescription = true;
+        $scope.loadCosts();
+    };
+
     $scope.addCost = function () {
+        $scope.disableDescription = false;
         $scope.costs.unshift({
-            buyer: null, date: formatDate(new Date()), name: null,
-            sum: null
+            buyer: null, buyerId: null, create: null,
+            date: formatDate(new Date()), description: null,
+            id: null, name: null, sum: null, typeId: null, update: null
         });
     };
 
@@ -90,18 +137,22 @@ Application.controller("costManagementController", function ($scope, $http, date
     $scope.getFilterDetails = function () {
         var fromDate = "";
         var toDate = "";
-        if ($scope.selectedDate !== 'no-date') {
-            if ($scope.selectedDate === 'custom') {
-                fromDate = $scope.dpFromDate;
-                toDate = $scope.dpToDate;
+        if ($scope.selectedInterval !== 'allTime') {
+            if ($scope.selectedInterval === 'custom') {
+                fromDate = formatDate($scope.dpFromDate);
+                toDate = formatDate($scope.dpToDate);
             }
             else {
-                fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
-                toDate = formatDate(dateFactory.pickDateTo($scope.selectedDate));
+                fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedInterval));
+                toDate = formatDate(dateFactory.pickDateTo($scope.selectedInterval));
             }
         }
 
-        return $scope.selectedBuyerNames+"&expensesType="+$scope.selectedTypes+"&from="+fromDate+"&to="+toDate;
+        else{
+            return $scope.selectedBuyerNames + "&expensesType=" + $scope.selectedTypes + "&from=" + "&to=";
+        }
+
+        return $scope.selectedBuyerNames + "&expensesType=" + $scope.selectedTypes + "&from=" + fromDate + "&to=" + toDate;
     };
 
     $scope.getSizeAndNumberFilter = function () {
@@ -132,7 +183,168 @@ Application.controller("costManagementController", function ($scope, $http, date
         });
     };
 
+    $scope.findAddedRows = function () {
+        for (var i = 0; i < $scope.costs.length; i++) {
+            if ($scope.costs[i].id === null) {
+                for (var j = 0; j < $scope.buyerNames.length; j++) {
+                    if ($scope.buyerNames[j].name === $scope.costs[i].buyer) {
+                        $scope.costs[i].buyerId = $scope.buyerNames[j].id;
+                    }
+                }
 
+                for (var f = 0; f < $scope.types.length; f++) {
+                    if ($scope.types[f].name === $scope.costs[i].name) {
+                        $scope.costs[i].typeId = $scope.types[f].id;
+                    }
+                }
+                $scope.addedRows.push($scope.costs[i]);
+            }
+        }
+
+        for(var e = 0; e < $scope.addedRows.length; e++){
+            $scope.addedRows[e].date = formatDate($scope.addedRows[e].date);
+        }
+    };
+
+    $scope.findEditedRows = function () {
+        if ($scope.editedRowsIds.length !== 0) {
+            for (var i = 0; i < $scope.costs.length; i++) {
+                if ($scope.costs[i].id !== null) {
+                    for (var j = 0; j < $scope.editedRowsIds.length; j++) {
+                        if ($scope.costs[i].id === $scope.editedRowsIds[j]) {
+                            $scope.editedRows.push($scope.costs[i]);
+                        }
+                    }
+                }
+            }
+
+            for(var e = 0; e < $scope.editedRows.length; e++){
+                $scope.editedRows[e].date = formatDate($scope.editedRows[e].date);
+            }
+        }
+    };
+
+
+    $scope.matchEditedTypesAndBuyers = function () {
+        for (var i = 0; i < $scope.costs.length; i++) {
+            for (var j = 0; j < $scope.buyerNames.length; j++) {
+                if ($scope.costs[i].buyer === $scope.buyerNames[j].name) {
+                    $scope.costs[i].buyerId = $scope.buyerNames[j].id;
+                }
+            }
+
+            for (var f = 0; f < $scope.types.length; f++) {
+                if ($scope.costs[i].name === $scope.types[f].name) {
+                    $scope.costs[i].typeId = $scope.types[f].id;
+                }
+            }
+
+        }
+    };
+
+    $scope.addType = function () {
+        var val = $scope.newTypeValue;
+        if (val !== "") {
+            var typeSaveUrl = "/expenses/type/save?name=" + val;
+            $http.post(typeSaveUrl, val).then(function success() {
+                $scope.getTypes();
+
+                for(var i=0; i<$scope.costs.length; i++){
+                    if($scope.costs[i].id === $scope.rowIdForNewType){
+                        $scope.costs[i].name = val;
+
+                        for(var j = 0; j<$scope.types.length; j++){
+                            if(val === $scope.types[j].name){
+                                $scope.costs[i].typeId = $scope.types[j].id;
+                            }
+                        }
+                    }
+                }
+
+
+            }, function errorCallback(response) {
+                notify('ti-alert', 'Error occurred during saving types', 'danger');
+            });
+        }
+    };
+
+
+    $scope.selectRow = function (id) {
+        $scope.selectedRowId = id;
+    };
+
+    $scope.deleteRow = function () {
+        for (var i = 0; i < $scope.costs.length; i++) {
+            if ($scope.selectedRowId === $scope.costs[i].id) {
+                $scope.costs.splice(i, 1);
+            }
+        }
+
+        var deleteUrl = "/expenses?expensesIds=" + $scope.selectedRowId;
+        $http.delete(deleteUrl).then(function success() {
+            notify('ti-alert', 'Deleted successful', 'success');
+        }, function errorCallback(response) {
+            $scope.showCostManagementLoader = false;
+            notify('ti-alert', 'Error occurred during deleting costs', 'danger');
+        });
+    };
+
+
+    $scope.updateBuyerName = function (id) {
+        if ($scope.editedRowsIds.length === 0) {
+            $scope.editedRowsIds.push(id);
+        }
+        else {
+            for (var i = 0; i < $scope.editedRowsIds.length; i++) {
+                if ($scope.editedRowsIds[i] !== id) {
+                    $scope.editedRowsIds.push(id);
+                }
+            }
+        }
+    };
+
+    $scope.updateDate = function (id) {
+        if ($scope.editedRowsIds.length === 0) {
+            $scope.editedRowsIds.push(id);
+        }
+        else {
+            for (var i = 0; i < $scope.editedRowsIds.length; i++) {
+                if ($scope.editedRowsIds[i] !== id) {
+                    $scope.editedRowsIds.push(id);
+                }
+            }
+        }
+    };
+
+    $scope.updateSum = function (id) {
+        if ($scope.editedRowsIds.length === 0) {
+            $scope.editedRowsIds.push(id);
+        }
+        else {
+            for (var i = 0; i < $scope.editedRowsIds.length; i++) {
+                if ($scope.editedRowsIds[i] !== id) {
+                    $scope.editedRowsIds.push(id);
+                }
+            }
+        }
+    };
+
+    $scope.updateType = function (id) {
+        if ($scope.editedRowsIds.length === 0) {
+            $scope.editedRowsIds.push(id);
+        }
+        else {
+            for (var i = 0; i < $scope.editedRowsIds.length; i++) {
+                if ($scope.editedRowsIds[i] !== id) {
+                    $scope.editedRowsIds.push(id);
+                }
+            }
+        }
+    };
+
+    $scope.clickAddNewType = function (id) {
+        $scope.rowIdForNewType = id;
+    };
 });
 
 function formatDate(date) {
