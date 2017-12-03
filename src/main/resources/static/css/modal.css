@@ -5,3 +5,7 @@ div > .modal-backdrop fade{
 body .modal-open{
     display: none!important;
 }
+
+div .modal .fade{
+    display: none!important;
+}
