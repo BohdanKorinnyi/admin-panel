@@ -39,13 +39,7 @@
                     <div class="card-content">
                         <div class="row">
                             <form class="form-inline">
-                                <div class="form-group" id="size">
-                                    <select class="form-control" data-ng-model="selectedSize"
-                                            data-ng-options="v as k for (k, v) in sizeOptions"
-                                            style="margin-left: 20px;margin-bottom: 14px;">
-                                    </select>
-                                </div>
-                                <div class="form-group">
+                                <div class="form-group" style="margin-left: 15px">
                                     <select class="form-control" data-ng-model="selectedDate"
                                             data-ng-options="v as k for (k, v) in dateOptions"
                                             style="margin-bottom: 14px;">
@@ -54,15 +48,14 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6" style="width: 225px; margin-bottom: 15px;">
-                                            <md-datepicker ng-model="dpFromDate"
-                                                           date-format="yyyy-MM-dd"
+                                            <md-datepicker ng-model="dpFromDate" date-format="yyyy-MM-dd"
                                                            ng-disabled="selectedDate !== 'custom'"
-                                                           md-placeholder="From"></md-datepicker>
+                                                           md-placeholder="From">
+                                            </md-datepicker>
                                         </div>
 
                                         <div class="col-md-6" style="width:225px; margin-left: -27px; margin-bottom: 15px;">
-                                            <md-datepicker ng-model="dpToDate"
-                                                           date-format="yyyy-MM-dd"
+                                            <md-datepicker ng-model="dpToDate" date-format="yyyy-MM-dd"
                                                            ng-disabled="selectedDate !== 'custom'"
                                                            md-placeholder="To"></md-datepicker>
                                         </div>
@@ -71,7 +64,7 @@
                             </form>
                         </div>
                         <div class="row">
-                            <div class="col-md-11 form-group">
+                            <div class="col-md-12 form-group">
                                 <form class="form-inline">
                                     <div class="form-group"
                                          style="margin-top:10px;">
@@ -158,7 +151,6 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="col-md-1"></div>
                         </div>
                     </div>
                 </div>
@@ -172,7 +164,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="pull-right">
-                            <select class="form-control" data-ng-model="selectedSize"
+                            <select class="form-control white-input-no-border" data-ng-model="selectedSize"
                                     data-ng-options="v as k for (k, v) in sizeOptions"
                                     style="z-index: 10000; position: relative">
                             </select>

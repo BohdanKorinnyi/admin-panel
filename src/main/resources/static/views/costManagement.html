@@ -17,8 +17,8 @@
         </div>
     </nav>
 
-    <div class="content" style="margin-top: 20px">
-        <div class="row" style="margin-left: 15px; margin-right: 15px">
+    <div class="content content-backdown">
+        <div class="row margin-backdown">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -113,7 +113,7 @@
 
 
     <div class="content">
-        <div class="row" style="margin-left: 15px; margin-right: 15px">
+        <div class="row margin-backdown">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -126,113 +126,105 @@
                         <h4 class="card-title">All Costs</h4>
                     </div>
                     <div class="card-content">
-                        <div class="bootstrap-table">
-                            <div class="fixed-table-container" style="padding-bottom: 0;">
-                                <div class="fixed-table-header" style="display: none;">
-                                    <table></table>
-                                </div>
-                                <div class="fixed-table-body">
-                                    <div class="fixed-table-loading" style="top: 41px;">Loading, please wait...</div>
-                                    <table id="bootstrap-table" class="table">
-                                        <thead>
-                                        <tr>
-                                            <th><a>Buyer name</a></th>
-                                            <th><a>Date</a></th>
-                                            <th><a>Spent</a></th>
-                                            <th><a>Description</a></th>
-                                            <th><a>Type</a></th>
-                                            <th><a>Create</a></th>
-                                            <th><a>Update</a></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr ng-repeat="c in costs | filter:searchFilter">
-                                            <td style="text-align: left!important;">
-                                                <form class="form-inline">
-                                                    <div class="form-group" style="width: 10%!important;">
-                                                        <a data-toggle="modal" data-target="#confirmDeletingModal"
-                                                           ng-click="selectRow(c.id)">
-                                                            <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="form-group" style="width: 80%!important;">
-                                                        <select class="form-control white-input-no-border" ng-model="c.buyer"
-                                                                ng-change="updateBuyerName(c.id);"
-                                                                style="width: 98%!important;">
-                                                            <option ng-repeat="b in buyerNames"
-                                                                    value="{{b.name}}">
-                                                                {{b.name}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <div style="width:100%; margin-left: -10px;">
-                                                    <md-datepicker ng-model="c.date"
-                                                                   date-format="yyyy-MM-dd"
-                                                                   ng-change="updateDate(c.id);"
-                                                                   md-hide-icons="calendar"
-                                                                   md-placeholder="Enter date"></md-datepicker>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <input type="number" class="form-control white-input-no-border" placeholder="Spent"
-                                                       ng-model="c.sum"
-                                                       ng-change="updateSum(c.id);"/>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control white-input-no-border" placeholder="Description"
-                                                       ng-model="c.description"
-                                                       style="border: 1px solid white; background-color: white;"
-                                                       ng-disabled="disableDescription"/>
-                                            </td>
-                                            <td style="text-align: right!important; padding-right: 10px!important;">
-                                                <form class="form-inline">
-                                                    <div class="form-group" style="width:80%!important;">
-                                                        <select class="form-control white-input-no-border" ng-model="c.name"
-                                                                ng-change="updateType(c.id);"
-                                                                style="width: 100%!important; margin-left: -20px;">
-                                                            <option ng-repeat="t in types"
-                                                                    value="{{t.name}}">
-                                                                {{t.name}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group" style="width: 10%!important;">
-                                                        <a data-toggle="modal" data-target="#addTypeModal"
-                                                           ng-click="clickAddNewType(c.id);">
-                                                            <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
-                                                        </a>
-                                                    </div>
-                                                </form>
-                                            </td>
-                                            <td>
-                                                {{c.create}}
-                                            </td>
-                                            <td>
-                                                {{c.update}}
-                                            </td>
-                                        </tr>
-                                        <tr ng-show="costs.length == 0">
-                                            <td colspan="7">
-                                                <div class="loader" style="text-align: center;"
-                                                     ng-show="showCostManagementLoader"></div>
-                                                <div style="text-align: center;" ng-show="!showCostManagementLoader">No
-                                                    data
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="fixed-table-pagination text-center" ng-show="costs.length != 0">
-                                    <div class="pagination">
-                                        <uib-pagination total-items="totalPagination" max-size="5"
-                                                        ng-model="selectedPage" items-per-page="selectedSize"
-                                                        ng-click="loadPostbacks();">
-                                        </uib-pagination>
-                                    </div>
+                        <div class="card-content table-responsive table-full-width">
+                            <table class="table cost-management-table">
+                                <thead>
+                                <tr>
+                                    <th><a>Buyer name</a></th>
+                                    <th><a>Date</a></th>
+                                    <th><a>Spent</a></th>
+                                    <th><a>Description</a></th>
+                                    <th><a>Type</a></th>
+                                    <th><a>Create</a></th>
+                                    <th><a>Update</a></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="c in costs | filter:searchFilter">
+                                    <td class="cost-management-table" style="text-align: left!important;">
+                                        <form class="form-inline">
+                                            <div class="form-group" style="width: 10%!important;">
+                                                <a data-toggle="modal" data-target="#confirmDeletingModal"
+                                                   ng-click="selectRow(c.id)">
+                                                    <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div class="form-group" style="width: 80%!important;">
+                                                <select class="form-control white-input-no-border" ng-model="c.buyer"
+                                                        ng-change="updateBuyerName(c.id);"
+                                                        style="width: 98%!important;">
+                                                    <option ng-repeat="b in buyerNames"
+                                                            value="{{b.name}}">
+                                                        {{b.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td class="cost-management-table">
+                                        <div style="width:100%; margin-left: -10px;">
+                                            <md-datepicker ng-model="c.date"
+                                                           date-format="yyyy-MM-dd"
+                                                           ng-change="updateDate(c.id);"
+                                                           md-hide-icons="calendar"
+                                                           md-placeholder="Enter date"></md-datepicker>
+                                        </div>
+                                    </td>
+                                    <td class="cost-management-table">
+                                        <input type="number" class="form-control white-input-no-border" placeholder="Spent"
+                                               ng-model="c.sum"
+                                               ng-change="updateSum(c.id);"/>
+                                    </td>
+                                    <td class="cost-management-table">
+                                        <input type="text" class="form-control white-input-no-border" placeholder="Description"
+                                               ng-model="c.description"
+                                               style="border: 1px solid white; background-color: white;"
+                                               ng-disabled="disableDescription"/>
+                                    </td>
+                                    <td class="cost-management-table" style="text-align: right!important; padding-right: 10px!important;">
+                                        <form class="form-inline">
+                                            <div class="form-group" style="width:80%!important;">
+                                                <select class="form-control white-input-no-border" ng-model="c.name"
+                                                        ng-change="updateType(c.id);"
+                                                        style="width: 100%!important; margin-left: -20px;">
+                                                    <option ng-repeat="t in types"
+                                                            value="{{t.name}}">
+                                                        {{t.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group" style="width: 10%!important;">
+                                                <a data-toggle="modal" data-target="#addTypeModal"
+                                                   ng-click="clickAddNewType(c.id);">
+                                                    <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td class="cost-management-table">
+                                        {{c.create}}
+                                    </td>
+                                    <td class="cost-management-table">
+                                        {{c.update}}
+                                    </td>
+                                </tr>
+                                <tr ng-show="costs.length == 0">
+                                    <td colspan="7">
+                                        <div class="loader" style="text-align: center;"
+                                             ng-show="showCostManagementLoader"></div>
+                                        <div style="text-align: center;" ng-show="!showCostManagementLoader">No
+                                            data
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="bootstrap-table fixed-table-pagination text-center" ng-show="costs.length != 0">
+                                <div class="pagination">
+                                    <uib-pagination total-items="totalPagination" max-size="5"
+                                                    ng-model="selectedPage" items-per-page="selectedSize"
+                                                    ng-click="loadPostbacks();">
+                                    </uib-pagination>
                                 </div>
                             </div>
                         </div>
