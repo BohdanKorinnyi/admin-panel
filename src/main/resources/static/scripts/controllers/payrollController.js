@@ -24,6 +24,7 @@ Application.controller('payrollController', function ($scope, $http) {
     $scope.currencyOptions = [];
     $scope.descriptionOptions = [];
     $scope.datePicker = '';
+    $scope.selectedBuyerIdsForSave = [];
 
 
     $scope.sortColumn = '';
@@ -41,12 +42,24 @@ Application.controller('payrollController', function ($scope, $http) {
     };
 
     $scope.applyPayroll = function () {
-        $http.post('payroll/save', $scope.addedPayrolls).then(function successCallback(response) {
-            $scope.cancelClick();
-            $scope.loadPayrolls();
-        }, function errorCallback(response) {
-            notify('ti-alert', 'Error occurred during saving payroll', 'danger');
-        });
+        if ($scope.addedPayrolls.length !== 0) {
+            for (var i = 0; i < $scope.addedPayrolls.length; i++) {
+                if ($scope.selectedBuyerIdsForSave.length !== 0) {
+                    for (var j = 0; j < $scope.selectedBuyerIdsForSave.length; j++) {
+                        $scope.addedPayrolls[i].buyerId = $scope.selectedBuyerIdsForSave[j];
+                        ///fixxx
+                    }
+                }
+            }
+
+            $http.post('payroll/save', $scope.addedPayrolls).then(function successCallback(response) {
+                $scope.cancelClick();
+                $scope.loadPayrolls();
+            }, function errorCallback(response) {
+                notify('ti-alert', 'Error occurred during saving payroll', 'danger');
+            });
+        }
+
     };
 
 
@@ -100,7 +113,7 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.clickRow = function (payroll) {
         $scope.selectedPayrollItem = payroll;
-        $scope.selectedDate = formatDate(payroll.date);
+        $scope.selectedDate = payroll.date;
         $scope.selectedSum = payroll.sum;
         if (payroll.type === 0) {
             $scope.selectedTypeValue = 'Accrual';
@@ -135,7 +148,7 @@ Application.controller('payrollController', function ($scope, $http) {
         params.description = $scope.selectedDescriptionValue;
 
         params.date = formatDate($scope.selectedDate);
-        params.sum = formatDate($scope.selectedSum);
+        params.sum = $scope.selectedSum;
 
         if ($scope.selectedTypeValue === 'Accrual') {
             $scope.selectedTypeId = 0;
@@ -150,9 +163,9 @@ Application.controller('payrollController', function ($scope, $http) {
                 $scope.selectedCurrencyId = $scope.currencyOptions[i].id;
             }
         }
-        for (var i = 0; i < $scope.buyerOptions.length; i++) {
-            if ($scope.selectedBuyerName === $scope.buyerOptions[i].name) {
-                $scope.selectedBuyerId = $scope.buyerOptions[i].id;
+        for (var j = 0; j < $scope.buyerOptions.length; j++) {
+            if ($scope.selectedBuyerName === $scope.buyerOptions[j].name) {
+                $scope.selectedBuyerId = $scope.buyerOptions[j].id;
             }
         }
         params.buyerId = $scope.selectedBuyerId;
@@ -188,7 +201,7 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.updatePayrolls = function (payrolls) {
         for (var i = 0; i < payrolls.length; i++) {
-            payrolls[i]['bayerName'] = findBuyerName(payrolls[i].buyerId, $scope.buyerOptions);
+            payrolls[i]['buyerName'] = findBuyerName(payrolls[i].buyerId, $scope.buyerOptions);
             payrolls[i]['code'] = findCurrencyCode(payrolls[i].currencyId, $scope.currencyOptions);
             payrolls[i]['typeName'] = payrolls[i].type === 0 ? 'Accrual' : 'Write-off';
         }
