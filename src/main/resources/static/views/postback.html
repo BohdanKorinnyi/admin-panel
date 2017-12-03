@@ -177,7 +177,7 @@
                                     style="z-index: 10000; position: relative">
                             </select>
                         </div>
-                        <h4 class="card-title">All Payrolls</h4>
+                        <h4 class="card-title">All Postbacks</h4>
                     </div>
                     <div class="card-content">
                         <div class="bootstrap-table">
@@ -192,7 +192,6 @@
 
                                         <thead class="thead-default">
                                         <tr style="text-align: center; vertical-align: middle">
-                                            <th style="text-align: center; vertical-align: middle"><a href="">#</a></th>
                                             <th style="text-align: center; vertical-align: middle">
                                                 <a href="" ng-click="sortType = 'POSTBACK_ID'; changeOrder();loadPostbacks();">
                                     <span ng-show="sortType == 'POSTBACK_ID' && sortReverse == 'ASC'"
@@ -466,11 +465,8 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr style="text-align: center; vertical-align: middle; cursor:pointer;"
-                                            ng-show="postbacks.length != 0"
-                                            ng-repeat="item in postbacks"
+                                        <tr style="text-align: center; vertical-align: middle; cursor:pointer;" ng-show="postbacks.length != 0" ng-repeat="item in postbacks"
                                             ng-click="getPostbackId(item.id);">
-                                            <td style="text-align: center; vertical-align: middle">{{$index+1}}</td>
                                             <td style="text-align: center; vertical-align: middle">{{item.id}}</td>
                                             <td style="text-align: center; vertical-align: middle;">{{item.prefix}}</td>
                                             <td style="text-align: center; vertical-align: middle">{{item.afid}}</td>
@@ -550,15 +546,16 @@
                                             </td>
                                             <td style="text-align: center; vertical-align: middle">{{item.duplicate}}</td>
                                         </tr>
+                                        <!--
                                         <tr ng-show="postbacks.length != 0">
                                             <td style="text-align: left; vertical-align: middle" colspan="28">
                                                 Total by postbacks:
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                         <tr ng-show="postbacks.length == 0">
                                             <td colspan="28">
-                                                <div class="loader" style="text-align: center;" ng-show="showLoader"></div>
-                                                <div style="text-align: center;" ng-show="!showLoader">No Data</div>
+                                                <div class="loader text-center" ng-show="showLoader"></div>
+                                                <div class="text-center" ng-show="!showLoader">No Data</div>
                                             </td>
                                         </tr>
                                         </tbody>

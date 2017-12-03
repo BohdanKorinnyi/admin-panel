@@ -32,7 +32,7 @@
                                 Export
                             </button>
                         </div>
-                        <h4 class="card-title">Conversion filter</h4>
+                        <h4 class="card-title">Conversion filters</h4>
                     </div>
                     <div class="card-content">
                         <div class="row">
@@ -52,8 +52,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6" style="width: 225px; margin-bottom: 15px;">
-                                            <md-datepicker ng-model="dpFromDate"
-                                                           date-format="yyyy-MM-dd"
+                                            <md-datepicker ng-model="dpFromDate" date-format="yyyy-MM-dd"
                                                            ng-disabled="selectedDate !== 'custom'"
                                                            md-placeholder="From"></md-datepicker>
                                         </div>
@@ -162,10 +161,8 @@
                                     <div class="fixed-table-loading" style="top: 41px;">Loading, please wait...</div>
                                     <table id="bootstrap-table" class="table table-hover">
                                         <thead class="thead-default">
-                                        <tr style="text-align: center; vertical-align: middle">
-                                            <th style="text-align: center; vertical-align: middle"><a href="">#</a></th>
-
-                                            <th style="text-align: center; vertical-align: middle">
+                                        <tr>
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'CONVERSION_ID'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'CONVERSION_ID' && sortReverse == 'ASC'"
@@ -177,7 +174,7 @@
                                                 </a>
                                             </th>
 
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'CONVERSION_PREFIX'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'CONVERSION_PREFIX' && sortReverse == 'ASC'"
@@ -189,7 +186,7 @@
                                                 </a>
                                             </th>
 
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'CONVERSION_AFID'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'CONVERSION_AFID' && sortReverse == 'ASC'"
@@ -201,7 +198,7 @@
                                                 </a>
                                             </th>
 
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'AFFILIATES_AFNAME'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'AFFILIATES_AFNAME' && sortReverse == 'ASC'"
@@ -225,7 +222,7 @@
                                                 </a>
                                             </th>
 
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'CONVERSION_SUM'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'CONVERSION_SUM' && sortReverse == 'ASC'"
@@ -237,7 +234,7 @@
                                                 </a>
                                             </th>
 
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'CURRENCY_CODE'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'CURRENCY_CODE' && sortReverse == 'ASC'"
@@ -249,7 +246,7 @@
                                                 </a>
                                             </th>
 
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'ADV_STATUS_REAL_STATUS'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'ADV_STATUS_REAL_STATUS' && sortReverse == 'ASC'"
@@ -261,7 +258,7 @@
                                                 </a>
                                             </th>
 
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'ADVERTS_SHORT_NAME'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'ADVERTS_SHORT_NAME' && sortReverse == 'ASC'"
@@ -273,7 +270,7 @@
                                                 </a>
                                             </th>
 
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'OFFERS_ADV_NAME'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'OFFERS_ADV_NAME' && sortReverse == 'ASC'"
@@ -285,7 +282,7 @@
                                                 </a>
                                             </th>
 
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'SOURCES_NAME'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'SOURCES_NAME' && sortReverse == 'ASC'"
@@ -296,7 +293,7 @@
                                                     Traffic Source
                                                 </a>
                                             </th>
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'EXCHANGE_RATE'; changeOrder();loadConversions()">
                                     <span ng-show="sortType == 'EXCHANGE_RATE' && sortReverse == 'ASC'"
@@ -308,7 +305,7 @@
                                                 </a>
                                             </th>
 
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'CONVERSION_DATE_CHANGE'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'CONVERSION_DATE_CHANGE' && sortReverse == 'ASC'"
@@ -320,7 +317,7 @@
                                                 </a>
                                             </th>
 
-                                            <th style="text-align: center; vertical-align: middle">
+                                            <th>
                                                 <a href=""
                                                    ng-click="sortType = 'CONVERSION_CLICK_ID'; changeOrder();loadConversions()">
                     <span ng-show="sortType == 'CONVERSION_CLICK_ID' && sortReverse == 'ASC'"
@@ -334,30 +331,27 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr style="text-align: center; vertical-align: middle"
-                                            ng-show="conversions.length !== 0 && conversions !== undefined"
-                                            ng-repeat="item in conversions"
-                                            ng-click="clickRow(item)" data-toggle="modal"
+                                        <tr data-toggle="modal" ng-repeat="item in conversions"
+                                            ng-show="conversions.length !== 0" ng-click="clickRow(item)"
                                             data-target="#conversions-modal">
-                                            <td style="text-align: center; vertical-align: middle">{{$index+1}}</td>
-                                            <td style="text-align: center; vertical-align: middle">
+                                            <td>
                                                 {{item.conversionId}}
                                             </td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.prefix}}</td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.afId}}</td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.buyer}}</td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.date}}</td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.payout}}</td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.code}}</td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.status}}</td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.advert}}</td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.offerId}}</td>
-                                            <td style="text-align: center; vertical-align: middle">
+                                            <td>{{item.prefix}}</td>
+                                            <td>{{item.afId}}</td>
+                                            <td>{{item.buyer}}</td>
+                                            <td>{{item.date}}</td>
+                                            <td>{{item.payout}}</td>
+                                            <td>{{item.code}}</td>
+                                            <td>{{item.status}}</td>
+                                            <td>{{item.advert}}</td>
+                                            <td>{{item.offerId}}</td>
+                                            <td>
                                                 {{item.trafficSource}}
                                             </td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.rate}}</td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.change}}</td>
-                                            <td style="text-align: center; vertical-align: middle">{{item.clickId}}</td>
+                                            <td>{{item.rate}}</td>
+                                            <td>{{item.change}}</td>
+                                            <td>{{item.clickId}}</td>
                                         </tr>
                                         <tr ng-show="conversions.length !== 0 && conversions !== undefined">
                                             <td style="text-align: left; vertical-align: middle" colspan="15">
@@ -366,11 +360,8 @@
                                         </tr>
                                         <tr ng-show="conversions.length === 0 || conversions === undefined">
                                             <td colspan="15">
-                                                <div class="loader" style="text-align: center;"
-                                                     ng-show="showConversionLoader"></div>
-                                                <div style="text-align: center;" ng-show="!showConversionLoader">No
-                                                    data
-                                                </div>
+                                                <div class="loader text-center" ng-show="showConversionLoader"></div>
+                                                <div class="text-center" ng-show="!showConversionLoader">No data</div>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -400,11 +391,8 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Conversion details</h4>
                 </div>
-                <div class="modal-body">
-
-                </div>
+                <div class="modal-body"></div>
                 <div class="modal-footer">
-
                 </div>
             </div>
         </div>
