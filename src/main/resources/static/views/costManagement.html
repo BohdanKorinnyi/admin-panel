@@ -73,7 +73,8 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                        <input type="text" class="form-control" placeholder="Search..." ng-model="searchFilter">
+                                        <input type="text" class="form-control" placeholder="Search..."
+                                               ng-model="searchFilter">
                                     </div>
                                 </div>
 
@@ -93,7 +94,8 @@
                                                            md-placeholder="From"></md-datepicker>
                                         </div>
 
-                                        <div class="col-md-6" style="width: 225px; margin-left: -25px;margin-bottom: 15px;">
+                                        <div class="col-md-6"
+                                             style="width: 225px; margin-left: -25px;margin-bottom: 15px;">
                                             <md-datepicker ng-model="dpToDate"
                                                            date-format="yyyy-MM-dd"
                                                            ng-disabled="selectedInterval !== 'custom'"
@@ -115,6 +117,12 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
+                        <div class="pull-right">
+                            <button class="btn btn-success btn-sm btn-fill" ng-click="addCost();"
+                                    style="z-index: 10000; position: relative">
+                                Create
+                            </button>
+                        </div>
                         <h4 class="card-title">All Costs</h4>
                     </div>
                     <div class="card-content">
@@ -125,27 +133,16 @@
                                 </div>
                                 <div class="fixed-table-body">
                                     <div class="fixed-table-loading" style="top: 41px;">Loading, please wait...</div>
-                                    <table id="bootstrap-table" class="table table-hover">
+                                    <table id="bootstrap-table" class="table">
                                         <thead>
                                         <tr>
-                                            <th style="text-align: left!important;">
-                                                <a ng-click="addCost();">
-                                                    <i class="fa fa-plus fa-1x" aria-hidden="true"
-                                                       style="vertical-align: middle!important;">
-                                                    </i>
-                                                    Buyer name
-                                                </a>
-                                            </th>
-                                            <th>
-                                                <a>
-                                                    Date
-                                                </a>
-                                            </th>
+                                            <th><a>Buyer name</a></th>
+                                            <th><a>Date</a></th>
                                             <th><a>Spent</a></th>
                                             <th><a>Description</a></th>
                                             <th><a>Type</a></th>
-                                            <th><a>Create date</a></th>
-                                            <th><a>Update date</a></th>
+                                            <th><a>Create</a></th>
+                                            <th><a>Update</a></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -159,7 +156,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="form-group" style="width: 80%!important;">
-                                                        <select class="form-control" ng-model="c.buyer"
+                                                        <select class="form-control white-input-no-border" ng-model="c.buyer"
                                                                 ng-change="updateBuyerName(c.id);"
                                                                 style="width: 98%!important;">
                                                             <option ng-repeat="b in buyerNames"
@@ -175,16 +172,17 @@
                                                     <md-datepicker ng-model="c.date"
                                                                    date-format="yyyy-MM-dd"
                                                                    ng-change="updateDate(c.id);"
+                                                                   md-hide-icons="calendar"
                                                                    md-placeholder="Enter date"></md-datepicker>
                                                 </div>
                                             </td>
                                             <td>
-                                                <input type="number" class="form-control" placeholder="Spent"
+                                                <input type="number" class="form-control white-input-no-border" placeholder="Spent"
                                                        ng-model="c.sum"
                                                        ng-change="updateSum(c.id);"/>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" placeholder="Description"
+                                                <input type="text" class="form-control white-input-no-border" placeholder="Description"
                                                        ng-model="c.description"
                                                        style="border: 1px solid white; background-color: white;"
                                                        ng-disabled="disableDescription"/>
@@ -192,7 +190,7 @@
                                             <td style="text-align: right!important; padding-right: 10px!important;">
                                                 <form class="form-inline">
                                                     <div class="form-group" style="width:80%!important;">
-                                                        <select class="form-control" ng-model="c.name"
+                                                        <select class="form-control white-input-no-border" ng-model="c.name"
                                                                 ng-change="updateType(c.id);"
                                                                 style="width: 100%!important; margin-left: -20px;">
                                                             <option ng-repeat="t in types"
@@ -219,8 +217,11 @@
                                         </tr>
                                         <tr ng-show="costs.length == 0">
                                             <td colspan="7">
-                                                <div class="loader" style="text-align: center;" ng-show="showCostManagementLoader"></div>
-                                                <div style="text-align: center;" ng-show="!showCostManagementLoader">No data</div>
+                                                <div class="loader" style="text-align: center;"
+                                                     ng-show="showCostManagementLoader"></div>
+                                                <div style="text-align: center;" ng-show="!showCostManagementLoader">No
+                                                    data
+                                                </div>
                                             </td>
                                         </tr>
                                         </tbody>

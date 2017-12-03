@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -17,6 +19,6 @@ public final class Expenses {
 
     private Integer typeId;
     private String description;
-    private LocalDate create;
-    private LocalDate update;
+    private Date dateCreate;
+    private Date dateChange;
 }

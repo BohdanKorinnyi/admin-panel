@@ -1,3 +1,8 @@
+.pagination-size {
+    border: none;
+    background-color: white;
+}
+
 .content-backdown {
     margin-top: 25px;
 }
@@ -13,6 +18,7 @@
     vertical-align: middle;
 }
 
-.perfect-scrollbar-on .sidebar .sidebar-wrapper, .sidebar .sidebar-wrapper, .perfect-scrollbar-on .main-panel, .main-panel {
-    overflow: auto !important;
+.white-input-no-border {
+    border: none !important;
+    background-color: white;
 }

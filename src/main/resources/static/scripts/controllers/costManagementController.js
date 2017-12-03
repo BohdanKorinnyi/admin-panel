@@ -74,6 +74,8 @@ Application.controller("costManagementController", function ($scope, $http, date
             .then(function successCallback(response) {
                 $scope.costs = response.data.data;
                 for (var i = 0; i < $scope.costs.length; i++) {
+                    $scope.costs[i].create = new Date($scope.costs[i].dateCreate).toLocaleDateString();
+                    $scope.costs[i].update = new Date($scope.costs[i].dateChange).toLocaleDateString();
                     for (var j = 0; j < $scope.buyerNames.length; j++) {
                         if ($scope.costs[i].buyerId === $scope.buyerNames[j].id) {
                             $scope.costs[i].buyer = $scope.buyerNames[j].name;
