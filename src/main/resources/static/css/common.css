@@ -24,5 +24,15 @@
 }
 
 .sidebar{
-    z-index: 2!important;
+    z-index: 1056!important;
 }
+
+.sidebar:hover{
+    z-index: 1058!important;
+}
+
+
+.main-panel{
+    z-index: 1056!important;
+}
+
