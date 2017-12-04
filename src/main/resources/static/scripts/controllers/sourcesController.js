@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-Application.controller("sourcesController", function ($scope, $http, dateFactory) {
+Application.controller('sourcesController', function ($scope, $http, dateFactory) {
 
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
@@ -11,7 +11,7 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
     $scope.postbacks = [];
     $scope.showsourcesLoader = true;
     $scope.hideBuyerSelect = false;
-    $scope.role = "";
+    $scope.role = '';
 
     $scope.buyerDetails = false;
     $scope.dateDetails = true;
@@ -34,8 +34,8 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
         'Custom Range': 'custom'
     };
     $scope.selectedDate = 'no-date';
-    $scope.dpFromDate = "";
-    $scope.dpToDate = "";
+    $scope.dpFromDate = '';
+    $scope.dpToDate = '';
 
     function formatDate(date) {
         var d = new Date(date),
@@ -47,30 +47,29 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
         if (day.length < 2) day = '0' + day;
 
         return [year, month, day].join('-');
-    };
+    }
 
     $scope.getRole = function () {
         var request = new XMLHttpRequest();
-        request.open('GET', '/user/me', false);  // `false` makes the request synchronous
+        request.open('GET', '/user/me', false);
         request.send(null);
-
         if (request.status === 200) {
             var z = JSON.parse(request.response);
             $scope.role = z.authorities[0].authority;
-            //localStorage.setItem('role', $scope.role);
         }
     };
 
     $scope.initsources = function () {
-        var url = "/statistic/buyers";
+        var url = '/statistic/buyers';
         $scope.getRole();
         $scope.sources = [];
         $scope.showsourcesLoader = true;
-        if ($scope.role === "BUYER") {
+        if ($scope.role === 'BUYER') {
             $scope.hideBuyerSelect = true;
         }
         $http.get(url).then(function (response) {
             $scope.sources = response.data;
+            $scope.calculate();
             $scope.showsourcesLoader = false;
         }, function () {
             $scope.showsourcesLoader = false;
@@ -79,11 +78,12 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
     };
 
     $scope.applySources = function () {
-        var url = "/statistic/buyers?buyerIds="+ $scope.getGridDetails();
+        var url = '/statistic/buyers?buyerIds=' + $scope.getGridDetails();
         $scope.sources = [];
         $scope.showsourcesLoader = true;
         $http.get(url).then(function (response) {
             $scope.sources = response.data;
+            $scope.calculate();
             $scope.showsourcesLoader = false;
         }, function () {
             $scope.showsourcesLoader = false;
@@ -93,15 +93,15 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
 
 
     $scope.getDataDetails = function (buyerId, date) {
-        var url = "/statistic/date?buyerId=" + buyerId + "&date=" + date;
+        var url = '/statistic/date?buyerId=' + buyerId + '&date=' + date;
         var request = new XMLHttpRequest();
         request.open('GET', url, false);
         request.send(null);
         if (request.status === 200) {
             var z = JSON.parse(request.response);
             for (var i = 0; i < $scope.sources.length; i++) {
-                if($scope.sources[i].buyerId === buyerId){
-                    for(var j = 0; j<$scope.sources[i].data.length; j++){
+                if ($scope.sources[i].buyerId === buyerId) {
+                    for (var j = 0; j < $scope.sources[i].data.length; j++) {
                         if ($scope.sources[i].data[j].date === date) {
                             $scope.sources[i].data[j].dateDetails = z;
                             break;
@@ -113,24 +113,22 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
     };
 
     $scope.getGridDetails = function () {
-        var fromDate = "";
-        var toDate = "";
+        var fromDate = '';
+        var toDate = '';
         if ($scope.selectedDate !== 'no-date') {
             if ($scope.selectedDate === 'custom') {
                 fromDate = formatDate($scope.dpFromDate);
                 toDate = formatDate($scope.dpToDate);
-            }
-            else {
+            } else {
                 fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
                 toDate = formatDate(dateFactory.pickDateTo($scope.selectedDate));
             }
         }
-
-        return $scope.selectedBuyerNames+"&from="+fromDate+"&to="+toDate;
+        return $scope.selectedBuyerNames + '&from=' + fromDate + '&to=' + toDate;
     };
 
     $scope.getBuyers = function () {
-        var url = "/buyer";
+        var url = '/buyer';
         $http.get(url).then(function success(response) {
             $scope.buyerNames = response.data;
         }, function fail(response) {
@@ -144,28 +142,35 @@ Application.controller("sourcesController", function ($scope, $http, dateFactory
         if ($scope.id === id) {
             $scope.buyerDetails = false;
             $scope.id = -1;
-        }
-        else {
+        } else {
             $scope.buyerDetails = true;
             $scope.id = id;
         }
     };
 
-    $scope.buyerDate = "";
+    $scope.buyerDate = '';
 
     $scope.showBuyerByDateDetailsColumn = function (id, date) {
         if ($scope.buyerDate === date) {
             $scope.dateDetails = false;
-            $scope.buyerDate = "";
-        }
-        else {
+            $scope.buyerDate = '';
+        } else {
             $scope.getDataDetails(id, date);
             $scope.dateDetails = true;
             $scope.buyerDate = date;
         }
     };
+
+    $scope.calculate = function () {
+        for (var i = 0; i < $scope.sources.length; i++) {
+            var revenue = 0;
+            var spent = 0;
+            for (var j = 0; j < $scope.sources[i].data.length; j++) {
+                spent += $scope.sources[i].data[j].spent;
+                revenue += $scope.sources[i].data[j].revenue;
+            }
+            $scope.sources[i].revenue = revenue.toFixed(2);
+            $scope.sources[i].spent = spent.toFixed(2);
+        }
+    };
 });
-
-
-
-
