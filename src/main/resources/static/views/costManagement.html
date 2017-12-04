@@ -41,7 +41,7 @@
                                      style="margin-right:-3px;margin-bottom: 3px; margin-left: 5px;">
                                     <select ng-hide="hideBuyerSelect"
                                             class="selectpicker" multiple
-                                            data-style="btn-info btn-fill btn-block btn-sm"
+                                            data-style="btn-info btn-fill btn-block"
                                             data-size="5"
                                             title="Buyer"
                                             data-header="Buyers"
@@ -56,7 +56,7 @@
                                 <div class="form-group"
                                      style="margin-bottom: 3px; margin-left: 5px; margin-right: 5px;">
                                     <select class="selectpicker" multiple
-                                            data-style="btn-info btn-fill btn-block btn-sm"
+                                            data-style="btn-info btn-fill btn-block"
                                             data-size="5"
                                             data-header="Types"
                                             selected-header="options selected"
@@ -72,14 +72,14 @@
 
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                        <input type="text" class="form-control input-sm" placeholder="Search..."
+                                        <div class="input-group-addon white-input-no-border"><i class="fa fa-search"></i></div>
+                                        <input type="text" class="form-control white-input-no-border" placeholder="Search..."
                                                ng-model="searchFilter">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <select class="form-control form-control-sm" data-ng-model="selectedInterval"
+                                    <select class="form-control white-input-no-border" data-ng-model="selectedInterval"
                                             data-ng-options="v as k for (k, v) in dateInterval"
                                             style="margin-bottom: 14px;">
                                     </select>
@@ -126,7 +126,7 @@
                         <h4 class="card-title">All Costs</h4>
                     </div>
                     <div class="card-content">
-                        <div class="card-content table-responsive table-full-width">
+                        <div class="card-content table-responsive table-full-width" style="margin-top: -15px">
                             <table class="table cost-management-table">
                                 <thead>
                                 <tr>

@@ -17,9 +17,6 @@
     <div class="content content-backdown">
         <div class="row margin-backdown">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Report Filters</h4>
-                </div>
                 <div class="card-content">
                     <div class="row">
                         <div class="col-md-9">
@@ -38,7 +35,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control" data-ng-model="selectedDate"
+                                        <select class="form-control white-input-no-border" data-ng-model="selectedDate"
                                                 data-ng-options="v as k for (k, v) in dateOptions"
                                                 style="margin-bottom: 14px;">
                                         </select>
@@ -78,14 +75,14 @@
         </div>
     </div>
 
-    <div class="content content-backdown">
+    <div class="content">
         <div class="row margin-backdown">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Report</h4>
                 </div>
                 <div class="card-content">
-                    <div class="card-content table-responsive table-full-width">
+                    <div class="card-content table-responsive table-full-width" style="margin-top: -25px">
                         <table class="table">
                             <thead>
                             <tr class="text-center" style="vertical-align: middle">
@@ -120,10 +117,16 @@
                             <tbody ng-repeat="item in sources">
                             <tr>
                                 <td style="text-align: left; cursor: pointer;"
-                                    colspan="5" data-toggle="collapse"
+                                    colspan="3" data-toggle="collapse"
                                     ng-click="showBuyerDetailsColumn(item.buyerId);">
                                     <strong class="panel-heading">Buyer: {{item.buyer}} <i
                                             class="ti-angle-down"></i></strong></td>
+                                <td class="text-center">
+                                    <strong class="panel-heading">{{item.spent}}</strong>
+                                </td>
+                                <td class="text-center">
+                                    <strong class="panel-heading">{{item.revenue}}</strong>
+                                </td>
                             </tr>
 
                             <tr style="text-align: left; vertical-align: middle"
@@ -132,7 +135,7 @@
                                 <td style="cursor: pointer; text-align: left;"
                                     data-toggle="collapse" colspan="3"
                                     ng-click="showBuyerByDateDetailsColumn(item.buyerId, d.date);">
-                                    <strong style="text-align: left!important;">Date: {{d.date}}
+                                    <strong style="margin-left: 35px!important;">Date: {{d.date}}
                                         <i class="ti-angle-down"></i></strong>
                                 </td>
                                 <td style="text-align: center;"><strong>{{d.spent}}</strong></td>

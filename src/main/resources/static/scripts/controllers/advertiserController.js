@@ -82,18 +82,10 @@ Application.controller("advertiserController", function ($scope, $http) {
         }
         $scope.advertisersStatuses = [];
         $http.put("advertiser/update", parameters).then(function successCallback() {
-            swal(
-                'Updated successfully',
-                'Statuses and advertisers have updated!',
-                'success'
-            );
+            notify('ti-alert', 'Updated successfully', 'success');
             $scope.cancelAdvertisersData();
         }, function errorCallback() {
-            swal(
-                'Update failed',
-                'Error occurred during saving data',
-                'error'
-            );
+            notify('ti-alert', 'Update failed', 'danger')
             $scope.cancelAdvertisersData();
         });
         $scope.advertiserStatuses = [];
