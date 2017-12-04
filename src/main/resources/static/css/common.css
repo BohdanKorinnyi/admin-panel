@@ -20,7 +20,7 @@
 
 .white-input-no-border {
     border: none !important;
-    background-color: white;
+    background-color: white!important;
 }
 
 .sidebar{
