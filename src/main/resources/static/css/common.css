@@ -24,16 +24,16 @@
 }
 
 .sidebar{
-    z-index: 1056!important;
+    z-index: 100!important;
 }
 
 .sidebar:hover{
-    z-index: 1058!important;
+    z-index: 102!important;
 }
 
 
 .main-panel{
-    z-index: 1056!important;
+    z-index: 100!important;
 }
 
 body .modal-open {
