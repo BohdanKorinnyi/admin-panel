@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 import static com.omnia.admin.service.impl.SourceStatsServiceImpl.EMPTY_STATS_MAP;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 public interface SourceStatsService {
     Map<Integer, SourcesResult> getDailyAndGeneralStatistics(StatisticFilter filter);
@@ -44,6 +45,7 @@ public interface SourceStatsService {
             return EMPTY_STATS_MAP;
         }
         return sources.stream()
+                .filter(source -> nonNull(source.getBuyerId()))
                 .collect(Collectors.groupingBy(Source::getBuyerId, Collectors.toList()));
     }
 

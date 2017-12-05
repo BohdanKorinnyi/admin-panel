@@ -6,6 +6,7 @@ import com.omnia.admin.model.Source;
 import com.omnia.admin.model.SourceStat;
 import com.omnia.admin.service.QueryHelper;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,7 @@ import java.util.StringJoiner;
 
 import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 
+@Log4j
 @Repository
 @AllArgsConstructor
 public class SourceStatisticDaoImpl implements SourceStatisticDao {
@@ -42,7 +44,8 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
 
     @Override
     public List<Source> getStatistics(StatisticFilter filter) {
-        return jdbcTemplate.query(updateWhereClause(SELECT_STATISTIC, filter), BeanPropertyRowMapper.newInstance(Source.class));
+        String sql = updateWhereClause(SELECT_STATISTIC, filter);
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Source.class));
     }
 
     @Override

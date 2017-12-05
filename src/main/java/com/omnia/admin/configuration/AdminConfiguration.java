@@ -34,7 +34,7 @@ public class AdminConfiguration {
     public static final String DB_PORT_KEY = "db_port";
     public static final String MYSQL_HOST = "jdbc:mysql://";
     public static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
-    public static final String MYSQL_CONNECTION_PROPERTIES = "?useSSL=false&createDatabaseIfNotExist=true&autoReconnect=true";
+    public static final String MYSQL_CONNECTION_PROPERTIES = "?useSSL=false&createDatabaseIfNotExist=true&autoReconnect=true&characterEncoding=UTF-8";
     public static final String COLUMN = ":";
     public static final String SLASH = "/";
 
