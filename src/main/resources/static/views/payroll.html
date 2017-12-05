@@ -1,5 +1,5 @@
 <div ng-controller="payrollController" ng-init="getBuyers(); getCurrency(); getDescription();loadPayrolls();"
-     class="main-panel" ng-style="style()" resize >
+     class="main-panel" ng-style="style();" resize >
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -46,7 +46,7 @@
                                     <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
                                         <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                     </button>
-                                    <select class="form-control" ng-model="p.id"
+                                    <select class="form-control" ng-model="p.buyerId"
                                             style="width: 17%!important;">
                                         <option value="" disabled selected>Buyer</option>
                                         <option ng-repeat="b in buyerOptions"

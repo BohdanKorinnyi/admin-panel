@@ -373,7 +373,7 @@ Application.directive('resize', function ($window) {
 
             scope.style = function () {
                 return {
-                    'height': (newValue.h + 50) + 'px'
+                    'min-height': (newValue.h + 50) + 'px'
                 };
             };
 
@@ -383,6 +383,6 @@ Application.directive('resize', function ($window) {
             scope.$apply();
         });
     }
-})
+});
 
 
