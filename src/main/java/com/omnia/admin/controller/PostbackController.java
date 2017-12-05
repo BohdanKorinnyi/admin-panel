@@ -21,6 +21,11 @@ public class PostbackController {
 
     private final PostbackService postbackService;
 
+    @GetMapping
+    public ResponseEntity getPostbackByConversionId(@RequestParam Integer conversionId) {
+        return ResponseEntity.ok(postbackService.getPostbacksByConversionId(conversionId));
+    }
+
     @GetMapping("fullurl")
     public ResponseEntity getFullUrl(@RequestParam("id") Long postbackId) {
         Optional<String> fullUrl = postbackService.getFullUrl(postbackId);

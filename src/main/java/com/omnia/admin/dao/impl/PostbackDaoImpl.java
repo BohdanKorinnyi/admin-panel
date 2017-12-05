@@ -1,30 +1,22 @@
 package com.omnia.admin.dao.impl;
 
 import com.omnia.admin.dao.PostbackDao;
-import com.omnia.admin.dto.StatisticFilter;
 import com.omnia.admin.exception.QueryExecutionException;
-import com.omnia.admin.service.PostbackStats;
-import com.omnia.admin.service.QueryHelper;
+import com.omnia.admin.model.Postback;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.StringJoiner;
-
-import static com.omnia.admin.grid.filter.FilterConstant.EMPTY;
 
 @Log4j
 @Repository
 @AllArgsConstructor
 public class PostbackDaoImpl implements PostbackDao {
-    private static final String SELECT_POSTBACK = QueryHelper.loadQueryFromFile("postback.sql");
     private static final String SELECT_FULL_URL_BY_ID = "SELECT fullurl FROM postback WHERE id = ?;";
     private static final String SELECT_BUYER_REVENUE = "SELECT " +
             "  TRUNCATE(sum(postback.sum / " +
@@ -33,7 +25,7 @@ public class PostbackDaoImpl implements PostbackDao {
             "                WHERE exchange.id = postback.exchange) * " +
             "               (SELECT exchange.count " +
             "                FROM exchange " +
-            "                WHERE exchange.id = postback.exchange)), 2) AS 'revenue'"+
+            "                WHERE exchange.id = postback.exchange)), 2) AS 'revenue'" +
             "FROM postback " +
             "  INNER JOIN affiliates ON affiliates.afid = postback.afid " +
             "  INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
@@ -41,6 +33,11 @@ public class PostbackDaoImpl implements PostbackDao {
             "  INNER JOIN adv_status ON adv_status.adv_id = adverts.id " +
             "WHERE " +
             "  adv_status.real_status = 'approved' AND postback.status = adv_status.name AND postback.sum != 0 AND buyers.id = ? AND month(postback.date) = month(now())";
+
+    private static final String POSTBACK_BY_CONVERSION = "SELECT postback.* " +
+            "FROM conversions_postback " +
+            "  INNER JOIN postback ON conversions_postback.postback_id = postback.id " +
+            "WHERE conversions_postback.conversion_id = ?;";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -59,20 +56,12 @@ public class PostbackDaoImpl implements PostbackDao {
     }
 
     @Override
-    public List<PostbackStats> getStats(StatisticFilter filter) {
-        String buyerWhere = EMPTY;
-        String dateWhere = EMPTY;
-        if (!CollectionUtils.isEmpty(filter.getBuyers())) {
-            buyerWhere = " AND buyers.id IN (" + StringUtils.collectionToCommaDelimitedString(filter.getBuyers()) + ") ";
-        }
-        if (!StringUtils.isEmpty(filter.getFrom()) && !StringUtils.isEmpty(filter.getTo())) {
-            dateWhere = " AND date BETWEEN '" + filter.getFrom() + "' AND '" + filter.getTo() + "' ";
-        }
-        return jdbcTemplate.query(String.format(SELECT_POSTBACK, buyerWhere, dateWhere), BeanPropertyRowMapper.newInstance(PostbackStats.class));
+    public Float getRevenueByBuyer(int buyerId) {
+        return jdbcTemplate.queryForObject(SELECT_BUYER_REVENUE, Float.class, buyerId);
     }
 
     @Override
-    public Float getRevenueByBuyer(int buyerId) {
-        return jdbcTemplate.queryForObject(SELECT_BUYER_REVENUE, Float.class, buyerId);
+    public List<Postback> findPostbackByConversionId(long conversionId) {
+        return jdbcTemplate.query(POSTBACK_BY_CONVERSION, BeanPropertyRowMapper.newInstance(Postback.class), conversionId);
     }
 }
