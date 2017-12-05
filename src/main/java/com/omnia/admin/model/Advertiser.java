@@ -13,4 +13,5 @@ public class Advertiser {
     private String url;
     private String apiKey;
     private Long risk;
+    private Integer timezone;
 }

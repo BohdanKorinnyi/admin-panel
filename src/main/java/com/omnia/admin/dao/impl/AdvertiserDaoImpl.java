@@ -21,8 +21,8 @@ public class AdvertiserDaoImpl implements AdvertiserDao {
 
     private static final String SELECT_ALL_ADVERTISERS = "SELECT * FROM adverts;";
     private static final String SELECT_ALL_ADVERTISER_NAMES = "SELECT advshortname FROM adverts ORDER BY advshortname ASC;";
-    private static final String INSERT_ADVERTISER = "INSERT INTO adverts (advname, advshortname, secretkey, url, api_key, risk) VALUES (?, ?, ?, ?, ?, ?);";
-    private static final String UPDATE_ADVERTISER = "UPDATE adverts SET advname = ?, advshortname = ?, secretkey = ?, url = ?, risk = ?, api_key = ? WHERE id = ?;";
+    private static final String INSERT_ADVERTISER = "INSERT INTO adverts (advname, advshortname, secretkey, url, api_key, risk, timezone) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private static final String UPDATE_ADVERTISER = "UPDATE adverts SET advname = ?, advshortname = ?, secretkey = ?, url = ?, risk = ?, api_key = ?, timezone = ? WHERE id = ?;";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -47,6 +47,7 @@ public class AdvertiserDaoImpl implements AdvertiserDao {
             ps.setString(4, advertiser.getUrl());
             ps.setString(5, advertiser.getApiKey());
             ps.setLong(6, isNull(advertiser.getRisk()) ? 0 : advertiser.getRisk());
+            ps.setInt(7, advertiser.getTimezone());
             return ps;
         }, keyHolder);
         return keyHolder.getKey();
@@ -55,6 +56,8 @@ public class AdvertiserDaoImpl implements AdvertiserDao {
     @Override
     public void update(AdvertiserDto advertiser) {
         jdbcTemplate.update(UPDATE_ADVERTISER, advertiser.getAdvname(), advertiser.getAdvshortname(),
-                advertiser.getSecretKey(), advertiser.getUrl(), advertiser.getRisk(), advertiser.getApiKey(), advertiser.getId());
+                advertiser.getSecretKey(), advertiser.getUrl(), advertiser.getRisk(),
+                advertiser.getApiKey(), advertiser.getTimezone(), advertiser.getId()
+        );
     }
 }
