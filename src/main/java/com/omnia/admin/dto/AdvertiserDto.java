@@ -16,4 +16,5 @@ public class AdvertiserDto {
     private String apiKey;
     private Integer risk;
     private List<AdvertiserStatusDto> statuses;
+    private Integer timezone;
 }
