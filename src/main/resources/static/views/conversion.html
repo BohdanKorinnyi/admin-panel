@@ -104,22 +104,26 @@
                             <div class="col-md-12 form-group">
                                 <form class="form-inline">
                                     <div class="form-group">
-                                        <input type="text" placeholder="Aff.network" class="form-control white-input-no-border"
+                                        <input type="text" placeholder="Aff.network"
+                                               class="form-control white-input-no-border"
                                                ng-model="selectedAffNetworkValue"
                                                style=" width: 150px;"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" placeholder="Status" class="form-control white-input-no-border"
+                                        <input type="text" placeholder="Status"
+                                               class="form-control white-input-no-border"
                                                ng-model="selectedStatusValue"
                                                style=" width: 150px;"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" placeholder="Prefix" class="form-control white-input-no-border"
+                                        <input type="text" placeholder="Prefix"
+                                               class="form-control white-input-no-border"
                                                ng-model="selectedPrefixValue"
                                                style=" width: 150px;"/>
                                     </div>
                                     <div class="form-group ">
-                                        <input type="text" placeholder="Offer Name" class="form-control white-input-no-border"
+                                        <input type="text" placeholder="Offer Name"
+                                               class="form-control white-input-no-border"
                                                ng-model="selectedOfferNameValue"
                                                style=" width: 150px;"/>
                                     </div>
@@ -327,7 +331,8 @@
                                         </thead>
                                         <tbody>
                                         <tr data-toggle="modal" ng-repeat="item in conversions"
-                                            ng-show="conversions.length !== 0" ng-click="clickRow(item)"
+                                            ng-show="conversions.length !== 0"
+                                            ng-click="getRowInfo(item.conversionId);"
                                             data-target="#conversions-modal">
                                             <td>
                                                 {{item.conversionId}}
@@ -340,7 +345,7 @@
                                             <td>{{item.code}}</td>
                                             <td>{{item.status}}</td>
                                             <td>{{item.advert}}</td>
-                                            <td class="text-nowrap" {{item.offerId}}
+                                            <td class="text-nowrap" {{item.offerId}}>
                                             </td>
                                             <td>
                                                 {{item.trafficSource}}
@@ -381,13 +386,46 @@
     </div>
 
     <div id="conversions-modal" class="modal fade" role="dialog" style="background: rgba(0, 0, 0, 0.6);">
-        <div class="modal-dialog" style="width:70%;">
+        <div class="modal-dialog" style="width:90%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Conversion details</h4>
+                    <h4 class="modal-title">Conversion's postbacks</h4>
                 </div>
-                <div class="modal-body"></div>
+                <div class="modal-body">
+                    <div class="card-content table-responsive table-full-width">
+                        <table class="table" style="margin-bottom: 0!important;">
+                            <thead>
+                            <th><a>Prefix</a></th>
+                            <th><a>Afid</a></th>
+                            <th><a>Date</a></th>
+                            <th><a>Time</a></th>
+                            <th><a>Currency</a></th>
+                            <th><a>Status</a></th>
+                            <th><a>Offer Id</a></th>
+                            <th><a>Offer Name</a></th>
+                            <th><a>Click Id</a></th>
+                            <th><a>Transaction Id</a></th>
+                            <th><a>Duplicate</a></th>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in rowInfo">
+                                <td>{{item.prefix}}</td>
+                                <td>{{item.afid}}</td>
+                                <td>{{item.date}}</td>
+                                <td>{{item.time}}</td>
+                                <td>{{item.currency}}</td>
+                                <td>{{item.status}}</td>
+                                <td>{{item.offerId}}</td>
+                                <td>{{item.offerName}}</td>
+                                <td>{{item.clickId}}</td>
+                                <td>{{item.transactionId}}</td>
+                                <td>{{item.duplicate}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <div class="modal-footer">
                 </div>
             </div>
