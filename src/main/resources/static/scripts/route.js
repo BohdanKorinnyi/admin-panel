@@ -93,7 +93,8 @@ var checkRoutingForHomePage = function ($q, $rootScope, $location) {
         var z = JSON.parse(request.response);
         var role = z.authorities[0].authority;
         localStorage.setItem('role', role);
-        if (role === 'DIRECTOR' || role === 'CFO' || role === 'CBO') {
+        if (role === 'ADMIN' || role === 'ROLE_ADMIN'
+            || role === 'DIRECTOR' || role === 'CFO' || role === 'CBO') {
             $location.path('/cbo');
         }
         else if (role === 'BUYER') {
