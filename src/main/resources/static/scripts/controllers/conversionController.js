@@ -141,8 +141,13 @@ Application.controller('conversionController', function ($scope, $http, dateFact
         });
     };
 
-    $scope.clickRow = function (payroll) {
-      //TODO:show something
+    $scope.rowInfo = "";
+
+    $scope.getRowInfo = function(id){
+        var url = "/postback?conversionId=" + id;
+        $http.get(url).then(function successCallback(response) {
+            $scope.rowInfo = response.data;
+        });
     };
 });
 
