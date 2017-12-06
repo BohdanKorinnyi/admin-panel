@@ -26,7 +26,10 @@ Application.config(['$routeProvider', function ($routeProvider) {
         })
         .when('/cbo', {
             templateUrl: 'views/arbitratorExecutive.html',
-            controller: 'arbitratorExecutiveController'
+            controller: 'arbitratorExecutiveController',
+            resolve: {
+                factory: checkRoutingForHomePage
+            }
         })
         .when('/arbitrator', {
             templateUrl: 'views/arbitratorHomeScreen.html',
@@ -75,6 +78,27 @@ var checkRouting = function ($q, $rootScope, $location) {
         }
         else if (role === 'BUYER') {
             $location.path('/buyer/dashboard');
+        }
+        else {
+            $location.path('/');
+        }
+    }
+};
+
+var checkRoutingForHomePage = function ($q, $rootScope, $location) {
+    var request = new XMLHttpRequest();
+    request.open('GET', '/user/me', false);
+    request.send(null);
+    if (request.status === 200) {
+        var z = JSON.parse(request.response);
+        var role = z.authorities[0].authority;
+        localStorage.setItem('role', role);
+        if (role === 'ADMIN' || role === 'ROLE_ADMIN'
+            || role === 'DIRECTOR' || role === 'CFO' || role === 'CBO') {
+            $location.path('/cbo');
+        }
+        else if (role === 'BUYER') {
+            $location.path('/arbitrator');
         }
         else {
             $location.path('/');

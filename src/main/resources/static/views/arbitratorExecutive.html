@@ -1,70 +1,139 @@
-<div ng-controller="arbitratorExecutiveController">
-    <div class="row" style="margin-top: 10%">
+<div ng-controller="arbitratorExecutiveController" class="main-panel">
 
-        <div class="col-lg-2 col-sm-6">
-            <div class="card card-circle-chart" data-background-color="blue">
-                <div class="card-header text-center">
-                    <h5 class="card-title">Result</h5>
-                    <p class="description">The sum of all verified conversions by the advertiser for the past month</p>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-minimize">
+                <button class="btn btn-fill btn-icon" onclick="sidebarChange()"><i class="ti-menu"></i></button>
+            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand">
+                    CBO Home Screen
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="row" style="margin-left: 15px; margin-right: 15px; margin-top: 25px">
+            <div class="col-lg-5 col-sm-6">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="icon-big icon-success text-center">
+                                    <i class="ti-pulse"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="numbers">
+                                    <p>Verified conversions by the advertiser</p>
+                                    $ 100
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <hr />
+                        <div class="stats">
+                            <i class="ti-reload"></i> Past month
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <div class="chart-circle" data-percent="70">70%</div>
+            </div>
+            <div class="col-lg-7 col-sm-6">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="icon-big icon-warning text-center">
+                                    <i class="ti-calendar"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="numbers">
+                                    <p>Confirmed conversions for each
+                                        bayer with the total amount</p>
+                                    $ 100
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <hr />
+                        <div class="stats">
+                            <i class="ti-reload"></i> Current month
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-2 col-sm-6">
-            <div class="card card-circle-chart" data-background-color="blue">
-                <div class="card-header text-center">
-                    <h5 class="card-title">Result</h5>
-                    <p class="description">The sum of all confirmed conversions for the current month for each
-                        bayer with the total amount</p>
+        <div class="row" style="margin-left: 15px; margin-right: 15px">
+            <div class="col-lg-4 col-sm-6">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="icon-big icon-success text-center">
+                                    <i class="ti-money"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="numbers">
+                                    <p>Plan</p>
+                                    $ 100
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <hr />
+                        <div class="stats">
+                            <i class="ti-reload"></i> Current month
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <div id="chartDashboard" class="chart-circle" data-percent="70">70%</div>
+            </div>
+            <div class="col-lg-5 col-sm-6">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="icon-big icon-danger text-center">
+                                    <i class="ti-target"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="numbers">
+                                    <p>Balance before plan execution</p>
+                                    $ 100
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="icon-big icon-info text-center">
+                                    <i class="ti-dashboard"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="numbers">
+                                    <p>Current marginality</p>
+                                   100%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-1 col-sm-6"></div>
-
-        <div class="col-lg-2 col-sm-6">
-            <div class="card card-circle-chart" data-background-color="green">
-                <div class="card-header text-center">
-                    <h5 class="card-title">Result</h5>
-                    <p class="description">Plan for the current month</p>
-                </div>
-                <div class="card-content">
-                    <div id="chartOrders" class="chart-circle" data-percent="34">34%</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-1"></div>
-
-        <div class="col-lg-2 col-sm-6">
-            <div class="card card-circle-chart" data-background-color="orange">
-                <div class="card-header text-center">
-                    <h5 class="card-title">Result</h5>
-                    <p class="description">Balance before plan execution</p>
-                </div>
-                <div class="card-content">
-                    <div id="chartNewVisitors" class="chart-circle" data-percent="62">62%</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2 col-sm-6">
-            <div class="card card-circle-chart" data-background-color="brown">
-                <div class="card-header text-center">
-                    <h5 class="card-title">Result</h5>
-                    <p class="description">Current marginality</p>
-                </div>
-                <div class="card-content">
-                    <div id="chartSubscriptions" class="chart-circle" data-percent="10">10%</div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
