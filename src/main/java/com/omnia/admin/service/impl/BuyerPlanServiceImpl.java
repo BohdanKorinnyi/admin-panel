@@ -6,8 +6,10 @@ import com.omnia.admin.model.BuyerPlan;
 import com.omnia.admin.service.BuyerPlanService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -32,14 +34,17 @@ public class BuyerPlanServiceImpl implements BuyerPlanService {
 
     @Override
     public Float getMarginality(Integer buyerId) throws ExecutionException, InterruptedException {
-        int month = LocalDateTime.now().getMonth().getValue();
+        String month = LocalDateTime.now().getMonth().name();
         CompletableFuture<List<BuyerPlan>> revenuePlanFuture =
-                supplyAsync(() -> buyerPlanDao.getBuyerRevenuePlan(Lists.newArrayList(buyerId), Lists.newArrayList(String.valueOf(month))));
+                supplyAsync(() -> buyerPlanDao.getBuyerRevenuePlan(Lists.newArrayList(buyerId), Lists.newArrayList(month)));
         CompletableFuture<List<BuyerPlan>> profitPlanFuture =
-                supplyAsync(() -> buyerPlanDao.getBuyerProfitPlan(Lists.newArrayList(buyerId), Lists.newArrayList(String.valueOf(month))));
+                supplyAsync(() -> buyerPlanDao.getBuyerProfitPlan(Lists.newArrayList(buyerId), Lists.newArrayList(month)));
         CompletableFuture.allOf(revenuePlanFuture, profitPlanFuture);
         List<BuyerPlan> buyerRevenuePlan = revenuePlanFuture.get();
         List<BuyerPlan> buyerProfitPlan = profitPlanFuture.get();
+        if (CollectionUtils.isEmpty(buyerRevenuePlan) || CollectionUtils.isEmpty(buyerProfitPlan)) {
+            return 0F;
+        }
         Float profit = buyerProfitPlan.get(0).getSum();
         Float revenue = buyerRevenuePlan.get(0).getSum();
         return profit != 0 ? revenue / profit : 0;
