@@ -61,6 +61,11 @@ Application.config(['$routeProvider', function ($routeProvider) {
         .when('/cost/management', {
             templateUrl: 'views/costManagement.html',
             controller: 'costManagementController'
+        })
+        .when('/', {
+            resolve: {
+                factory: checkRoutingForHomePage
+            }
         });
 }]);
 
