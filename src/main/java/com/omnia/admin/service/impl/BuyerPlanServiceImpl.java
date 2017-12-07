@@ -25,6 +25,11 @@ public class BuyerPlanServiceImpl implements BuyerPlanService {
     private final BuyerPlanDao buyerPlanDao;
 
     @Override
+    public Float getBuyerRevenuePlan(Integer buyerId) {
+        return null;
+    }
+
+    @Override
     public List<BuyerPlan> getBuyerPlan(List<Integer> buyers, List<String> month) throws ExecutionException, InterruptedException {
         CompletableFuture<List<BuyerPlan>> revenuePlanFuture = supplyAsync(() -> buyerPlanDao.getBuyerRevenuePlan(buyers, month));
         CompletableFuture<List<BuyerPlan>> profitPlanFuture = supplyAsync(() -> buyerPlanDao.getBuyerProfitPlan(buyers, month));

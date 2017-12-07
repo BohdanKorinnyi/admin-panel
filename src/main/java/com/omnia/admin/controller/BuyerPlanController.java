@@ -3,7 +3,6 @@ package com.omnia.admin.controller;
 import com.omnia.admin.model.Role;
 import com.omnia.admin.service.BuyerPlanService;
 import com.omnia.admin.util.UserPrincipalUtils;
-import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +22,11 @@ import static com.omnia.admin.util.UserPrincipalUtils.getBuyerId;
 @AllArgsConstructor
 public class BuyerPlanController {
     private final BuyerPlanService buyerPlanService;
+
+    @GetMapping("plan/revenue")
+    public ResponseEntity getRevenuePlanByBuyer() {
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("plan")
     public ResponseEntity getPlan(HttpServletRequest request,

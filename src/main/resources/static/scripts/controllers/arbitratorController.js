@@ -1,6 +1,3 @@
-"use strict";
-
-Application.controller("arbitratorController", function ($scope, permission) {
-
+Application.controller("buyerHomeController", function ($scope, permission) {
     $scope.permission = permission;
 });

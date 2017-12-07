@@ -32,8 +32,8 @@ Application.config(['$routeProvider', function ($routeProvider) {
             }
         })
         .when('/home/buyer', {
-            templateUrl: 'views/arbitratorHomeScreen.html',
-            controller: 'arbitratorController'
+            templateUrl: 'views/buyerHomeScreen.html',
+            controller: 'buyerHomeController'
         })
         .when('/statistic', {
             templateUrl: 'views/statistic.html',
