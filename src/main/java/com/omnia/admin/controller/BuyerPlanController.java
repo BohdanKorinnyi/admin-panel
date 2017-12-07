@@ -23,8 +23,19 @@ import static com.omnia.admin.util.UserPrincipalUtils.getBuyerId;
 public class BuyerPlanController {
     private final BuyerPlanService buyerPlanService;
 
+    @GetMapping("marginality")
+    public ResponseEntity getMarginality(HttpServletRequest request) throws ExecutionException, InterruptedException {
+        if (UserPrincipalUtils.isRole(request, Role.BUYER)) {
+            return ResponseEntity.ok(buyerPlanService.getMarginality(getBuyerId(request)));
+        }
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("plan/revenue")
-    public ResponseEntity getRevenuePlanByBuyer() {
+    public ResponseEntity getRevenuePlanByBuyer(HttpServletRequest request) {
+        if (UserPrincipalUtils.isRole(request, Role.BUYER)) {
+            return ResponseEntity.ok(buyerPlanService.getBuyerRevenuePlan(getBuyerId(request)));
+        }
         return ResponseEntity.ok().build();
     }
 

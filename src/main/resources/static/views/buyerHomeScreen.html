@@ -1,4 +1,4 @@
-<div ng-controller="buyerHomeController" class="main-panel">
+<div ng-controller="buyerHomeController" class="main-panel" ng-init="init();">
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -29,8 +29,8 @@
                             </div>
                             <div class="col-xs-9">
                                 <div class="numbers">
-                                    <p>Verified by advertiser</p>
-                                    $ 100
+                                    <p>Confirmed</p>
+                                    $ {{confirmed}}
                                 </div>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                     <div class="card-footer">
                         <hr />
                         <div class="stats">
-                            <i class="ti-calendar"></i> Last month
+                            <i class="ti-calendar"></i> Current month
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                             <div class="col-xs-9">
                                 <div class="numbers">
                                     <p>Plan</p>
-                                    $ 100
+                                    $ {{plan}}
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                             <div class="col-xs-9">
                                 <div class="numbers">
                                     <p>Verified</p>
-                                    $ 100
+                                    $ 0
                                 </div>
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                             <div class="col-xs-9">
                                 <div class="numbers">
                                     <p>Estimated premium</p>
-                                    $ 100
+                                    $ 0
                                 </div>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                             <div class="col-xs-9">
                                 <div class="numbers">
                                     <p>Current marginality</p>
-                                    100%
+                                    {{marginality}}%
                                 </div>
                             </div>
                         </div>
@@ -145,7 +145,7 @@
                             <div class="col-xs-9">
                                 <div class="numbers">
                                     <p>Balance</p>
-                                    $ 100
+                                    $ 0
                                 </div>
                             </div>
                         </div>

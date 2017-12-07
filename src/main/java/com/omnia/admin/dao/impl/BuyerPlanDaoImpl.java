@@ -18,6 +18,11 @@ import java.util.StringJoiner;
 @Repository
 @AllArgsConstructor
 public class BuyerPlanDaoImpl implements BuyerPlanDao {
+    private static final String SELECT_BUYER_REVENUE_PLAN_VALUE = "SELECT kpi_value " +
+            "FROM buyers_kpi " +
+            "  INNER JOIN catalog_kpi ON buyers_kpi.kpi_name = catalog_kpi.id " +
+            "WHERE catalog_kpi.name = 'Revenue' AND buyers_kpi.buyer_id = ? AND month(buyers_kpi.date) = month(NOW());";
+
     private static final String SELECT_BUYER_REVENUE_PLAN = "SELECT " +
             "  monthname(buyers_kpi.date)                                       AS 'month', " +
             "  buyers.name                                                      AS 'buyerName', " +
@@ -129,6 +134,16 @@ public class BuyerPlanDaoImpl implements BuyerPlanDao {
                 getWhereClause(buyers, month), getWhereClause(buyers, month)
         );
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(BuyerPlan.class));
+    }
+
+    @Override
+    public Float getBuyerRevenuePlan(Integer buyerId) {
+        try {
+            return jdbcTemplate.queryForObject(SELECT_BUYER_REVENUE_PLAN_VALUE, Float.class, buyerId);
+        } catch (Exception e) {
+            log.debug("Error occurred during getting revenue plan by buyerId=" + buyerId, e);
+            return 0F;
+        }
     }
 
     private String getWhereClause(List<Integer> buyers, List<String> months) {
