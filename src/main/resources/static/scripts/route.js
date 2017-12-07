@@ -24,14 +24,14 @@ Application.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'views/buyers.html',
             controller: 'buyerController'
         })
-        .when('/cbo', {
+        .when('/home', {
             templateUrl: 'views/arbitratorExecutive.html',
             controller: 'arbitratorExecutiveController',
             resolve: {
                 factory: checkRoutingForHomePage
             }
         })
-        .when('/arbitrator', {
+        .when('/home/buyer', {
             templateUrl: 'views/arbitratorHomeScreen.html',
             controller: 'arbitratorController'
         })
@@ -95,10 +95,10 @@ var checkRoutingForHomePage = function ($q, $rootScope, $location) {
         localStorage.setItem('role', role);
         if (role === 'ADMIN' || role === 'ROLE_ADMIN'
             || role === 'DIRECTOR' || role === 'CFO' || role === 'CBO') {
-            $location.path('/cbo');
+            $location.path('/home');
         }
         else if (role === 'BUYER') {
-            $location.path('/arbitrator');
+            $location.path('/home/buyer');
         }
         else {
             $location.path('/');
