@@ -43,3 +43,12 @@ body .modal-open {
 [ng\:cloak], [ng-cloak], .ng-cloak {
     display: none !important;
 }
+
+.card .card-footer{
+    padding: 0 15px 5px!important;
+}
+
+.card-footer-hr{
+    margin-top: 0px!important;
+    margin-bottom: 5px!important;
+}
