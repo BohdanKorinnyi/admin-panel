@@ -1,4 +1,4 @@
-<div ng-controller="buyerHomeController" class="main-panel" ng-init="init();">
+<div ng-controller="buyerHomeController" class="main-panel" ng-init="init();loadPayrolls();getBuyers(); getCurrency();">
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -106,7 +106,7 @@
                             </div>
                             <div class="col-xs-9">
                                 <div class="numbers">
-                                    <p>Estimated premium</p>
+                                    <p style="color:darkgreen;">Spent</p>
                                     $ 0
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                             </div>
                             <div class="col-xs-9">
                                 <div class="numbers">
-                                    <p>Current marginality</p>
+                                    <p style="color:darkred">Profit</p>
                                     {{marginality}}%
                                 </div>
                             </div>
@@ -144,9 +144,92 @@
                             </div>
                             <div class="col-xs-9">
                                 <div class="numbers">
-                                    <p>Balance</p>
+                                    <p style="color:darkred">Bonus</p>
                                     $ 0
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="content">
+            <div class="row margin-backdown" style="margin-left: 15px; margin-right: 15px">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="pull-right">
+                                <select class="form-control pagination-size" data-ng-model="selectedSize"
+                                        data-ng-options="v as k for (k, v) in sizeOptions"
+                                        style="z-index: 10000; position: relative">
+                                </select>
+                            </div>
+                            <h4 class="card-title">Buyers Payrolls</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-content table-responsive table-full-width">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th><a href="">#</a></th>
+                                        <th>
+                                            <a href=""
+                                               ng-click="sortColumn = 'buyer_id';changeOrder();loadPayrolls();">
+                                    <span ng-show="sortColumn == 'buyer_id' && sortReverse == 'ASC'"
+                                          class="fa fa-caret-up"></span>
+                                                <span ng-show="sortColumn == 'buyer_id' && sortReverse == 'DESC'"
+                                                      class="fa fa-caret-down"></span>
+                                                <span ng-show="sortColumn == 'buyer_id' && sortReverse == ''"></span>
+                                                Buyer
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="" ng-click="sortColumn = 'date';changeOrder();loadPayrolls();">
+                                <span ng-show="sortColumn == 'date' && sortReverse == 'ASC'"
+                                      class="fa fa-caret-up"></span>
+                                                <span ng-show="sortColumn == 'date' && sortReverse == 'DESC'"
+                                                      class="fa fa-caret-down"></span>
+                                                <span ng-show="sortColumn == 'date' && sortReverse == ''"></span>
+                                                Date
+                                            </a>
+                                        </th>
+                                        <th><a>Type</a></th>
+                                        <th><a>Sum</a></th>
+                                        <th><a>Currency</a></th>
+                                        <th><a>Description</a></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-show="payrolls.length != 0" ng-repeat="item in payrolls"
+                                        ng-click="clickRow(item)" data-toggle="modal" data-target="#payroll-modal">
+
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.bayerName}}</td>
+                                        <td>{{item.date}}</td>
+                                        <td>{{item.typeName}}</td>
+                                        <td>{{item.sum}}</td>
+                                        <td>{{item.code}}</td>
+                                        <td>{{item.description}}</td>
+                                    </tr>
+                                    <tr ng-show="payrolls.length == 0">
+                                        <td colspan="7">
+                                            <div class="loader text-center" ng-show="showPayrollsLoader"></div>
+                                            <div class="text-center" ng-show="!showPayrollsLoader">No data</div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="fixed-table-pagination text-center" ng-show="payrolls.length != 0">
+                            <div class="pagination">
+                                <uib-pagination total-items="totalPagination" max-size="5"
+                                                ng-model="selectedPage" items-per-page="selectedSize">
+                                </uib-pagination>
                             </div>
                         </div>
                     </div>
