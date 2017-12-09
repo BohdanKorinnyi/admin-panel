@@ -15,13 +15,13 @@ public class PayrollServiceImpl implements PayrollService {
     private final PayrollDao payrollDao;
 
     @Override
-    public Integer countAll() {
-        return payrollDao.countAll();
+    public Integer countAll(Integer buyerId) {
+        return payrollDao.countAll(buyerId);
     }
 
     @Override
-    public List<Payroll> findPayrolls(Page page) {
-        return payrollDao.findPayrolls(page);
+    public List<Payroll> findPayrolls(Page page, Integer buyerId) {
+        return payrollDao.findPayrolls(page, buyerId);
     }
 
     @Override

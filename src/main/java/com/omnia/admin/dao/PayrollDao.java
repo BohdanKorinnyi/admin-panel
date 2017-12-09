@@ -6,9 +6,9 @@ import com.omnia.admin.model.Payroll;
 import java.util.List;
 
 public interface PayrollDao {
-    Integer countAll();
+    Integer countAll(Integer buyerId);
 
-    List<Payroll> findPayrolls(Page page);
+    List<Payroll> findPayrolls(Page page, Integer buyerId);
 
     List<Payroll> findPayrollsByBuyerId(Integer buyerId);
 

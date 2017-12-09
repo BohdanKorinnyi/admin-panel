@@ -2,17 +2,16 @@ package com.omnia.admin.controller;
 
 import com.omnia.admin.dto.PageResponse;
 import com.omnia.admin.grid.Page;
-import com.omnia.admin.model.CurrentUser;
 import com.omnia.admin.model.Payroll;
+import com.omnia.admin.model.Role;
 import com.omnia.admin.service.PayrollService;
+import com.omnia.admin.util.UserPrincipalUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -23,9 +22,17 @@ public class PayrollController {
     private final PayrollService payrollService;
 
     @PostMapping
-    public ResponseEntity getPayrolls(@RequestBody Page page) {
-        Integer total = payrollService.countAll();
-        List<Payroll> payrolls = payrollService.findPayrolls(page);
+    public ResponseEntity getPayrolls(HttpServletRequest request, @RequestBody Page page) {
+        Integer total;
+        List<Payroll> payrolls;
+        if (UserPrincipalUtils.isRole(request, Role.BUYER)) {
+            int buyerId = UserPrincipalUtils.getBuyerId(request);
+            total = payrollService.countAll(buyerId);
+            payrolls = payrollService.findPayrolls(page, buyerId);
+        } else {
+            total = payrollService.countAll(null);
+            payrolls = payrollService.findPayrolls(page, null);
+        }
         return ResponseEntity.ok(new PageResponse(total, page.getNumber(), payrolls));
     }
 

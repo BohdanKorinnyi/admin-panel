@@ -25,7 +25,7 @@ import static java.util.Objects.nonNull;
 public class PayrollDaoImpl implements PayrollDao {
 
     private static final Set<String> SORTED_PAYROLL_COLUMNS = ImmutableSet.of("date", "buyer_id");
-    private static final String ORDER_BY = "ORDER BY %s %s";
+    private static final String ORDER_BY = " ORDER BY %s %s";
     private static final String SELECT_PAYROLLS = "SELECT * FROM payroll ";
     private static final String SELECT_COUNT_PAYROLLS = "SELECT COUNT(*) FROM payroll";
     private static final String UPDATE_PAYROLL = "UPDATE payroll SET buyer_id = ?, date = ?, description = ?, type = ?, sum = ?, currency_id = ? WHERE id = ?;";
@@ -36,18 +36,18 @@ public class PayrollDaoImpl implements PayrollDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public Integer countAll() {
-        return jdbcTemplate.queryForObject(SELECT_COUNT_PAYROLLS, Integer.class);
+    public Integer countAll(Integer buyerId) {
+        return jdbcTemplate.queryForObject(SELECT_COUNT_PAYROLLS + addBuyerFilter(buyerId), Integer.class);
     }
 
     @Override
-    public List<Payroll> findPayrolls(Page page) {
+    public List<Payroll> findPayrolls(Page page, Integer buyerId) {
         String where = EMPTY;
         ColumnOrder columnOrder = page.getColumnOrder();
         if (isValidSortDetails(page.getColumnOrder())) {
             where = String.format(ORDER_BY, columnOrder.getColumn(), columnOrder.getOrder());
         }
-        return jdbcTemplate.query(SELECT_PAYROLLS + where + page.limit(), new BeanPropertyRowMapper<>(Payroll.class));
+        return jdbcTemplate.query(SELECT_PAYROLLS + addBuyerFilter(buyerId) + where + page.limit(), new BeanPropertyRowMapper<>(Payroll.class));
     }
 
     @Override
@@ -106,5 +106,12 @@ public class PayrollDaoImpl implements PayrollDao {
 
     private boolean isValidSortDetails(ColumnOrder columnOrder) {
         return nonNull(columnOrder) && columnOrder.isValid() && SORTED_PAYROLL_COLUMNS.contains(columnOrder.getColumn());
+    }
+
+    private String addBuyerFilter(Integer buyerId) {
+        if (nonNull(buyerId)) {
+            return " WHERE buyer_id = " + buyerId + " ";
+        }
+        return EMPTY;
     }
 }
