@@ -48,6 +48,18 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
             source.addValue("from", "2016-01-01");
             source.addValue("to", "2020-01-01");
             return namedParameterJdbcTemplate.query(SELECT_CHARTS, source, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
+        } else if ("thisMonth".equals(filter) || "lastMonth".equals(filter)) {
+            MapSqlParameterSource source = new MapSqlParameterSource();
+            source.addValue("from", from);
+            source.addValue("to", to);
+            return namedParameterJdbcTemplate.query(SELECT_CHARTS.replaceAll("month\\(", "week\\("),
+                    source, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
+        } else if("lastWeek".equals(filter)) {
+            MapSqlParameterSource source = new MapSqlParameterSource();
+            source.addValue("from", from);
+            source.addValue("to", to);
+            return namedParameterJdbcTemplate.query(SELECT_CHARTS.replaceAll("month\\(", "day\\("),
+                    source, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
         }
         return Collections.emptyList();
     }
