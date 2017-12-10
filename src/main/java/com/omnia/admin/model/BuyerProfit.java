@@ -11,4 +11,5 @@ public class BuyerProfit {
     private Float revenue;
     private Float profit;
     private String buyer;
+    private String date;
 }

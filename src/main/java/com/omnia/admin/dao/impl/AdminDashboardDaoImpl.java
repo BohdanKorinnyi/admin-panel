@@ -38,8 +38,7 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
         }
         String sql = String.format(SELECT_PROFIT, whereClause, whereClause, whereClause, whereClause);
         log.debug("sql by period=" + sql);
-        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(BuyerProfit.class)
-        );
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
     }
 
     @Override
@@ -63,7 +62,6 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
         }
         String sql = String.format(SELECT_TOTAL, DATE_YESTERDAY_FORMAT, DATE_YESTERDAY_FORMAT, DATE_YESTERDAY_FORMAT, DATE_YESTERDAY_FORMAT);
         log.debug("sql yesterday=" + sql);
-        return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(BuyerProfit.class)
-        );
+        return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
     }
 }
