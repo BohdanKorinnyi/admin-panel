@@ -46,8 +46,8 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
     public List<BuyerProfit> findChartData(String from, String to, String filter) {
         if ("allTime".equals(filter)) {
             MapSqlParameterSource source = new MapSqlParameterSource();
-            source.addValue("from", from);
-            source.addValue("to", to);
+            source.addValue("from", "2016-11-01");
+            source.addValue("to", "2020-11-01");
             return namedParameterJdbcTemplate.query(SELECT_CHARTS, source, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
         }
         return Collections.emptyList();
