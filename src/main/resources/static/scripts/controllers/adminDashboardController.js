@@ -17,14 +17,14 @@ Application.controller("adminDashboardController", function ($scope, $http, date
     $scope.profitTotal = 0;
 
     $scope.dateOptions = {
-        'All time': 'all_time',
+        'All time': 'allTime',
         'Today': 'today',
         'Yesterday': 'yesterday',
         'Last 7 days': 'lastWeek',
         'This Month': 'thisMonth',
         'Last Month': 'lastMonth'
     };
-    $scope.selectedDate = 'all_time';
+    $scope.selectedDate = 'allTime';
     $scope.from = "";
     $scope.to = "";
 
@@ -33,7 +33,7 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         $scope.spentTotal = 0;
         $scope.profitTotal = 0;
 
-        if($scope.selectedDate === "all_time"){
+        if($scope.selectedDate === "allTime"){
             $scope.from = "";
             $scope.to = "";
         }
@@ -65,7 +65,7 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         $scope.chartSpentData = [];
         $scope.chartProfitData = [];
 
-        if($scope.selectedDate === "all_time"){
+        if($scope.selectedDate === "allTime"){
             $scope.from = "";
             $scope.to = "";
         }
