@@ -2,6 +2,11 @@
 
 Application.controller("adminDashboardController", function ($scope, $http, dateFactory) {
 
+    $scope.chartData = [];
+    $scope.chartDateData =[];
+    $scope.chartRevData = [];
+    $scope.chartSpentData = [];
+    $scope.chartProfitData = [];
     $scope.adminDashboardData = [];
     $scope.revenueToday = "";
     $scope.revenueYesterday = "";
@@ -54,11 +59,56 @@ Application.controller("adminDashboardController", function ($scope, $http, date
     };
 
     $scope.getChartData = function () {
-        var url = "/admin/dashboard/charts?from=&to=&filter=allTime";
+        $scope.chartData = [];
+        $scope.chartDateData =[];
+        $scope.chartRevData = [];
+        $scope.chartSpentData = [];
+        $scope.chartProfitData = [];
+
+        if($scope.selectedDate === "all_time"){
+            $scope.from = "";
+            $scope.to = "";
+        }
+        else if($scope.selectedDate === "yesterday"){
+            $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
+            $scope.to = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
+        }
+        else{
+            $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
+            $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
+        }
+
+        var url = "/admin/dashboard/charts?from="+$scope.from+"&to="+$scope.to+"&filter="+$scope.selectedDate;
         $http.get(url).then(function success(response) {
-            console.warn(response.data);
+            $scope.chartData = response.data.data;
+            for(var i=0; i<$scope.chartData.length; i++){
+                $scope.chartDateData.push($scope.chartData[i].date);
+                $scope.chartRevData.push($scope.chartData[i].revenue);
+                $scope.chartSpentData.push($scope.chartData[i].spent);
+                $scope.chartProfitData.push($scope.chartData[i].profit);
+            }
+
+            $scope.chartDateData.sort(function(a, b){return a-b});
+            new Chartist.Line('#revenueChart', {
+                labels: $scope.chartDateData,
+                series: [$scope.chartRevData]
+            }, {
+                showArea: true
+            });
+            new Chartist.Line('#spentChart', {
+                labels: $scope.chartDateData,
+                series: [$scope.chartSpentData]
+            }, {
+                showArea: true
+            });
+            new Chartist.Line('#profitChart', {
+                labels: $scope.chartDateData,
+                series: [$scope.chartProfitData]
+            }, {
+                showArea: true
+            });
         }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading dashboard info', 'danger');
+            notify('ti-alert', 'Error occurred during loading chart info', 'danger');
         });
     };
 
@@ -74,32 +124,6 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         $scope.profitTotal = $scope.profitTotal.toFixed(2);
     };
 
-
-    new Chartist.Line('#revenueChart', {
-        labels: [1, 2, 3, 4],
-        series: [[100, 120, 180, 200]]
-    }, {
-        low: 0,
-        showArea: true
-    });
-
-
-    new Chartist.Line('#spentChart', {
-        labels: [1, 2, 3, 4],
-        series: [[100, 120, 180, 200]]
-    }, {
-        low: 0,
-        showArea: true
-    });
-
-
-    new Chartist.Line('#profitChart', {
-        labels: [1, 2, 3, 4],
-        series: [[100, 120, 180, 200]]
-    }, {
-        low: 0,
-        showArea: true
-    });
 });
 
 function formatDate(date) {
