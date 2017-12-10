@@ -1,4 +1,4 @@
-<div ng-controller="adminDashboardController" ng-init="initData();" class="main-panel">
+<div ng-controller="adminDashboardController" ng-init="initData(); getChartData();" class="main-panel">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-minimize">
@@ -47,8 +47,8 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <div class="numbers">
-                                        <p>Spent today</p>
-                                        $ {{spentToday}}
+                                        <p>Profit today</p>
+                                        $ {{revenueToday - spentToday}}
                                     </div>
                                 </div>
                             </div>
@@ -85,11 +85,52 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <div class="numbers">
-                                        <p>Spent yesterday</p>
-                                        $ {{spentYesterday}}
+                                        <p>Profit yesterday</p>
+                                        $ {{revenueYesterday - spentYesterday}}
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-right: 15px;margin-left: 15px">
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="pull-left">
+                            <h4 class="card-title" style="color:green;">Revenue</h4>
+                        </div>
+                        <div class="card-content" style="margin-top: 10px!important;">
+                            <div class="ct-chart ct-golden-section" id="revenueChart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="pull-left">
+                            <h4 class="card-title" style="color:red;">Spent</h4>
+                        </div>
+                        <div class="card-content" style="margin-top: 10px!important;">
+                            <div class="ct-chart ct-golden-section" id="spentChart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="pull-left">
+                            <h4 class="card-title" style="color:darkviolet;">Profit</h4>
+                        </div>
+                        <div class="card-content" style="margin-top: 10px!important;">
+                            <div class="ct-chart ct-golden-section" id="profitChart"></div>
                         </div>
                     </div>
                 </div>
@@ -101,7 +142,8 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="pull-right">
-                            <select class="form-control white-input-no-border" data-ng-model="selectedDate" ng-change="initData();"
+                            <select class="form-control white-input-no-border" data-ng-model="selectedDate"
+                                    ng-change="initData();"
                                     data-ng-options="v as k for (k, v) in dateOptions"
                                     style="z-index: 10000; position: relative">
                             </select>
@@ -133,6 +175,23 @@
                                 </thead>
 
                                 <tbody>
+                                <tr style="text-align: center; vertical-align: middle">
+                                    <td>
+                                        <a href="">Total:</a>
+                                    </td>
+
+                                    <td>
+                                        <a href="">{{revTotal}}</a>
+                                    </td>
+
+                                    <td>
+                                        <a href="">{{spentTotal}}</a>
+                                    </td>
+
+                                    <td>
+                                        <a href="">{{profitTotal}}</a>
+                                    </td>
+                                </tr>
                                 <tr style="text-align: center; vertical-align: middle"
                                     ng-repeat="item in adminDashboardData">
                                     <td>{{item.buyer}}</td>
