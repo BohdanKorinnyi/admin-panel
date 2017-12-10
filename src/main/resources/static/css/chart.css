@@ -1,0 +1,53 @@
+#revenueChart .ct-series-a .ct-line {
+    stroke: green!important;
+}
+
+#revenueChart .ct-series-a .ct-point {
+    stroke: green!important;
+}
+
+#revenueChart .ct-label{
+    color: green!important;
+}
+
+#revenueChart .ct-series-a .ct-area{
+    fill: green!important;
+}
+
+#spentChart .ct-series-a .ct-line {
+    stroke: red!important;
+}
+
+#spentChart .ct-series-a .ct-point {
+    stroke: red!important;
+}
+
+#spentChart .ct-label {
+    color: red!important;
+}
+
+#spentChart .ct-series-a .ct-area {
+    fill: red !important;
+}
+
+#profitChart .ct-series-a .ct-line{
+    stroke: darkviolet!important;
+}
+
+#profitChart .ct-series-a .ct-point {
+    stroke: darkviolet!important;
+}
+
+#profitChart .ct-label {
+    color: darkviolet!important;
+}
+
+#profitChart .ct-series-a .ct-area{
+    fill: darkviolet!important;
+}
+
+#spentChart .ct-area,
+#profitChart .ct-area,
+#revenueChart .ct-area {
+    fill-opacity: 0.1!important;
+}
