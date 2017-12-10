@@ -20,4 +20,11 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
         result.put("yesterday", adminDashboardDao.findRecentBuyersProfit(false));
         return result;
     }
+
+    @Override
+    public Object getChartData(String from, String to, String filterName) {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("data", adminDashboardDao.findChartData(from, to, filterName));
+        return null;
+    }
 }

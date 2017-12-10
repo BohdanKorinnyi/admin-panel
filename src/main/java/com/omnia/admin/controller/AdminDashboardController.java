@@ -27,4 +27,12 @@ public class AdminDashboardController {
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
+
+    @GetMapping("charts")
+    public ResponseEntity getChartsData(HttpServletRequest request, @RequestParam String from, @RequestParam String to, @RequestParam String filter) {
+        if (UserPrincipalUtils.hasRole(request, ImmutableSet.of(Role.ADMIN, Role.DIRECTOR, Role.CFO, Role.CBO))) {
+            return ResponseEntity.ok(adminDashboardService.getChartData(from, to, filter));
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
 }
