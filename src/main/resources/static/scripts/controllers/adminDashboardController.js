@@ -7,6 +7,9 @@ Application.controller("adminDashboardController", function ($scope, $http, date
     $scope.revenueYesterday = "";
     $scope.spentToday = "";
     $scope.spentYesterday = "";
+    $scope.revTotal = 0;
+    $scope.spentTotal = 0;
+    $scope.profitTotal = 0;
 
     $scope.dateOptions = {
         'All time': 'all_time',
@@ -21,6 +24,10 @@ Application.controller("adminDashboardController", function ($scope, $http, date
     $scope.to = "";
 
     $scope.initData = function () {
+        $scope.revTotal = 0;
+        $scope.spentTotal = 0;
+        $scope.profitTotal = 0;
+
         if($scope.selectedDate === "all_time"){
             $scope.from = "";
             $scope.to = "";
@@ -35,6 +42,7 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         }
         var url = "/admin/dashboard?from="+$scope.from+"&to="+$scope.to;
         $http.get(url).then(function success(response) {
+            $scope.findTotals(response.data.data);
             $scope.adminDashboardData = response.data.data;
             $scope.spentToday = response.data.today.spent;
             $scope.revenueToday = response.data.today.revenue;
@@ -44,6 +52,45 @@ Application.controller("adminDashboardController", function ($scope, $http, date
             notify('ti-alert', 'Error occurred during loading dashboard info', 'danger');
         });
     };
+
+
+    $scope.findTotals = function (data) {
+        for(var i = 0; i<data.length; i++){
+            $scope.revTotal = $scope.revTotal + data[i].revenue;
+            $scope.spentTotal = $scope.spentTotal + data[i].spent;
+            $scope.profitTotal = $scope.profitTotal + data[i].profit;
+        }
+        $scope.revTotal = $scope.revTotal.toFixed(2);
+        $scope.spentTotal = $scope.spentTotal.toFixed(2);
+        $scope.profitTotal = $scope.profitTotal.toFixed(2);
+    };
+
+
+    new Chartist.Line('#revenueChart', {
+        labels: [1, 2, 3, 4],
+        series: [[100, 120, 180, 200]]
+    }, {
+        low: 0,
+        showArea: true
+    });
+
+
+    new Chartist.Line('#spentChart', {
+        labels: [1, 2, 3, 4],
+        series: [[100, 120, 180, 200]]
+    }, {
+        low: 0,
+        showArea: true
+    });
+
+
+    new Chartist.Line('#profitChart', {
+        labels: [1, 2, 3, 4],
+        series: [[100, 120, 180, 200]]
+    }, {
+        low: 0,
+        showArea: true
+    });
 });
 
 function formatDate(date) {
