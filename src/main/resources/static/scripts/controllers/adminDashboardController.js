@@ -53,6 +53,15 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         });
     };
 
+    $scope.getChartData = function () {
+        var url = "/admin/dashboard/charts?from=&to=&filter=allTime";
+        $http.get(url).then(function success(response) {
+            console.warn(response.data);
+        }, function fail(response) {
+            notify('ti-alert', 'Error occurred during loading dashboard info', 'danger');
+        });
+    };
+
 
     $scope.findTotals = function (data) {
         for(var i = 0; i<data.length; i++){
