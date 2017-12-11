@@ -67,7 +67,7 @@ FROM (SELECT
         FROM postback
           INNER JOIN affiliates ON affiliates.afid = postback.afid
           INNER JOIN buyers ON affiliates.buyer_id = buyers.id
-          INNER JOIN adverts ON adverts.advname = postback.advname
+          INNER JOIN adverts ON adverts.advshortname = postback.advname
           INNER JOIN adv_status ON adv_status.adv_id = adverts.id
         WHERE (postback.duplicate != 'FULL' OR postback.duplicate IS NULL) AND
           adv_status.real_status = 'approved' AND postback.status = adv_status.name AND postback.sum != 0 %s

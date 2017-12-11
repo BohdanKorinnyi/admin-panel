@@ -28,7 +28,7 @@ FROM (SELECT
                         FROM exchange
                         WHERE exchange.id = postback.exchange)), 2) AS 'revenue'
         FROM postback
-          INNER JOIN adverts ON adverts.advname = postback.advname
+          INNER JOIN adverts ON adverts.advshortname = postback.advname
           INNER JOIN adv_status ON adv_status.adv_id = adverts.id
         WHERE adv_status.real_status = 'approved' AND postback.status = adv_status.name AND postback.sum != 0 %s
       )) AS details;

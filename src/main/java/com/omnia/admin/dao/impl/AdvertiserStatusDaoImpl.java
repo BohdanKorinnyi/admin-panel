@@ -40,11 +40,6 @@ public class AdvertiserStatusDaoImpl implements AdvertiserStatusDao {
             log.error("Error occurred during execution " + UPDATE_STATUS + " statusId=" + status.getId() + " advertiserId=" + status.getAdvId(), e);
             throw new RuntimeException();
         }
-//        try {
-//            jdbcTemplate.update(INSERT_UPDATED_STATUS, status.getId(), status.getAdvId(), status.getName(), status.getType(), status.getRealStatus());
-//        } catch (Exception e) {
-//            log.error("Error occurred during execution " + INSERT_UPDATED_STATUS + " statusId=" + status.getId() + " advertiserId=" + status.getAdvId(), e);
-//        }
     }
 
     @Override
