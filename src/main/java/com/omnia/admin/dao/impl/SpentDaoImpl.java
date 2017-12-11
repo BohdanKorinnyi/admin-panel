@@ -10,16 +10,16 @@ import org.springframework.stereotype.Repository;
 public class SpentDaoImpl implements SpentDao {
 
     private static final String SELECT_CURRENT_MONTH_SPENT_BY_BUYER = "SELECT truncate(sum(result.spent), 2) AS 'spent' " +
-            "FROM (SELECT TRUNCATE(expenses.sum, 2) AS 'spent' " +
+            "FROM (SELECT sum(expenses.sum) AS 'spent' " +
             "      FROM expenses " +
             "        INNER JOIN buyers ON expenses.buyer_id = buyers.id " +
             "      WHERE expenses.sum != 0 AND month(expenses.date) = month(now()) AND buyers.id = ? " +
-            "      UNION (SELECT TRUNCATE(source_statistics.spent, 2) AS 'spent' " +
+            "      UNION (SELECT sum(source_statistics.spent) AS 'spent' " +
             "             FROM source_statistics " +
             "               INNER JOIN affiliates ON affiliates.afid = source_statistics.afid " +
             "               INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
             "             WHERE source_statistics.spent != 0 AND month(source_statistics.date) = month(now()) AND buyers.id = ?) " +
-            "      UNION (SELECT TRUNCATE(source_statistics_today.spent, 2) AS 'spent' " +
+            "      UNION (SELECT sum(source_statistics_today.spent) AS 'spent' " +
             "             FROM source_statistics_today " +
             "               INNER JOIN affiliates ON affiliates.afid = source_statistics_today.afid " +
             "               INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +

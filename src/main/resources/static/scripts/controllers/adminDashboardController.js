@@ -59,6 +59,8 @@ Application.controller("adminDashboardController", function ($scope, $http, date
             $scope.revenueToday = response.data.today.revenue;
             $scope.spentYesterday = response.data.yesterday.spent;
             $scope.revenueYesterday = response.data.yesterday.revenue;
+            $scope.profitToday = ($scope.revenueToday - $scope.spentToday).toFixed(2);
+            $scope.profitYesterday = ($scope.revenueYesterday - $scope.spentYesterday).toFixed(2);
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading dashboard info', 'danger');
         });

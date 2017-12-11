@@ -39,9 +39,9 @@ Application.controller("buyerHomeController", function ($scope, $http) {
             $scope.confirmed = value.data;
             $http.get('/buyer/home/spent').then(function (value) {
                 $scope.spent = value.data;
-                $scope.profit = $scope.confirmed - $scope.spent;
+                $scope.profit = ($scope.confirmed - $scope.spent).toFixed(2);
                 if ($scope.profit > 0) {
-                    $scope.bonus = $scope.profit * 0.2;
+                    $scope.bonus = ($scope.profit * 0.2).toFixed(2);
                 }
             });
         });
