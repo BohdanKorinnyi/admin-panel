@@ -124,39 +124,90 @@
                     </div>
                 </div>
                 <div class="card-content">
-                    <div class="card-content table-responsive table-full-width">
-                        <table class="table">
-                            <thead>
-                            <tr style="text-align: center; vertical-align: middle">
-                                <th>
-                                    <a href="">Buyer total</a>
-                                </th>
+                    <table class="table" style="overflow-x: auto;">
+                        <thead>
+                        <tr style="text-align: center; vertical-align: middle">
+                            <th><a href="">Buyer total</a></th>
 
-                                <th>
-                                    <a href="">Month total</a>
-                                </th>
+                            <th><a href="">Month total</a></th>
 
-                                <th>
-                                    <a href="">01</a>
-                                </th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr style="text-align: center; vertical-align: middle" ng-show="">
-                                <td colspan="3">No data</td>
-                            </tr>
-                            <tr style="text-align: center; vertical-align: middle" ng-show="">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            <th><a href="">01</a></th>
+                            <th><a href="">02</a></th>
+                            <th><a href="">03</a></th>
+                            <th><a href="">04</a></th>
+                            <th><a href="">05</a></th>
+                            <th><a href="">06</a></th>
+                            <th><a href="">07</a></th>
+                            <th><a href="">08</a></th>
+                            <th><a href="">09</a></th>
+                            <th><a href="">10</a></th>
+                            <th><a href="">11</a></th>
+                            <th><a href="">12</a></th>
+                            <th><a href="">13</a></th>
+                            <th><a href="">14</a></th>
+                            <th><a href="">15</a></th>
+                            <th><a href="">16</a></th>
+                            <th><a href="">17</a></th>
+                            <th><a href="">18</a></th>
+                            <th><a href="">19</a></th>
+                            <th><a href="">20</a></th>
+                            <th><a href="">21</a></th>
+                            <th><a href="">22</a></th>
+                            <th><a href="">23</a></th>
+                            <th><a href="">24</a></th>
+                            <th><a href="">25</a></th>
+                            <th><a href="">26</a></th>
+                            <th><a href="">27</a></th>
+                            <th><a href="">28</a></th>
+                            <th><a href="">29</a></th>
+                            <th><a href="">30</a></th>
+                            <th><a href="">31</a></th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="item in data">
+                        <tr style="text-align: center; vertical-align: middle">
+                            <td colspan="3">No data</td>
+                        </tr>
+                        <tr style="text-align: center; vertical-align: middle"
+                            ng-repeat="info in item">
+                            <td>{{info.buyer}}</td>
+                            <td>month total</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>24</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                            <td>29</td>
+                            <td>30</td>
+                            <td>31</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-
 </div>

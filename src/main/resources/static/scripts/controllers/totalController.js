@@ -23,12 +23,23 @@ Application.controller('totalController', function ($scope, $http) {
     ];
     $scope.selectedMonth = [];
 
+    $scope.buyersTotals = {};
     $scope.data = [];
-    
+
     $scope.init = function () {
-        var url = "/finance/total?from=2017-09-01&to=2017-12-31";
+        var url = "/finance/total?from=2017-10-01&to=2017-10-31";
         $http.get(url).then(function success(response) {
-            $scope.data = response.data;
+            $scope.buyersTotals = response.data;
+            Object.keys($scope.buyersTotals).map(function (p1) {
+                $scope.data.push($scope.buyersTotals[p1]);
+            });
+            console.log($scope.data);
+            for(var i = 0; i<2; i++){
+                console.log($scope.data[i]);
+                for(var j=0; j<2; j++){
+                    console.log($scope.data[i][j]);
+                }
+            }
         }, function error() {
             notify('ti-alert', 'Error occurred during loading data', 'danger');
         });
