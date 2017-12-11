@@ -29,6 +29,27 @@ Application.controller('payrollController', function ($scope, $http) {
     $scope.sortColumn = '';
     $scope.sortReverse = '';
 
+    $scope.role = "";
+    $scope.disableButtons = false;
+
+    $scope.getRole = function () {
+        var request = new XMLHttpRequest();
+        request.open('GET', '/user/me', false);  // `false` makes the request synchronous
+        request.send(null);
+
+        if (request.status === 200) {
+            var z = JSON.parse(request.response);
+            $scope.role = z.authorities[0].authority;
+            if($scope.role === "BUYER"){
+                $scope.disableButtons = true;
+            }
+            else{
+                $scope.disableButtons = false;
+            }
+        }
+    };
+
+
     $scope.cancelClick = function () {
         $scope.addedPayrolls = [];
     };

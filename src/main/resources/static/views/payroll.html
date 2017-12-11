@@ -1,4 +1,4 @@
-<div ng-controller="payrollController" ng-init="getBuyers(); getCurrency(); getDescription();loadPayrolls();"
+<div ng-controller="payrollController" ng-init="getBuyers(); getCurrency(); getDescription();loadPayrolls();getRole();"
      class="main-panel" ng-style="style();" resize >
 
     <nav class="navbar navbar-default">
@@ -23,11 +23,15 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="pull-right">
-                            <button class="btn btn-info btn-md btn-fill " ng-click="addPayroll();"
+                            <button class="btn btn-info btn-md btn-fill "
+                                    ng-click="addPayroll();"
+                                    ng-disabled="disableButtons"
                                     style="z-index: 10000; position: relative">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Create
                             </button>
-                            <button class="btn btn-success btn-md btn-fill" ng-click="applyPayroll();"
+                            <button class="btn btn-success btn-md btn-fill"
+                                    ng-click="applyPayroll();"
+                                    ng-disabled="disableButtons"
                                     style="z-index: 10000; position: relative">
                                 Apply
                             </button>
@@ -185,7 +189,9 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <label>
-                                <select class="form-control" ng-model="selectedBuyerName"
+                                <select class="form-control"
+                                        ng-model="selectedBuyerName"
+                                        ng-disabled="disableButtons"
                                         style="width: 16%!important;">
                                     <option ng-repeat="b in buyerOptions"
                                             value="{{b.name}}">
@@ -193,9 +199,13 @@
                                     </option>
                                 </select>
                                 <input type="text" class="form-control"
-                                       ng-model="selectedDate" placeholder="Date"
+                                       ng-model="selectedDate"
+                                       ng-disabled="disableButtons"
+                                       placeholder="Date"
                                        style="width: 16%!important;"/>
-                                <select class="form-control" ng-model="selectedTypeValue"
+                                <select class="form-control"
+                                        ng-model="selectedTypeValue"
+                                        ng-disabled="disableButtons"
                                         style="width: 16%!important;">
                                     <option ng-repeat="t in typeValues"
                                             value="{{t.name}}">
@@ -203,16 +213,22 @@
                                     </option>
                                 </select>
                                 <input type="text" class="form-control"
-                                       ng-model="selectedSum" placeholder="Sum"
+                                       ng-model="selectedSum"
+                                       ng-disabled="disableButtons"
+                                       placeholder="Sum"
                                        style="width: 16%!important;"/>
-                                <select class="form-control" ng-model="selectedCurrencyCode"
+                                <select class="form-control"
+                                        ng-model="selectedCurrencyCode"
+                                        ng-disabled="disableButtons"
                                         style="width: 16%!important;">
                                     <option ng-repeat="c in currencyOptions"
                                             value="{{c.code}}">
                                         {{c.code}}
                                     </option>
                                 </select>
-                                <select class="form-control" ng-model="selectedDescriptionValue"
+                                <select class="form-control"
+                                        ng-model="selectedDescriptionValue"
+                                        ng-disabled="disableButtons"
                                         style="width: 16%!important;">
                                     <option ng-repeat="d in descriptionOptions"
                                             value="{{d}}">
@@ -225,7 +241,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal"
-                            ng-click="saveExistingPayroll();">Save changes
+                            ng-click="saveExistingPayroll();"
+                            ng-disabled="disableButtons">Save changes
                     </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                             ng-click="close();">Close

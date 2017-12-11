@@ -25,8 +25,29 @@ Application.controller("advertiserController", function ($scope, $http) {
     $scope.statusesForUser.statuses['type'] = [];
 
     $scope.advertisersStatuses = [];
+    $scope.role = "";
+    $scope.disableButtons = false;
+
 
     // functions
+    $scope.getRole = function () {
+        var request = new XMLHttpRequest();
+        request.open('GET', '/user/me', false);  // `false` makes the request synchronous
+        request.send(null);
+
+        if (request.status === 200) {
+            var z = JSON.parse(request.response);
+            $scope.role = z.authorities[0].authority;
+            if($scope.role === "BUYER"){
+                $scope.disableButtons = true;
+            }
+            else{
+                $scope.disableButtons = false;
+            }
+        }
+    };
+
+
     $scope.loadData = function () {
         $scope.initData();
     };
@@ -40,8 +61,13 @@ Application.controller("advertiserController", function ($scope, $http) {
 
     $scope.onAdvertiserClick = function (advertiser, index) {
         if ($scope.selectedAdvertiserIndex === -1) {
-            $scope.selectedAdvertiserIndex = index;
-            $scope.previousAdvertiserIndex = index;
+            if($scope.role === "BUYER"){
+                $scope.selectedAdvertiserIndex = -1;
+            }
+            else{
+                $scope.selectedAdvertiserIndex = index;
+                $scope.previousAdvertiserIndex = index;
+            }
         }
         $scope.previousAdvertiserIndex = $scope.selectedAdvertiserIndex;
         $scope.selectedAdvertiserIndex = index;
