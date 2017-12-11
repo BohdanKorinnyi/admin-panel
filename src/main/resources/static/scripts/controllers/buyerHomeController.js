@@ -37,12 +37,16 @@ Application.controller("buyerHomeController", function ($scope, $http) {
     $scope.init = function () {
         $http.get('postback/buyers/revenue').then(function (value) {
             $scope.confirmed = value.data;
+            $http.get('/buyer/home/spent').then(function (value) {
+                $scope.spent = value.data;
+                $scope.profit = $scope.confirmed - $scope.spent;
+                if ($scope.profit > 0) {
+                    $scope.bonus = $scope.profit * 0.2;
+                }
+            });
         });
         $http.get('buyer/plan/revenue').then(function (value) {
             $scope.plan = value.data;
-        });
-        $http.get('buyer/marginality').then(function (value) {
-            $scope.marginality = value.data;
         });
     };
 
