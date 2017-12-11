@@ -87,32 +87,6 @@ Application.controller("adminDashboardController", function ($scope, $http, date
                 if($scope.selectedDate === "thisMonth" || $scope.selectedDate === "lastMonth"){
                     $scope.chartDateData.push(formatDateWithoutYear(getDateOfWeek($scope.chartData[i].date, 2017)));//todo: get current year
                 }
-                else if($scope.selectedDate === "lastWeek"){
-                    var n = $scope.chartData[i].date;
-                    var day = "";
-                    if(n === "1"){
-                        day = "Mo";
-                    }
-                    else if(n === "2"){
-                        day = "Tu";
-                    }
-                    else if(n === "3"){
-                        day = "We";
-                    }
-                    else if(n === "4"){
-                        day = "Th";
-                    }
-                    else if(n === "5"){
-                        day = "Fr";
-                    }
-                    else if(n === "6"){
-                        day = "Sa";
-                    }
-                    else{
-                        day = "Su";
-                    }
-                    $scope.chartDateData.push(day);
-                }
                 else{
                     $scope.chartDateData.push($scope.chartData[i].date);
                 }
