@@ -1,4 +1,4 @@
-<div ng-controller="totalController" ng-init="" class="main-panel">
+<div ng-controller="totalController" ng-init="init();" class="main-panel">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-minimize">
@@ -105,7 +105,7 @@
                         <form class="form-inline">
                             <div class="form-group">
                                 <select id="monthSelectPicker" data-style="btn-info btn-fill btn-block"
-                                        class="selectpicker" multiple data-size="5" title="Month"
+                                        class="selectpicker" data-size="5" title="Month"
                                         data-header="Month" style="width: 130%;margin-left: 5px;"
                                         ng-model="selectedMonth">
                                     <option class="small-font" ng-repeat="m in dateOptions" data-select-watcher
@@ -137,8 +137,9 @@
                                 </th>
 
                                 <th>
-                                    <a href="">Days...</a>
+                                    <a href="">01</a>
                                 </th>
+
                             </tr>
                             </thead>
                             <tbody>
