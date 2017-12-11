@@ -16,7 +16,146 @@
     </nav>
 
     <div class="content">
+        <div class="row" style="margin-left: 15px; margin-right: 15px; margin-top: 25px">
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="icon-big icon-success text-center">
+                                    <i class="ti-check"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="numbers">
+                                    <p></p>
+                                    $ 0
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <hr class="card-footer-hr"/>
+                        <div class="stats">
+                            <i class="ti-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="icon-big icon-success text-center">
+                                    <i class="ti-check-box"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="numbers">
+                                    <p></p>
+                                    $ 0
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <hr class="card-footer-hr"/>
+                        <div class="stats">
+                            <i class="ti-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="icon-big icon-success text-center">
+                                    <i class="ti-stats-up"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="numbers">
+                                    <p></p>
+                                    $ 0
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <hr class="card-footer-hr"/>
+                        <div class="stats">
+                            <i class="ti-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+    <div class="row" style="margin-right: 15px;margin-left: 15px">
+        <div class="col-md-12">
+            <div class="card" style="min-height: 300px;!important;">
+                <div class="card-header">
+                    <h4 class="card-title">Total</h4>
+                    <div class="pull-right">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <select id="monthSelectPicker" data-style="btn-info btn-fill btn-block"
+                                        class="selectpicker" multiple data-size="5" title="Month"
+                                        data-header="Month" style="width: 130%;margin-left: 5px;"
+                                        ng-model="selectedMonth">
+                                    <option class="small-font" ng-repeat="m in dateOptions" data-select-watcher
+                                            data-last="{{$last}}" value="{{m}}">{{m}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control pagination-size" data-ng-model="selectedSize"
+                                        data-ng-options="v as k for (k, v) in sizeOptions"
+                                        style="z-index: 10000; position: relative; margin-bottom: 10px;">
+                                </select>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-content table-responsive table-full-width">
+                        <table class="table">
+                            <thead>
+                            <tr style="text-align: center; vertical-align: middle">
+                                <th>
+                                    <a href="">Buyer total</a>
+                                </th>
+
+                                <th>
+                                    <a href="">Month total</a>
+                                </th>
+
+                                <th>
+                                    <a href="">Days...</a>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style="text-align: center; vertical-align: middle" ng-show="">
+                                <td colspan="3">No data</td>
+                            </tr>
+                            <tr style="text-align: center; vertical-align: middle" ng-show="">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

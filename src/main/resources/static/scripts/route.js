@@ -64,7 +64,10 @@ Application.config(['$routeProvider', function ($routeProvider) {
         })
         .when('/finance/total', {
             templateUrl: 'views/total.html',
-            controller: 'totalController'
+            controller: 'totalController',
+            resolve: {
+                factory: checkRoutingForTotalPage
+            }
         })
         .when('/', {
             resolve: {
@@ -72,6 +75,25 @@ Application.config(['$routeProvider', function ($routeProvider) {
             }
         });
 }]);
+
+var checkRoutingForTotalPage = function ($q, $rootScope, $location) {
+    var request = new XMLHttpRequest();
+    request.open('GET', '/user/me', false);
+    request.send(null);
+    if (request.status === 200) {
+        var z = JSON.parse(request.response);
+        var role = z.authorities[0].authority;
+        localStorage.setItem('role', role);
+        if (role === 'ADMIN' || role === 'ROLE_ADMIN'
+            || role === 'DIRECTOR' || role === 'CFO' || role === 'CBO') {
+            $location.path('/finance/total');
+        }
+        else {
+            $location.path('/');
+        }
+    }
+};
+
 
 var checkRouting = function ($q, $rootScope, $location) {
     var request = new XMLHttpRequest();
