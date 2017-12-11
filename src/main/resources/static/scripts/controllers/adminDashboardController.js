@@ -24,6 +24,7 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         'This Month': 'thisMonth',
         'Last Month': 'lastMonth'
     };
+
     $scope.selectedDate = 'allTime';
     $scope.from = "";
     $scope.to = "";
@@ -32,6 +33,11 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         $scope.revTotal = 0;
         $scope.spentTotal = 0;
         $scope.profitTotal = 0;
+
+        $scope.spentToday = 0;
+        $scope.revenueToday = 0;
+        $scope.spentYesterday = 0;
+        $scope.revenueYesterday = 0;
 
         if($scope.selectedDate === "allTime"){
             $scope.from = "";
@@ -78,7 +84,38 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         $http.get(url).then(function success(response) {
             $scope.chartData = response.data.data;
             for(var i=0; i<$scope.chartData.length; i++){
-                $scope.chartDateData.push($scope.chartData[i].date);
+                if($scope.selectedDate === "thisMonth" || $scope.selectedDate === "lastMonth"){
+                    $scope.chartDateData.push(formatDateWithoutYear(getDateOfWeek($scope.chartData[i].date, 2017)));//todo: get current year
+                }
+                else if($scope.selectedDate === "lastWeek"){
+                    var n = $scope.chartData[i].date;
+                    var day = "";
+                    if(n === "1"){
+                        day = "Mo";
+                    }
+                    else if(n === "2"){
+                        day = "Tu";
+                    }
+                    else if(n === "3"){
+                        day = "We";
+                    }
+                    else if(n === "4"){
+                        day = "Th";
+                    }
+                    else if(n === "5"){
+                        day = "Fr";
+                    }
+                    else if(n === "6"){
+                        day = "Sa";
+                    }
+                    else{
+                        day = "Su";
+                    }
+                    $scope.chartDateData.push(day);
+                }
+                else{
+                    $scope.chartDateData.push($scope.chartData[i].date);
+                }
                 $scope.chartRevData.push($scope.chartData[i].revenue);
                 $scope.chartSpentData.push($scope.chartData[i].spent);
                 $scope.chartProfitData.push($scope.chartData[i].profit);
@@ -132,6 +169,23 @@ function formatDate(date) {
     if (day.length < 2) day = '0' + day;
 
     return [year, month, day].join('-');
+}
+
+function getDateOfWeek(w, y) {
+    var d = (1 + (w - 1) * 7); // 1st of January + 7 days for each week
+
+    return new Date(y, 0, d);
+}
+
+function formatDateWithoutYear(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [month, day].join('-');
 }
 
 
