@@ -1,4 +1,4 @@
-<div ng-controller="advertiserController" ng-init="loadData();"
+<div ng-controller="advertiserController" ng-init="loadData();getRole();"
      class="main-panel">
 
 
@@ -24,7 +24,9 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="pull-right">
-                            <button class="btn btn-success btn-md btn-fill" ng-click="applyClick();"
+                            <button class="btn btn-success btn-md btn-fill"
+                                    ng-click="applyClick();"
+                                    ng-disabled="disableButtons"
                                     style="z-index: 10000; position: relative">
                                 Apply
                             </button>
@@ -55,7 +57,9 @@
                             <div class="card-content">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <a class="btn btn-info btn-sm" ng-click="addAdvertiser();"
+                                        <a class="btn btn-info btn-sm"
+                                           ng-click="addAdvertiser();"
+                                           ng-disabled="disableButtons"
                                            style="cursor:pointer; width: 47%;">Add</a>
                                         <a class="btn btn-info btn-sm" ng-click="cancelAdvertisersData();"
                                            style="cursor:pointer; width: 47%;">Cancel</a>

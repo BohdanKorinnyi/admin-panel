@@ -23,6 +23,11 @@
     background-color: white!important;
 }
 
+.white-input-no-border:focus {
+    border: none !important;
+    background-color: white!important;
+}
+
 .sidebar{
     z-index: 100!important;
 }
@@ -30,7 +35,6 @@
 .sidebar:hover{
     z-index: 102!important;
 }
-
 
 .main-panel{
     z-index: 100!important;
