@@ -102,19 +102,28 @@ Application.controller("adminDashboardController", function ($scope, $http, date
                 labels: $scope.chartDateData,
                 series: [$scope.chartRevData]
             }, {
-                showArea: true
+                showArea: true,
+                plugins: [
+                    Chartist.plugins.tooltip()
+                ]
             });
             new Chartist.Line('#spentChart', {
                 labels: $scope.chartDateData,
                 series: [$scope.chartSpentData]
             }, {
-                showArea: true
+                showArea: true,
+                plugins: [
+                    Chartist.plugins.tooltip()
+                ]
             });
             new Chartist.Line('#profitChart', {
                 labels: $scope.chartDateData,
                 series: [$scope.chartProfitData]
             }, {
-                showArea: true
+                showArea: true,
+                plugins: [
+                    Chartist.plugins.tooltip()
+                ]
             });
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading chart info', 'danger');
