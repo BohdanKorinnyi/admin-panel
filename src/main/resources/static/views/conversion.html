@@ -334,9 +334,7 @@
                                             ng-show="conversions.length !== 0"
                                             ng-click="getRowInfo(item.conversionId);"
                                             data-target="#conversions-modal">
-                                            <td>
-                                                {{item.conversionId}}
-                                            </td>
+                                            <td>{{item.conversionId}}</td>
                                             <td>{{item.prefix}}</td>
                                             <td>{{item.afId}}</td>
                                             <td>{{item.buyer}}</td>
@@ -345,24 +343,18 @@
                                             <td>{{item.code}}</td>
                                             <td>{{item.status}}</td>
                                             <td>{{item.advert}}</td>
-                                            <td class="text-nowrap" {{item.offerId}}>
-                                            </td>
-                                            <td>
-                                                {{item.trafficSource}}
-                                            </td>
+                                            <td class="text-nowrap">{{item.offerId}}</td>
+                                            <td>{{item.trafficSource}}</td>
                                             <td>{{item.rate}}</td>
                                             <td>{{item.change}}</td>
                                             <td>{{item.clickId}}</td>
                                         </tr>
-                                        <!--<tr ng-show="conversions.length !== 0 && conversions !== undefined">-->
-                                        <!--<td style="text-align: left; vertical-align: middle" colspan="15">-->
-                                        <!--Total by conversions:-->
-                                        <!--</td>-->
-                                        <!--</tr>-->
                                         <tr ng-show="conversions.length === 0 || conversions === undefined">
                                             <td colspan="15">
                                                 <div class="loader text-center" ng-show="showConversionLoader"></div>
-                                                <div class="text-center" ng-show="!showConversionLoader">No data</div>
+                                                <div class="text-center"
+                                                     ng-show="!showConversionLoader && conversions.length == 0">No data
+                                                </div>
                                             </td>
                                         </tr>
                                         </tbody>

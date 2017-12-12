@@ -31,7 +31,7 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
             "FROM (SELECT sum(spent) AS sum " +
             "      FROM source_statistics_today " +
             "        INNER JOIN affiliates ON affiliates.afid = source_statistics_today.afid " +
-            "      WHERE affiliates.buyer_id = ? AND month(source_statistics_today.date) = month(now()) " +
+            "      WHERE affiliates.buyer_id = ? AND source_statistics_today.date = date(now()) " +
             "      UNION (SELECT sum(spent) AS sum " +
             "             FROM source_statistics " +
             "               INNER JOIN affiliates ON affiliates.afid = source_statistics.afid " +
@@ -89,8 +89,7 @@ public class SourceStatisticDaoImpl implements SourceStatisticDao {
     @Override
     public List<SourceStat> getSourceStatByDate(Integer buyerId, String date) {
         return jdbcTemplate.query(SELECT_DETAILED_SOURCE_STATISTIC, BeanPropertyRowMapper.newInstance(SourceStat.class),
-                date, buyerId, date, buyerId,
-                date, buyerId, date, buyerId
+                date, buyerId, date, buyerId, buyerId, date, buyerId
         );
     }
 

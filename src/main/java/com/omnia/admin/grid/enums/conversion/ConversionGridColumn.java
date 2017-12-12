@@ -14,8 +14,6 @@ public enum ConversionGridColumn {
     CURRENCY_CODE("currency.code"),
     ADV_STATUS_REAL_STATUS("adv_status.real_status"),
     ADVERTS_SHORT_NAME("adverts.advshortname"),
-    OFFERS_ADV_NAME("offers_adv.name"),
-    SOURCES_NAME("sources_tracker.name"),
     EXCHANGE_RATE("exchange.rate"),
     CONVERSION_DATE_CHANGE("conversions.date_change"),
     CONVERSION_CLICK_ID("conversions.clickid");

@@ -37,9 +37,6 @@ public class ConversionGridDaoImpl implements ConversionGridDao {
             "  LEFT JOIN currency ON currency.id = conversions.currency_id" +
             "  LEFT JOIN adv_status ON adv_status.id = conversions.status_id" +
             "  LEFT JOIN adverts ON adverts.id = adv_status.adv_id" +
-            "  LEFT JOIN offers_tracker ON offers_tracker.offer_id_tracker = conversions.offers_tracker_id" +
-            "  LEFT JOIN offers_adv ON offers_adv.id = offers_tracker.offer_id_adv" +
-            "  LEFT JOIN sources_tracker ON sources_tracker.id = conversions.source_id_tracker" +
             "  LEFT JOIN exchange ON exchange.id = conversions.exchange_id ";
 
     private static final String COUNT_CONVERSIONS = "SELECT COUNT(*)" +
@@ -49,9 +46,6 @@ public class ConversionGridDaoImpl implements ConversionGridDao {
             "  LEFT JOIN currency ON currency.id = conversions.currency_id" +
             "  LEFT JOIN adv_status ON adv_status.id = conversions.status_id" +
             "  LEFT JOIN adverts ON adverts.id = adv_status.adv_id" +
-            "  LEFT JOIN offers_tracker ON offers_tracker.offer_id_tracker = conversions.offers_tracker_id" +
-            "  LEFT JOIN offers_adv ON offers_adv.id = offers_tracker.offer_id_adv" +
-            "  LEFT JOIN sources_tracker ON sources_tracker.id = conversions.source_id_tracker" +
             "  LEFT JOIN exchange ON exchange.id = conversions.exchange_id ";
 
     private final JdbcTemplate jdbcTemplate;
@@ -97,8 +91,6 @@ public class ConversionGridDaoImpl implements ConversionGridDao {
             conversionDto.setPayout(rs.getFloat("sum"));
             conversionDto.setStatus(rs.getString("real_status"));
             conversionDto.setAdvert(rs.getString("advshortname"));
-            conversionDto.setOfferId(rs.getString("offers_adv.name"));
-            conversionDto.setTrafficSource(rs.getString("sources_tracker.name"));
             conversionDto.setRate(rs.getInt("rate"));
             conversionDto.setChange(rs.getDate("date_change"));
             conversionDto.setClickId(rs.getString("clickid"));
