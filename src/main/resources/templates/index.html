@@ -9,7 +9,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
           crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.5/angular-material.min.css"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.5/angular-material.min.css"/>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
     <link href="css/chartist.min.css" rel="stylesheet"/>
     <link href="css/paper-dashboard.css" rel="stylesheet"/>
@@ -25,11 +26,15 @@
         .alertify .alert .msg, .alertify .dialog .msg {
             width: 95% !important;
         }
+
+        .sidebar-wrapper::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 </head>
 
 <body style="background-color: #f4f3ef" ng-controller="mainController">
-<div class="sidebar" data-background-color="white" data-active-color="warning" ng-cloak=""  ng-init="getUsername();">
+<div class="sidebar" data-background-color="white" data-active-color="warning" ng-cloak="" ng-init="getUsername();">
     <div class="logo">
         <a class="simple-text logo-normal" style="text-align: center">
             OMNI-A
@@ -343,7 +348,7 @@
 
 <script>
     $(document).ready(function () {
-        $( window ).height();
+        $(window).height();
     });
 </script>
 </body>
