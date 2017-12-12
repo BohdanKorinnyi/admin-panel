@@ -71,7 +71,7 @@ Application.config(['$routeProvider', function ($routeProvider) {
         })
         .when('/', {
             resolve: {
-                factory: checkRoutingForHomePage
+                factory: checkRouting
             }
         });
 }]);
