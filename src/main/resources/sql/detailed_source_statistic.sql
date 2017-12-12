@@ -14,7 +14,6 @@ FROM (SELECT
         expenses.description AS 'type'
       FROM expenses
         INNER JOIN buyers ON expenses.buyer_id = buyers.id
-        INNER JOIN expenses_type ON expenses.type_id = expenses_type.id
       WHERE expenses.sum != 0 AND expenses.date = ? AND buyers.id = ?
       GROUP BY expenses.description
       UNION (SELECT
@@ -29,7 +28,7 @@ FROM (SELECT
                INNER JOIN buyers ON affiliates.buyer_id = buyers.id
                INNER JOIN accounts ON accounts.account_id = source_statistics.account_id
              WHERE source_statistics.spent != 0 AND source_statistics.date = ? AND buyers.id = ?
-             GROUP BY accounts.type)
+             GROUP BY accounts.account_id, accounts.type)
       UNION (SELECT
                sum(source_statistics_today.spent) AS 'spent',
                0                                  AS 'revenue',
@@ -43,7 +42,7 @@ FROM (SELECT
                INNER JOIN accounts ON accounts.account_id = source_statistics_today.account_id
              WHERE
                source_statistics_today.spent != 0 AND source_statistics_today.date = date(now()) AND buyers.id = ?
-             GROUP BY accounts.type)
+             GROUP BY accounts.account_id, accounts.type)
       UNION (SELECT
                0                                            AS 'spent',
                sum(postback.sum /
