@@ -47,6 +47,7 @@ Application.controller("adminDashboardController", function ($scope, $http, date
             $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
         }
         var url = "/admin/dashboard?from="+$scope.from+"&to="+$scope.to;
+        $scope.adminDashboardData = [];
         $http.get(url).then(function success(response) {
             $scope.findTotals(response.data.data);
             $scope.adminDashboardData = response.data.data;
