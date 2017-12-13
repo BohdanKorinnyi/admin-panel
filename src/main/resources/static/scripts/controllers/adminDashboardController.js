@@ -38,19 +38,19 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         $scope.spentYesterday = 0;
         $scope.revenueYesterday = 0;
 
-        if($scope.selectedDate === "allTime"){
+        if ($scope.selectedDate === "allTime") {
             $scope.from = "";
             $scope.to = "";
         }
-        else if($scope.selectedDate === "yesterday"){
+        else if ($scope.selectedDate === "yesterday") {
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
             $scope.to = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
         }
-        else{
+        else {
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
             $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
         }
-        var url = "/admin/dashboard?from="+$scope.from+"&to="+$scope.to;
+        var url = "/admin/dashboard?from=" + $scope.from + "&to=" + $scope.to;
         $scope.adminDashboardData = [];
         $http.get(url).then(function success(response) {
             $scope.findTotals(response.data.data);
@@ -61,6 +61,8 @@ Application.controller("adminDashboardController", function ($scope, $http, date
             $scope.revenueYesterday = response.data.yesterday.revenue;
             $scope.profitToday = ($scope.revenueToday - $scope.spentToday).toFixed(2);
             $scope.profitYesterday = ($scope.revenueYesterday - $scope.spentYesterday).toFixed(2);
+            $scope.roiToday = (($scope.profitToday / $scope.spentToday) * 100).toFixed(2);
+            $scope.roiYesterday = (($scope.profitYesterday / $scope.spentYesterday) * 100).toFixed(2);
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading dashboard info', 'danger');
         });
@@ -68,56 +70,56 @@ Application.controller("adminDashboardController", function ($scope, $http, date
 
     $scope.getChartData = function () {
         $scope.chartData = [];
-        $scope.chartDateData =[];
+        $scope.chartDateData = [];
         $scope.chartRevData = [];
         $scope.chartSpentData = [];
         $scope.chartProfitData = [];
         $scope.chartMonthData = [];
 
-        if($scope.selectedDate === "allTime"){
+        if ($scope.selectedDate === "allTime") {
             $scope.from = "";
             $scope.to = "";
         }
-        else{
+        else {
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
             $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
         }
 
-        var url = "/admin/dashboard/charts?from="+$scope.from+"&to="+$scope.to+"&filter="+$scope.selectedDate;
+        var url = "/admin/dashboard/charts?from=" + $scope.from + "&to=" + $scope.to + "&filter=" + $scope.selectedDate;
         $http.get(url).then(function success(response) {
             $scope.chartData = response.data.data;
-            for(var i=0; i<$scope.chartData.length; i++){
+            for (var i = 0; i < $scope.chartData.length; i++) {
 
                 var currentDate = formatDateWithoutYear(getDateOfWeek($scope.chartData[i].date, (new Date()).getFullYear()));
                 var currentDateNonFormated = getDateOfWeek($scope.chartData[i].date, (new Date()).getFullYear());
 
-                if($scope.selectedDate === "thisMonth"){
+                if ($scope.selectedDate === "thisMonth") {
 
                     var thisM = (new Date()).getMonth();
 
-                    if(currentDateNonFormated.getMonth() !== thisM){
+                    if (currentDateNonFormated.getMonth() !== thisM) {
                         currentDateNonFormated.setDate(1);
                         currentDateNonFormated.setMonth(thisM);
                         $scope.chartDateData.push(formatDateWithoutYear(currentDateNonFormated));
                     }
-                    else{
+                    else {
                         $scope.chartDateData.push(currentDate);
                     }
                 }
-                else if($scope.selectedDate === "lastMonth"){
+                else if ($scope.selectedDate === "lastMonth") {
 
-                    var lastM = ((new Date()).getMonth()-1);
+                    var lastM = ((new Date()).getMonth() - 1);
 
-                    if(currentDateNonFormated.getMonth() !== lastM){
+                    if (currentDateNonFormated.getMonth() !== lastM) {
                         currentDateNonFormated.setDate(1);
                         currentDateNonFormated.setMonth(lastM);
                         $scope.chartDateData.push(formatDateWithoutYear(currentDateNonFormated));
                     }
-                    else{
+                    else {
                         $scope.chartDateData.push(currentDate);
                     }
                 }
-                else{
+                else {
                     $scope.chartDateData.push($scope.chartData[i].date);
                 }
 
@@ -126,9 +128,11 @@ Application.controller("adminDashboardController", function ($scope, $http, date
                 $scope.chartProfitData.push($scope.chartData[i].profit);
             }
 
-            $scope.chartDateData.sort(function(a, b){return a-b});
-            if($scope.selectedDate === "allTime"){
-                for(var i=0; i<$scope.chartDateData.length; i++){
+            $scope.chartDateData.sort(function (a, b) {
+                return a - b
+            });
+            if ($scope.selectedDate === "allTime") {
+                for (var i = 0; i < $scope.chartDateData.length; i++) {
                     $scope.chartMonthData.push($scope.monthNames[$scope.chartDateData[i] - 1]);
                 }
                 $scope.chartDateData = $scope.chartMonthData;
@@ -167,7 +171,7 @@ Application.controller("adminDashboardController", function ($scope, $http, date
 
 
     $scope.findTotals = function (data) {
-        for(var i = 0; i<data.length; i++){
+        for (var i = 0; i < data.length; i++) {
             $scope.revTotal = $scope.revTotal + data[i].revenue;
             $scope.spentTotal = $scope.spentTotal + data[i].spent;
             $scope.profitTotal = $scope.profitTotal + data[i].profit;
