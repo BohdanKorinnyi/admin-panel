@@ -56,7 +56,7 @@ Application.controller('dashboardController', function ($scope, $http) {
 
             $scope.chartDateData.sort(function(a, b){return a-b});
             for(var i=0; i<$scope.chartDateData.length; i++){
-                $scope.chartMonthData.push($scope.monthNames[$scope.chartDateData[i]]);
+                $scope.chartMonthData.push($scope.monthNames[$scope.chartDateData[i] - 1]);
             }
             new Chartist.Line('#revenueChart', {
                 labels: $scope.chartMonthData,
