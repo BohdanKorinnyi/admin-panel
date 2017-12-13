@@ -8,6 +8,7 @@
 
 #revenueChart .ct-label{
     color: green!important;
+    white-space: nowrap!important;
 }
 
 #revenueChart .ct-series-a .ct-area{
@@ -24,6 +25,7 @@
 
 #spentChart .ct-label {
     color: red!important;
+    white-space: nowrap!important;
 }
 
 #spentChart .ct-series-a .ct-area {
@@ -40,6 +42,7 @@
 
 #profitChart .ct-label {
     color: darkviolet!important;
+    white-space: nowrap!important;
 }
 
 #profitChart .ct-series-a .ct-area{

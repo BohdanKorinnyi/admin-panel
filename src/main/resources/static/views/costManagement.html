@@ -24,6 +24,7 @@
                     <div class="card-header">
                         <div class="pull-right">
                             <button class="btn btn-success btn-md btn-fill" ng-click="onApplyClick();"
+                                    ng-disabled="disableCreateCost"
                                     style="z-index: 10000; position: relative">
                                 Apply
                             </button>
@@ -118,7 +119,9 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="pull-right">
-                            <button class="btn btn-success btn-sm btn-fill" ng-click="addCost();"
+                            <button class="btn btn-success btn-sm btn-fill"
+                                    ng-click="addCost();"
+                                    ng-disabled="disableCreateCost"
                                     style="z-index: 10000; position: relative">
                                 Create
                             </button>
@@ -145,13 +148,15 @@
                                         <form class="form-inline">
                                             <div class="form-group" style="width: 10%!important;">
                                                 <a data-toggle="modal" data-target="#confirmDeletingModal"
-                                                   ng-click="selectRow(c.id)">
+                                                   ng-click="selectRow(c.id)"
+                                                   ng-disabled="disableCreateCost">
                                                     <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
                                                 </a>
                                             </div>
                                             <div class="form-group" style="width: 80%!important;">
                                                 <select class="form-control white-input-no-border" ng-model="c.buyer"
                                                         ng-change="updateBuyerName(c.id);"
+                                                        ng-disabled="disableCreateCost"
                                                         style="width: 98%!important;">
                                                     <option ng-repeat="b in buyerNames"
                                                             value="{{b.name}}">
@@ -166,6 +171,7 @@
                                             <md-datepicker ng-model="c.date"
                                                            date-format="yyyy-MM-dd"
                                                            ng-change="updateDate(c.id);"
+                                                           ng-disabled="disableCreateCost"
                                                            md-hide-icons="calendar"
                                                            md-placeholder="Enter date"></md-datepicker>
                                         </div>
@@ -173,6 +179,7 @@
                                     <td class="cost-management-table">
                                         <input type="number" class="form-control white-input-no-border" placeholder="Spent"
                                                ng-model="c.sum"
+                                               ng-disabled="disableCreateCost"
                                                ng-change="updateSum(c.id);"/>
                                     </td>
                                     <td class="cost-management-table">
@@ -186,6 +193,7 @@
                                             <div class="form-group" style="width:80%!important;">
                                                 <select class="form-control white-input-no-border" ng-model="c.name"
                                                         ng-change="updateType(c.id);"
+                                                        ng-disabled="disableCreateCost"
                                                         style="width: 100%!important; margin-left: -20px;">
                                                     <option ng-repeat="t in types"
                                                             value="{{t.name}}">
@@ -194,7 +202,9 @@
                                                 </select>
                                             </div>
                                             <div class="form-group" style="width: 10%!important;">
-                                                <a data-toggle="modal" data-target="#addTypeModal"
+                                                <a data-toggle="modal"
+                                                   ng-disabled="disableCreateCost"
+                                                   data-target="#addTypeModal"
                                                    ng-click="clickAddNewType(c.id);">
                                                     <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
                                                 </a>
@@ -247,6 +257,7 @@
                         <div class="form-group">
                             <label>
                                 <input type="text" class="form-control"
+                                       ng-disabled="disableCreateCost"
                                        ng-model="newTypeValue" placeholder="Type"
                                        style="width: 100%!important;"/>
                             </label>
@@ -255,7 +266,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal"
-                            ng-click="addType();">Apply
+                            ng-click="addType();"
+                            ng-disabled="disableCreateCost">Apply
                     </button>
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
@@ -284,7 +296,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal"
-                            ng-click="deleteRow();">Yes
+                            ng-click="deleteRow();"
+                            ng-disabled="disableCreateCost">Yes
                     </button>
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
