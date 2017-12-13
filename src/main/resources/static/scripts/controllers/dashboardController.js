@@ -1,4 +1,11 @@
 Application.controller('dashboardController', function ($scope, $http) {
+    $scope.chartData = [];
+    $scope.chartDateData =[];
+    $scope.chartRevData = [];
+    $scope.chartSpentData = [];
+    $scope.chartProfitData = [];
+    $scope.chartMonthData =[];
+
     $scope.payroll = [];
     $scope.revenue = '';
     $scope.profitPlan = '';
@@ -23,6 +30,63 @@ Application.controller('dashboardController', function ($scope, $http) {
             $scope.profitCompleted = (($scope.profit / $scope.profitPlan !== 0 ? $scope.profitPlan : 1) * 100).toFixed(2);
         }, function fail() {
             notify('ti-alert', 'Error occurred during loading buyer\'s statistic', 'danger');
+        });
+    };
+
+    $scope.monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    $scope.getChartData = function () {
+        $scope.chartData = [];
+        $scope.chartDateData =[];
+        $scope.chartRevData = [];
+        $scope.chartSpentData = [];
+        $scope.chartProfitData = [];
+        $scope.chartMonthData = [];
+
+        var url = "/dashboard/charts?from="+$scope.from+"&to="+$scope.to+"&filter=allTime";
+        $http.get(url).then(function success(response) {
+            $scope.chartData = response.data.data;
+            for(var i=0; i<$scope.chartData.length; i++){
+                $scope.chartDateData.push($scope.chartData[i].date);
+                $scope.chartRevData.push($scope.chartData[i].revenue);
+                $scope.chartSpentData.push($scope.chartData[i].spent);
+                $scope.chartProfitData.push($scope.chartData[i].profit);
+            }
+
+            $scope.chartDateData.sort(function(a, b){return a-b});
+            for(var i=0; i<$scope.chartDateData.length; i++){
+                $scope.chartMonthData.push($scope.monthNames[$scope.chartDateData[i]]);
+            }
+            new Chartist.Line('#revenueChart', {
+                labels: $scope.chartMonthData,
+                series: [$scope.chartRevData]
+            }, {
+                showArea: true,
+                plugins: [
+                    Chartist.plugins.tooltip()
+                ]
+            });
+            new Chartist.Line('#spentChart', {
+                labels: $scope.chartMonthData,
+                series: [$scope.chartSpentData]
+            }, {
+                showArea: true,
+                plugins: [
+                    Chartist.plugins.tooltip()
+                ]
+            });
+            new Chartist.Line('#profitChart', {
+                labels: $scope.chartMonthData,
+                series: [$scope.chartProfitData]
+            }, {
+                showArea: true,
+                plugins: [
+                    Chartist.plugins.tooltip()
+                ]
+            });
+        }, function fail(response) {
+            notify('ti-alert', 'Error occurred during loading chart info', 'danger');
         });
     };
 });

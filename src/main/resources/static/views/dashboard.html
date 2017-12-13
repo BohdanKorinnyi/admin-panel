@@ -1,4 +1,4 @@
-<div ng-controller="dashboardController" ng-init="initData();" class="main-panel">
+<div ng-controller="dashboardController" ng-init="initData();getChartData();" class="main-panel">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-minimize">
@@ -148,6 +148,47 @@
                                     {{profitCompleted}}%
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-right: 15px;margin-left: 15px">
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="pull-left">
+                            <h4 class="card-title" style="color:green;">Revenue</h4>
+                        </div>
+                        <div class="card-content" style="margin-top: 10px!important;">
+                            <div class="ct-chart ct-golden-section" id="revenueChart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="pull-left">
+                            <h4 class="card-title" style="color:red;">Spent</h4>
+                        </div>
+                        <div class="card-content" style="margin-top: 10px!important;">
+                            <div class="ct-chart ct-golden-section" id="spentChart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="pull-left">
+                            <h4 class="card-title" style="color:darkviolet;">Profit</h4>
+                        </div>
+                        <div class="card-content" style="margin-top: 10px!important;">
+                            <div class="ct-chart ct-golden-section" id="profitChart"></div>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,14 @@
+.greenTd{
+    background-color:rgba(0,255,0,0.3);
+    color: green;
+}
+
+.redTd{
+    background-color:rgba(255,0,0,0.3);
+    color: red;
+}
+
+.greyTd{
+    background-color:rgba(192,192,192,0.3);
+    color: grey;
+}

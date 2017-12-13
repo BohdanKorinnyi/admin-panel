@@ -123,7 +123,9 @@
                             <tbody>
                             <tr ng-repeat="row in result">
                                 <td ng-repeat="column in row track by $index"
-                                    class="text-nowrap">{{column}}</td>
+                                    class="text-nowrap"
+                                    ng-class="{greenTd: column > 0, redTd: column < 0, greyTd: column === 0}"
+                                >{{column}}</td>
                             </tr>
                             </tbody>
                         </table>
