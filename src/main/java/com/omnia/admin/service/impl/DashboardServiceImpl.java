@@ -1,5 +1,7 @@
 package com.omnia.admin.service.impl;
 
+import com.omnia.admin.dao.DashboardDao;
+import com.omnia.admin.model.BuyerProfit;
 import com.omnia.admin.model.Payroll;
 import com.omnia.admin.service.*;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,7 @@ public class DashboardServiceImpl implements DashboardService {
     private final SourceStatsService sourceStatsService;
     private final BuyerKpiService buyerKpiService;
     private final BuyerService buyerService;
+    private final DashboardDao dashboardDao;
 
     @Override
     public Map<String, Object> getDashboardData(Integer buyerId) throws ExecutionException, InterruptedException {
@@ -44,6 +47,13 @@ public class DashboardServiceImpl implements DashboardService {
         response.put("payroll", payrolls.get());
         response.put("totalPaid", payrolls.get().parallelStream().mapToDouble(Payroll::getSum).sum());
         response.put("bonus", realProfit > 0 ? realProfit * 0.2 : 0);
+        return response;
+    }
+
+    @Override
+    public Map<String, List<BuyerProfit>> getChartData(int buyerId, String from, String to, String filter) {
+        HashMap<String, List<BuyerProfit>> response = new HashMap<>();
+        response.put("data", dashboardDao.findChartData(buyerId, from, to, filter));
         return response;
     }
 }

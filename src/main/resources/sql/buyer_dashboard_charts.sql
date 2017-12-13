@@ -8,14 +8,17 @@ FROM (SELECT
         0                              AS 'revenue',
         date                           AS 'date'
       FROM expenses
-      WHERE expenses.sum != 0 AND date BETWEEN :from AND :to
+        JOIN buyers ON expenses.buyer_id = buyers.id
+      WHERE expenses.sum != 0 AND date BETWEEN :from AND :to AND buyers.id = :buyerId
       GROUP BY month(date)
       UNION (SELECT
                TRUNCATE(sum(source_statistics.spent), 2) AS 'spent',
                0                                         AS 'revenue',
                date                                      AS 'date'
              FROM source_statistics
-             WHERE source_statistics.spent != 0 AND date BETWEEN :from AND :to
+               JOIN affiliates ON source_statistics.afid = affiliates.afid
+               JOIN buyers ON affiliates.buyer_id = buyers.id
+             WHERE source_statistics.spent != 0 AND date BETWEEN :from AND :to AND buyers.id = :buyerId
              GROUP BY month(date))
       UNION (
         SELECT
@@ -23,7 +26,9 @@ FROM (SELECT
           0                                               AS 'revenue',
           date                                            AS 'date'
         FROM source_statistics_today
-        WHERE source_statistics_today.spent != 0 AND date = date(now())
+               JOIN affiliates ON source_statistics_today.afid = affiliates.afid
+               JOIN buyers ON affiliates.buyer_id = buyers.id
+        WHERE source_statistics_today.spent != 0 AND date = date(now()) AND buyers.id = :buyerId
         GROUP BY month(date))
       UNION (
         SELECT
@@ -37,10 +42,12 @@ FROM (SELECT
                         WHERE exchange.id = postback.exchange)), 2) AS 'revenue',
           postback.date                                             AS 'date'
         FROM postback
-          INNER JOIN adverts ON adverts.advshortname = postback.advname
-          INNER JOIN adv_status ON adv_status.adv_id = adverts.id
+          JOIN adverts ON adverts.advshortname = postback.advname
+          JOIN adv_status ON adv_status.adv_id = adverts.id
+          JOIN affiliates ON postback.afid = affiliates.afid
+          JOIN buyers ON affiliates.buyer_id = buyers.id
         WHERE adv_status.real_status = 'approved' AND postback.status = adv_status.name
-              AND postback.sum != 0 AND date BETWEEN :from AND :to
+              AND postback.sum != 0 AND date BETWEEN :from AND :to AND buyers.id = :buyerId
         GROUP BY month(date)
       )
      ) AS details
