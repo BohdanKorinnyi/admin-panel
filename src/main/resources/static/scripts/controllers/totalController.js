@@ -32,27 +32,53 @@ Application.controller('totalController', function ($scope, $http) {
         $http.get("/finance/total?from=" + year + "-" + month + "-01&to=" + year + "-" + month + "-31")
             .then(function success(response) {
                 var data = response.data;
+
+                $scope.revenue = 0;
+                $scope.spent = 0;
+                $scope.profit = 0;
+                Object.keys(data).map(function (value) {
+                    for (var i = 0; i < data[value].length; i++) {
+                        var daily = data[value][i];
+                        $scope.revenue += daily.revenue;
+                        $scope.spent += daily.spent;
+                        $scope.profit += daily.profit;
+                    }
+                });
+                $scope.revenue = $scope.revenue.toFixed(2);
+                $scope.spent = $scope.spent.toFixed(2);
+                $scope.profit = $scope.profit.toFixed(2);
+
                 $scope.values = [];
                 Object.keys(data).map(function (value) {
                     var buyerData = [value, 'no-total'];
+                    var profitTotal = 0;
                     for (var i = 2; i < $scope.headers.length; i++) {
-                        var searchDateProfit = searchProfitByDate($scope.headers[i], data[value]);
-                        // console.log(searchDateProfit);
+                        var searchDateProfit = searchByDate($scope.headers[i], data[value], 'profit');
+                        profitTotal = profitTotal + (searchDateProfit === undefined ? 0 : searchDateProfit);
                         buyerData.push(searchDateProfit);
                     }
+                    buyerData[1] = profitTotal.toFixed(2);
                     $scope.result.push(buyerData);
                 });
-                console.log($scope.result);
+                var buyerTotalByDate = ['Total', undefined];
+                for (var i = 2; i < $scope.headers.length; i++) {
+                    var total = 0;
+                    for (var j = 0; j < $scope.result.length; j++) {
+                        total = total + ($scope.result[j][i] === undefined ? 0 : $scope.result[j][i]);
+                    }
+                    buyerTotalByDate.push(total === undefined ? undefined : total.toFixed(2));
+                }
+                $scope.result.push(buyerTotalByDate);
             }, function error() {
                 notify('ti-alert', 'Error occurred during loading data', 'danger');
             });
     };
 
-    function searchProfitByDate(date, buyerStats) {
+    function searchByDate(date, buyerStats, value) {
         for (var i = 0; i < buyerStats.length; i++) {
             var gridDate = convertResponseToDate(buyerStats[i].date);
             if (gridDate === date) {
-                return buyerStats[i].profit;
+                return buyerStats[i][value];
             }
         }
     }
