@@ -1,11 +1,11 @@
 SELECT
-  sum(details.spent)                          AS 'spent',
-  sum(details.revenue)                        AS 'revenue',
+  truncate(sum(details.spent),2)                         AS 'spent',
+  truncate(sum(details.revenue),2)                        AS 'revenue',
   details.buyer                               AS 'buyer',
   details.buyerId                             AS 'buyerId',
   (sum(details.revenue) - sum(details.spent)) AS 'profit'
 FROM (SELECT
-        TRUNCATE(sum(expenses.sum), 2) AS 'spent',
+        sum(expenses.sum) AS 'spent',
         0                              AS 'revenue',
         buyers.id                      AS 'buyerId',
         buyers.name                    AS 'buyer'
@@ -15,7 +15,7 @@ FROM (SELECT
       WHERE expenses.sum != 0 %s
       GROUP BY buyers.id, expenses.date
       UNION (SELECT
-               TRUNCATE(sum(source_statistics.spent), 2) AS 'spent',
+               sum(source_statistics.spent) AS 'spent',
                0                                         AS 'revenue',
                buyers.id                                 AS 'buyerId',
                buyers.name                               AS 'buyer'
@@ -27,7 +27,7 @@ FROM (SELECT
              GROUP BY buyers.id, source_statistics.date, accounts.type)
       UNION (
         SELECT
-          TRUNCATE(sum(source_statistics_today.spent), 2) AS 'spent',
+          sum(source_statistics_today.spent) AS 'spent',
           0                                               AS 'revenue',
           buyers.id                                       AS 'buyerId',
           buyers.name                                     AS 'buyer'
@@ -35,19 +35,19 @@ FROM (SELECT
           INNER JOIN affiliates ON affiliates.afid = source_statistics_today.afid
           INNER JOIN buyers ON affiliates.buyer_id = buyers.id
           INNER JOIN accounts ON accounts.account_id = source_statistics_today.account_id
-        WHERE source_statistics_today.spent != 0 %s
+        WHERE source_statistics_today.spent != 0 AND source_statistics_today.date = date(now()) %s
         GROUP BY buyers.id, source_statistics_today.date, accounts.type
         ORDER BY buyers.name ASC, DATE DESC)
       UNION (
         SELECT
           0                                                         AS 'spent',
-          TRUNCATE(sum(postback.sum /
+          sum(postback.sum /
                        (SELECT exchange.rate
                         FROM exchange
                         WHERE exchange.id = postback.exchange) *
                        (SELECT exchange.count
                         FROM exchange
-                        WHERE exchange.id = postback.exchange)), 2) AS 'revenue',
+                        WHERE exchange.id = postback.exchange)) AS 'revenue',
           buyers.id                                                 AS 'buyerId',
           buyers.name                                               AS 'buyer'
         FROM postback
