@@ -2,11 +2,6 @@
 
 Application.controller("adminDashboardController", function ($scope, $http, dateFactory) {
 
-    $scope.chartData = [];
-    $scope.chartDateData =[];
-    $scope.chartRevData = [];
-    $scope.chartSpentData = [];
-    $scope.chartProfitData = [];
     $scope.adminDashboardData = [];
     $scope.revenueToday = "";
     $scope.revenueYesterday = "";
