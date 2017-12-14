@@ -22,7 +22,10 @@ Application.config(['$routeProvider', function ($routeProvider) {
         })
         .when('/buyers', {
             templateUrl: 'views/buyers.html',
-            controller: 'buyerController'
+            controller: 'buyerController',
+            resolve:{
+                factory: checkRoutingForBuyersAndAfid
+            }
         })
         .when('/home', {
             templateUrl: 'views/arbitratorExecutive.html',
@@ -127,6 +130,27 @@ var checkRoutingForHomePage = function ($q, $rootScope, $location) {
         if (role === 'ADMIN' || role === 'ROLE_ADMIN'
             || role === 'DIRECTOR' || role === 'CFO' || role === 'CBO') {
             $location.path('/home');
+        }
+        else if (role === 'BUYER') {
+            $location.path('/home/buyer');
+        }
+        else {
+            $location.path('/');
+        }
+    }
+};
+
+var checkRoutingForBuyersAndAfid = function ($q, $rootScope, $location) {
+    var request = new XMLHttpRequest();
+    request.open('GET', '/user/me', false);
+    request.send(null);
+    if (request.status === 200) {
+        var z = JSON.parse(request.response);
+        var role = z.authorities[0].authority;
+        localStorage.setItem('role', role);
+        if (role === 'ADMIN' || role === 'ROLE_ADMIN'
+            || role === 'DIRECTOR' || role === 'CFO' || role === 'CBO') {
+            $location.path('/buyers');
         }
         else if (role === 'BUYER') {
             $location.path('/home/buyer');

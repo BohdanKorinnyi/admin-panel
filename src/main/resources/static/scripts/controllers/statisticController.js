@@ -146,4 +146,8 @@ Application.controller("statisticController", function ($scope, $http, dateFacto
             $scope.id = id;
         }
     };
+
+    $scope.toFixedValue = function (value) {
+        return value.toFixed(2);
+    }
 });

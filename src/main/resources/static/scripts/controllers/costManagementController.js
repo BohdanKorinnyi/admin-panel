@@ -43,6 +43,8 @@ Application.controller("costManagementController", function ($scope, $http, date
     $scope.selectedPage = 1;
     $scope.totalPagination = 1;
     $scope.noOfPages = 1;
+    $scope.role = "";
+    $scope.disableCreateCost = false;
 
     //functions
     $scope.getRole = function () {
@@ -60,6 +62,7 @@ Application.controller("costManagementController", function ($scope, $http, date
         $scope.getRole();
         if ($scope.role === "BUYER") {
             $scope.hideBuyerSelect = true;
+            $scope.disableCreateCost = true;
         }
     };
 
