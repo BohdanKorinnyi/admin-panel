@@ -52,8 +52,8 @@ FROM (SELECT
           JOIN adv_status ON adv_status.adv_id = adverts.id
           JOIN affiliates ON postback.afid = affiliates.afid
           JOIN buyers ON affiliates.buyer_id = buyers.id
-        WHERE adv_status.real_status = 'approved' AND postback.status = adv_status.name
-              AND postback.sum != 0 AND date BETWEEN :from AND :to
+        WHERE adv_status.real_status = 'approved' AND (postback.duplicate != 'FULL' OR postback.duplicate IS NULL)
+         AND postback.status = adv_status.name AND postback.sum != 0 AND date BETWEEN :from AND :to
         GROUP BY buyers.id, date(date)
       )
      ) AS details
