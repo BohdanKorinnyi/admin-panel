@@ -1,5 +1,5 @@
 <div ng-controller="payrollController" ng-init="getBuyers(); getCurrency(); getDescription();loadPayrolls();getRole();"
-     class="main-panel" ng-style="style();" resize >
+     class="main-panel" ng-style="style();" resize>
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -23,16 +23,12 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="pull-right">
-                            <button class="btn btn-info btn-md btn-fill "
-                                    ng-click="addPayroll();"
-                                    ng-disabled="disableButtons"
-                                    style="z-index: 10000; position: relative">
+                            <button class="btn btn-info btn-md btn-fill " ng-click="addPayroll();"
+                                    ng-disabled="disableButtons" style="z-index: 10000; position: relative">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Create
                             </button>
-                            <button class="btn btn-success btn-md btn-fill"
-                                    ng-click="applyPayroll();"
-                                    ng-disabled="disableButtons"
-                                    style="z-index: 10000; position: relative">
+                            <button class="btn btn-success btn-md btn-fill" ng-click="applyPayroll();"
+                                    ng-disabled="disableButtons" style="z-index: 10000; position: relative">
                                 Apply
                             </button>
                             <button class="btn btn-primary btn-md btn-fill" style="z-index: 10000; position: relative"
@@ -50,7 +46,7 @@
                                     <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
                                         <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                     </button>
-                                    <select class="form-control" ng-model="p.buyerId"
+                                    <select class="form-control white-input-no-border" ng-model="p.buyerId"
                                             style="width: 17%!important;">
                                         <option value="" disabled selected>Buyer</option>
                                         <option ng-repeat="b in buyerOptions"
@@ -62,7 +58,7 @@
                                                    id="payrollDatePicker"
                                                    date-format="yyyy-MM-dd"
                                                    md-placeholder="Date"></md-datepicker>
-                                    <select class="form-control" ng-model="p.type"
+                                    <select class="form-control white-input-no-border" ng-model="p.type"
                                             style="width: 11%!important;">
                                         <option value="" disabled selected>Type</option>
                                         <option ng-repeat="t in typeValues"
@@ -70,10 +66,10 @@
                                             {{t.name}}
                                         </option>
                                     </select>
-                                    <input type="text" class="form-control" id="payrollSum"
+                                    <input type="text" class="form-control white-input-no-border" id="payrollSum"
                                            ng-model="p.sum" placeholder="Sum"
                                            style="width: 10%!important;"/>
-                                    <select class="form-control" ng-model="p.currencyId"
+                                    <select class="form-control white-input-no-border" ng-model="p.currencyId"
                                             style="width: 11%!important;">
                                         <option value="" disabled selected>Currency</option>
                                         <option ng-repeat="c in currencyOptions"
@@ -81,7 +77,7 @@
                                             {{c.code}}
                                         </option>
                                     </select>
-                                    <select class="form-control" ng-model="p.description"
+                                    <select class="form-control white-input-no-border" ng-model="p.description"
                                             style="width: 26%!important;">
                                         <option value="" disabled selected>Description</option>
                                         <option ng-repeat="d in descriptionOptions"

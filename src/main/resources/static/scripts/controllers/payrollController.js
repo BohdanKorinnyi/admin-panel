@@ -34,19 +34,10 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.getRole = function () {
         var request = new XMLHttpRequest();
-        request.open('GET', '/user/me', false);  // `false` makes the request synchronous
+        request.open('GET', '/user/me', false);
         request.send(null);
-
-        if (request.status === 200) {
-            var z = JSON.parse(request.response);
-            $scope.role = z.authorities[0].authority;
-            if($scope.role === "BUYER"){
-                $scope.disableButtons = true;
-            }
-            else{
-                $scope.disableButtons = false;
-            }
-        }
+        $scope.role = JSON.parse(request.response).authorities[0].authority;
+        $scope.disableButtons = $scope.role === "BUYER";
     };
 
 
