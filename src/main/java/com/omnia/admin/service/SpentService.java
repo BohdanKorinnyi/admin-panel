@@ -1,5 +1,9 @@
 package com.omnia.admin.service;
 
 public interface SpentService {
-    Float getSpentByCurrentMonthAndBuyer(Integer buyerId);
+    Float getSpentByCurrentMonth(Integer buyerId);
+
+    Float getSpentByToday(Integer buyerId);
+
+    Float getSpentByYesterday(Integer buyerId);
 }

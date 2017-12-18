@@ -10,5 +10,9 @@ public interface PostbackDao {
 
     Float getRevenueByBuyer(int buyerId);
 
+    Float getTodayRevenueByBuyer(int buyerId);
+
+    Float getYesterdayRevenueByBuyer(int buyerId);
+
     List<Postback> findPostbackByConversionId(long conversionId);
 }

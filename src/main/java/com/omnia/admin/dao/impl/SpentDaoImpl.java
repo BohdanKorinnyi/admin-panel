@@ -24,13 +24,38 @@ public class SpentDaoImpl implements SpentDao {
             "               INNER JOIN affiliates ON affiliates.afid = source_statistics_today.afid " +
             "               INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
             "             WHERE source_statistics_today.spent != 0 AND source_statistics_today.date = date(now()) AND buyers.id = ?)) AS result;";
+    private static final String SELECT_TODAY_SPENT = "SELECT truncate(sum(result.spent), 2) AS 'spent' " +
+            "            FROM (SELECT sum(expenses.sum) AS 'spent' " +
+            "                  FROM expenses " +
+            "                    INNER JOIN buyers ON expenses.buyer_id = buyers.id  " +
+            "                  WHERE expenses.sum != 0 AND expenses.date = date(now()) AND buyers.id = ? " +
+            "                  UNION (SELECT sum(source_statistics.spent) AS 'spent'  " +
+            "                         FROM source_statistics " +
+            "                           INNER JOIN affiliates ON affiliates.afid = source_statistics.afid " +
+            "                           INNER JOIN buyers ON affiliates.buyer_id = buyers.id  " +
+            "                         WHERE source_statistics.spent != 0 AND source_statistics.date = date(now()) AND buyers.id = ?) " +
+            "                  UNION (SELECT sum(source_statistics_today.spent) AS 'spent' " +
+            "                         FROM source_statistics_today " +
+            "                           INNER JOIN affiliates ON affiliates.afid = source_statistics_today.afid " +
+            "                           INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
+            "                         WHERE source_statistics_today.spent != 0 AND source_statistics_today.date = date(now()) AND buyers.id = ?)) AS result;";
+    private static final String SELECT_YESTERDAY_SPENT = "SELECT truncate(sum(result.spent), 2) AS 'spent'  " +
+            "            FROM (SELECT sum(expenses.sum) AS 'spent'  " +
+            "                  FROM expenses " +
+            "                    INNER JOIN buyers ON expenses.buyer_id = buyers.id  " +
+            "                  WHERE expenses.sum != 0 AND expenses.date = date(now() - INTERVAL 1 DAY) AND buyers.id = ? " +
+            "                  UNION (SELECT sum(source_statistics.spent) AS 'spent'  " +
+            "                         FROM source_statistics " +
+            "                           INNER JOIN affiliates ON affiliates.afid = source_statistics.afid  " +
+            "                           INNER JOIN buyers ON affiliates.buyer_id = buyers.id  " +
+            "                         WHERE source_statistics.spent != 0 AND source_statistics.date = date(now() - INTERVAL 1 DAY) AND buyers.id = ?)  " +
+            "                  UNION (SELECT sum(source_statistics_today.spent) AS 'spent'  " +
+            "                         FROM source_statistics_today " +
+            "                           INNER JOIN affiliates ON affiliates.afid = source_statistics_today.afid  " +
+            "                           INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
+            "                         WHERE source_statistics_today.spent != 0 AND source_statistics_today.date = date(now() - INTERVAL 1 DAY) AND buyers.id = ?)) AS result;";
 
     private final JdbcTemplate jdbcTemplate;
-
-    @Override
-    public Float calculateBuyerAllTimeSpent(Integer buyerId) {
-        return null;
-    }
 
     @Override
     public Float calculateBuyerCurrentMonthSpent(Integer buyerId) {
@@ -38,7 +63,12 @@ public class SpentDaoImpl implements SpentDao {
     }
 
     @Override
-    public Float calculateBuyerCustomRangeSpent(Integer buyerId) {
-        return null;
+    public Float calculateBuyerTodaySpent(Integer buyerId) {
+        return jdbcTemplate.queryForObject(SELECT_TODAY_SPENT, Float.class, buyerId, buyerId, buyerId);
+    }
+
+    @Override
+    public Float calculateBuyerYesterdaySpent(Integer buyerId) {
+        return jdbcTemplate.queryForObject(SELECT_YESTERDAY_SPENT, Float.class, buyerId, buyerId, buyerId);
     }
 }

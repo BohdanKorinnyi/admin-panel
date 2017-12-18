@@ -8,11 +8,20 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class SpentServiceImpl implements SpentService {
-
     private final SpentDao spentDao;
 
     @Override
-    public Float getSpentByCurrentMonthAndBuyer(Integer buyerId) {
+    public Float getSpentByCurrentMonth(Integer buyerId) {
         return spentDao.calculateBuyerCurrentMonthSpent(buyerId);
+    }
+
+    @Override
+    public Float getSpentByToday(Integer buyerId) {
+        return spentDao.calculateBuyerTodaySpent(buyerId);
+    }
+
+    @Override
+    public Float getSpentByYesterday(Integer buyerId) {
+        return spentDao.calculateBuyerYesterdaySpent(buyerId);
     }
 }

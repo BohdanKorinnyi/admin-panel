@@ -18,6 +18,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PostbackDaoImpl implements PostbackDao {
     private static final String SELECT_FULL_URL_BY_ID = "SELECT fullurl FROM postback WHERE id = ?;";
+
+    private static final String CURRENT_MONTH_INTERVAL = " AND month(postback.date) = month(now()) ";
+    private static final String TODAY_INTERVAL = " AND postback.date = date(now()) ";
+    private static final String YESTERDAY_INTERVAL = " AND postback.date = date(now() - INTERVAL 1 DAY) ";
+
     private static final String SELECT_BUYER_REVENUE = "SELECT " +
             "  TRUNCATE(sum(postback.sum / " +
             "               (SELECT exchange.rate " +
@@ -32,7 +37,7 @@ public class PostbackDaoImpl implements PostbackDao {
             "  INNER JOIN adverts ON adverts.advshortname = postback.advname " +
             "  INNER JOIN adv_status ON adv_status.adv_id = adverts.id " +
             "WHERE (postback.duplicate != 'FULL' OR postback.duplicate IS NULL) AND" +
-            "  adv_status.real_status = 'approved' AND postback.status = adv_status.name AND postback.sum != 0 AND buyers.id = ? AND month(postback.date) = month(now())";
+            "  adv_status.real_status = 'approved' AND postback.status = adv_status.name AND postback.sum != 0 AND buyers.id = ? ";
 
     private static final String POSTBACK_BY_CONVERSION = "SELECT postback.* " +
             "FROM conversions_postback " +
@@ -57,7 +62,17 @@ public class PostbackDaoImpl implements PostbackDao {
 
     @Override
     public Float getRevenueByBuyer(int buyerId) {
-        return jdbcTemplate.queryForObject(SELECT_BUYER_REVENUE, Float.class, buyerId);
+        return jdbcTemplate.queryForObject(SELECT_BUYER_REVENUE + CURRENT_MONTH_INTERVAL, Float.class, buyerId);
+    }
+
+    @Override
+    public Float getTodayRevenueByBuyer(int buyerId) {
+        return jdbcTemplate.queryForObject(SELECT_BUYER_REVENUE + TODAY_INTERVAL, Float.class, buyerId);
+    }
+
+    @Override
+    public Float getYesterdayRevenueByBuyer(int buyerId) {
+        return jdbcTemplate.queryForObject(SELECT_BUYER_REVENUE + YESTERDAY_INTERVAL, Float.class, buyerId);
     }
 
     @Override

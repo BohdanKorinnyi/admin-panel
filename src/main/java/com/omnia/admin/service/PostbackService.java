@@ -10,5 +10,9 @@ public interface PostbackService {
 
     Float getRevenueByBuyer(int buyerId);
 
+    Float getTodayRevenueByBuyer(int buyerId);
+
+    Float getYesterdayRevenueByBuyer(int buyerId);
+
     List<Postback> getPostbacksByConversionId(long conversionId);
 }

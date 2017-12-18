@@ -25,7 +25,7 @@ public class BuyerHomeController {
                                                 @RequestParam(required = false) String from,
                                                 @RequestParam(required = false) String to) {
         if (UserPrincipalUtils.isRole(request, Role.BUYER)) {
-            return ResponseEntity.ok(spentService.getSpentByCurrentMonthAndBuyer(UserPrincipalUtils.getBuyerId(request)));
+            return ResponseEntity.ok(spentService.getSpentByCurrentMonth(UserPrincipalUtils.getBuyerId(request)));
         }
         return ResponseEntity.ok(HttpStatus.NO_CONTENT);
     }

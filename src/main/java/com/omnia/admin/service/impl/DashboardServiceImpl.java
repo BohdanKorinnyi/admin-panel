@@ -25,6 +25,7 @@ public class DashboardServiceImpl implements DashboardService {
     private final BuyerKpiService buyerKpiService;
     private final BuyerService buyerService;
     private final DashboardDao dashboardDao;
+    private final SpentService spentService;
 
     @Override
     public Map<String, Object> getDashboardData(Integer buyerId) throws ExecutionException, InterruptedException {
@@ -45,6 +46,10 @@ public class DashboardServiceImpl implements DashboardService {
         response.put("profit", realProfit);
         response.put("profitPlan", profitPlanFuture.get());
         response.put("payroll", payrolls.get());
+        response.put("revenueToday", postbackService.getTodayRevenueByBuyer(buyerId));
+        response.put("revenueYesterday", postbackService.getYesterdayRevenueByBuyer(buyerId));
+        response.put("spentToday", spentService.getSpentByToday(buyerId));
+        response.put("spentYesterday", spentService.getSpentByYesterday(buyerId));
         response.put("totalPaid", payrolls.get().parallelStream().mapToDouble(Payroll::getSum).sum());
         response.put("bonus", realProfit > 0 ? realProfit * 0.2 : 0);
         return response;
