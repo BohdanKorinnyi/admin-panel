@@ -1,0 +1,181 @@
+<div ng-controller="buyerStatisticController" ng-init="loadBuyerCosts();" class="main-panel">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-minimize">
+                <button class="btn btn-fill btn-icon" onclick="sidebarChange()"><i class="ti-menu"></i></button>
+            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand">
+                    Spent By Buyer
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="content content-backdown">
+        <div class="row margin-backdown">
+            <div class="card">
+                <div class="card-header">
+                    <div class="pull-right">
+                        <button class="btn btn-success btn-md btn-fill" ng-click=""
+                                style="z-index: 10000; position: relative">
+                            Apply
+                        </button>
+                        <button class="btn btn-primary btn-md btn-fill" ng-click=""
+                                style="z-index: 10000; position: relative">
+                            Export
+                        </button>
+                    </div>
+                    <h4 class="card-title">Report Filters</h4>
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <form class="form-inline">
+                                    <div class="form-group" ng-init="getBuyers();"
+                                         style="margin-right:-3px;margin-bottom: 3px; margin-left: 5px;">
+                                        <select ng-hide="hideBuyerSelect"
+                                                class="selectpicker" multiple
+                                                data-style="btn-info btn-fill btn-block"
+                                                data-size="5"
+                                                title="Buyer"
+                                                data-header="Buyers"
+                                                ng-model="selectedBuyerNames"
+                                                style="width: 130%;margin-left: 5px;">
+                                            <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
+                                                    data-last="{{$last}}" value="{{b.id}}">{{b.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group" ng-init="getTypes();"
+                                         style="margin-bottom: 3px; margin-left: 5px; margin-right: 5px;">
+                                        <select class="selectpicker" multiple
+                                                data-style="btn-info btn-fill btn-block"
+                                                data-size="5"
+                                                data-header="Types"
+                                                selected-header="options selected"
+                                                title="Types"
+                                                ng-model="selectedTypes"
+                                                style="width: 120%;">
+                                            <option class="small-font" ng-repeat="t in types"
+                                                    data-select-watcher
+                                                    data-last="{{$last}}" value="{{t.name}}">{{t.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select class="form-control white-input-no-border" data-ng-model="selectedDate"
+                                                data-ng-options="v as k for (k, v) in dateOptions"
+                                                style="margin-bottom: 14px;">
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6" style="width: 225px; margin-bottom: 15px;">
+                                                <md-datepicker ng-model="dpFromDate"
+                                                               date-format="yyyy-MM-dd"
+                                                               ng-disabled="selectedDate !== 'custom'"
+                                                               md-placeholder="From"></md-datepicker>
+                                            </div>
+                                            <div class="col-md-6"
+                                                 style="width:225px; margin-left: -27px; margin-bottom: 15px;">
+                                                <md-datepicker ng-model="dpToDate"
+                                                               date-format="yyyy-MM-dd"
+                                                               ng-disabled="selectedDate !== 'custom'"
+                                                               md-placeholder="To"></md-datepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content content-backdown">
+        <div class="row margin-backdown">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Report</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-content table-responsive table-full-width">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center; vertical-align: middle">
+                                    <a href="">
+                                        Date
+                                    </a>
+                                </th>
+
+                                <th style="text-align: center; vertical-align: middle">
+                                    <a href="">
+                                        Source
+                                    </a>
+                                </th>
+
+                                <th style="text-align: center; vertical-align: middle; width:30%;">
+                                    <a href="">
+                                        Buyer
+                                    </a>
+                                </th>
+
+                                <th style="text-align: center; vertical-align: middle">
+                                    <a href="">
+                                        Sum
+                                    </a>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody ng-repeat="item in buyerCosts">
+                            <tr>
+                                <td style="text-align: left; cursor: pointer;"
+                                    colspan="4" data-toggle="collapse"
+                                    ng-click="showDateDetailsColumn(item.date);">
+                                    <strong class="panel-heading">Date: {{item.date}} <i
+                                            class="ti-angle-down"></i></strong></td>
+                            </tr>
+                            <tr style="text-align: left; vertical-align: middle"
+                                ng-repeat-start="s in item.sources"
+                                ng-show="dateDetails && currentDateDetails === item.date">
+                                <td style="cursor: pointer; text-align: left;"
+                                    data-toggle="collapse" colspan="4"
+                                    ng-click="showSourcesDetailsColumn(s.sourceId);">
+                                    <strong style="margin-left: 35px!important;">Source: {{s.source}}
+                                        <i class="ti-angle-down"></i></strong>
+                                </td>
+                            </tr>
+
+                            <tr style="text-align: center; vertical-align: middle"
+                                ng-repeat="c in s.costs"
+                                ng-show="sourcesDetails && currentSourceUuid === s.sourceId">
+                                <td>{{c.date}}</td>
+                                <td>{{c.source}}</td>
+                                <td>{{c.buyerName}}</td>
+                                <td>{{c.spent}}</td>
+                            </tr>
+                            <tr ng-repeat-end></tr>
+                            </tbody>
+                            <tfoot>
+                            <tr ng-show="buyerCosts.length == 0">
+                                <td colspan="4">
+                                    <div class="loader" style="text-align: center;" ng-show="showBuyerCostsLoader"></div>
+                                    <div style="text-align: center;" ng-show="!showBuyerCostsLoader">No data</div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -42,6 +42,10 @@ Application.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'views/statistic.html',
             controller: 'statisticController'
         })
+        .when('/buyerStatistic', {
+            templateUrl: 'views/buyerStatistic.html',
+            controller: 'buyerStatisticController'
+        })
         .when('/sources', {
             templateUrl: 'views/sources.html',
             controller: 'sourcesController'
