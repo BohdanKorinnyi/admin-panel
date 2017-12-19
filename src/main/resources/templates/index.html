@@ -3,8 +3,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Admin Panel</title>
-    <!-- <link href="css/login.css" rel="stylesheet"/> -->
+    <title>Omnia Digital</title>
     <link href="css/nya-bs-select.css" rel="stylesheet"/>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
@@ -38,8 +37,11 @@
 <body style="background-color: #f4f3ef" ng-controller="mainController">
 <div class="sidebar" data-background-color="white" data-active-color="warning" ng-cloak="" ng-init="getUsername();">
     <div class="logo">
-        <a class="simple-text logo-normal" style="text-align: center">
-            OMNI-A
+        <a id="mini-logo" class="simple-text logo-mini">
+            OD
+        </a>
+        <a id="normal-logo" class="simple-text logo-normal text-center">
+            OMNIA DIGITAL
         </a>
     </div>
     <div class="sidebar-wrapper" style="overflow: auto !important;">
@@ -345,13 +347,9 @@
 
 <script>
     $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
         $(window).height();
+        $('[data-toggle="tooltip"]').tooltip();
+        $('#mini-logo').css('display', 'none');
     });
 </script>
 </body>

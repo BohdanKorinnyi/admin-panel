@@ -1,10 +1,11 @@
 Application.controller('dashboardController', function ($scope, $http) {
+    $scope.monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     $scope.chartData = [];
-    $scope.chartDateData =[];
+    $scope.chartDateData = [];
     $scope.chartRevData = [];
     $scope.chartSpentData = [];
     $scope.chartProfitData = [];
-    $scope.chartMonthData =[];
+    $scope.chartMonthData = [];
 
     $scope.payroll = [];
     $scope.revenue = '';
@@ -38,30 +39,27 @@ Application.controller('dashboardController', function ($scope, $http) {
         });
     };
 
-    $scope.monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    $scope.getChartData = function () {
+    $scope.getDashboardChartData = function () {
         $scope.chartData = [];
-        $scope.chartDateData =[];
+        $scope.chartDateData = [];
         $scope.chartRevData = [];
         $scope.chartSpentData = [];
         $scope.chartProfitData = [];
         $scope.chartMonthData = [];
-
-        var url = "/dashboard/charts?from="+$scope.from+"&to="+$scope.to+"&filter=allTime";
-        $http.get(url).then(function success(response) {
+        $http.get("/dashboard/charts?from=&to=&filter=allTime").then(function success(response) {
             $scope.chartData = response.data.data;
-            for(var i=0; i<$scope.chartData.length; i++){
+            for (var i = 0; i < $scope.chartData.length; i++) {
                 $scope.chartDateData.push($scope.chartData[i].date);
                 $scope.chartRevData.push($scope.chartData[i].revenue);
                 $scope.chartSpentData.push($scope.chartData[i].spent);
                 $scope.chartProfitData.push($scope.chartData[i].profit);
             }
 
-            $scope.chartDateData.sort(function(a, b){return a-b});
-            for(var i=0; i<$scope.chartDateData.length; i++){
-                $scope.chartMonthData.push($scope.monthNames[$scope.chartDateData[i] - 1]);
+            $scope.chartDateData.sort(function (a, b) {
+                return a - b
+            });
+            for (var j = 0; j < $scope.chartDateData.length; j++) {
+                $scope.chartMonthData.push($scope.monthShortNames[$scope.chartDateData[j] - 1]);
             }
             new Chartist.Line('#revenueChart', {
                 labels: $scope.chartMonthData,
@@ -90,8 +88,8 @@ Application.controller('dashboardController', function ($scope, $http) {
                     Chartist.plugins.tooltip()
                 ]
             });
-        }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading chart info', 'danger');
+        }, function fail() {
+            notify('ti-alert', 'Error occurred during loading dashboard chart info', 'danger');
         });
     };
 });

@@ -1,16 +1,17 @@
-"use strict";
+'use strict';
 
-Application.controller("adminDashboardController", function ($scope, $http, dateFactory) {
-
+Application.controller('adminDashboardController', function ($scope, $http, dateFactory) {
+    var date = new Date();
     $scope.adminDashboardData = [];
-    $scope.revenueToday = "";
-    $scope.revenueYesterday = "";
-    $scope.spentToday = "";
-    $scope.spentYesterday = "";
+    $scope.revenueToday = '';
+    $scope.revenueYesterday = '';
+    $scope.spentToday = '';
+    $scope.spentYesterday = '';
     $scope.revTotal = 0;
     $scope.spentTotal = 0;
     $scope.profitTotal = 0;
 
+    $scope.monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     $scope.dateOptions = {
         'All time': 'allTime',
         'Today': 'today',
@@ -21,11 +22,8 @@ Application.controller("adminDashboardController", function ($scope, $http, date
     };
 
     $scope.selectedDate = 'allTime';
-    $scope.from = "";
-    $scope.to = "";
-
-    $scope.monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    $scope.from = '';
+    $scope.to = '';
 
 
     $scope.initData = function () {
@@ -38,11 +36,11 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         $scope.spentYesterday = 0;
         $scope.revenueYesterday = 0;
 
-        if ($scope.selectedDate === "allTime") {
-            $scope.from = "";
-            $scope.to = "";
+        if ($scope.selectedDate === 'allTime') {
+            $scope.from = '';
+            $scope.to = '';
         }
-        else if ($scope.selectedDate === "yesterday") {
+        else if ($scope.selectedDate === 'yesterday') {
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
             $scope.to = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
         }
@@ -50,7 +48,7 @@ Application.controller("adminDashboardController", function ($scope, $http, date
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
             $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
         }
-        var url = "/admin/dashboard?from=" + $scope.from + "&to=" + $scope.to;
+        var url = '/admin/dashboard?from=' + $scope.from + '&to=' + $scope.to;
         $scope.adminDashboardData = [];
         $http.get(url).then(function success(response) {
             $scope.findTotals(response.data.data);
@@ -59,11 +57,11 @@ Application.controller("adminDashboardController", function ($scope, $http, date
             $scope.revenueToday = response.data.today.revenue;
             $scope.spentYesterday = response.data.yesterday.spent;
             $scope.revenueYesterday = response.data.yesterday.revenue;
-            $scope.profitToday = ($scope.revenueToday - $scope.spentToday).toFixed(2);
-            $scope.profitYesterday = ($scope.revenueYesterday - $scope.spentYesterday).toFixed(2);
-            $scope.roiToday = (($scope.profitToday / $scope.spentToday) * 100).toFixed(2);
-            $scope.roiYesterday = (($scope.profitYesterday / $scope.spentYesterday) * 100).toFixed(2);
-        }, function fail(response) {
+            $scope.profitToday = (parseFloat($scope.revenueToday) - parseFloat($scope.spentToday)).toFixed(2);
+            $scope.profitYesterday = (parseFloat($scope.revenueYesterday) - parseFloat($scope.spentYesterday)).toFixed(2);
+            $scope.roiToday = ((parseFloat($scope.spentToday) === 0 ? 0 : parseFloat($scope.profitToday) / parseFloat($scope.spentToday)) * 100).toFixed(2);
+            $scope.roiYesterday = ((parseFloat($scope.spentYesterday) === 0 ? 0 : parseFloat($scope.profitYesterday) / parseFloat($scope.spentYesterday)) * 100).toFixed(2);
+        }, function fail() {
             notify('ti-alert', 'Error occurred during loading dashboard info', 'danger');
         });
     };
@@ -76,44 +74,38 @@ Application.controller("adminDashboardController", function ($scope, $http, date
         $scope.chartProfitData = [];
         $scope.chartMonthData = [];
 
-        if ($scope.selectedDate === "allTime") {
-            $scope.from = "";
-            $scope.to = "";
+        if ($scope.selectedDate === 'allTime') {
+            $scope.from = '';
+            $scope.to = '';
         }
         else {
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
             $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
         }
-
-        var url = "/admin/dashboard/charts?from=" + $scope.from + "&to=" + $scope.to + "&filter=" + $scope.selectedDate;
-        $http.get(url).then(function success(response) {
+        console.log('request chart: ', $scope.from, $scope.to, $scope.selectedDate);
+        $http.get('/admin/dashboard/charts?from=' + $scope.from + '&to=' + $scope.to + '&filter=' + $scope.selectedDate).then(function success(response) {
             $scope.chartData = response.data.data;
             for (var i = 0; i < $scope.chartData.length; i++) {
+                var currentDate = formatDateWithoutYear(getDateOfWeek($scope.chartData[i].date, date.getFullYear()));
+                var currentNotFormattedDate = getDateOfWeek($scope.chartData[i].date, date.getFullYear());
 
-                var currentDate = formatDateWithoutYear(getDateOfWeek($scope.chartData[i].date, (new Date()).getFullYear()));
-                var currentDateNonFormated = getDateOfWeek($scope.chartData[i].date, (new Date()).getFullYear());
-
-                if ($scope.selectedDate === "thisMonth") {
-
-                    var thisM = (new Date()).getMonth();
-
-                    if (currentDateNonFormated.getMonth() !== thisM) {
-                        currentDateNonFormated.setDate(1);
-                        currentDateNonFormated.setMonth(thisM);
-                        $scope.chartDateData.push(formatDateWithoutYear(currentDateNonFormated));
+                if ($scope.selectedDate === 'thisMonth') {
+                    var currentMonth = date.getMonth();
+                    if (currentNotFormattedDate.getMonth() !== currentMonth) {
+                        currentNotFormattedDate.setDate(1);
+                        currentNotFormattedDate.setMonth(currentMonth);
+                        $scope.chartDateData.push(formatDateWithoutYear(currentNotFormattedDate));
                     }
                     else {
                         $scope.chartDateData.push(currentDate);
                     }
                 }
-                else if ($scope.selectedDate === "lastMonth") {
-
-                    var lastM = ((new Date()).getMonth() - 1);
-
-                    if (currentDateNonFormated.getMonth() !== lastM) {
-                        currentDateNonFormated.setDate(1);
-                        currentDateNonFormated.setMonth(lastM);
-                        $scope.chartDateData.push(formatDateWithoutYear(currentDateNonFormated));
+                else if ($scope.selectedDate === 'lastMonth') {
+                    var lastMonth = date.getMonth() - 1;
+                    if (currentNotFormattedDate.getMonth() !== lastMonth) {
+                        currentNotFormattedDate.setDate(1);
+                        currentNotFormattedDate.setMonth(lastMonth);
+                        $scope.chartDateData.push(formatDateWithoutYear(currentNotFormattedDate));
                     }
                     else {
                         $scope.chartDateData.push(currentDate);
@@ -131,9 +123,9 @@ Application.controller("adminDashboardController", function ($scope, $http, date
             $scope.chartDateData.sort(function (a, b) {
                 return a - b
             });
-            if ($scope.selectedDate === "allTime") {
-                for (var i = 0; i < $scope.chartDateData.length; i++) {
-                    $scope.chartMonthData.push($scope.monthNames[$scope.chartDateData[i] - 1]);
+            if ($scope.selectedDate === 'allTime') {
+                for (var j = 0; j < $scope.chartDateData.length; j++) {
+                    $scope.chartMonthData.push($scope.monthShortNames[$scope.chartDateData[j] - 1]);
                 }
                 $scope.chartDateData = $scope.chartMonthData;
             }
@@ -164,7 +156,7 @@ Application.controller("adminDashboardController", function ($scope, $http, date
                     Chartist.plugins.tooltip()
                 ]
             });
-        }, function fail(response) {
+        }, function fail() {
             notify('ti-alert', 'Error occurred during loading chart info', 'danger');
         });
     };
@@ -197,19 +189,15 @@ function formatDate(date) {
 
 function getDateOfWeek(w, y) {
     var d = (1 + (w - 1) * 7); // 1st of January + 7 days for each week
-
     return new Date(y, 0, d);
 }
 
 function formatDateWithoutYear(date) {
     var d = new Date(date),
-        //month = '' + (d.getMonth() + 1),
         day = '' + d.getDate();
-
-    //if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    //return [month, day].join('-');
+    if (day.length < 2) {
+        day = '0' + day
+    }
     return [day];
 }
 
