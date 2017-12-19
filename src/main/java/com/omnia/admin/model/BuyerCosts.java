@@ -10,4 +10,5 @@ public class BuyerCosts {
     private int buyerId;
     private String date;
     private String source;
+    private String buyerName;
 }
