@@ -2,9 +2,9 @@ package com.omnia.admin.controller;
 
 import com.omnia.admin.model.Buyer;
 import com.omnia.admin.service.BuyerService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.omnia.admin.service.SpentService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +14,7 @@ import java.util.List;
 @RequestMapping(value = "buyer")
 public class BuyerController {
     private final BuyerService buyerService;
+    private final SpentService spentService;
 
     @GetMapping
     public List<Buyer> getBuyers() {
@@ -33,5 +34,10 @@ public class BuyerController {
     @PostMapping("save")
     public void saveBuyers(@RequestBody List<Buyer> buyers) {
         buyerService.saveBuyers(buyers);
+    }
+
+    @GetMapping("spent/report")
+    public ResponseEntity getSpentByBuyerReport(@RequestParam String from, @RequestParam String to) {
+        return ResponseEntity.ok(spentService.createSpentByBuyerReport(from, to));
     }
 }
