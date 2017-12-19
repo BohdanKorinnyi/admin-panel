@@ -13,6 +13,7 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
 
     $scope.dateDetails = false;
     $scope.sourcesDetails = false;
+    $scope.buyerDetails = false;
 
     $scope.sizeOptions = {
         50: 50,
@@ -145,6 +146,9 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
             $scope.dateDetails = true;
             $scope.currentDateDetails = date;
         }
+
+        $scope.currentBuyerUUID = "";
+        $scope.currentSourceUuid = "";
     };
 
     $scope.currentSourceUuid = "";
@@ -152,11 +156,26 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
     $scope.showSourcesDetailsColumn = function (uuid) {
         if ($scope.currentSourceUuid === uuid) {
             $scope.sourcesDetails = false;
-            $scope.currentSourceUuid = uuid;
+            $scope.currentSourceUuid = "";
         }
         else {
             $scope.sourcesDetails = true;
             $scope.currentSourceUuid = uuid;
+        }
+
+        $scope.currentBuyerUUID = "";
+    };
+
+    $scope.currentBuyerUUID = "";
+
+    $scope.showBuyerDetailsColumn = function (uuid) {
+        if ($scope.currentBuyerUUID === uuid) {
+            $scope.buyerDetails = false;
+            $scope.currentBuyerUUID = "";
+        }
+        else {
+            $scope.buyerDetails = true;
+            $scope.currentBuyerUUID = uuid;
         }
     };
 
@@ -164,6 +183,9 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
         for(var i = 0; i<data.length; i++){
             for(var j = 0; j<data[i].sources.length; j++){
                 data[i].sources[j]['sourceId'] = createUUID();
+                for(var f = 0; f<data[i].sources[j].costs.length; f++){
+                    data[i].sources[j].costs[f]['buyerUUID'] = createUUID();
+                }
             }
         }
         return data;
@@ -171,7 +193,7 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
 
     function createUUID() {
         var s = [];
-        var hexDigits = "0123456789ABCDEF";
+        var hexDigits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         for (var i = 0; i < 32; i++) {
             s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
         }

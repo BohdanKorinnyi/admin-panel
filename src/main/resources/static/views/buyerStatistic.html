@@ -154,14 +154,25 @@
                                 </td>
                             </tr>
 
-                            <tr style="text-align: center; vertical-align: middle"
-                                ng-repeat="c in s.costs"
+                            <tr style="text-align: left; vertical-align: middle"
+                                ng-repeat-start="c in s.costs"
                                 ng-show="sourcesDetails && currentSourceUuid === s.sourceId">
+                                <td style="cursor: pointer; text-align: left;"
+                                    data-toggle="collapse" colspan="4"
+                                    ng-click="showBuyerDetailsColumn(c.buyerUUID);">
+                                    <strong style="margin-left: 70px!important;">Buyer: {{c.buyerName}}
+                                        <i class="ti-angle-down"></i></strong>
+                                </td>
+                            </tr>
+
+                            <tr style="text-align: center; vertical-align: middle"
+                                ng-show="sourcesDetails && currentBuyerUUID === c.buyerUUID">
                                 <td>{{c.date}}</td>
                                 <td>{{c.source}}</td>
                                 <td>{{c.buyerName}}</td>
                                 <td>{{c.spent}}</td>
                             </tr>
+                            <tr ng-repeat-end></tr>
                             <tr ng-repeat-end></tr>
                             </tbody>
                             <tfoot>
