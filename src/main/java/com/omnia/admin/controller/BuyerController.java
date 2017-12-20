@@ -37,7 +37,7 @@ public class BuyerController {
     }
 
     @GetMapping("spent/report")
-    public ResponseEntity getSpentByBuyerReport(@RequestParam String from, @RequestParam String to) {
-        return ResponseEntity.ok(spentService.createSpentByBuyerReport(from, to));
+    public ResponseEntity getSpentReport(@RequestParam String from, @RequestParam String to) {
+        return ResponseEntity.ok(spentService.getSpentReport(from, to));
     }
 }

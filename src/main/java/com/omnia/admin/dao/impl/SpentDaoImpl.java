@@ -64,7 +64,7 @@ public class SpentDaoImpl implements SpentDao {
             "  result.source, " +
             "  result.buyerId, " +
             "  result.buyerName, " +
-            "  result.date " +
+            "  DATE_FORMAT(result.date, '%d-%M-%y') AS 'date' " +
             "FROM (SELECT " +
             "        sum(expenses.sum)    AS 'spent', " +
             "        expenses.description AS 'source', " +
@@ -121,7 +121,7 @@ public class SpentDaoImpl implements SpentDao {
     }
 
     @Override
-    public List<BuyerCosts> createSpentByBuyerReport(String from, String to) {
+    public List<BuyerCosts> getSpentReport(String from, String to) {
         return jdbcTemplate.query(SELECT_SPENT_BY_BUYER, BeanPropertyRowMapper.newInstance(BuyerCosts.class));
     }
 }

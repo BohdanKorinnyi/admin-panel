@@ -1,5 +1,6 @@
 package com.omnia.admin.service;
 
+import com.omnia.admin.model.BuyerCosts;
 import com.omnia.admin.model.SpentByDateReport;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface SpentService {
 
     Float getSpentByYesterday(Integer buyerId);
 
-    List<SpentByDateReport> createSpentByBuyerReport(String from, String to);
+    List<BuyerCosts> getSpentReport(String from, String to);
 }

@@ -11,5 +11,5 @@ public interface SpentDao {
 
     Float calculateBuyerYesterdaySpent(Integer buyerId);
 
-    List<BuyerCosts> createSpentByBuyerReport(String from, String to);
+    List<BuyerCosts> getSpentReport(String from, String to);
 }
