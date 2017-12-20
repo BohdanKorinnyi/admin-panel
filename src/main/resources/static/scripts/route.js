@@ -54,12 +54,14 @@ Application.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'views/planByBuyer.html',
             controller: 'planByBuyerController'
         })
-        .when('/buyer/dashboard', {
-            templateUrl: 'views/dashboard.html',
-            controller: 'dashboardController',
+        .when('/dashboard',{
             resolve: {
                 factory: checkRouting
             }
+        })
+        .when('/buyer/dashboard', {
+            templateUrl: 'views/dashboard.html',
+            controller: 'dashboardController'
         })
         .when('/admin/dashboard', {
             templateUrl: 'views/adminDashboard.html',

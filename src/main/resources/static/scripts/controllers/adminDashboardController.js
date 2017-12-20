@@ -26,7 +26,7 @@ Application.controller('adminDashboardController', function ($scope, $http, date
     $scope.to = '';
 
 
-    $scope.initData = function () {
+    $scope.initAdminDashboardData = function () {
         $scope.revTotal = 0;
         $scope.spentTotal = 0;
         $scope.profitTotal = 0;
@@ -62,11 +62,11 @@ Application.controller('adminDashboardController', function ($scope, $http, date
             $scope.roiToday = ((parseFloat($scope.spentToday) === 0 ? 0 : parseFloat($scope.profitToday) / parseFloat($scope.spentToday)) * 100).toFixed(2);
             $scope.roiYesterday = ((parseFloat($scope.spentYesterday) === 0 ? 0 : parseFloat($scope.profitYesterday) / parseFloat($scope.spentYesterday)) * 100).toFixed(2);
         }, function fail() {
-            notify('ti-alert', 'Error occurred during loading dashboard info', 'danger');
+            notify('ti-alert', 'Error occurred during loading admin dashboard info', 'danger');
         });
     };
 
-    $scope.getChartData = function () {
+    $scope.getAdminDashboardChartData = function () {
         $scope.chartData = [];
         $scope.chartDateData = [];
         $scope.chartRevData = [];
@@ -157,7 +157,7 @@ Application.controller('adminDashboardController', function ($scope, $http, date
                 ]
             });
         }, function fail() {
-            notify('ti-alert', 'Error occurred during loading chart info', 'danger');
+            notify('ti-alert', 'Error occurred during loading admin dashboard chart info', 'danger');
         });
     };
 
