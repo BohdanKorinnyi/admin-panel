@@ -62,13 +62,28 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
     };
 
     $scope.loadBuyerCosts = function () {
-        var url = "/buyer/spent/report?from=&to=";
         $scope.buyerCosts = [];
         $scope.showBuyerCostsLoader = true;
         $scope.getRole();
         if($scope.role === "BUYER"){
             $scope.hideBuyerSelect = true;
         }
+
+        if($scope.dpToDate !== "" && $scope.dpFromDate !== ""){
+            $scope.from = formatDate($scope.dpFromDate);
+            $scope.to = formatDate($scope.dpToDate);
+        }
+        else if ($scope.selectedDate === 'allTime') {
+            $scope.from = '';
+            $scope.to = '';
+        }
+        else {
+            $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
+            $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
+        }
+
+        var url = "/buyer/spent/report?from=" + $scope.from + "&to=" + $scope.to;
+
         $http.get(url).then(function (response) {
             $scope.buyerCosts = $scope.formatSources(response.data);
             $scope.showBuyerCostsLoader = false;
