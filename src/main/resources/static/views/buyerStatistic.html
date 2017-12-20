@@ -137,14 +137,17 @@
                             </thead>
                             <tbody ng-repeat="item in buyerCosts">
                             <tr>
-                                <td></td>
+                                <td>{{item.date}}</td>
+                                <td>{{item.source}}</td>
+                                <td>{{item.buyerName}}</td>
+                                <td>{{item.spent}}</td>
                             </tr>
-
                             </tbody>
                             <tfoot>
                             <tr ng-show="buyerCosts.length == 0">
                                 <td colspan="4">
-                                    <div class="loader" style="text-align: center;" ng-show="showBuyerCostsLoader"></div>
+                                    <div class="loader" style="text-align: center;"
+                                         ng-show="showBuyerCostsLoader"></div>
                                     <div style="text-align: center;" ng-show="!showBuyerCostsLoader">No data</div>
                                 </td>
                             </tr>
