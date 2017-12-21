@@ -12,3 +12,50 @@
     background-color:rgba(192,192,192,0.3);
     color: grey;
 }
+
+.table > thead:first-child > tr:first-child > th:first-child {
+    position: absolute!important;
+    display: inline-block!important;
+    height: 80%!important;
+    width: 14%!important;
+    background: #FFFFFF!important;
+    z-index: 2;
+}
+
+.table > tbody > tr > td:first-child {
+    position: absolute!important;
+    display: inline-block!important;
+    height: 80%!important;
+    width: 14%!important;
+    background: #FFFFFF!important;
+    z-index: 2;
+}
+
+.table > thead:first-child > tr:first-child > th:nth-child(3) {
+    padding-left: 7%!important;
+    padding-right: 22%!important;
+}
+
+.table > tbody > tr > td:nth-child(3) {
+    padding-left: 7%!important;
+}
+
+.table > thead:first-child > tr:first-child > th:nth-child(2) {
+    position: absolute!important;
+    display: inline-block!important;
+    height: 80%!important;
+    width: 22%!important;
+    background: #FFFFFF!important;
+    padding-left: 15%!important;
+    z-index: 1;
+}
+
+.table > tbody > tr > td:nth-child(2) {
+    position: absolute!important;
+    display: inline-block!important;
+    height: 80%!important;
+    width: 22%!important;
+    background: #FFFFFF!important;
+    padding-left: 15%!important;
+    z-index: 1;
+}
