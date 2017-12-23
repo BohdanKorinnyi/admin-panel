@@ -1,5 +1,5 @@
 <div ng-controller="costManagementController" ng-init="loadCosts(); getBuyers(); getTypes(); initRole();"
-     class="main-panel" ng-style="style()" resize >
+     class="main-panel" ng-style="style()" resize>
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -73,8 +73,10 @@
 
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <div class="input-group-addon white-input-no-border"><i class="fa fa-search"></i></div>
-                                        <input type="text" class="form-control white-input-no-border" placeholder="Search..."
+                                        <div class="input-group-addon white-input-no-border"><i
+                                                class="fa fa-search"></i></div>
+                                        <input type="text" class="form-control white-input-no-border"
+                                               placeholder="Search..."
                                                ng-model="searchFilter">
                                     </div>
                                 </div>
@@ -89,16 +91,13 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6" style="width: 225px; margin-bottom: 15px;">
-                                            <md-datepicker ng-model="dpFromDate"
-                                                           date-format="yyyy-MM-dd"
+                                            <md-datepicker ng-model="dpFromDate" date-format="dd-MM-yyyy"
                                                            ng-disabled="selectedInterval !== 'custom'"
                                                            md-placeholder="From"></md-datepicker>
                                         </div>
-
                                         <div class="col-md-6"
                                              style="width: 225px; margin-left: -25px;margin-bottom: 15px;">
-                                            <md-datepicker ng-model="dpToDate"
-                                                           date-format="yyyy-MM-dd"
+                                            <md-datepicker ng-model="dpToDate" date-format="dd-MM-yyyy"
                                                            ng-disabled="selectedInterval !== 'custom'"
                                                            md-placeholder="To"></md-datepicker>
                                         </div>
@@ -168,27 +167,28 @@
                                     </td>
                                     <td class="cost-management-table">
                                         <div style="width:100%; margin-left: -10px;">
-                                            <md-datepicker ng-model="c.date"
-                                                           date-format="yyyy-MM-dd"
-                                                           ng-change="updateDate(c.id);"
-                                                           ng-disabled="disableCreateCost"
-                                                           md-hide-icons="calendar"
-                                                           md-placeholder="Enter date"></md-datepicker>
+                                            <md-datepicker ng-model="c.date" date-format="dd-MM-yyyy"
+                                                           ng-change="updateDate(c.id);" ng-disabled="disableCreateCost"
+                                                           md-hide-icons="calendar" md-placeholder="Enter date">
+                                            </md-datepicker>
                                         </div>
                                     </td>
                                     <td class="cost-management-table">
-                                        <input type="number" class="form-control white-input-no-border" placeholder="Spent"
+                                        <input type="number" class="form-control white-input-no-border"
+                                               placeholder="Spent"
                                                ng-model="c.sum"
                                                ng-disabled="disableCreateCost"
                                                ng-change="updateSum(c.id);"/>
                                     </td>
                                     <td class="cost-management-table">
-                                        <input type="text" class="form-control white-input-no-border" placeholder="Description"
+                                        <input type="text" class="form-control white-input-no-border"
+                                               placeholder="Description"
                                                ng-model="c.description"
                                                style="border: 1px solid white; background-color: white;"
                                                ng-disabled="disableDescription"/>
                                     </td>
-                                    <td class="cost-management-table" style="text-align: right!important; padding-right: 10px!important;">
+                                    <td class="cost-management-table"
+                                        style="text-align: right!important; padding-right: 10px!important;">
                                         <form class="form-inline">
                                             <div class="form-group" style="width:80%!important;">
                                                 <select class="form-control white-input-no-border" ng-model="c.name"

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @AllArgsConstructor
 public class UserDaoImpl implements UserDao {
-
     private static final String SELECT_USER_BY_USERNAME = "SELECT user_id,username,password,roles.name AS 'role',group_id, " +
             "buyer_id FROM users INNER JOIN roles ON users.role_id = roles.id WHERE username = ?;";
 
@@ -20,9 +19,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByName(String username) {
-        long start = System.currentTimeMillis();
-        User user = jdbcTemplate.queryForObject(SELECT_USER_BY_USERNAME, new BeanPropertyRowMapper<>(User.class), username);
-        log.info("Select user by username executed in " + (System.currentTimeMillis() - start) + "ms, sql=" + SELECT_USER_BY_USERNAME);
-        return user;
+        return jdbcTemplate.queryForObject(SELECT_USER_BY_USERNAME, new BeanPropertyRowMapper<>(User.class), username);
     }
 }

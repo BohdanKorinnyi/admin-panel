@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class SpentDaoImpl implements SpentDao {
             "        expenses.date        AS 'date' " +
             "      FROM expenses " +
             "        INNER JOIN buyers ON expenses.buyer_id = buyers.id " +
-            "      WHERE expenses.sum != 0 AND month(expenses.date) = month(now()) " +
+            "      WHERE expenses.sum != 0 AND expenses.date BETWEEN ? AND ? " +
             "      GROUP BY expenses.date, expenses.description, buyers.id " +
             "      UNION (SELECT " +
             "               sum(source_statistics.spent) AS 'spent', " +
@@ -85,7 +86,7 @@ public class SpentDaoImpl implements SpentDao {
             "               INNER JOIN affiliates ON affiliates.afid = source_statistics.afid " +
             "               INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
             "               INNER JOIN accounts ON source_statistics.account_id = accounts.account_id " +
-            "             WHERE source_statistics.spent != 0 AND month(source_statistics.date) = month(now()) " +
+            "             WHERE source_statistics.spent != 0 AND source_statistics.date BETWEEN ? AND ? " +
             "             GROUP BY source_statistics.date, source_statistics.account_id, buyers.id) " +
             "      UNION (SELECT " +
             "               sum(source_statistics_today.spent) AS 'spent', " +
@@ -97,7 +98,7 @@ public class SpentDaoImpl implements SpentDao {
             "               INNER JOIN affiliates ON affiliates.afid = source_statistics_today.afid " +
             "               INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
             "               INNER JOIN accounts ON source_statistics_today.account_id = accounts.account_id " +
-            "             WHERE source_statistics_today.spent != 0 AND source_statistics_today.date = date(now()) " +
+            "             WHERE source_statistics_today.spent != 0 AND source_statistics_today.date = date(now()) AND source_statistics_today.date BETWEEN ? AND ? " +
             "             GROUP BY source_statistics_today.date, source_statistics_today.account_id, buyers.id) " +
             "     ) AS result " +
             "GROUP BY result.date, result.source, result.buyerId " +
@@ -122,6 +123,6 @@ public class SpentDaoImpl implements SpentDao {
 
     @Override
     public List<BuyerCosts> getSpentReport(String from, String to) {
-        return jdbcTemplate.query(SELECT_SPENT_BY_BUYER, BeanPropertyRowMapper.newInstance(BuyerCosts.class));
+        return jdbcTemplate.query(SELECT_SPENT_BY_BUYER, BeanPropertyRowMapper.newInstance(BuyerCosts.class), from, to, from, to, from, to);
     }
 }
