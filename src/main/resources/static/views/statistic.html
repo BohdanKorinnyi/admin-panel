@@ -149,7 +149,7 @@
                             <tr style="text-align: center; vertical-align: middle"
                                 ng-repeat="stat in item.data" ng-show="buyerDetails && item.id == id">
                                 <td style="text-align: center; vertical-align: middle" class="panel-body">
-                                    {{stat.date}}
+                                    {{formatViewDate(stat.date)}}
                                 </td>
                                 <td style="text-align: center; vertical-align: middle" class="panel-body">
                                     {{stat.accountType}}

@@ -134,6 +134,9 @@ Application.controller("buyerController", function ($scope, $http) {
     $scope.getBuyerKpiById = function (id) {
         if (id !== null) {
             $http.get("/buyer/kpi?buyerId=" + id).then(function success(response) {
+                for(var i = 0; i < response.data.length; i++){
+                    response.data[i].date = $scope.formatViewDate(response.data[i].date);
+                }
                 $scope.buyerKpi = response.data;
             }, function errorCallback() {
                 notify('ti-alert', 'Error occurred during loading KPI', 'danger');
@@ -242,5 +245,17 @@ Application.controller("buyerController", function ($scope, $http) {
 
     $scope.cancelKpi = function(){
         $scope.addedKpi = [];
+    };
+
+    $scope.formatViewDate = function (date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [day, month, year].join('-');
     };
 });

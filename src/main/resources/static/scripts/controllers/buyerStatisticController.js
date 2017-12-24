@@ -19,7 +19,7 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
     $scope.selectedSize = 50;
 
     $scope.dateOptions = {
-        'Select Date': 'no-date',
+        'All time': 'allTime',
         'Today': 'today',
         'Yesterday': 'yesterday',
         'Last 7 days': 'lastWeek',
@@ -27,7 +27,7 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
         'Last Month': 'lastMonth',
         'Custom Range': 'custom'
     };
-    $scope.selectedDate = 'no-date';
+    $scope.selectedDate = 'thisMonth';
     $scope.dpFromDate = "";
     $scope.dpToDate = "";
 
@@ -70,8 +70,14 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
             $scope.to = formatDate($scope.dpToDate);
         }
         else if ($scope.selectedDate === 'allTime') {
-            $scope.from = '';
-            $scope.to = '';
+            // DYNAMIC DATE(-1 year) - (formatDate(new Date(new Date().setFullYear(new Date().getFullYear() - 1))));
+            // DYNAMIC DATE(+4 year) - (formatDate(new Date(new Date().setFullYear(new Date().getFullYear() + 4))));
+            var yearFrom = 2017;
+            var yearTo = 2020;
+            var f = new Date(yearFrom,0,1);
+            var t = new Date(yearTo,0,1);
+            $scope.from = formatDate(f);
+            $scope.to = formatDate(t);
         }
         else {
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
@@ -90,9 +96,16 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
     };
 
     $scope.getGridDetails = function () {
-        var fromDate = "";
-        var toDate = "";
-        if ($scope.selectedDate !== 'no-date') {
+        var yearFrom = 2017;
+        var yearTo = 2020;
+
+        var f = new Date(yearFrom,0,1);
+        var t = new Date(yearTo,0,1);
+
+        var fromDate = formatDate(f);
+        var toDate = formatDate(t);
+
+        if ($scope.selectedDate !== 'allTime') {
             if ($scope.selectedDate === 'custom') {
                 fromDate = formatDate($scope.dpFromDate);
                 toDate = formatDate($scope.dpToDate);
