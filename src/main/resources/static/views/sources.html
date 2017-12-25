@@ -135,7 +135,7 @@
                                 <td style="cursor: pointer; text-align: left;"
                                     data-toggle="collapse" colspan="3"
                                     ng-click="showBuyerByDateDetailsColumn(item.buyerId, d.date);">
-                                    <strong style="margin-left: 35px!important;">Date: {{d.date}}
+                                    <strong style="margin-left: 35px!important;">Date: {{formatViewDate(d.date)}}
                                         <i class="ti-angle-down"></i></strong>
                                 </td>
                                 <td style="text-align: center;"><strong>{{d.spent}}</strong></td>
@@ -146,7 +146,7 @@
                                 ng-repeat="det in d.dateDetails"
                                 ng-show="dateDetails && det.date == buyerDate && det.buyerId == id">
                                 <td>{{det.buyer}}</td>
-                                <td>{{det.date}}</td>
+                                <td>{{formatViewDate(det.date)}}</td>
                                 <td>{{det.type}}</td>
                                 <td>{{det.spent}}</td>
                                 <td>{{det.revenue}}</td>
