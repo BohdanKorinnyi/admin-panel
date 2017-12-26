@@ -1,13 +1,10 @@
-"use strict";
+'use strict';
 
-Application.controller("buyerStatisticController", function ($scope, $http, dateFactory) {
-
+Application.controller('buyerStatisticController', function ($scope, $http, dateFactory) {
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
-
     $scope.types = [];
     $scope.selectedTypes = [];
-
     $scope.buyerCosts = [];
     $scope.showBuyerCostsLoader = true;
 
@@ -17,7 +14,6 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
         500: 500
     };
     $scope.selectedSize = 50;
-
     $scope.dateOptions = {
         'All time': 'allTime',
         'Today': 'today',
@@ -28,9 +24,8 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
         'Custom Range': 'custom'
     };
     $scope.selectedDate = 'thisMonth';
-    $scope.dpFromDate = "";
-    $scope.dpToDate = "";
-
+    $scope.dpFromDate = '';
+    $scope.dpToDate = '';
     $scope.hideBuyerSelect = false;
 
 
@@ -46,36 +41,29 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
         return [year, month, day].join('-');
     }
 
-    $scope.getRole = function () {
+    $scope.checkRole = function () {
         var request = new XMLHttpRequest();
         request.open('GET', '/user/me', false);
         request.send(null);
-
-        if (request.status === 200) {
-            var z = JSON.parse(request.response);
-            $scope.role = z.authorities[0].authority;
+        var principle = JSON.parse(request.response);
+        $scope.role = principle.authorities[0].authority;
+        if ($scope.role === 'BUYER') {
+            $scope.hideBuyerSelect = true;
         }
     };
 
     $scope.loadBuyerCosts = function () {
         $scope.buyerCosts = [];
         $scope.showBuyerCostsLoader = true;
-        $scope.getRole();
-        if($scope.role === "BUYER"){
-            $scope.hideBuyerSelect = true;
-        }
-
-        if($scope.dpToDate !== "" && $scope.dpFromDate !== ""){
+        if ($scope.dpToDate !== '' && $scope.dpFromDate !== '') {
             $scope.from = formatDate($scope.dpFromDate);
             $scope.to = formatDate($scope.dpToDate);
         }
         else if ($scope.selectedDate === 'allTime') {
-            // DYNAMIC DATE(-1 year) - (formatDate(new Date(new Date().setFullYear(new Date().getFullYear() - 1))));
-            // DYNAMIC DATE(+4 year) - (formatDate(new Date(new Date().setFullYear(new Date().getFullYear() + 4))));
             var yearFrom = 2017;
             var yearTo = 2020;
-            var f = new Date(yearFrom,0,1);
-            var t = new Date(yearTo,0,1);
+            var f = new Date(yearFrom, 0, 1);
+            var t = new Date(yearTo, 0, 1);
             $scope.from = formatDate(f);
             $scope.to = formatDate(t);
         }
@@ -84,14 +72,14 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
             $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
         }
 
-        var url = "/buyer/spent/report?from=" + $scope.from + "&to=" + $scope.to;
-
+        var url = '/buyer/spent/report?from=' + $scope.from + '&to=' + $scope.to;
+        console.log($scope.getGridDetails());
         $http.get(url).then(function (response) {
             $scope.buyerCosts = response.data;
             $scope.showBuyerCostsLoader = false;
         }, function () {
             $scope.showBuyerCostsLoader = false;
-            notify('ti-alert', 'Error occurred during loading buyer costs', 'danger');
+            notify('ti-alert', 'Error occurred during loading buyer spent', 'danger');
         });
     };
 
@@ -99,8 +87,8 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
         var yearFrom = 2017;
         var yearTo = 2020;
 
-        var f = new Date(yearFrom,0,1);
-        var t = new Date(yearTo,0,1);
+        var f = new Date(yearFrom, 0, 1);
+        var t = new Date(yearTo, 0, 1);
 
         var fromDate = formatDate(f);
         var toDate = formatDate(t);
@@ -117,16 +105,16 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
         }
 
         return {
-            "buyers": $scope.selectedBuyerNames,
-            "types": $scope.selectedTypes,
-            "from": fromDate,
-            "to": toDate
+            'buyers': $scope.selectedBuyerNames,
+            'types': $scope.selectedTypes,
+            'from': fromDate,
+            'to': toDate
         };
     };
 
 
     $scope.getBuyers = function () {
-        var url = "/buyer";
+        var url = '/buyer';
         $http.get(url).then(function success(response) {
             $scope.buyerNames = response.data;
         }, function fail(response) {
@@ -136,7 +124,7 @@ Application.controller("buyerStatisticController", function ($scope, $http, date
 
 
     $scope.getTypes = function () {
-        var url = "/account/types";
+        var url = '/account/types';
         $http.get(url).then(function success(response) {
             for (var i = 0; i < response.data.length; i++) {
                 $scope.types.push({
