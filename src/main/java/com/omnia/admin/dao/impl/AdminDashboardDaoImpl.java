@@ -45,8 +45,8 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
     public List<BuyerProfit> findChartData(String from, String to, String filter) {
         if ("allTime".equals(filter)) {
             MapSqlParameterSource source = new MapSqlParameterSource();
-            source.addValue("from", "2016-01-01");
-            source.addValue("to", "2020-01-01");
+            source.addValue("from", "date(now() - INTERVAL 2 YEAR)");
+            source.addValue("to", "date(now() + INTERVAL 1 YEAR)");
             return namedParameterJdbcTemplate.query(SELECT_CHARTS, source, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
         } else if ("thisMonth".equals(filter) || "lastMonth".equals(filter)) {
             MapSqlParameterSource source = new MapSqlParameterSource();
@@ -54,7 +54,7 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
             source.addValue("to", to);
             return namedParameterJdbcTemplate.query(SELECT_CHARTS.replaceAll("month\\(", "week\\("),
                     source, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
-        } else if("lastWeek".equals(filter)) {
+        } else if ("lastWeek".equals(filter)) {
             MapSqlParameterSource source = new MapSqlParameterSource();
             source.addValue("from", from);
             source.addValue("to", to);
