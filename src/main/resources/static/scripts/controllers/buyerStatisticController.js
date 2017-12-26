@@ -72,8 +72,9 @@ Application.controller('buyerStatisticController', function ($scope, $http, date
             $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
         }
 
-        var url = '/buyer/spent/report?from=' + $scope.from + '&to=' + $scope.to;
-        console.log($scope.getGridDetails());
+        var url = '/buyer/spent/report?from=' + $scope.from + '&to=' + $scope.to
+            + "&sources=" + $scope.selectedTypes + "&buyerIds=" + $scope.selectedBuyerNames;
+        console.log(url);
         $http.get(url).then(function (response) {
             $scope.buyerCosts = response.data;
             $scope.showBuyerCostsLoader = false;
