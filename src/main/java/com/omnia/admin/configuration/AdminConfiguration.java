@@ -1,18 +1,10 @@
 package com.omnia.admin.configuration;
 
-import io.swagger.annotations.Contact;
-import io.swagger.annotations.Info;
-import io.swagger.annotations.SwaggerDefinition;
 import lombok.extern.log4j.Log4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
@@ -23,8 +15,6 @@ import static com.omnia.admin.AdminApplication.configurationFile;
 
 @Log4j
 @Configuration
-@EnableSwagger2
-@SwaggerDefinition(info = @Info(description = "Conversion panel API", version = "1.0", title = "REST API of conversions server", contact = @Contact(name = "Bohdan Korinnyi", email = "bohdan.korinnyi@gmail.com")))
 public class AdminConfiguration {
     public static final String WRITE_PREFIX = "write_";
     public static final String DB_NAME_KEY = "db_name";
@@ -62,15 +52,6 @@ public class AdminConfiguration {
             log.error("Bad confgiuration to database");
         }
         throw new RuntimeException("Wrong read only dataSource configurations");
-    }
-
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build();
     }
 
     private static String getDbUrl(String address, String port, String name) {

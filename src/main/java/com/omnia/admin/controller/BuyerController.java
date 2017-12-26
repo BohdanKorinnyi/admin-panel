@@ -43,4 +43,5 @@ public class BuyerController {
                                          @RequestParam String to) {
         return ResponseEntity.ok(spentService.getSpentReport(buyerIds, sources, from, to));
     }
+
 }

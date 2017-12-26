@@ -1,7 +1,6 @@
 package com.omnia.admin.dao;
 
 import com.omnia.admin.model.BuyerPlan;
-import io.swagger.models.auth.In;
 
 import java.util.List;
 
