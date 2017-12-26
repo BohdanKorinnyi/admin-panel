@@ -40,4 +40,9 @@ public class AdvertiserServiceImpl implements AdvertiserService {
             }
         }
     }
+
+    @Override
+    public Object report() {
+        return null;
+    }
 }

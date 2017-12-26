@@ -11,4 +11,6 @@ public interface AdvertiserService {
     List<String> getAdvertisersName();
 
     void update(List<AdvertiserDto> advertisers);
+
+    Object report();
 }

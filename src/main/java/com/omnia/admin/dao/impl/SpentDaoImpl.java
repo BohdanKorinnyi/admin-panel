@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -84,8 +85,8 @@ public class SpentDaoImpl implements SpentDao {
     @Override
     public List<BuyerCosts> getSpentReport(List<Integer> buyerIds, List<String> sources, String from, String to) {
         MapSqlParameterSource filters = new MapSqlParameterSource();
-        filters.addValue("buyers", buyerIds);
-        filters.addValue("sources", sources);
+        filters.addValue("buyers", CollectionUtils.isEmpty(buyerIds) ? null : buyerIds);
+        filters.addValue("sources", CollectionUtils.isEmpty(sources) ? null : buyerIds);
         filters.addValue("from", from);
         filters.addValue("to", to);
         return namedParameterJdbcTemplate.query(SELECT_SPENT_BY_BUYER, filters, BeanPropertyRowMapper.newInstance(BuyerCosts.class));
