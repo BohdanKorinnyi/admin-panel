@@ -15,6 +15,11 @@ public class PostbackServiceImpl implements PostbackService {
     private final PostbackDao postbackDao;
 
     @Override
+    public Float getRevenueByPeriod(String from, String to) {
+        return postbackDao.getRevenueByPeriod(from, to);
+    }
+
+    @Override
     public Optional<String> getFullUrl(Long postbackId) {
         return postbackDao.findFullUrlById(postbackId);
     }

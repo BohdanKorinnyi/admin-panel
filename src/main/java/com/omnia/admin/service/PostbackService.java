@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostbackService {
+    Float getRevenueByPeriod(String from, String to);
+
     Optional<String> getFullUrl(Long postbackId);
 
     Float getRevenueByBuyer(int buyerId);

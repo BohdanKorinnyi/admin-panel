@@ -7,6 +7,7 @@ import com.omnia.admin.security.annotation.RequiredRole;
 import com.omnia.admin.security.service.TokenService;
 import com.omnia.admin.service.AdvertiserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,5 +34,10 @@ public class AdvertiserController {
     @RequiredRole(roles = {Role.ADMIN, Role.DIRECTOR, Role.CFO, Role.CBO})
     public void update(@RequestBody List<AdvertiserDto> advertisers) {
         advertiserService.update(advertisers);
+    }
+
+    @GetMapping("report")
+    public ResponseEntity getReport() {
+        return ResponseEntity.ok(advertiserService.report());
     }
 }
