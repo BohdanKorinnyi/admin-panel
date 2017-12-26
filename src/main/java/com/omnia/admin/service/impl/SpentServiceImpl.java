@@ -29,7 +29,7 @@ public class SpentServiceImpl implements SpentService {
     }
 
     @Override
-    public List<BuyerCosts> getSpentReport(String from, String to) {
-        return spentDao.getSpentReport(from, to);
+    public List<BuyerCosts> getSpentReport(List<Integer> buyerIds, List<String> sources, String from, String to) {
+        return spentDao.getSpentReport(buyerIds, sources, from, to);
     }
 }

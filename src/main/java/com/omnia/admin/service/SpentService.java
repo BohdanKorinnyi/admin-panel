@@ -12,5 +12,5 @@ public interface SpentService {
 
     Float getSpentByYesterday(Integer buyerId);
 
-    List<BuyerCosts> getSpentReport(String from, String to);
+    List<BuyerCosts> getSpentReport(List<Integer> buyerIds, List<String> sources, String from, String to);
 }
