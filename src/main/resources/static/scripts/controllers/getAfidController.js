@@ -32,15 +32,14 @@ Application.controller("getAfidController", function ($scope, $http) {
 
     $scope.addAfids = function () {
         if($scope.addedBuyersAfidCount > 10){
-            alertify.error("The number of added afIds can not be > 10!");
+            notify('ti-alert', 'The number of added afIds can not be > 10', 'danger');
         }
         else{
-            alertify.alert($scope.buyersAfidsString);
             var url = "/affiliates?quantity="+$scope.addedBuyersAfidCount+"&buyer_id="+$scope.currentBuyerId;
             $http.post(url, $scope.addedBuyersAfidCount).then(function success(response){
-                alertify.alert(response.data.afids);
+                alertify.alert(response.data.join());
                 $scope.getBuyersAfidById($scope.currentBuyerId);
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 notify('ti-alert', 'Error occurred during adding afids', 'danger');
             });
         }

@@ -9,5 +9,5 @@ public interface AffiliatesService {
 
     List<Long> getAffiliatesIdsByBuyerId(long buyerId);
 
-    void generate(int quantity, long buyerId);
+    List<Long> generate(int quantity, long buyerId);
 }
