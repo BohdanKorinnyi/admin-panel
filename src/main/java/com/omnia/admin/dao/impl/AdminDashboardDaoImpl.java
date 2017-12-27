@@ -27,6 +27,8 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
     private static final String SELECT_PROFIT = QueryHelper.loadQueryFromFile("admin_dashboard_profit.sql");
     private static final String SELECT_TOTAL = QueryHelper.loadQueryFromFile("total_admin_dashboard_profit.sql");
     private static final String SELECT_CHARTS = QueryHelper.loadQueryFromFile("admin_dashboard_charts.sql");
+
+    //TODO: remove one from templates
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -37,7 +39,6 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
             whereClause = String.format(DATE_CUSTOM_FORMAT, from, to);
         }
         String sql = String.format(SELECT_PROFIT, whereClause, whereClause, whereClause, whereClause);
-        log.debug("sql by period=" + sql);
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
     }
 
@@ -45,8 +46,9 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
     public List<BuyerProfit> findChartData(String from, String to, String filter) {
         if ("allTime".equals(filter)) {
             MapSqlParameterSource source = new MapSqlParameterSource();
-            source.addValue("from", "date(now() - INTERVAL 2 YEAR)");
-            source.addValue("to", "date(now() + INTERVAL 1 YEAR)");
+            // TODO: fix using MySQL: date(now() + INTERVAL 1 YEAR)
+            source.addValue("from", "2017-01-01");
+            source.addValue("to", "2020-01-01");
             return namedParameterJdbcTemplate.query(SELECT_CHARTS, source, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
         } else if ("thisMonth".equals(filter) || "lastMonth".equals(filter)) {
             MapSqlParameterSource source = new MapSqlParameterSource();
@@ -66,14 +68,13 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
 
     @Override
     public BuyerProfit findRecentBuyersProfit(boolean today) {
+        String sql;
+        //TODO: don't use String.format for SQL building
         if (today) {
-            String sql = String.format(SELECT_TOTAL, DATE_TODAY_FORMAT, DATE_TODAY_FORMAT, DATE_TODAY_FORMAT, DATE_TODAY_FORMAT);
-            log.debug("sql today=" + sql);
-            return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(BuyerProfit.class)
-            );
+            sql = String.format(SELECT_TOTAL, DATE_TODAY_FORMAT, DATE_TODAY_FORMAT, DATE_TODAY_FORMAT, DATE_TODAY_FORMAT);
+        } else {
+            sql = String.format(SELECT_TOTAL, DATE_YESTERDAY_FORMAT, DATE_YESTERDAY_FORMAT, DATE_YESTERDAY_FORMAT, DATE_YESTERDAY_FORMAT);
         }
-        String sql = String.format(SELECT_TOTAL, DATE_YESTERDAY_FORMAT, DATE_YESTERDAY_FORMAT, DATE_YESTERDAY_FORMAT, DATE_YESTERDAY_FORMAT);
-        log.debug("sql yesterday=" + sql);
         return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
     }
 }

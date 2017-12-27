@@ -143,7 +143,7 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
         $scope.postbacks = [];
         $scope.showLoader = true;
         $scope.getRole();
-        if($scope.role === "BUYER"){
+        if ($scope.role === "BUYER") {
             $scope.hideBuyerSelect = true;
         }
         $http.post('grid/postback/get', $scope.getFilterParameters())
@@ -162,9 +162,7 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
         var parameters = {};
         parameters.page = $scope.selectedPage;
         parameters.size = $scope.selectedSize;
-        parameters.timezone = $scope.selectedUtc;
         parameters['filter'] = {};
-
         if ($scope.selectedDate !== 'no-date') {
             if ($scope.selectedDate === 'custom') {
                 parameters.filter['from'] = formatDate($scope.dpFromDate);
@@ -186,6 +184,9 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
         }
         if ($scope.selectedStatusForPostValue.join() !== '') {
             parameters.filter['status'] = $scope.selectedStatusForPostValue.join();
+        }
+        if ($scope.selectedUtc !== 'utc') {
+            parameters.filter['timezone'] = $scope.selectedUtc;
         }
         if ($scope.selectedAfIdValue !== '') {
             parameters.filter['afid'] = $scope.selectedAfIdValue;
