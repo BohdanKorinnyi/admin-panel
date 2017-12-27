@@ -25,7 +25,8 @@ public class AffiliatesController {
     }
 
     @PostMapping
-    public void create(@RequestParam("quantity") Integer quantity, @RequestParam("buyer_id") Integer buyerId) {
-        affiliatesService.generate(quantity, buyerId);
+    public ResponseEntity<List<Long>> create(@RequestParam("quantity") Integer quantity,
+                                             @RequestParam("buyer_id") Integer buyerId) {
+        return ResponseEntity.ok(affiliatesService.generate(quantity, buyerId));
     }
 }

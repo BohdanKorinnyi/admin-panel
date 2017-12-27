@@ -1,5 +1,6 @@
 package com.omnia.admin.service.impl;
 
+import com.google.common.collect.Lists;
 import com.omnia.admin.dao.AffiliatesDao;
 import com.omnia.admin.model.Affiliates;
 import com.omnia.admin.service.AffiliatesService;
@@ -24,19 +25,20 @@ public class AffiliatesServiceImpl implements AffiliatesService {
     }
 
     @Override
-    public void generate(int quantity, long buyerId) {
+    public List<Long> generate(int quantity, long buyerId) {
         List<Long> ids = affiliatesDao.getAffiliatesIdsByBuyerId();
-        int counter = 0;
+        List<Long> newAfIds = Lists.newArrayList();
         for (long i = 0; i < Long.MAX_VALUE; i++) {
             if (ids.contains(i)) {
                 continue;
             }
-            if (counter != quantity) {
-                counter++;
+            if (newAfIds.size() != quantity) {
                 affiliatesDao.generate(i, buyerId);
+                newAfIds.add(i);
                 continue;
             }
-            return;
+            return newAfIds;
         }
+        return newAfIds;
     }
 }
