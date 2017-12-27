@@ -49,7 +49,6 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
             dateTo = formatDate($scope.dpToDate);
         }
         var url = '/advertiser/report?advertiserIds=' + ($scope.selectedAdv.join()) + '&from=' + dateFrom + '&to=' + dateTo;
-        console.log(url);
         $http.get(url).then(function successCallback(response) {
             $scope.totalRevenue = response.data.totalRevenue;
             $scope.totalIncome = response.data.totalIncome;
