@@ -86,7 +86,7 @@ public class SpentDaoImpl implements SpentDao {
     public List<BuyerCosts> getSpentReport(List<Integer> buyerIds, List<String> sources, String from, String to) {
         MapSqlParameterSource filters = new MapSqlParameterSource();
         filters.addValue("buyers", CollectionUtils.isEmpty(buyerIds) ? null : buyerIds);
-        filters.addValue("sources", CollectionUtils.isEmpty(sources) ? null : buyerIds);
+        filters.addValue("sources", CollectionUtils.isEmpty(sources) ? null : sources);
         filters.addValue("from", from);
         filters.addValue("to", to);
         return namedParameterJdbcTemplate.query(SELECT_SPENT_BY_BUYER, filters, BeanPropertyRowMapper.newInstance(BuyerCosts.class));
