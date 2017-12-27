@@ -80,6 +80,13 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <select class="form-control white-input-no-border"
+                                            data-ng-model="selectedUtc"
+                                            data-ng-options="v as k for (k, v) in utcValues"
+                                            style="margin-bottom: 14px;">
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <select class="form-control white-input-no-border" data-ng-model="selectedDate"
                                             data-ng-options="v as k for (k, v) in dateOptions"
                                             style="margin-bottom: 14px;">
