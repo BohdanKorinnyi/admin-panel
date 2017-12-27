@@ -20,24 +20,24 @@
 
 .white-input-no-border {
     border: none !important;
-    background-color: white!important;
+    background-color: white !important;
 }
 
 .white-input-no-border:focus {
     border: none !important;
-    background-color: white!important;
+    background-color: white !important;
 }
 
-.sidebar{
-    z-index: 100!important;
+.sidebar {
+    z-index: 100 !important;
 }
 
-.sidebar:hover{
-    z-index: 102!important;
+.sidebar:hover {
+    z-index: 102 !important;
 }
 
-.main-panel{
-    z-index: 100!important;
+.main-panel {
+    z-index: 100 !important;
 }
 
 body .modal-open {
@@ -48,11 +48,16 @@ body .modal-open {
     display: none !important;
 }
 
-.card .card-footer{
-    padding: 0 15px 5px!important;
+.card .card-footer {
+    padding: 0 15px 5px !important;
 }
 
-.card-footer-hr{
-    margin-top: 0px!important;
-    margin-bottom: 5px!important;
+.card-footer-hr {
+    margin-top: 0 !important;
+    margin-bottom: 5px !important;
+}
+
+.btn-in-header {
+    z-index: 10000 !important;
+    position: relative !important;
 }

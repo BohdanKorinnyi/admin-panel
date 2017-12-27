@@ -94,77 +94,63 @@
                 </div>
             </div>
         </div>
-
-        <div class="row" style="margin-left: 15px; margin-right: 15px; margin-top: 10px">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="pull-right">
-                            <button class="btn btn-success btn-md btn-fill" ng-click=""
-                                    style="z-index: 10000; position: relative">
-                                Apply
-                            </button>
-                            <button class="btn btn-primary btn-md btn-fill" style="z-index: 10000; position: relative">
-                                Per month
-                            </button>
-                        </div>
-                        <h4 class="card-title">Balance by advertiser filter</h4>
-                    </div>
-                    <div class="card-content">
-                        <div class="row">
-                            <form class="form-inline" style="margin-left: 10px;margin-top: 10px;">
-                                <div class="form-group"
-                                     style="margin-right:-3px;margin-bottom: 3px; margin-left: 5px;">
-                                    <select class="selectpicker" multiple
-                                            data-style="btn-info btn-fill btn-block"
-                                            data-size="5"
-                                            title="Advertisers"
-                                            data-header="Advertisers"
-                                            ng-model="selectedAdvNames"
-                                            style="width: 130%;margin-left: 5px;">
-                                        <option class="small-font" ng-repeat="a in advNames" data-select-watcher
-                                                data-last="{{$last}}" value="{{a.id}}">{{a.name}}
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <select class="form-control white-input-no-border" data-ng-model="selectedInterval"
-                                            data-ng-options="v as k for (k, v) in dateInterval"
-                                            style="margin-bottom: 14px;">
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-6" style="width: 225px; margin-bottom: 15px;">
-                                            <md-datepicker ng-model="dpFromDate" date-format="dd-MM-yyyy"
-                                                           ng-disabled="selectedInterval !== 'custom'"
-                                                           md-placeholder="From"></md-datepicker>
-                                        </div>
-                                        <div class="col-md-6"
-                                             style="width: 225px; margin-left: -25px;margin-bottom: 15px;">
-                                            <md-datepicker ng-model="dpToDate" date-format="dd-MM-yyyy"
-                                                           ng-disabled="selectedInterval !== 'custom'"
-                                                           md-placeholder="To"></md-datepicker>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="content">
             <div class="row margin-backdown" style="margin-left: 15px; margin-right: 15px">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
+                            <div class="pull-right">
+                                <button class="btn btn-success btn-md btn-fill btn-sm btn-in-header">
+                                    Apply
+                                </button>
+                                <button class="btn btn-primary btn-md btn-fill btn-sm btn-in-header">
+                                    Per month
+                                </button>
+                            </div>
                             <h4 class="card-title">Advertisers balance</h4>
                         </div>
                         <div class="card-content">
+                            <div class="row">
+                                <form class="form-inline" style="margin-left: 10px;margin-top: 10px;">
+                                    <div class="form-group"
+                                         style="margin-right:-3px;margin-bottom: 3px; margin-left: 5px;">
+                                        <select class="selectpicker" multiple
+                                                data-style="btn-info btn-fill btn-block"
+                                                data-size="5"
+                                                title="Advertisers"
+                                                data-header="Advertisers"
+                                                ng-model="selectedAdvNames"
+                                                style="width: 130%;margin-left: 5px;">
+                                            <option class="small-font" ng-repeat="a in advNames" data-select-watcher
+                                                    data-last="{{$last}}" value="{{a.id}}">{{a.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select class="form-control white-input-no-border" data-ng-model="selectedInterval"
+                                                data-ng-options="v as k for (k, v) in dateInterval"
+                                                style="margin-bottom: 14px;">
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6" style="width: 225px; margin-bottom: 15px;">
+                                                <md-datepicker ng-model="dpFromDate" date-format="dd-MM-yyyy"
+                                                               ng-disabled="selectedInterval !== 'custom'"
+                                                               md-placeholder="From"></md-datepicker>
+                                            </div>
+                                            <div class="col-md-6"
+                                                 style="width: 225px; margin-left: -25px;margin-bottom: 15px;">
+                                                <md-datepicker ng-model="dpToDate" date-format="dd-MM-yyyy"
+                                                               ng-disabled="selectedInterval !== 'custom'"
+                                                               md-placeholder="To"></md-datepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                             <div class="card-content table-responsive table-full-width">
                                 <table class="table">
                                     <thead>
