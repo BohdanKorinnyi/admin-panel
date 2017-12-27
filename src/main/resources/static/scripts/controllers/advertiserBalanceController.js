@@ -5,16 +5,16 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
     $scope.selectedAdv = [];
 
     $scope.dateInterval = {
-        'This Year': 'allTime',
-        'Today': 'today',
-        'Yesterday': 'yesterday',
-        'Last 7 days': 'lastWeek',
-        'This Month': 'thisMonth',
-        'Last Month': 'lastMonth',
-        'Custom Range': 'custom'
+        'This Year': 'This Year',
+        'Today': 'Today',
+        'Yesterday': 'Yesterday',
+        'Last 7 days': 'Last Week',
+        'This Month': 'This Month',
+        'Last Month': 'Last Month',
+        'Custom Range': 'Custom'
     };
 
-    $scope.selectedInterval = 'allTime';
+    $scope.selectedInterval = 'This Year';
     $scope.dpFromDate = "";
     $scope.dpToDate = "";
 
@@ -28,8 +28,8 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
         $scope.showAdvBalanceLoader = true;
         var dateFrom = "";
         var dateTo = "";
-        if ($scope.selectedInterval !== 'custom') {
-            if ($scope.selectedInterval === 'allTime'){
+        if ($scope.selectedInterval !== 'Custom') {
+            if ($scope.selectedInterval === 'This Year'){
                 var yearFrom = new Date().getFullYear();
                 var yearTo = new Date().getFullYear() + 1;
 

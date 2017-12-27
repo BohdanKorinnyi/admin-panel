@@ -66,12 +66,13 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
 
     $scope.utcValues = {"UTC": "utc",
         "UTC+1":"utc+1","UTC+2":"utc+2","UTC+3":"utc+3",
-        "UTC+5":"utc+5","UTC+6":"utc+6","UTC+7":"utc+7",
+        "UTC+4":"utc+4","UTC+5":"utc+5","UTC+6":"utc+6","UTC+7":"utc+7",
         "UTC+8":"utc+8","UTC+9":"utc+9",
-        "UTC+10":"utc+10","UTC+11":"utc+11",
+        "UTC+10":"utc+10","UTC+11":"utc+11","UTC+12":"utc+12",
+        "UTC-1":"utc-1","UTC-2":"utc-2",
         "UTC-3":"utc-3","UTC-4":"utc-4","UTC-5":"utc-5",
         "UTC-6":"utc-6","UTC-7":"utc-7","UTC-8":"utc-8","UTC-9":"utc-9",
-        "UTC-10":"utc-10","UTC-11":"utc-11"};
+        "UTC-10":"utc-10","UTC-11":"utc-11","UTC-12":"utc-12",};
 
     $scope.selectedUtc = "utc";
 
