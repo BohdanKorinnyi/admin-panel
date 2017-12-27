@@ -15,8 +15,8 @@ public class PostbackServiceImpl implements PostbackService {
     private final PostbackDao postbackDao;
 
     @Override
-    public Float getRevenueByPeriod(String from, String to) {
-        return postbackDao.getRevenueByPeriod(from, to);
+    public Float getRevenueByPeriod(List<Integer> advertiserIds, String from, String to) {
+        return postbackDao.getRevenueByPeriod(advertiserIds,from, to);
     }
 
     @Override

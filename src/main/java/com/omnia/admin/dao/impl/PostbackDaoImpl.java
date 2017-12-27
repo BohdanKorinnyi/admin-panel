@@ -8,7 +8,10 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +24,8 @@ public class PostbackDaoImpl implements PostbackDao {
     private static final String CURRENT_MONTH_INTERVAL = " AND month(postback.date) = month(now()) ";
     private static final String TODAY_INTERVAL = " AND postback.date = date(now()) ";
     private static final String YESTERDAY_INTERVAL = " AND postback.date = date(now() - INTERVAL 1 DAY) ";
-    private static final String BY_DATE_RANGE = " AND postback.date BETWEEN ? AND ? ";
+    private static final String BY_DATE_RANGE = " AND postback.date BETWEEN :from AND :to ";
+    private static final String BY_ADVERTISER_IDS = " AND IF(concat(:advertiserIds) IS NULL, TRUE, adverts.id IN (:advertiserIds)) ";
     private static final String BY_BUYER_ID = " AND buyers.id = ? ";
     private static final String SELECT_BUYER_REVENUE = "SELECT " +
             "  TRUNCATE(sum(postback.sum / " +
@@ -45,10 +49,12 @@ public class PostbackDaoImpl implements PostbackDao {
 
 
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public Float getRevenueByPeriod(String from, String to) {
-        return jdbcTemplate.queryForObject(SELECT_BUYER_REVENUE + BY_DATE_RANGE, Float.class, from, to);
+    public Float getRevenueByPeriod(List<Integer> advertiserIds, String from, String to) {
+        return namedParameterJdbcTemplate.queryForObject(SELECT_BUYER_REVENUE + BY_DATE_RANGE + BY_ADVERTISER_IDS,
+                getAdvertsIncomeFilter(advertiserIds, from, to), Float.class);
     }
 
     @Override
@@ -83,5 +89,13 @@ public class PostbackDaoImpl implements PostbackDao {
     @Override
     public List<Postback> findPostbackByConversionId(long conversionId) {
         return jdbcTemplate.query(POSTBACK_BY_CONVERSION, BeanPropertyRowMapper.newInstance(Postback.class), conversionId);
+    }
+
+    private MapSqlParameterSource getAdvertsIncomeFilter(List<Integer> advertiserIds, String from, String to) {
+        MapSqlParameterSource filter = new MapSqlParameterSource();
+        filter.addValue("advertiserIds", CollectionUtils.isEmpty(advertiserIds) ? null : advertiserIds);
+        filter.addValue("from", from);
+        filter.addValue("to", to);
+        return filter;
     }
 }

@@ -4,7 +4,6 @@ import com.omnia.admin.dto.AdvertiserDto;
 import com.omnia.admin.model.Advertiser;
 import com.omnia.admin.model.Role;
 import com.omnia.admin.security.annotation.RequiredRole;
-import com.omnia.admin.security.service.TokenService;
 import com.omnia.admin.service.AdvertiserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import java.util.List;
 public class AdvertiserController {
 
     private final AdvertiserService advertiserService;
-    private final TokenService tokenService;
 
     @GetMapping(path = "all")
     public List<Advertiser> getAllAdvertisers() {
@@ -37,7 +35,9 @@ public class AdvertiserController {
     }
 
     @GetMapping("report")
-    public ResponseEntity getReport() {
-        return ResponseEntity.ok(advertiserService.report());
+    public ResponseEntity getReport(@RequestParam(required = false) List<Integer> advertiserIds,
+                                    @RequestParam String from,
+                                    @RequestParam String to) {
+        return ResponseEntity.ok(advertiserService.report(advertiserIds, from, to));
     }
 }
