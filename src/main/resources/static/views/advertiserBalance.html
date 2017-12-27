@@ -176,15 +176,15 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>ClickDealer</td>
-                                        <td>11 000 USD</td>
-                                        <td>2 000 USD<br/>5 000 USD</td>
-                                        <td>21.10.2017<br/>02.12.2017</td>
+                                    <tr ng-repeat="item in incomes">
+                                        <td>{{item.advertiser}}</td>
+                                        <td>{{item.revenue}}</td>
+                                        <td>{{item.income}}</td>
+                                        <td></td>
                                         <td>
                                             <form class="form-inline">
                                                 <div class="form-group" style="width:70%!important;">
-                                                    4 000 USD
+                                                    {{item.revenue - item.income}}
                                                 </div>
                                                 <div class="form-group" style="text-align: left; width: 20%!important;">
                                                     <a ng-click=""
@@ -196,27 +196,7 @@
                                             </form>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Avazu</td>
-                                        <td>230 USD</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <form class="form-inline">
-                                                <div class="form-group" style="width:70%!important;">
-                                                    230 USD
-                                                </div>
-                                                <div class="form-group" style="text-align: left; width: 20%!important;">
-                                                    <a ng-click=""
-                                                       data-toggle="modal"
-                                                       data-target="#moreInfoModal">
-                                                        <i class="fa fa-info fa-2x" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <tr ng-show="balance.length !== 0">
+                                    <tr ng-show="incomes.length == 0">
                                         <td colspan="5">
                                             <div class="loader text-center" ng-show="showAdvBalanceLoader"></div>
                                             <div class="text-center" ng-show="!showAdvBalanceLoader">No data</div>

@@ -22,12 +22,18 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
 
 
     $scope.loadData = function () {
-
+        var dateFrom = "";
+        var dateTo = "";
         if ($scope.selectedInterval !== 'custom') {
-            $scope.dpFromDate = dateFactory.pickDateFrom($scope.selectedInterval);
-            $scope.dpToDate = dateFactory.pickDateTo($scope.selectedInterval);
+            dateFrom = formatDate(dateFactory.pickDateFrom($scope.selectedInterval));
+            dateTo = formatDate(dateFactory.pickDateTo($scope.selectedInterval));
         }
-        var url = '/advertiser/report?advertiserIds=' + ($scope.selectedAdv.join()) + '&from=' + $scope.dpFromDate + '&to=' + $scope.dpToDate;
+        else {
+            dateFrom = formatDate($scope.dpFromDate);
+            dateTo = formatDate($scope.dpToDate);
+        }
+        var url = '/advertiser/report?advertiserIds=' + ($scope.selectedAdv.join()) + '&from=' + dateFrom + '&to=' + dateTo;
+        console.log(url);
         $http.get(url).then(function successCallback(response) {
             $scope.totalRevenue = response.data.totalRevenue;
             $scope.totalIncome = response.data.totalIncome;
@@ -48,3 +54,15 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
         });
     };
 });
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
