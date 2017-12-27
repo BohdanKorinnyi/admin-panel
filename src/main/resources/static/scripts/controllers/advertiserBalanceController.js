@@ -18,10 +18,14 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
     $scope.dpFromDate = "";
     $scope.dpToDate = "";
 
+    $scope.incomes = [];
+
     $scope.showAdvBalanceLoader = false;
 
 
     $scope.loadData = function () {
+        $scope.incomes = [];
+        $scope.showAdvBalanceLoader = true;
         var dateFrom = "";
         var dateTo = "";
         if ($scope.selectedInterval !== 'custom') {
@@ -33,12 +37,12 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
             dateTo = formatDate($scope.dpToDate);
         }
         var url = '/advertiser/report?advertiserIds=' + ($scope.selectedAdv.join()) + '&from=' + dateFrom + '&to=' + dateTo;
-        console.log(url);
         $http.get(url).then(function successCallback(response) {
             $scope.totalRevenue = response.data.totalRevenue;
             $scope.totalIncome = response.data.totalIncome;
             $scope.totalLiability = $scope.totalRevenue - $scope.totalIncome;
             $scope.incomes = response.data.incomes;
+            $scope.showAdvBalanceLoader = false;
         });
     };
 
