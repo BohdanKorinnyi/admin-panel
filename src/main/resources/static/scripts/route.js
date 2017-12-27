@@ -71,6 +71,10 @@ Application.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'views/advertiserBalance.html',
             controller: 'advertiserBalanceController'
         })
+        .when('/getAfid', {
+            templateUrl: 'views/getAfid.html',
+            controller: 'getAfidController'
+        })
         .when('/cost/management', {
             templateUrl: 'views/costManagement.html',
             controller: 'costManagementController'
