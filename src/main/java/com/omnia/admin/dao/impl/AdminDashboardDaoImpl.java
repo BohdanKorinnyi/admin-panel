@@ -56,7 +56,7 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
             source.addValue("to", to);
             return namedParameterJdbcTemplate.query(SELECT_CHARTS.replaceAll("month\\(", "week\\("),
                     source, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
-        } else if ("lastWeek".equals(filter)) {
+        } else if ("lastWeek".equals(filter) || "day".equals(filter)) {
             MapSqlParameterSource source = new MapSqlParameterSource();
             source.addValue("from", from);
             source.addValue("to", to);
