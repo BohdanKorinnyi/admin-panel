@@ -54,3 +54,61 @@
 #revenueChart .ct-area {
     fill-opacity: 0.1!important;
 }
+
+
+#bigRevenueChart .ct-series-a .ct-line {
+    stroke: green!important;
+}
+
+#bigRevenueChart .ct-series-a .ct-point {
+    stroke: green!important;
+}
+
+#bigRevenueChart .ct-label{
+    color: green!important;
+    white-space: nowrap!important;
+}
+
+#bigRevenueChart .ct-series-a .ct-area{
+    fill: green!important;
+}
+
+#bigSpentChart .ct-series-a .ct-line {
+    stroke: red!important;
+}
+
+#bigSpentChart .ct-series-a .ct-point {
+    stroke: red!important;
+}
+
+#bigSpentChart .ct-label {
+    color: red!important;
+    white-space: nowrap!important;
+}
+
+#bigSpentChart .ct-series-a .ct-area {
+    fill: red !important;
+}
+
+#bigProfitChart .ct-series-a .ct-line{
+    stroke: darkviolet!important;
+}
+
+#bigProfitChart .ct-series-a .ct-point {
+    stroke: darkviolet!important;
+}
+
+#bigProfitChart .ct-label {
+    color: darkviolet!important;
+    white-space: nowrap!important;
+}
+
+#bigProfitChart .ct-series-a .ct-area{
+    fill: darkviolet!important;
+}
+
+#bigSpentChart .ct-area,
+#bigProfitChart .ct-area,
+#bigRevenueChart .ct-area {
+    fill-opacity: 0.1!important;
+}
