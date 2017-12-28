@@ -5,22 +5,48 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
     $scope.selectedAdv = [];
 
     $scope.dateInterval = {
-        'This Year': 'This Year',
-        'Today': 'Today',
-        'Yesterday': 'Yesterday',
-        'Last 7 days': 'Last Week',
-        'This Month': 'This Month',
-        'Last Month': 'Last Month',
-        'Custom Range': 'Custom'
+        'This Year': 'allTime',
+        'Today': 'today',
+        'Yesterday': 'yesterday',
+        'Last 7 days': 'lastWeek',
+        'This Month': 'thisMonth',
+        'Last Month': 'lastMonth',
+        'Custom Range': 'custom'
     };
 
-    $scope.selectedInterval = 'This Year';
+    $scope.selectedInterval = 'allTime';
     $scope.dpFromDate = "";
     $scope.dpToDate = "";
+
 
     $scope.incomes = [];
 
     $scope.showAdvBalanceLoader = false;
+
+
+    $scope.showCardDate = function (interval) {
+        if(interval === "custom"){
+            return "Custom range";
+        }
+        else if(interval === "allTime"){
+            return "This Year";
+        }
+        else if(interval === "today"){
+            return "Today";
+        }
+        else if(interval === "yesterday"){
+            return "Yesterday";
+        }
+        else if (interval === "lastWeek"){
+            return "Last Week";
+        }
+        else if(interval === "thisMonth"){
+            return "This Month";
+        }
+        else if(interval === "lastMonth"){
+            return "Last Month";
+        }
+    };
 
 
     $scope.loadData = function () {
@@ -28,8 +54,8 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
         $scope.showAdvBalanceLoader = true;
         var dateFrom = "";
         var dateTo = "";
-        if ($scope.selectedInterval !== 'Custom') {
-            if ($scope.selectedInterval === 'This Year'){
+        if ($scope.selectedInterval !== 'custom') {
+            if ($scope.selectedInterval === 'allTime'){
                 var yearFrom = new Date().getFullYear();
                 var yearTo = new Date().getFullYear() + 1;
 
