@@ -10,11 +10,11 @@ import static java.util.Objects.isNull;
 
 @Controller
 public class WebController {
-    private static final String INVALID_EMAIL_OR_PASSOWORD_MESSAGE = "Invalid email or password";
+    private static final String MESSAGE = "Invalid email or password";
 
     @GetMapping(value = "/login")
     public String getLoginPage(Model model, @RequestParam(value = "error", required = false) String error) {
-        model.addAttribute("error", isNull(error) ? "" : INVALID_EMAIL_OR_PASSOWORD_MESSAGE);
+        model.addAttribute("error", isNull(error) ? "" : MESSAGE);
         return "login";
     }
 
@@ -22,11 +22,6 @@ public class WebController {
     @PreAuthorize("isAuthenticated()")
     public String index() {
         return "index";
-    }
-
-    //    @GetMapping(path = "/creative-dashboard")
-    public String index2() {
-        return "index-2";
     }
 
     @GetMapping(path = "/advertiser")
