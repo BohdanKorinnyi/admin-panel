@@ -103,7 +103,8 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="pull-right">
-                                <button class="btn btn-success btn-md btn-fill btn-sm btn-in-header" ng-click="loadData();">
+                                <button class="btn btn-success btn-md btn-fill btn-sm btn-in-header"
+                                        ng-click="loadData();">
                                     Apply
                                 </button>
                                 <button class="btn btn-primary btn-md btn-fill btn-sm btn-in-header">
@@ -131,7 +132,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <select class="form-control white-input-no-border" data-ng-model="selectedInterval"
+                                        <select class="form-control white-input-no-border"
+                                                data-ng-model="selectedInterval"
                                                 data-ng-options="v as k for (k, v) in dateInterval"
                                                 style="margin-bottom: 14px;">
                                         </select>
@@ -216,26 +218,81 @@
     </div>
 
     <div id="addIncomeModal" class="modal fade" role="dialog" style="background: rgba(0, 0, 0, 0.6);">
-        <div class="modal-dialog" style="width:20%;">
+        <div class="modal-dialog" style="width:90%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Income Management</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label>
-                                <input type="text" class="form-control"
-                                       placeholder="Income Management"
-                                       style="width: 100%!important;"/>
-                            </label>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th><a>Advertiser</a></th>
+                                    <th><a>Date</a></th>
+                                    <th><a>Sum Total</a></th>
+                                    <th><a>Comission</a></th>
+                                    <th><a>Sum Bank</a></th>
+                                    <th><a>Account</a></th>
+                                    <th><a>Currency</a></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="b in addedBalance">
+                                    <td>
+                                        <select class="selectpicker"
+                                                data-style="btn-info btn-fill btn-block"
+                                                data-size="5"
+                                                title="Advertisers"
+                                                data-header="Advertisers"
+                                                ng-model="b.advertiser"
+                                                style="width: 130%;margin-left: 5px;">
+                                            <option class="small-font" ng-repeat="a in advNames" data-select-watcher
+                                                    data-last="{{$last}}" value="{{a.id}}">{{a.name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <md-datepicker ng-model="b.date" date-format="dd-MM-yyyy"
+                                                       md-placeholder="date">
+                                        </md-datepicker>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="white-input-no-border"
+                                               placeholder="Sum Total"
+                                               ng-model="b.total"/>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="white-input-no-border"
+                                               placeholder="Comission"
+                                               ng-model="b.comission"/>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="white-input-no-border"
+                                               placeholder="Sum Bank"
+                                               ng-model="b.bank"/>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="white-input-no-border"
+                                               placeholder="Account"
+                                               ng-model="b.account"/>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="white-input-no-border"
+                                               placeholder="Currency"
+                                               ng-model="b.cur"/>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal"
-                            ng-click="">Apply
+                    <button type="button" class="btn btn-success"
+                            ng-click="addBalance();">Add
                     </button>
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"

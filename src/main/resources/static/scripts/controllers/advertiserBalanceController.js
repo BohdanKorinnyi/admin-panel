@@ -1,5 +1,6 @@
 Application.controller("advertiserBalanceController", function ($scope, $http, dateFactory) {
     $scope.balance = [];
+    $scope.addedBalance = [];
 
     $scope.advNames = [];
     $scope.selectedAdv = [];
@@ -93,6 +94,14 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
                     name: response.data[i].advshortname
                 });
             }
+        });
+    };
+
+    $scope.addBalance = function () {
+        $scope.addedBalance.unshift({
+            advertiser: null, date: new Date(),
+            total: null, comission: null,
+            bank: null, account: null, cur: null
         });
     };
 });

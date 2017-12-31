@@ -11,15 +11,39 @@ Application.controller('adminDashboardController', function ($scope, $http, date
     $scope.spentTotal = 0;
     $scope.profitTotal = 0;
 
+
     $scope.monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     $scope.dateOptions = {
-        'All time': 'allTime',
+        'This year': 'allTime',
         'Today': 'today',
         'Yesterday': 'yesterday',
         'Last 7 days': 'lastWeek',
         'This Month': 'thisMonth',
         'Last Month': 'lastMonth'
     };
+
+    $scope.bigChartMonthOptions = {
+        "January": "01",
+        "February": "02",
+        "March": "03",
+        "April": "04",
+        "May": "05",
+        "June": "06",
+        "July": "07",
+        "August": "08",
+        "September": "09",
+        "October": "10",
+        "November": "11",
+        "December": "12"
+    };
+    $scope.bigChartSelectedMonth = "01";
+
+    $scope.bigChartYearOptions = {
+        "Current Year": "thisYear",
+        "Next Year": "nextYear",
+        "Previous Year": "prevYear"
+    };
+    $scope.bigChartSelectedYear = "thisYear";
 
     $scope.selectedDate = 'allTime';
     $scope.from = '';
@@ -162,6 +186,86 @@ Application.controller('adminDashboardController', function ($scope, $http, date
     };
 
 
+    $scope.getBigChartData = function (key) {
+        $scope.bigChartData = [];
+        $scope.bigChartDateData = [];
+        $scope.bigChartRevData = [];
+        $scope.bigChartSpentData = [];
+        $scope.bigChartProfitData = [];
+        var year = "";
+
+        if ($scope.bigChartSelectedYear === 'thisYear') {
+            year = new Date().getFullYear();
+        }
+        else if ($scope.bigChartSelectedYear === "nextYear") {
+            year = new Date().getFullYear() + 1;
+        } else {
+            year = new Date().getFullYear() - 1;
+        }
+
+        $scope.from = year + "-" + $scope.bigChartSelectedMonth + "-01";
+        $scope.to = year + "-" + $scope.bigChartSelectedMonth + "-31";
+
+        var url = '/admin/dashboard/charts?from=' + $scope.from + '&to=' + $scope.to + '&filter=day';
+
+        $http.get(url).then(function success(response) {
+            $scope.bigChartData = response.data.data;
+
+            if (key === 0) {
+                for (var s = 0; i < $scope.bigChartData.length; s++) {
+                    $scope.bigChartSpentData.push($scope.bigChartData[s].spent);
+                    $scope.bigChartDateData.push($scope.formatViewDate($scope.bigChartData[s].date));
+                }
+
+                new Chartist.Line('#bigSpentChart', {
+                    labels: $scope.bigChartDateData,
+                    series: [$scope.bigChartSpentData]
+                }, {
+                    showArea: true,
+                    plugins: [
+                        Chartist.plugins.tooltip()
+                    ]
+                });
+            }
+
+            else if (key === 1) {
+                for (var r = 0; r < $scope.bigChartData.length; r++) {
+                    $scope.bigChartRevData.push($scope.bigChartData[r].revenue);
+                    $scope.bigChartDateData.push($scope.formatViewDate($scope.bigChartData[r].date))
+                }
+
+                new Chartist.Line('#bigRevenueChart', {
+                    labels: $scope.bigChartDateData,
+                    series: [$scope.bigChartRevData]
+                }, {
+                    showArea: true,
+                    plugins: [
+                        Chartist.plugins.tooltip()
+                    ]
+                });
+            }
+            else if (key === 2) {
+                for (var p = 0; p < $scope.bigChartData.length; p++) {
+                    $scope.bigChartProfitData.push($scope.bigChartData[p].profit);
+                    $scope.bigChartDateData.push($scope.formatViewDate($scope.bigChartData[p].date))
+                }
+
+                new Chartist.Line('#bigProfitChart', {
+                    labels: $scope.bigChartDateData,
+                    series: [$scope.bigChartProfitData]
+                }, {
+                    showArea: true,
+                    plugins: [
+                        Chartist.plugins.tooltip()
+                    ]
+                });
+            }
+        }, function fail() {
+            notify('ti-alert', 'Error occurred during loading admin dashboard chart info', 'danger');
+        });
+    };
+
+
     $scope.findTotals = function (data) {
         for (var i = 0; i < data.length; i++) {
             $scope.revTotal = $scope.revTotal + data[i].revenue;
@@ -171,6 +275,19 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         $scope.revTotal = $scope.revTotal.toFixed(2);
         $scope.spentTotal = $scope.spentTotal.toFixed(2);
         $scope.profitTotal = $scope.profitTotal.toFixed(2);
+    };
+
+
+    $scope.formatViewDate = function (date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [day];
     };
 
 });
@@ -201,4 +318,7 @@ function formatDateWithoutYear(date) {
     return [day];
 }
 
+function daysInMonth(month, year) {
+    return new Date(year, month, 0).getDate();
+}
 
