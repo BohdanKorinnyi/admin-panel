@@ -212,7 +212,7 @@ Application.controller('adminDashboardController', function ($scope, $http, date
             $scope.bigChartData = response.data.data;
 
             if (key === 0) {
-                for (var s = 0; i < $scope.bigChartData.length; s++) {
+                for (var s = 0; s < $scope.bigChartData.length; s++) {
                     $scope.bigChartSpentData.push($scope.bigChartData[s].spent);
                     $scope.bigChartDateData.push($scope.formatViewDate($scope.bigChartData[s].date));
                 }
@@ -244,6 +244,7 @@ Application.controller('adminDashboardController', function ($scope, $http, date
                     ]
                 });
             }
+
             else if (key === 2) {
                 for (var p = 0; p < $scope.bigChartData.length; p++) {
                     $scope.bigChartProfitData.push($scope.bigChartData[p].profit);
