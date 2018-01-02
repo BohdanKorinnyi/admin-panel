@@ -50,6 +50,20 @@ Application.controller('adminDashboardController', function ($scope, $http, date
     $scope.to = '';
 
 
+    $scope.setCurrentMonth = function (){
+        var someDays = 10;
+        var currentDate = new Date();
+        currentDate.setDate(currentDate.getDate()+ someDays);
+        var mm = currentDate.getMonth() + 1;
+        if(mm < 10){
+            mm = "0" + mm;
+        }
+
+        mm = mm.toString();
+        $scope.bigChartSelectedMonth = mm;
+    };
+
+
     $scope.initAdminDashboardData = function () {
         $scope.revTotal = 0;
         $scope.spentTotal = 0;

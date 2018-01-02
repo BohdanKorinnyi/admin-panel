@@ -148,7 +148,7 @@
                         </div>
                         <div class="pull-right">
                             <a style="color: green; cursor: pointer;"
-                               ng-click="getBigChartData(1)"
+                               ng-click="getBigChartData(1);setCurrentMonth();"
                                data-toggle="modal"
                                data-target="#revenueChartModal">
                                 <i class="fa fa-area-chart fa-2x" aria-hidden="true"></i>
@@ -169,7 +169,7 @@
                         </div>
                         <div class="pull-right">
                             <a style="color: red; cursor: pointer;"
-                               ng-click="getBigChartData(0)"
+                               ng-click="getBigChartData(0);setCurrentMonth();"
                                data-toggle="modal"
                                data-target="#spentChartModal">
                                 <i class="fa fa-area-chart fa-2x" aria-hidden="true"></i>
@@ -190,7 +190,7 @@
                         </div>
                         <div class="pull-right">
                             <a style="color: darkviolet; cursor: pointer;"
-                               ng-click="getBigChartData(2)"
+                               ng-click="getBigChartData(2);setCurrentMonth();"
                                data-toggle="modal"
                                data-target="#profitChartModal">
                                 <i class="fa fa-area-chart fa-2x" aria-hidden="true"></i>
