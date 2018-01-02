@@ -75,8 +75,8 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         $scope.revenueYesterday = 0;
 
         if ($scope.selectedDate === 'allTime') {
-            $scope.from = '';
-            $scope.to = '';
+            $scope.from = '01-01-2018';
+            $scope.to = '31-12-2018';
         }
         else if ($scope.selectedDate === 'yesterday') {
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
@@ -113,14 +113,13 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         $scope.chartMonthData = [];
 
         if ($scope.selectedDate === 'allTime') {
-            $scope.from = '';
-            $scope.to = '';
+            $scope.from = '01-01-2018';
+            $scope.to = '31-01-2018';
         }
         else {
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
             $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
         }
-        console.log('request chart: ', $scope.from, $scope.to, $scope.selectedDate);
         $http.get('/admin/dashboard/charts?from=' + $scope.from + '&to=' + $scope.to + '&filter=' + $scope.selectedDate).then(function success(response) {
             $scope.chartData = response.data.data;
             for (var i = 0; i < $scope.chartData.length; i++) {

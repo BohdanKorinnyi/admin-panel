@@ -47,8 +47,8 @@ public class AdminDashboardDaoImpl implements AdminDashboardDao {
         if ("allTime".equals(filter)) {
             MapSqlParameterSource source = new MapSqlParameterSource();
             // TODO: fix using MySQL: date(now() + INTERVAL 1 YEAR)
-            source.addValue("from", "2017-01-01");
-            source.addValue("to", "2020-01-01");
+            source.addValue("from", "2018-01-01");
+            source.addValue("to", "2018-01-31");
             return namedParameterJdbcTemplate.query(SELECT_CHARTS, source, BeanPropertyRowMapper.newInstance(BuyerProfit.class));
         } else if ("thisMonth".equals(filter) || "lastMonth".equals(filter)) {
             MapSqlParameterSource source = new MapSqlParameterSource();
