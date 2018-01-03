@@ -1,4 +1,4 @@
-<div ng-controller="advertiserBalanceController" class="main-panel" ng-init="initAdverts();loadData();">
+<div ng-controller="balancePerMonthController" class="main-panel" ng-init="initAdverts();">
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -10,7 +10,7 @@
                     <span class="sr-only">Toggle navigation</span>
                 </button>
                 <a class="navbar-brand">
-                    Balance by advertiser
+                    Balance per month
                 </a>
             </div>
         </div>
@@ -30,7 +30,7 @@
                             <div class="col-xs-9">
                                 <div class="numbers">
                                     <p>Total from postback</p>
-                                    $ {{totalRevenue}}
+                                    $ 0
                                 </div>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                         <hr class="card-footer-hr"/>
                         <div class="stats">
                             <i class="ti-calendar"></i>
-                            {{showCardDate(selectedInterval)}}
+
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                             <div class="col-xs-9">
                                 <div class="numbers">
                                     <p>Total Paid</p>
-                                    $ {{totalIncome}}
+                                    $ 0
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                         <hr class="card-footer-hr"/>
                         <div class="stats">
                             <i class="ti-calendar"></i>
-                            {{showCardDate(selectedInterval)}}
+
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                             <div class="col-xs-9">
                                 <div class="numbers">
                                     <p>Total Liability</p>
-                                    $ {{totalLiability}}
+                                    $ 0
                                 </div>
                             </div>
                         </div>
@@ -91,7 +91,6 @@
                         <hr class="card-footer-hr"/>
                         <div class="stats">
                             <i class="ti-calendar"></i>
-                            {{showCardDate(selectedInterval)}}
                         </div>
                     </div>
                 </div>
@@ -104,15 +103,21 @@
                         <div class="card-header">
                             <div class="pull-right">
                                 <button class="btn btn-success btn-md btn-fill btn-sm btn-in-header"
-                                        ng-click="loadData();">
-                                    Apply
+                                    ng-click="go('/advertiserBalance')">
+                                    Total
                                 </button>
                                 <button class="btn btn-primary btn-md btn-fill btn-sm btn-in-header"
-                                        ng-click="go('/balancePerMonth')">
-                                    Per month
+                                        data-toggle="modal"
+                                        data-target="#addIncomeModal">
+                                    Add
+                                </button>
+                                <button class="btn btn-primary btn-md btn-fill btn-sm btn-in-header"
+                                        data-toggle="modal"
+                                        data-target="#moreInfoModal">
+                                    More
                                 </button>
                             </div>
-                            <h4 class="card-title">Advertisers balance</h4>
+                            <h4 class="card-title">Balance per month</h4>
                         </div>
                         <div class="card-content">
                             <div class="row">
@@ -131,29 +136,19 @@
                                             </option>
                                         </select>
                                     </div>
-
                                     <div class="form-group">
                                         <select class="form-control white-input-no-border"
-                                                data-ng-model="selectedInterval"
-                                                data-ng-options="v as k for (k, v) in dateInterval"
+                                                data-ng-model="selectedYear"
+                                                data-ng-options="v as k for (k, v) in yearOptions"
                                                 style="margin-bottom: 14px;">
                                         </select>
                                     </div>
-
                                     <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-6" style="width: 225px; margin-bottom: 15px;">
-                                                <md-datepicker ng-model="dpFromDate" date-format="dd-MM-yyyy"
-                                                               ng-disabled="selectedInterval !== 'custom'"
-                                                               md-placeholder="From"></md-datepicker>
-                                            </div>
-                                            <div class="col-md-6"
-                                                 style="width: 225px; margin-left: -25px;margin-bottom: 15px;">
-                                                <md-datepicker ng-model="dpToDate" date-format="dd-MM-yyyy"
-                                                               ng-disabled="selectedInterval !== 'custom'"
-                                                               md-placeholder="To"></md-datepicker>
-                                            </div>
-                                        </div>
+                                        <select class="form-control white-input-no-border"
+                                                data-ng-model="selectedMonth"
+                                                data-ng-options="v as k for (k, v) in monthOptions"
+                                                style="margin-bottom: 14px;">
+                                        </select>
                                     </div>
                                 </form>
                             </div>
@@ -161,51 +156,25 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
+                                        <th><a>Month</a></th>
                                         <th><a>Advertiser</a></th>
                                         <th><a>From Postback</a></th>
-                                        <th>
-                                            <form class="form-inline">
-                                                <a class="form-group" style="width:70%!important;">
-                                                    Income
-                                                </a>
-                                                <div class="form-group" style="text-align: left; width: 20%!important;">
-                                                    <a ng-click=""
-                                                       data-toggle="modal"
-                                                       data-target="#addIncomeModal">
-                                                        <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
-                                            </form>
-                                        </th>
-                                        <th><a>Date</a></th>
+                                        <th><a>Income</a></th>
                                         <th><a>Liability</a></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="item in incomes">
-                                        <td>{{item.advertiser}}</td>
-                                        <td>{{item.revenue}}</td>
-                                        <td>{{item.income}}</td>
+                                    <tr>
                                         <td></td>
-                                        <td>
-                                            <form class="form-inline">
-                                                <div class="form-group" style="width:70%!important;">
-                                                    {{item.revenue - item.income}}
-                                                </div>
-                                                <div class="form-group" style="text-align: left; width: 20%!important;">
-                                                    <a ng-click=""
-                                                       data-toggle="modal"
-                                                       data-target="#moreInfoModal">
-                                                        <i class="fa fa-info fa-2x" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
-                                            </form>
-                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
-                                    <tr ng-show="incomes.length == 0">
+                                    <tr>
                                         <td colspan="5">
-                                            <div class="loader text-center" ng-show="showAdvBalanceLoader"></div>
-                                            <div class="text-center" ng-show="!showAdvBalanceLoader">No data</div>
+                                            <div class="loader text-center" ng-show="showBalancePerMonthLoader"></div>
+                                            <div class="text-center" ng-show="!showBalancePerMonthLoader">No data</div>
                                         </td>
                                     </tr>
                                     </tbody>
