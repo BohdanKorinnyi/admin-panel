@@ -18,4 +18,9 @@ public class AccountController {
     public ResponseEntity getAccountTypes() {
         return ResponseEntity.ok(accountService.getAccountTypes());
     }
+
+    @GetMapping("finance")
+    public ResponseEntity getFinanceAccounts() {
+        return ResponseEntity.ok(accountService.getFinanceAccounts());
+    }
 }
