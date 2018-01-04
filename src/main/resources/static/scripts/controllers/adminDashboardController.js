@@ -50,6 +50,11 @@ Application.controller('adminDashboardController', function ($scope, $http, date
     $scope.to = '';
 
 
+    $scope.clearSelects = function () {
+        $scope.bigChartSelectedMonth = "01";
+        $scope.bigChartSelectedYear = "thisYear";
+    };
+
     $scope.setCurrentMonth = function (){
         var someDays = 10;
         var currentDate = new Date();
@@ -74,9 +79,16 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         $scope.spentYesterday = 0;
         $scope.revenueYesterday = 0;
 
+
         if ($scope.selectedDate === 'allTime') {
-            $scope.from = '01-01-2018';
-            $scope.to = '31-12-2018';
+            var yearFrom = new Date().getFullYear();
+            var yearTo = new Date().getFullYear() + 1;
+
+            var f = new Date(yearFrom, 0, 1);
+            var t = new Date(yearTo, 0, 1);
+
+            $scope.from = formatDate(f);
+            $scope.to = formatDate(t);
         }
         else if ($scope.selectedDate === 'yesterday') {
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
@@ -86,6 +98,7 @@ Application.controller('adminDashboardController', function ($scope, $http, date
             $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
             $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
         }
+
         var url = '/admin/dashboard?from=' + $scope.from + '&to=' + $scope.to;
         $scope.adminDashboardData = [];
         $http.get(url).then(function success(response) {
