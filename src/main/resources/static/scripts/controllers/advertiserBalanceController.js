@@ -1,4 +1,4 @@
-Application.controller("advertiserBalanceController", function ($scope, $http, dateFactory) {
+Application.controller("advertiserBalanceController", function ($scope, $http, dateFactory, $location) {
     $scope.balance = [];
     $scope.addedBalance = [];
 
@@ -103,6 +103,10 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
             total: null, comission: null,
             bank: null, account: null, cur: null
         });
+    };
+
+    $scope.go = function ( path ) {
+        $location.path( path );
     };
 });
 
