@@ -2,8 +2,11 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
     $scope.balance = [];
     $scope.addedBalance = [];
 
+    $scope.accounts = [];
     $scope.advNames = [];
     $scope.selectedAdv = [];
+
+    $scope.balanceToSave = [];
 
     $scope.dateInterval = {
         'This Year': 'allTime',
@@ -98,15 +101,74 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
     };
 
     $scope.addBalance = function () {
-        $scope.addedBalance.unshift({
-            advertiser: null, date: new Date(),
-            total: null, comission: null,
-            bank: null, account: null, cur: null
+        $scope.addedBalance.push({
+            advertiser: null, date: formatDate(new Date()),
+            total: null, commission: null,
+            bank: null, account: null, cur: null,
+            currId: null
         });
     };
 
     $scope.go = function ( path ) {
         $location.path( path );
+    };
+
+
+    $scope.getAccounts = function () {
+        var url = "/account/finance";
+
+        $http.get(url).then(function successCallback(response) {
+            $scope.accounts = response.data;
+        });
+    };
+
+    $scope.getCurrencyForCurrentAccount = function (accountId, index) {
+        var currency = "";
+        var currencyId = "";
+        for (var i = 0; i < $scope.accounts.length; i++) {
+            if ($scope.accounts[i].id === parseInt(accountId)) {
+                currency = $scope.accounts[i].code;
+                currencyId = $scope.accounts[i].currencyId;
+            }
+        }
+
+        for (var j = 0; j < $scope.addedBalance.length; j++) {
+            $scope.addedBalance[index].cur = currency;
+            $scope.addedBalance[index].currId = currencyId;
+        }
+    };
+
+
+    $scope.saveAddedBalance = function () {
+        var url = "/income";
+
+        for (var i = 0; i < $scope.addedBalance.length; i++) {
+            $scope.balanceToSave.push({
+                date: formatDate($scope.addedBalance[i].date),
+                total: $scope.addedBalance[i].total,
+                commission: $scope.addedBalance[i].commission,
+                bank: $scope.addedBalance[i].bank,
+                accountId: $scope.addedBalance[i].account,
+                advertiserId: $scope.addedBalance[i].advertiser,
+                currencyId: $scope.addedBalance[i].currId
+            });
+        }
+
+        $http.post(url, $scope.balanceToSave).then(function successCallback(response) {
+            $scope.addedBalance = [];
+        });
+    };
+
+
+    $scope.calculateSumBank = function (index) {
+        for(var i = 0; i < $scope.addedBalance.length; i++){
+            if($scope.addedBalance[index].total !== null
+                && $scope.addedBalance[index].commission !== null)
+            {
+                $scope.addedBalance[index].bank =
+                    $scope.addedBalance[index].total - $scope.addedBalance[index].commission;
+            }
+        }
     };
 });
 

@@ -169,7 +169,7 @@
                                                     Income
                                                 </a>
                                                 <div class="form-group" style="text-align: left; width: 20%!important;">
-                                                    <a ng-click=""
+                                                    <a ng-click="getAccounts();"
                                                        data-toggle="modal"
                                                        data-target="#addIncomeModal">
                                                         <i class="fa fa-plus fa-1x" aria-hidden="true"></i>
@@ -241,7 +241,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="b in addedBalance">
+                                <tr ng-repeat="b in addedBalance track by $index">
                                     <td>
                                         <select class="selectpicker"
                                                 data-style="btn-info btn-fill btn-block"
@@ -263,27 +263,40 @@
                                     <td>
                                         <input type="number" class="white-input-no-border"
                                                placeholder="Sum Total"
-                                               ng-model="b.total"/>
+                                               ng-model="b.total"
+                                               ng-change="calculateSumBank($index);"
+                                               style="width: 60%; margin-left: 20%;"/>
                                     </td>
                                     <td>
                                         <input type="number" class="white-input-no-border"
-                                               placeholder="Comission"
-                                               ng-model="b.comission"/>
+                                               placeholder="Commission"
+                                               ng-model="b.commission"
+                                               ng-change="calculateSumBank($index);"
+                                               style="width: 60%; margin-left: 20%;"/>
                                     </td>
                                     <td>
                                         <input type="number" class="white-input-no-border"
                                                placeholder="Sum Bank"
-                                               ng-model="b.bank"/>
+                                               ng-model="b.bank"
+                                               style="width: 60%; margin-left: 20%;"/>
                                     </td>
                                     <td>
-                                        <input type="text" class="white-input-no-border"
-                                               placeholder="Account"
-                                               ng-model="b.account"/>
+                                        <select class="selectpicker"
+                                                data-style="btn-info btn-fill btn-block"
+                                                data-size="5"
+                                                title="Accounts"
+                                                data-header="Accounts"
+                                                ng-model="b.account"
+                                                ng-change="getCurrencyForCurrentAccount(b.account, $index)"
+                                                style="width: 130%;margin-left: 5px;">
+                                            <option class="small-font" ng-repeat="account in accounts"
+                                                    data-select-watcher
+                                                    data-last="{{$last}}" value="{{account.id}}">{{account.type}}
+                                            </option>
+                                        </select>
                                     </td>
                                     <td>
-                                        <input type="text" class="white-input-no-border"
-                                               placeholder="Currency"
-                                               ng-model="b.cur"/>
+                                        {{b.cur}}
                                     </td>
                                 </tr>
                                 </tbody>
@@ -292,6 +305,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            ng-click="saveAddedBalance();">Save
+                    </button>
+
                     <button type="button" class="btn btn-success"
                             ng-click="addBalance();">Add
                     </button>

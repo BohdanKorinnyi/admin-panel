@@ -211,7 +211,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="b in addedBalance">
+                                <tr ng-repeat="b in addedBalance track by $index">
                                     <td>
                                         <select class="selectpicker"
                                                 data-style="btn-info btn-fill btn-block"
@@ -234,12 +234,14 @@
                                         <input type="number" class="white-input-no-border"
                                                placeholder="Sum Total"
                                                ng-model="b.total"
-                                                style="width: 60%; margin-left: 20%;"/>
+                                               ng-change="calculateSumBank($index);"
+                                               style="width: 60%; margin-left: 20%;"/>
                                     </td>
                                     <td>
                                         <input type="number" class="white-input-no-border"
                                                placeholder="Commission"
                                                ng-model="b.commission"
+                                               ng-change="calculateSumBank($index);"
                                                style="width: 60%; margin-left: 20%;"/>
                                     </td>
                                     <td>
@@ -255,7 +257,7 @@
                                                 title="Accounts"
                                                 data-header="Accounts"
                                                 ng-model="b.account"
-                                                ng-change="getCurrencyForCurrentAccount(b.account)"
+                                                ng-change="getCurrencyForCurrentAccount(b.account, $index)"
                                                 style="width: 130%;margin-left: 5px;">
                                             <option class="small-font" ng-repeat="account in accounts" data-select-watcher
                                                     data-last="{{$last}}" value="{{account.id}}">{{account.type}}
