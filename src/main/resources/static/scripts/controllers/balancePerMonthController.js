@@ -3,9 +3,12 @@
 Application.controller('balancePerMonthController', function ($scope, $http, $location) {
     var date = new Date();
 
+    $scope.accounts = [];
     $scope.advNames = [];
     $scope.selectedAdv = [];
     $scope.addedBalance = [];
+    $scope.balanceToSave = [];
+
 
     $scope.showBalancePerMonthLoader = false;
 
@@ -33,12 +36,12 @@ Application.controller('balancePerMonthController', function ($scope, $http, $lo
     $scope.selectedYear = "thisYear";
 
 
-    $scope.setCurrentMonth = function (){
+    $scope.setCurrentMonth = function () {
         var someDays = 10;
         var currentDate = new Date();
-        currentDate.setDate(currentDate.getDate()+ someDays);
+        currentDate.setDate(currentDate.getDate() + someDays);
         var mm = currentDate.getMonth() + 1;
-        if(mm < 10){
+        if (mm < 10) {
             mm = "0" + mm;
         }
 
@@ -63,15 +66,65 @@ Application.controller('balancePerMonthController', function ($scope, $http, $lo
 
     $scope.addBalance = function () {
         $scope.addedBalance.unshift({
-            advertiser: null, date: new Date(),
-            total: null, comission: null,
-            bank: null, account: null, cur: null
+            advertiser: null, date: formatDate(new Date()),
+            total: null, commission: null,
+            bank: null, account: null, cur: null,
+            currId: null
         });
     };
 
 
-    $scope.go = function ( path ) {
-        $location.path( path );
+    $scope.go = function (path) {
+        $location.path(path);
+    };
+
+
+    $scope.getAccounts = function () {
+        var url = "/account/finance";
+
+        $http.get(url).then(function successCallback(response) {
+            $scope.accounts = response.data;
+        });
+    };
+
+    $scope.getCurrencyForCurrentAccount = function (accountId) {
+        var currency = "";
+        var currencyId = "";
+        for (var i = 0; i < $scope.accounts.length; i++) {
+            if ($scope.accounts[i].id === parseInt(accountId)) {
+                currency = $scope.accounts[i].code;
+                currencyId = $scope.accounts[i].currencyId;
+            }
+        }
+
+        for(var j = 0; j< $scope.addedBalance.length; j++){
+            if($scope.addedBalance[j].account === accountId){
+                $scope.addedBalance[j].cur = currency;
+                $scope.addedBalance[j].currId = currencyId;
+            }
+        }
+    };
+
+
+    $scope.saveAddedBalance = function () {
+        var url = "/income";
+
+        for (var i = 0; i < $scope.addedBalance.length; i++) {
+            $scope.balanceToSave.push({
+                date: $scope.addedBalance[i].date,
+                total: $scope.addedBalance[i].total,
+                commission: $scope.addedBalance[i].commission,
+                bank: $scope.addedBalance[i].bank,
+                accountId: $scope.addedBalance[i].account,
+                advertiserId: $scope.addedBalance[i].advertiser,
+                currencyId: $scope.addedBalance[i].currId
+            });
+        }
+
+        //
+        // $http.post(url, $scope.balanceToSave).then(function successCallback(response) {
+        //     $scope.addedBalance = [];
+        // });
     };
 });
 
