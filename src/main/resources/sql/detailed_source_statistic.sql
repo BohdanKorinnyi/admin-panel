@@ -22,27 +22,27 @@ FROM (SELECT
                buyers.id                    AS 'buyerId',
                buyers.name                  AS 'buyer',
                source_statistics.date       AS 'date',
-               accounts.type                AS 'type'
+               accounts.name                AS 'type'
              FROM source_statistics
                INNER JOIN affiliates ON affiliates.afid = source_statistics.afid
                INNER JOIN buyers ON affiliates.buyer_id = buyers.id
                INNER JOIN accounts ON accounts.account_id = source_statistics.account_id
              WHERE source_statistics.spent != 0 AND source_statistics.date = ? AND buyers.id = ?
-             GROUP BY accounts.account_id, accounts.type)
+             GROUP BY accounts.account_id, accounts.name)
       UNION (SELECT
                sum(source_statistics_today.spent) AS 'spent',
                0                                  AS 'revenue',
                buyers.id                          AS 'buyerId',
                buyers.name                        AS 'buyer',
                source_statistics_today.date       AS 'date',
-               accounts.type                      AS 'type'
+               accounts.name                      AS 'type'
              FROM source_statistics_today
                INNER JOIN affiliates ON affiliates.afid = source_statistics_today.afid
                INNER JOIN buyers ON affiliates.buyer_id = buyers.id
                INNER JOIN accounts ON accounts.account_id = source_statistics_today.account_id
              WHERE
                source_statistics_today.spent != 0 AND source_statistics_today.date = date(now()) AND buyers.id = ?
-             GROUP BY accounts.account_id, accounts.type)
+             GROUP BY accounts.account_id, accounts.name)
       UNION (SELECT
                0                                            AS 'spent',
                sum(postback.sum /

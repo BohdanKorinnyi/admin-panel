@@ -20,45 +20,39 @@
             <div class="card">
                 <div class="card-header">
                     <div class="pull-right">
-                        <button class="btn btn-success btn-md btn-fill" ng-click="filterPlans();"
+                        <button class="btn btn-success btn-md btn-fill btn-sm" ng-click="filterPlans();"
                                 style="z-index: 10000; position: relative">
                             Apply
                         </button>
                     </div>
-                    <h4 class="card-title">Plan</h4>
+                    <div class="row">
+                        <form class="form-inline">
+                            <div class="form-group" ng-init="getBuyers();"
+                                 style="margin-right:5px;margin-bottom: 3px; margin-left: 15px;">
+                                <select ng-hide="hideBuyerSelect" id="buyerSelectPicker" class="selectpicker"
+                                        multiple data-style="btn-info btn-fill btn-block btn-sm" data-size="5"
+                                        title="Buyer" data-header="Buyers" ng-model="selectedBuyerNames"
+                                        style="width: 180%;margin-left: 5px;">
+                                    <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
+                                            data-last="{{$last}}" value="{{b.id}}">{{b.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
+                                <select id="monthSelectPicker" data-style="btn-info btn-fill btn-block btn-sm"
+                                        class="selectpicker" multiple data-size="5" title="Month"
+                                        data-header="Month" style="width: 130%;margin-left: 5px;"
+                                        ng-model="selectedMonth">
+                                    <option class="small-font" ng-repeat="m in dateOptions" data-select-watcher
+                                            data-last="{{$last}}" value="{{m}}">{{m}}
+                                    </option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <div class="card-content">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <form class="form-inline">
-                                    <div class="form-group" ng-init="getBuyers();"
-                                         style="margin-right:5px;margin-bottom: 3px; margin-left: 15px;">
-                                        <select ng-hide="hideBuyerSelect" id="buyerSelectPicker" class="selectpicker"
-                                                multiple data-style="btn-info btn-fill btn-block" data-size="5"
-                                                title="Buyer" data-header="Buyers" ng-model="selectedBuyerNames"
-                                                style="width: 180%;margin-left: 5px;">
-                                            <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
-                                                    data-last="{{$last}}" value="{{b.id}}">{{b.name}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group"
-                                         style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
-                                        <select id="monthSelectPicker" data-style="btn-info btn-fill btn-block"
-                                                class="selectpicker" multiple data-size="5" title="Month"
-                                                data-header="Month" style="width: 130%;margin-left: 5px;"
-                                                ng-model="selectedMonth">
-                                            <option class="small-font" ng-repeat="m in dateOptions" data-select-watcher
-                                                    data-last="{{$last}}" value="{{m}}">{{m}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content table-responsive table-full-width">
+                    <div class="card-content table-responsive table-full-width" style="padding: 0 15px 10px 15px;">
                         <table class="table">
                             <thead class="thead-default">
                             <tr style="text-align: center; vertical-align: middle">

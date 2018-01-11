@@ -1,7 +1,5 @@
 <div ng-controller="postbackController" ng-init="loadPostbacks();initAdvNames();initBuyerNames();"
      class="main-panel">
-
-
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-minimize">
@@ -17,19 +15,17 @@
             </div>
         </div>
     </nav>
-
-
     <div class="content" style="margin-top: 20px">
         <div class="row" style="margin-left: 15px; margin-right: 15px">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <div class="pull-right">
-                            <button class="btn btn-success btn-md btn-fill" ng-click="loadPostbacks();"
+                            <button class="btn btn-success btn-md btn-fill btn-sm" ng-click="loadPostbacks();"
                                     style="z-index: 10000; position: relative">
                                 Apply
                             </button>
-                            <button class="btn btn-primary btn-md btn-fill" style="z-index: 10000; position: relative"
+                            <button class="btn btn-primary btn-md btn-fill btn-sm" style="z-index: 10000; position: relative"
                                     ng-click="export();">
                                 Export
                             </button>
