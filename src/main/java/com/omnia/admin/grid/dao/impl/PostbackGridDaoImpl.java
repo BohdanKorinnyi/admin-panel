@@ -52,7 +52,6 @@ public class PostbackGridDaoImpl implements PostbackGridDao {
         List<Map<String, Object>> postbacks = jdbcTemplate.queryForList(sql);
 //        log.info("Select postbacks executed in " + (System.currentTimeMillis() - start) + "ms, sql=" + sql);
         Integer count = jdbcTemplate.queryForObject(SELECT_POSTBACK_COUNT + whereWithSortQuery, Integer.class);
-        log.info(new ObjectMapper().writeValueAsString(new PostbackList(count, postbacks)));
         return new PostbackList(count, postbacks);
     }
 
