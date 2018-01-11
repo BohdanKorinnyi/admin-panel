@@ -1,10 +1,12 @@
 package com.omnia.admin.grid.dao.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.omnia.admin.grid.dao.PostbackGridDao;
 import com.omnia.admin.grid.dto.postback.PostbackGridFilterDetails;
 import com.omnia.admin.grid.dto.postback.PostbackGridSortingDetails;
 import com.omnia.admin.grid.dto.postback.PostbackList;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -39,21 +41,23 @@ public class PostbackGridDaoImpl implements PostbackGridDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
+    @SneakyThrows
     public PostbackList getPostbacks(PostbackGridFilterDetails filterDetails, String whereQuery) {
         if (!StringUtils.isEmpty(whereQuery)) {
             whereQuery = WHERE + whereQuery;
         }
         String whereWithSortQuery = whereQuery + getOrderBy(filterDetails.getSortingDetails());
         String sql = SELECT_POSTBACK + whereWithSortQuery + getLimit(filterDetails);
-        long start = System.currentTimeMillis();
+//        long start = System.currentTimeMillis();
         List<Map<String, Object>> postbacks = jdbcTemplate.queryForList(sql);
-        log.info("Select postbacks executed in " + (System.currentTimeMillis() - start) + "ms, sql=" + sql);
+//        log.info("Select postbacks executed in " + (System.currentTimeMillis() - start) + "ms, sql=" + sql);
         Integer count = jdbcTemplate.queryForObject(SELECT_POSTBACK_COUNT + whereWithSortQuery, Integer.class);
+        log.info(new ObjectMapper().writeValueAsString(new PostbackList(count, postbacks)));
         return new PostbackList(count, postbacks);
     }
 
     private String getLimit(PostbackGridFilterDetails filterDetails) {
-        return String.format(LIMIT, filterDetails.getFirstElement(), filterDetails.getSize());
+        return " GROUP BY postback.id " + String.format(LIMIT, filterDetails.getFirstElement(), filterDetails.getSize());
     }
 
     private String getOrderBy(PostbackGridSortingDetails sortingDetails) {
