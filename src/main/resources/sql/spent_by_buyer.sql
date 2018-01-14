@@ -27,7 +27,7 @@ FROM (SELECT
                INNER JOIN buyers ON affiliates.buyer_id = buyers.id
                INNER JOIN accounts ON source_statistics.account_id = accounts.account_id
              WHERE source_statistics.spent != 0 AND source_statistics.date BETWEEN :from AND :to AND
-                   IF(concat(:sources) IS NULL, TRUE, accounts.name IN (:sources))
+                   IF(concat(:sources) IS NULL, TRUE, accounts.type IN (:sources))
                    AND IF(concat(:buyers) IS NULL, TRUE, buyers.id IN (:buyers))
              GROUP BY source_statistics.date, source_statistics.account_id, buyers.id)
       UNION (SELECT
@@ -42,7 +42,7 @@ FROM (SELECT
                INNER JOIN accounts ON source_statistics_today.account_id = accounts.account_id
              WHERE source_statistics_today.spent != 0 AND source_statistics_today.date = date(now()) AND
                    source_statistics_today.date BETWEEN :from AND :to AND
-                   IF(concat(:sources) IS NULL, TRUE, accounts.name IN (:sources))
+                   IF(concat(:sources) IS NULL, TRUE, accounts.type IN (:sources))
                    AND IF(concat(:buyers) IS NULL, TRUE, buyers.id IN (:buyers))
              GROUP BY source_statistics_today.date, source_statistics_today.account_id,
                buyers.id)
