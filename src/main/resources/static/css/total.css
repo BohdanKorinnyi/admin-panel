@@ -45,6 +45,7 @@
 }
 
 .fixed-cols > tbody > tr > td:nth-child(2) {
+    width: 21%!important;
     position: absolute!important;
     display: inline-block!important;
     background: #FFFFFF!important;

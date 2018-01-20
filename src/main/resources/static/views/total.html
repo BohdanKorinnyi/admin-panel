@@ -101,12 +101,22 @@
             <div class="card" style="min-height: 300px;!important;">
                 <div class="card-header">
                     <div class="pull-right">
-                        <select class="form-control white-input-no-border"
-                                ng-change="init();"
-                                data-ng-model="selectedMonth"
-                                data-ng-options="v as k for (k, v) in dateOptions"
-                                style="z-index: 10000; position: relative; margin-bottom: 10px;">
-                        </select>
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <input type="number" class="form-control white-input-no-border"
+                                       ng-model="currentYear"
+                                       ng-change="init();"
+                                       style="width: 60%; margin-left: 50%;"/>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control white-input-no-border"
+                                        ng-change="init();"
+                                        data-ng-model="selectedMonth"
+                                        data-ng-options="v as k for (k, v) in dateOptions"
+                                        style="z-index: 10000; position: relative; margin-bottom: 5px;">
+                                </select>
+                            </div>
+                        </form>
                     </div>
                     <h4 class="card-title">Summary</h4>
                 </div>
