@@ -16,8 +16,6 @@
 .fixed-cols > thead:first-child > tr:first-child > th:first-child {
     position: absolute!important;
     display: inline-block!important;
-    height: 8%!important;
-    width: 14%!important;
     background: #FFFFFF!important;
     z-index: 2;
 }
@@ -25,8 +23,6 @@
 .fixed-cols > tbody > tr > td:first-child {
     position: absolute!important;
     display: inline-block!important;
-    height: 8%!important;
-    width: 14%!important;
     background: #FFFFFF!important;
     z-index: 2;
 }
@@ -43,8 +39,6 @@
 .fixed-cols > thead:first-child > tr:first-child > th:nth-child(2) {
     position: absolute!important;
     display: inline-block!important;
-    height: 8%!important;
-    width: 22%!important;
     background: #FFFFFF!important;
     padding-left: 15%!important;
     z-index: 1;
@@ -53,8 +47,6 @@
 .fixed-cols > tbody > tr > td:nth-child(2) {
     position: absolute!important;
     display: inline-block!important;
-    height: 8%!important;
-    width: 22%!important;
     background: #FFFFFF!important;
     padding-left: 15%!important;
     z-index: 1;
