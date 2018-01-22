@@ -3,6 +3,10 @@ Application.controller('totalController', function ($scope, $http) {
     $scope.selectedMonth = 'December';
     $scope.selectedSize = 50;
     $scope.data = [];
+
+    $scope.buyerAndTotalData = [];
+    $scope.currentYear = date.getFullYear();
+
     $scope.sizeOptions = {
         50: 50,
         100: 100,
@@ -27,8 +31,9 @@ Application.controller('totalController', function ($scope, $http) {
     $scope.init = function () {
         $scope.headers = generateTableHeaders($scope.selectedMonth);
         $scope.result = [];
+        $scope.buyerAndTotalData = [];
         var month = getMonthNumber($scope.selectedMonth);
-        var year = date.getFullYear();
+        var year = $scope.currentYear;
         $http.get("/finance/total?from=" + year + "-" + month + "-01&to=" + year + "-" + month + "-31")
             .then(function success(response) {
                 var data = response.data;
@@ -59,8 +64,13 @@ Application.controller('totalController', function ($scope, $http) {
                     }
                     buyerData[1] = profitTotal.toFixed(2);
                     $scope.result.push(buyerData);
+
+                    $scope.buyerAndTotalData.push({
+                        buyer: buyerData[0], total: buyerData[1]
+                    });
                 });
-                var buyerTotalByDate = ['Total', undefined];
+                var totalSum = getTotalSum($scope.buyerAndTotalData);
+                var buyerTotalByDate = ['Total', totalSum];
                 for (var i = 2; i < $scope.headers.length; i++) {
                     var total = 0;
                     for (var j = 0; j < $scope.result.length; j++) {
@@ -69,6 +79,7 @@ Application.controller('totalController', function ($scope, $http) {
                     buyerTotalByDate.push(total === undefined ? undefined : total.toFixed(2));
                 }
                 $scope.result.push(buyerTotalByDate);
+                replaceUndefinedValues($scope.result);
             }, function error() {
                 notify('ti-alert', 'Error occurred during loading data', 'danger');
             });
@@ -91,7 +102,6 @@ Application.controller('totalController', function ($scope, $http) {
         for (var i = 1; i <= numberOfDays; i++) {
             headers.push(i + '-' + monthNumber + '-' + year);
         }
-        console.log(headers);
         return headers;
     }
 
@@ -105,5 +115,25 @@ Application.controller('totalController', function ($scope, $http) {
 
     function getNumberOfDays(monthNumber) {
         return new Date(date.getFullYear(), monthNumber, 0).getDate();
+    }
+
+    function replaceUndefinedValues(resultArrays){
+        for(var i = 0; i < resultArrays.length; i++){
+            for(var j = 0; j < resultArrays[i].length; j++){
+                if(resultArrays[i][j] === undefined){
+                    resultArrays[i][j] = "0";
+                }
+            }
+        }
+    }
+
+    function getTotalSum(buyerAndTotalArr){
+        var sum = 0.00;
+
+        for(var i = 0; i < buyerAndTotalArr.length; i++){
+            sum = sum + parseFloat(buyerAndTotalArr[i].total);
+        }
+
+        return sum.toFixed(2);
     }
 });
