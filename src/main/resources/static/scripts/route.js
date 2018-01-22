@@ -84,7 +84,7 @@ Application.config(['$routeProvider', function ($routeProvider) {
             controller: 'costManagementController'
         })
         .when('/finance/total', {
-            templateUrl: 'views/total.html',
+            templateUrl: 'views/totalByBuyer.html',
             controller: 'totalController',
             resolve: {
                 factory: checkRoutingForTotalPage

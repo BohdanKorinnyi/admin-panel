@@ -33,7 +33,7 @@ FROM (SELECT
         FROM source_statistics_today
           JOIN affiliates ON source_statistics_today.afid = affiliates.afid
           JOIN buyers ON affiliates.buyer_id = buyers.id
-        WHERE source_statistics_today.spent != 0 AND source_statistics_today.date = date(now())
+        WHERE source_statistics_today.spent != 0 AND source_statistics_today.date = date(now()) AND month(source_statistics_today.date) = month(:from)
         GROUP BY buyers.id, date(date))
       UNION (
         SELECT
