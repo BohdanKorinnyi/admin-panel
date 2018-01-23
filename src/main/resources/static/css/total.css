@@ -28,27 +28,27 @@
 }
 
 .fixed-cols > thead:first-child > tr:first-child > th:nth-child(3) {
-    padding-left: 9%!important;
-    padding-right: 22%!important;
+    padding-left: 260px!important;
+    padding-right: 10px!important;
 }
 
 .fixed-cols > tbody > tr > td:nth-child(3) {
-    padding-left: 8%!important;
+    padding-left: 260px!important;
 }
 
 .fixed-cols > thead:first-child > tr:first-child > th:nth-child(2) {
     position: absolute!important;
     display: inline-block!important;
     background: #FFFFFF!important;
-    padding-left: 15%!important;
+    padding-left: 170px!important;
     z-index: 1;
 }
 
 .fixed-cols > tbody > tr > td:nth-child(2) {
-    width: 21%!important;
+    width: 230px!important;
     position: absolute!important;
     display: inline-block!important;
     background: #FFFFFF!important;
-    padding-left: 15%!important;
+    padding-left: 160px!important;
     z-index: 1;
 }

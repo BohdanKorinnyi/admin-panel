@@ -1,5 +1,6 @@
 Application.controller('totalController', function ($scope, $http) {
     var date = new Date();
+
     $scope.selectedMonth = 'January';
     $scope.data = [];
     $scope.showLoader = true;
