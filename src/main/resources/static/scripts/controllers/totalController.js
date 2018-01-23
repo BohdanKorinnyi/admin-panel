@@ -30,7 +30,7 @@ Application.controller('totalController', function ($scope, $http) {
         $scope.revenue = 0;
         $scope.spent = 0;
         $scope.profit = 0;
-        $http.get("/finance/total?from=" + $scope.selectedYear + "-" + month + "-01&to=" + $scope.selectedYear + "-" + $scope.selectedYear + "-31")
+        $http.get("/finance/total?from=" + $scope.selectedYear + "-" + month + "-01&to=" + $scope.selectedYear + "-" + month + "-31")
             .then(function success(response) {
                 $scope.showLoader = false;
                 var data = response.data;
@@ -43,9 +43,9 @@ Application.controller('totalController', function ($scope, $http) {
                         $scope.profit += daily.profit;
                     }
                 });
-                $scope.revenue = getZeroInsteadOfUndefined($scope.revenue);
-                $scope.spent = getZeroInsteadOfUndefined($scope.spent);
-                $scope.profit = getZeroInsteadOfUndefined($scope.profit);
+                $scope.revenue = getZeroInsteadOfUndefined($scope.revenue).toFixed(2);
+                $scope.spent = getZeroInsteadOfUndefined($scope.spent).toFixed(2);
+                $scope.profit = getZeroInsteadOfUndefined($scope.profit).toFixed(2);
 
                 $scope.values = [];
                 Object.keys(data).map(function (value) {
