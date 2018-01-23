@@ -28,12 +28,12 @@
 }
 
 .fixed-cols > thead:first-child > tr:first-child > th:nth-child(3) {
-    padding-left: 7%!important;
+    padding-left: 9%!important;
     padding-right: 22%!important;
 }
 
 .fixed-cols > tbody > tr > td:nth-child(3) {
-    padding-left: 7%!important;
+    padding-left: 8%!important;
 }
 
 .fixed-cols > thead:first-child > tr:first-child > th:nth-child(2) {
