@@ -1,12 +1,16 @@
 package com.omnia.admin.controller;
 
+import com.google.common.collect.Lists;
 import com.omnia.admin.model.Buyer;
+import com.omnia.admin.model.Role;
 import com.omnia.admin.service.BuyerService;
 import com.omnia.admin.service.SpentService;
+import com.omnia.admin.util.UserPrincipalUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -37,10 +41,15 @@ public class BuyerController {
     }
 
     @GetMapping("spent/report")
-    public ResponseEntity getSpentReport(@RequestParam(required = false) List<Integer> buyerIds,
+    public ResponseEntity getSpentReport(HttpServletRequest request,
+                                         @RequestParam(required = false) List<Integer> buyerIds,
                                          @RequestParam(required = false) List<String> sources,
                                          @RequestParam String from,
                                          @RequestParam String to) {
+        if (UserPrincipalUtils.isRole(request, Role.BUYER)) {
+            int buyerId = UserPrincipalUtils.getBuyerId(request);
+            return ResponseEntity.ok(spentService.getSpentReport(Lists.newArrayList(buyerId), sources, from, to));
+        }
         return ResponseEntity.ok(spentService.getSpentReport(buyerIds, sources, from, to));
     }
 }
