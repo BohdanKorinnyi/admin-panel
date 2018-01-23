@@ -32,7 +32,7 @@ Application.controller('dashboardController', function ($scope, $http) {
 
             $scope.profitToday = (response.data.revenueToday - response.data.spentToday).toFixed(2);
             $scope.profitYesterday = (response.data.revenueYesterday - response.data.spentYesterday).toFixed(2);
-            $scope.roiToday = (($scope.profitToday / response.data.spentToday) * 100).toFixed(2);
+            $scope.roiToday = response.data.spentToday === null ? 0.00 : (($scope.profitToday / response.data.spentToday) * 100).toFixed(2);
             $scope.roiYesterday = (($scope.profitYesterday / response.data.spentYesterday) * 100).toFixed(2);
         }, function fail() {
             notify('ti-alert', 'Error occurred during loading buyer\'s statistic', 'danger');
