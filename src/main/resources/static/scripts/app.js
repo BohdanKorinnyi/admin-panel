@@ -4,7 +4,8 @@ var Application = angular.module("Application", [
     "ui.bootstrap",
     "nya.bootstrap.select",
     "ngMaterial",
-    "ngMessages"
+    "ngMessages",
+    'daterangepicker'
 ]);
 
 Application.constant("routeForUnauthorizedAccess", "/");

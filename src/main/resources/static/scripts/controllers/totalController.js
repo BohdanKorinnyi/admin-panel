@@ -1,5 +1,26 @@
 Application.controller('totalController', function ($scope, $http) {
     var date = new Date();
+
+    $scope.dt = {startDate: null, endDate: null};
+
+    $scope.opts = {
+        locale: {
+            applyClass: "btn-green",
+            applyLabel: "Apply",
+            fromLabel: "From",
+            format: "YYYY-MM-DD",
+            toLabel: "To",
+            cancelLabel: 'Cancel',
+            customRangeLabel: 'Custom range'
+        },
+        ranges: {
+            "Today": [moment().subtract(1, "days"), moment()],
+            "Yesterday": [moment().subtract(2, "days"), moment()],
+            "Last 7 Days": [moment().subtract(6, "days"), moment()],
+            "Last 30 Days": [moment().subtract(29, "days"), moment()]
+        }
+    };
+
     $scope.selectedMonth = 'January';
     $scope.data = [];
     $scope.showLoader = true;
@@ -22,6 +43,7 @@ Application.controller('totalController', function ($scope, $http) {
     };
 
     $scope.init = function () {
+        console.error($scope.dt);
         $scope.showLoader = true;
         $scope.headers = generateTableHeaders($scope.selectedMonth);
         $scope.result = [];
