@@ -2,7 +2,8 @@ SELECT
   sum(details.revenue)                        AS 'revenue',
   sum(details.spent)                          AS 'spent',
   (sum(details.revenue) - sum(details.spent)) AS 'profit',
-  month(details.date)                          AS 'date'
+  month(details.date)                          AS 'date',
+  substr(details.date,9)                      AS 'fullDate'
 FROM (SELECT
         TRUNCATE(sum(expenses.sum), 2) AS 'spent',
         0                              AS 'revenue',

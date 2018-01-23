@@ -10,7 +10,7 @@ Application.controller('dashboardController', function ($scope, $http) {
     $scope.payroll = [];
     $scope.revenue = '';
     $scope.profitPlan = '';
-    $scope.totalPaid = '';
+    $scope.totalPaid = 0.00;
     $scope.bonus = '';
     $scope.revenuePlan = '';
     $scope.buyerName = '';
@@ -46,10 +46,10 @@ Application.controller('dashboardController', function ($scope, $http) {
         $scope.chartSpentData = [];
         $scope.chartProfitData = [];
         $scope.chartMonthData = [];
-        $http.get("/dashboard/charts?from=&to=&filter=allTime").then(function success(response) {
+        $http.get("/dashboard/charts?from=2018-01-01&to=2018-01-31&filter=thisMonth").then(function success(response) {
             $scope.chartData = response.data.data;
             for (var i = 0; i < $scope.chartData.length; i++) {
-                $scope.chartDateData.push($scope.chartData[i].date);
+                $scope.chartDateData.push($scope.chartData[i].fullDate);
                 $scope.chartRevData.push($scope.chartData[i].revenue);
                 $scope.chartSpentData.push($scope.chartData[i].spent);
                 $scope.chartProfitData.push($scope.chartData[i].profit);
@@ -59,7 +59,7 @@ Application.controller('dashboardController', function ($scope, $http) {
                 return a - b
             });
             for (var j = 0; j < $scope.chartDateData.length; j++) {
-                $scope.chartMonthData.push($scope.monthShortNames[$scope.chartDateData[j] - 1]);
+                $scope.chartMonthData.push($scope.chartDateData[j]);
             }
             new Chartist.Line('#revenueChart', {
                 labels: $scope.chartMonthData,
