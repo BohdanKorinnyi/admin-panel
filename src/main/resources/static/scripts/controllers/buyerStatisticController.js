@@ -14,18 +14,30 @@ Application.controller('buyerStatisticController', function ($scope, $http, date
         500: 500
     };
     $scope.selectedSize = 50;
-    $scope.dateOptions = {
-        'All time': 'allTime',
-        'Today': 'today',
-        'Yesterday': 'yesterday',
-        'Last 7 days': 'lastWeek',
-        'This Month': 'thisMonth',
-        'Last Month': 'lastMonth',
-        'Custom Range': 'custom'
+
+    $scope.dt = {
+        startDate: null,
+        endDate: null
     };
-    $scope.selectedDate = 'thisMonth';
-    $scope.dpFromDate = '';
-    $scope.dpToDate = '';
+
+    $scope.dpOptions = {
+        locale: {
+            applyClass: "btn-green",
+            applyLabel: "Apply",
+            fromLabel: "From",
+            format: "DD-MM-YYYY",
+            toLabel: "To",
+            cancelLabel: 'Cancel',
+            customRangeLabel: 'Custom range'
+        },
+        ranges: {
+            "Today": [moment().subtract(1, "days"), moment()],
+            "Yesterday": [moment().subtract(2, "days"), moment()],
+            "Last 7 Days": [moment().subtract(6, "days"), moment()],
+            "Last 30 Days": [moment().subtract(29, "days"), moment()]
+        }
+    };
+
     $scope.hideBuyerSelect = false;
 
 
@@ -55,24 +67,12 @@ Application.controller('buyerStatisticController', function ($scope, $http, date
     $scope.loadBuyerCosts = function () {
         $scope.buyerCosts = [];
         $scope.showBuyerCostsLoader = true;
-        if ($scope.dpToDate !== '' && $scope.dpFromDate !== '') {
-            $scope.from = formatDate($scope.dpFromDate);
-            $scope.to = formatDate($scope.dpToDate);
-        }
-        else if ($scope.selectedDate === 'allTime') {
-            var yearFrom = 2017;
-            var yearTo = 2020;
-            var f = new Date(yearFrom, 0, 1);
-            var t = new Date(yearTo, 0, 1);
-            $scope.from = formatDate(f);
-            $scope.to = formatDate(t);
-        }
-        else {
-            $scope.from = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
-            $scope.to = formatDate(dateFactory.pickDateTo($scope.selectedDate));
-        }
 
-        var url = '/buyer/spent/report?from=' + $scope.from + '&to=' + $scope.to
+        var validDate = $scope.validateDate();
+        var from = validDate.from;
+        var to = validDate.to;
+
+        var url = '/buyer/spent/report?from=' + from + '&to=' + to
             + "&sources=" + $scope.selectedTypes + "&buyerIds=" + $scope.selectedBuyerNames;
         $http.get(url).then(function (response) {
             $scope.buyerCosts = response.data;
@@ -84,31 +84,15 @@ Application.controller('buyerStatisticController', function ($scope, $http, date
     };
 
     $scope.getGridDetails = function () {
-        var yearFrom = 2017;
-        var yearTo = 2020;
-
-        var f = new Date(yearFrom, 0, 1);
-        var t = new Date(yearTo, 0, 1);
-
-        var fromDate = formatDate(f);
-        var toDate = formatDate(t);
-
-        if ($scope.selectedDate !== 'allTime') {
-            if ($scope.selectedDate === 'custom') {
-                fromDate = formatDate($scope.dpFromDate);
-                toDate = formatDate($scope.dpToDate);
-            }
-            else {
-                fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
-                toDate = formatDate(dateFactory.pickDateTo($scope.selectedDate));
-            }
-        }
+        var validDate = $scope.validateDate();
+        var from = validDate.from;
+        var to = validDate.to;
 
         return {
             'buyers': $scope.selectedBuyerNames,
             'types': $scope.selectedTypes,
-            'from': fromDate,
-            'to': toDate
+            'from': from,
+            'to': to
         };
     };
 
@@ -144,5 +128,25 @@ Application.controller('buyerStatisticController', function ($scope, $http, date
             + '&types=' + args.types.join(',')
             + '&from=' + args.from
             + '&to=' + args.to;
+    };
+
+    $scope.validateDate = function () {
+        var yearFrom = 2017;
+        var yearTo = 2020;
+        var f = new Date(yearFrom, 0, 1);
+        var t = new Date(yearTo, 0, 1);
+
+        var fromDate = f;
+        var toDate = t;
+        if($scope.dt.startDate !== null
+            && $scope.dt.endDate !== null){
+            fromDate = formatDate($scope.dt.startDate._d);
+            toDate = formatDate($scope.dt.endDate._d);
+        }
+
+        return {
+            from: formatDate(fromDate),
+            to: formatDate(toDate)
+        };
     };
 });

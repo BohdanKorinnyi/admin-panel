@@ -21,18 +21,8 @@ Application.controller("costManagementController", function ($scope, $http, date
 
     $scope.selectedSize = 50;
 
-    $scope.dateInterval = {
-        'All time': 'allTime',
-        'Today': 'today',
-        'Yesterday': 'yesterday',
-        'Last 7 days': 'lastWeek',
-        'This Month': 'thisMonth',
-        'Last Month': 'lastMonth',
-        'Custom Range': 'custom'
-    };
-    $scope.selectedInterval = 'allTime';
-    $scope.dpFromDate = "";
-    $scope.dpToDate = "";
+    $scope.dpFromDate = new Date(new Date().getFullYear(), 0, 1);
+    $scope.dpToDate = new Date(new Date().getFullYear() + 1, 0, 1);
 
     $scope.hideBuyerSelect = false;
     $scope.showCostManagementLoader = false;
@@ -45,6 +35,29 @@ Application.controller("costManagementController", function ($scope, $http, date
     $scope.noOfPages = 1;
     $scope.role = "";
     $scope.disableCreateCost = false;
+
+    $scope.dt = {
+        startDate: $scope.dpFromDate,
+        endDate: $scope.dpToDate
+    };
+
+    $scope.dpOptions = {
+        locale: {
+            applyClass: "btn-green",
+            applyLabel: "Apply",
+            fromLabel: "From",
+            format: "DD-MM-YYYY",
+            toLabel: "To",
+            cancelLabel: 'Cancel',
+            customRangeLabel: 'Custom range'
+        },
+        ranges: {
+            "Today": [moment().subtract(1, "days"), moment()],
+            "Yesterday": [moment().subtract(2, "days"), moment()],
+            "Last 7 Days": [moment().subtract(6, "days"), moment()],
+            "Last 30 Days": [moment().subtract(29, "days"), moment()]
+        }
+    };
 
     //functions
     $scope.getRole = function () {
@@ -94,8 +107,13 @@ Application.controller("costManagementController", function ($scope, $http, date
             });
     };
 
+    $scope.formatFromToDate = function () {
+        $scope.dpFromDate = formatDate($scope.dt.startDate._d);
+        $scope.dpToDate = formatDate($scope.dt.endDate._d);
+    };
 
     $scope.onApplyClick = function () {
+        $scope.formatFromToDate();
         $scope.findAddedRows();
         $scope.findEditedRows();
         $scope.matchEditedTypesAndBuyers();
@@ -140,23 +158,8 @@ Application.controller("costManagementController", function ($scope, $http, date
 
 
     $scope.getFilterDetails = function () {
-        var fromDate = "";
-        var toDate = "";
-        if ($scope.selectedInterval !== 'allTime') {
-            if ($scope.selectedInterval === 'custom') {
-                fromDate = formatDate($scope.dpFromDate);
-                toDate = formatDate($scope.dpToDate);
-            }
-            else {
-                fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedInterval));
-                toDate = formatDate(dateFactory.pickDateTo($scope.selectedInterval));
-            }
-        }
-
-        else{
-            return $scope.selectedBuyerNames + "&expensesType=" + $scope.selectedTypes + "&from=" + "&to=";
-        }
-
+        var fromDate = formatDate($scope.dpFromDate);
+        var toDate = formatDate($scope.dpToDate);
         return $scope.selectedBuyerNames + "&expensesType=" + $scope.selectedTypes + "&from=" + fromDate + "&to=" + toDate;
     };
 
@@ -206,7 +209,7 @@ Application.controller("costManagementController", function ($scope, $http, date
             }
         }
 
-        for(var e = 0; e < $scope.addedRows.length; e++){
+        for (var e = 0; e < $scope.addedRows.length; e++) {
             $scope.addedRows[e].date = formatDate($scope.addedRows[e].date);
         }
     };
@@ -223,7 +226,7 @@ Application.controller("costManagementController", function ($scope, $http, date
                 }
             }
 
-            for(var e = 0; e < $scope.editedRows.length; e++){
+            for (var e = 0; e < $scope.editedRows.length; e++) {
                 $scope.editedRows[e].date = formatDate($scope.editedRows[e].date);
             }
         }
@@ -254,12 +257,12 @@ Application.controller("costManagementController", function ($scope, $http, date
             $http.post(typeSaveUrl, val).then(function success() {
                 $scope.getTypes();
 
-                for(var i=0; i<$scope.costs.length; i++){
-                    if($scope.costs[i].id === $scope.rowIdForNewType){
+                for (var i = 0; i < $scope.costs.length; i++) {
+                    if ($scope.costs[i].id === $scope.rowIdForNewType) {
                         $scope.costs[i].name = val;
 
-                        for(var j = 0; j<$scope.types.length; j++){
-                            if(val === $scope.types[j].name){
+                        for (var j = 0; j < $scope.types.length; j++) {
+                            if (val === $scope.types[j].name) {
                                 $scope.costs[i].typeId = $scope.types[j].id;
                             }
                         }
@@ -369,7 +372,7 @@ Application.directive('resize', function ($window) {
     return function (scope, element) {
         var w = angular.element($window);
         scope.getWindowDimensions = function () {
-            return { 'h': w.height()};
+            return {'h': w.height()};
         };
         scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
             scope.windowHeight = newValue.h;

@@ -54,10 +54,10 @@
                                             {{b.name}}
                                         </option>
                                     </select>
-                                    <md-datepicker ng-model="p.date"
-                                                   id="payrollDatePicker"
-                                                   date-format="yyyy-MM-dd"
-                                                   md-placeholder="Date"></md-datepicker>
+                                    <input date-range-picker
+                                           class="form-control date-picker white-input-no-border"
+                                           type="text" ng-model="p.date"
+                                           options="{singleDatePicker: true}" />
                                     <select class="form-control white-input-no-border" ng-model="p.type"
                                             style="width: 11%!important;">
                                         <option value="" disabled selected>Type</option>

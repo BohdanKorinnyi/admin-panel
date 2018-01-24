@@ -52,7 +52,14 @@ Application.controller('payrollController', function ($scope, $http) {
         });
     };
 
+    $scope.formatAddedPayrollsDate = function () {
+        for(var i = 0; i < $scope.addedPayrolls.length; i++){
+            $scope.addedPayrolls[i].date = formatDate($scope.addedPayrolls[i].date._d);
+        }
+    };
+
     $scope.applyPayroll = function () {
+        $scope.formatAddedPayrollsDate();
         $http.post('payroll/save', $scope.addedPayrolls).then(function successCallback() {
             $scope.cancelClick();
             $scope.loadPayrolls();

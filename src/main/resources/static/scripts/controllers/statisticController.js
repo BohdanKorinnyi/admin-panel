@@ -20,18 +20,28 @@ Application.controller("statisticController", function ($scope, $http, dateFacto
     };
     $scope.selectedSize = 50;
 
-    $scope.dateOptions = {
-        'Select Date': 'no-date',
-        'Today': 'today',
-        'Yesterday': 'yesterday',
-        'Last 7 days': 'lastWeek',
-        'This Month': 'thisMonth',
-        'Last Month': 'lastMonth',
-        'Custom Range': 'custom'
+    $scope.dt = {
+        startDate: null,
+        endDate: null
     };
-    $scope.selectedDate = 'no-date';
-    $scope.dpFromDate = "";
-    $scope.dpToDate = "";
+
+    $scope.dpOptions = {
+        locale: {
+            applyClass: "btn-green",
+            applyLabel: "Apply",
+            fromLabel: "From",
+            format: "DD-MM-YYYY",
+            toLabel: "To",
+            cancelLabel: 'Cancel',
+            customRangeLabel: 'Custom range'
+        },
+        ranges: {
+            "Today": [moment().subtract(1, "days"), moment()],
+            "Yesterday": [moment().subtract(2, "days"), moment()],
+            "Last 7 Days": [moment().subtract(6, "days"), moment()],
+            "Last 30 Days": [moment().subtract(29, "days"), moment()]
+        }
+    };
 
     $scope.hideBuyerSelect = false;
 
@@ -80,15 +90,10 @@ Application.controller("statisticController", function ($scope, $http, dateFacto
     $scope.getGridDetails = function () {
         var fromDate = "";
         var toDate = "";
-        if ($scope.selectedDate !== 'no-date') {
-            if ($scope.selectedDate === 'custom') {
-                fromDate = formatDate($scope.dpFromDate);
-                toDate = formatDate($scope.dpToDate);
-            }
-            else {
-                fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
-                toDate = formatDate(dateFactory.pickDateTo($scope.selectedDate));
-            }
+        if($scope.dt.startDate !== null
+            && $scope.dt.endDate !== null){
+            fromDate = formatDate($scope.dt.startDate._d);
+            toDate = formatDate($scope.dt.endDate._d);
         }
 
         return {

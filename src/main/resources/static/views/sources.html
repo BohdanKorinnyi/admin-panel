@@ -35,27 +35,12 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control white-input-no-border" data-ng-model="selectedDate"
-                                                data-ng-options="v as k for (k, v) in dateOptions"
-                                                style="margin-bottom: 14px;">
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-6" style="width: 225px;margin-bottom: 15px;">
-                                                <md-datepicker ng-model="dpFromDate"
-                                                               date-format="yyyy-MM-dd"
-                                                               ng-disabled="selectedDate !== 'custom'"
-                                                               md-placeholder="From"></md-datepicker>
-                                            </div>
-                                            <div class="col-md-6"
-                                                 style="width:225px; margin-left: -27px; margin-bottom: 15px;">
-                                                <md-datepicker ng-model="dpToDate"
-                                                               date-format="yyyy-MM-dd"
-                                                               ng-disabled="selectedDate !== 'custom'"
-                                                               md-placeholder="To"></md-datepicker>
-                                            </div>
-                                        </div>
+                                        <input date-range-picker
+                                               class="form-control date-picker white-input-no-border"
+                                               type="text" ng-model="dt"
+                                               options="dpOptions"
+                                               placeholder="Click to filter by date..."
+                                               style="width: 110%; margin-bottom: 8%;"/>
                                     </div>
                                 </form>
                             </div>

@@ -24,18 +24,28 @@ Application.controller('sourcesController', function ($scope, $http, dateFactory
     };
     $scope.selectedSize = 50;
 
-    $scope.dateOptions = {
-        'Select Date': 'no-date',
-        'Today': 'today',
-        'Yesterday': 'yesterday',
-        'Last 7 days': 'lastWeek',
-        'This Month': 'thisMonth',
-        'Last Month': 'lastMonth',
-        'Custom Range': 'custom'
+    $scope.dt = {
+        startDate: null,
+        endDate: null
     };
-    $scope.selectedDate = 'no-date';
-    $scope.dpFromDate = '';
-    $scope.dpToDate = '';
+
+    $scope.dpOptions = {
+        locale: {
+            applyClass: "btn-green",
+            applyLabel: "Apply",
+            fromLabel: "From",
+            format: "DD-MM-YYYY",
+            toLabel: "To",
+            cancelLabel: 'Cancel',
+            customRangeLabel: 'Custom range'
+        },
+        ranges: {
+            "Today": [moment().subtract(1, "days"), moment()],
+            "Yesterday": [moment().subtract(2, "days"), moment()],
+            "Last 7 Days": [moment().subtract(6, "days"), moment()],
+            "Last 30 Days": [moment().subtract(29, "days"), moment()]
+        }
+    };
 
     function formatDate(date) {
         var d = new Date(date),
@@ -113,17 +123,8 @@ Application.controller('sourcesController', function ($scope, $http, dateFactory
     };
 
     $scope.getGridDetails = function () {
-        var fromDate = '';
-        var toDate = '';
-        if ($scope.selectedDate !== 'no-date') {
-            if ($scope.selectedDate === 'custom') {
-                fromDate = formatDate($scope.dpFromDate);
-                toDate = formatDate($scope.dpToDate);
-            } else {
-                fromDate = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
-                toDate = formatDate(dateFactory.pickDateTo($scope.selectedDate));
-            }
-        }
+        var fromDate = formatDate($scope.dt.startDate._d);
+        var toDate = formatDate($scope.dt.endDate._d);
         return $scope.selectedBuyerNames + '&from=' + fromDate + '&to=' + toDate;
     };
 
