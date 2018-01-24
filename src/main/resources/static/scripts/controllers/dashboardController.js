@@ -18,7 +18,7 @@ Application.controller('dashboardController', function ($scope, $http) {
     $scope.revenueCompleted = '';
     $scope.profitCompleted = '';
     $scope.initData = function () {
-        $http.get('/dashboard/get').then(function success(response) {
+        $http.get('/dashboard').then(function success(response) {
             $scope.payroll = response.data.payroll;
             $scope.revenue = response.data.revenue.toFixed(2);
             $scope.profitPlan = response.data.profitPlan.toFixed(2);

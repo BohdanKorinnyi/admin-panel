@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 public class DashboardController {
     private final DashboardService dashboardService;
 
-    @GetMapping("get")
+    @GetMapping
     public ResponseEntity getData(HttpServletRequest request) throws ExecutionException, InterruptedException {
         return ResponseEntity.ok(dashboardService.getDashboardData(UserPrincipalUtils.getBuyerId(request)));
     }
