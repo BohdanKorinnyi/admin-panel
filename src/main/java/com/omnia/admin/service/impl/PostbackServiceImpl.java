@@ -2,6 +2,7 @@ package com.omnia.admin.service.impl;
 
 import com.omnia.admin.dao.PostbackDao;
 import com.omnia.admin.model.Postback;
+import com.omnia.admin.model.Revenue;
 import com.omnia.admin.service.PostbackService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PostbackServiceImpl implements PostbackService {
     private final PostbackDao postbackDao;
+
+    @Override
+    public List<Revenue> getRevenueByBuyerIdAndYear(long buyerId, int year) {
+        return postbackDao.getRevenueByBuyerIdAndYear(buyerId, year);
+    }
 
     @Override
     public Float getRevenueByPeriod(List<Integer> advertiserIds, String from, String to) {

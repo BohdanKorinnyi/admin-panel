@@ -3,6 +3,7 @@ package com.omnia.admin.dao.impl;
 import com.omnia.admin.dao.PostbackDao;
 import com.omnia.admin.exception.QueryExecutionException;
 import com.omnia.admin.model.Postback;
+import com.omnia.admin.model.Revenue;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -50,6 +51,29 @@ public class PostbackDaoImpl implements PostbackDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Override
+    public List<Revenue> getRevenueByBuyerIdAndYear(long buyerId, int year) {
+        return jdbcTemplate.query("SELECT " +
+                        "  monthname(postback.date)                                  AS 'date', " +
+                        "  TRUNCATE(sum(postback.sum / " +
+                        "               (SELECT exchange.rate " +
+                        "                FROM exchange " +
+                        "                WHERE exchange.id = postback.exchange) * " +
+                        "               (SELECT exchange.count " +
+                        "                FROM exchange " +
+                        "                WHERE exchange.id = postback.exchange)), 2) AS 'value' " +
+                        "FROM postback " +
+                        "  INNER JOIN affiliates ON affiliates.afid = postback.afid " +
+                        "  INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
+                        "  INNER JOIN adverts ON adverts.advshortname = postback.advname " +
+                        "  INNER JOIN adv_status ON adv_status.adv_id = adverts.id " +
+                        "WHERE (postback.duplicate != 'FULL' OR postback.duplicate IS NULL) AND " +
+                        "      adv_status.real_status = 'approved' AND postback.status = adv_status.name AND postback.sum != 0 " +
+                        "      AND buyers.id = ? AND year(postback.date) = ? GROUP BY monthname(postback.date) " +
+                        "ORDER BY month(postback.date) ASC ",
+                BeanPropertyRowMapper.newInstance(Revenue.class), buyerId, year);
+    }
 
     @Override
     public Float getRevenueByPeriod(List<Integer> advertiserIds, String from, String to) {

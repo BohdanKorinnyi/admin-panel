@@ -2,17 +2,15 @@ package com.omnia.admin.controller;
 
 import com.google.common.collect.ImmutableMap;
 import com.omnia.admin.service.PostbackService;
-import com.omnia.admin.util.UserPrincipalUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
+
+import static com.omnia.admin.util.UserPrincipalUtils.getBuyerId;
 
 @RestController
 @AllArgsConstructor
@@ -20,6 +18,11 @@ import java.util.Optional;
 public class PostbackController {
 
     private final PostbackService postbackService;
+
+    @GetMapping("year/{year}")
+    public ResponseEntity getRevenueByYear(HttpServletRequest request, @PathVariable int year) {
+        return ResponseEntity.ok(postbackService.getRevenueByBuyerIdAndYear(getBuyerId(request), year));
+    }
 
     @GetMapping
     public ResponseEntity getPostbackByConversionId(@RequestParam Integer conversionId) {
@@ -37,6 +40,6 @@ public class PostbackController {
 
     @GetMapping("buyers/revenue")
     public ResponseEntity getBuyerRevenue(HttpServletRequest request) {
-        return ResponseEntity.ok(postbackService.getRevenueByBuyer(UserPrincipalUtils.getBuyerId(request)));
+        return ResponseEntity.ok(postbackService.getRevenueByBuyer(getBuyerId(request)));
     }
 }
