@@ -6,6 +6,8 @@ import com.omnia.admin.model.Payroll;
 import java.util.List;
 
 public interface PayrollService {
+    List<Payroll> getPayrollsByBuyerAndYear(int buyerId, int year);
+
     Integer countAll(Integer buyerId);
 
     List<Payroll> findPayrolls(Page page, Integer buyerId);

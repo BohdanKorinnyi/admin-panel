@@ -15,6 +15,11 @@ public class PayrollServiceImpl implements PayrollService {
     private final PayrollDao payrollDao;
 
     @Override
+    public List<Payroll> getPayrollsByBuyerAndYear(int buyerId, int year) {
+        return payrollDao.getPayrollsByBuyerAndYear(buyerId, year);
+    }
+
+    @Override
     public Integer countAll(Integer buyerId) {
         return payrollDao.countAll(buyerId);
     }

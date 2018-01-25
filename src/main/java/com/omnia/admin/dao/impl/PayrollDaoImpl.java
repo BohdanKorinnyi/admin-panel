@@ -36,6 +36,20 @@ public class PayrollDaoImpl implements PayrollDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
+    public List<Payroll> getPayrollsByBuyerAndYear(int buyerId, int year) {
+        return jdbcTemplate.query("SELECT " +
+                "  payroll.sum             AS 'sum', " +
+                "  currency.code           AS 'currency', " +
+                "  monthname(payroll.date) AS 'month' " +
+                "FROM payroll " +
+                "  INNER JOIN payroll_type ON payroll_type.id = payroll.type " +
+                "  LEFT JOIN currency ON payroll.currency_id = currency.id " +
+                "WHERE payroll_type.type = 'bonus' AND payroll.buyer_id = ? AND year(payroll.date) = ? " +
+                "GROUP BY month(payroll.date) " +
+                "ORDER BY month(payroll.date)", BeanPropertyRowMapper.newInstance(Payroll.class), buyerId, year);
+    }
+
+    @Override
     public Integer countAll(Integer buyerId) {
         return jdbcTemplate.queryForObject(SELECT_COUNT_PAYROLLS + addBuyerFilter(buyerId), Integer.class);
     }

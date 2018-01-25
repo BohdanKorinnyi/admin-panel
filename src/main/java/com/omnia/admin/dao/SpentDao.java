@@ -1,10 +1,13 @@
 package com.omnia.admin.dao;
 
 import com.omnia.admin.model.BuyerCosts;
+import com.omnia.admin.model.Spent;
 
 import java.util.List;
 
 public interface SpentDao {
+    List<Spent> getSpentByBuyerAndYear(int buyer, int year);
+
     Float calculateBuyerCurrentMonthSpent(Integer buyerId);
 
     Float calculateBuyerTodaySpent(Integer buyerId);

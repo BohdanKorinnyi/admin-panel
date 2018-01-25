@@ -2,6 +2,7 @@ package com.omnia.admin.dao.impl;
 
 import com.omnia.admin.dao.SpentDao;
 import com.omnia.admin.model.BuyerCosts;
+import com.omnia.admin.model.Spent;
 import com.omnia.admin.service.QueryHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -66,6 +67,40 @@ public class SpentDaoImpl implements SpentDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Override
+    public List<Spent> getSpentByBuyerAndYear(int buyer, int year) {
+        return jdbcTemplate.query("SELECT " +
+                "  truncate(sum(result.spent), 2) AS 'value', " +
+                "  monthname(result.date)         AS 'date' " +
+                "FROM (SELECT " +
+                "        sum(expenses.sum) AS 'spent', " +
+                "        expenses.date " +
+                "      FROM expenses " +
+                "        INNER JOIN buyers ON expenses.buyer_id = buyers.id " +
+                "      WHERE expenses.sum != 0 AND buyers.id = ? AND year(expenses.date) = ? " +
+                "      GROUP BY monthname(expenses.date) " +
+                "      UNION (SELECT " +
+                "               sum(source_statistics.spent) AS 'spent', " +
+                "               source_statistics.date " +
+                "             FROM source_statistics " +
+                "               INNER JOIN affiliates ON affiliates.afid = source_statistics.afid " +
+                "               INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
+                "             WHERE source_statistics.spent != 0 AND buyers.id = ? AND year(source_statistics.date) = ? " +
+                "             GROUP BY monthname(source_statistics.date) " +
+                "      ) " +
+                "      UNION (SELECT " +
+                "               sum(source_statistics_today.spent) AS 'spent', " +
+                "               source_statistics_today.date " +
+                "             FROM source_statistics_today " +
+                "               INNER JOIN affiliates ON affiliates.afid = source_statistics_today.afid " +
+                "               INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
+                "             WHERE source_statistics_today.spent != 0 AND buyers.id = ? AND year(source_statistics_today.date) = ? " +
+                "             GROUP BY monthname(source_statistics_today.date) " +
+                "      )) AS result " +
+                "GROUP BY monthname(result.date) " +
+                "ORDER BY month(result.date);", BeanPropertyRowMapper.newInstance(Spent.class), buyer, year, buyer, year, buyer, year);
+    }
 
     @Override
     public Float calculateBuyerCurrentMonthSpent(Integer buyerId) {
