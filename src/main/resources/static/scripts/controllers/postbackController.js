@@ -7,9 +7,6 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
     $scope.totalPagination = 1;
     $scope.noOfPages = 1;
 
-    $scope.dpFromDate = '';
-    $scope.dpToDate = '';
-
     $scope.sortType = '';
     $scope.sortReverse = '';
 
@@ -53,16 +50,31 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
     };
     $scope.selectedSize = 50;
 
-    $scope.dateOptions = {
-        'Select Date': 'no-date',
-        'Today': 'today',
-        'Yesterday': 'yesterday',
-        'Last 7 days': 'lastWeek',
-        'This Month': 'thisMonth',
-        'Last Month': 'lastMonth',
-        'Custom Range': 'custom'
+    $scope.dpFromDate = new Date(new Date().getFullYear(), 0, 1);
+    $scope.dpToDate = new Date(new Date().getFullYear() + 1, 0, 1);
+
+    $scope.dt = {
+        startDate: $scope.dpFromDate,
+        endDate: $scope.dpToDate
     };
-    $scope.selectedDate = 'no-date';
+
+    $scope.dpOptions = {
+        locale: {
+            applyClass: "btn-green",
+            applyLabel: "Apply",
+            fromLabel: "From",
+            format: "DD-MM-YYYY",
+            toLabel: "To",
+            cancelLabel: 'Cancel',
+            customRangeLabel: 'Custom range'
+        },
+        ranges: {
+            "Today": [moment().subtract(1, "days"), moment()],
+            "Yesterday": [moment().subtract(2, "days"), moment()],
+            "Last 7 Days": [moment().subtract(6, "days"), moment()],
+            "Last 30 Days": [moment().subtract(29, "days"), moment()]
+        }
+    };
 
     $scope.utcValues = {"UTC": "utc",
         "UTC+1":"utc+1","UTC+2":"utc+2","UTC+3":"utc+3",
@@ -158,21 +170,42 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
             });
     };
 
+    $scope.formatFromToDate = function () {
+        $scope.dpFromDate = formatDate($scope.dt.startDate._d);
+        $scope.dpToDate = formatDate($scope.dt.endDate._d);
+    };
+
+    $scope.apply = function () {
+        $scope.postbacks = [];
+        $scope.showLoader = true;
+
+        var postParams = $scope.getFilterParameters();
+        $scope.formatFromToDate();
+        postParams.filter.from = $scope.dpFromDate;
+        postParams.filter.to = $scope.dpToDate;
+
+        $http.post('grid/postback/get', postParams)
+            .then(function successCallback(response) {
+                $scope.postbacks = response.data.postbacks;
+                $scope.showLoader = false;
+                $scope.totalPagination = response.data.size;
+                $scope.noOfPages = Math.ceil($scope.totalPagination / $scope.selectedSize);
+            }, function errorCallback(response) {
+                $scope.showLoader = false;
+                notify('ti-alert', 'Error occurred during loading postbacks', 'danger');
+            });
+    };
+
+
     $scope.getFilterParameters = function () {
         var parameters = {};
         parameters.page = $scope.selectedPage;
         parameters.size = $scope.selectedSize;
         parameters['filter'] = {};
-        if ($scope.selectedDate !== 'no-date') {
-            if ($scope.selectedDate === 'custom') {
-                parameters.filter['from'] = formatDate($scope.dpFromDate);
-                parameters.filter['to'] = formatDate($scope.dpToDate);
-            }
-            else {
-                parameters.filter['from'] = formatDate(dateFactory.pickDateFrom($scope.selectedDate));
-                parameters.filter['to'] = formatDate(dateFactory.pickDateTo($scope.selectedDate));
-            }
-        }
+
+        parameters.filter['from'] = formatDate($scope.dpFromDate);
+        parameters.filter['to'] = formatDate($scope.dpToDate);
+
         $scope.selectedAdvertiserValue = getSelectedValues($scope.selectedAdvertiserNames, $scope.advertiserNames);
         $scope.selectedBuyerValue = getSelectedValues($scope.selectedBuyerNames, $scope.buyerNames);
         $scope.selectedStatusForPostValue = getSelectedValues($scope.selectedStatusValue, $scope.statusValues);

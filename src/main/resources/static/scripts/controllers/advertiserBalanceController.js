@@ -8,77 +8,66 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
 
     $scope.balanceToSave = [];
 
-    $scope.dateInterval = {
-        'This Year': 'allTime',
-        'Today': 'today',
-        'Yesterday': 'yesterday',
-        'Last 7 days': 'lastWeek',
-        'This Month': 'thisMonth',
-        'Last Month': 'lastMonth',
-        'Custom Range': 'custom'
+    $scope.dpFromDate = new Date(new Date().getFullYear(), 0, 1);
+    $scope.dpToDate = new Date(new Date().getFullYear() + 1, 0, 1);
+
+    $scope.dt = {
+        startDate: $scope.dpFromDate,
+        endDate: $scope.dpToDate
     };
 
-    $scope.selectedInterval = 'allTime';
-    $scope.dpFromDate = "";
-    $scope.dpToDate = "";
-
+    $scope.dpOptions = {
+        locale: {
+            applyClass: "btn-green",
+            applyLabel: "Apply",
+            fromLabel: "From",
+            format: "DD-MM-YYYY",
+            toLabel: "To",
+            cancelLabel: 'Cancel',
+            customRangeLabel: 'Custom range'
+        },
+        ranges: {
+            "Today": [moment().subtract(1, "days"), moment()],
+            "Yesterday": [moment().subtract(2, "days"), moment()],
+            "Last 7 Days": [moment().subtract(6, "days"), moment()],
+            "Last 30 Days": [moment().subtract(29, "days"), moment()]
+        }
+    };
 
     $scope.incomes = [];
 
     $scope.showAdvBalanceLoader = false;
 
-
-    $scope.showCardDate = function (interval) {
-        if(interval === "custom"){
-            return "Custom range";
-        }
-        else if(interval === "allTime"){
-            return "This Year";
-        }
-        else if(interval === "today"){
-            return "Today";
-        }
-        else if(interval === "yesterday"){
-            return "Yesterday";
-        }
-        else if (interval === "lastWeek"){
-            return "Last Week";
-        }
-        else if(interval === "thisMonth"){
-            return "This Month";
-        }
-        else if(interval === "lastMonth"){
-            return "Last Month";
-        }
+    $scope.showCardDate = function (date) {
+        return formatViewDate(date.startDate) + " - " + formatViewDate(date.endDate);
     };
-
 
     $scope.loadData = function () {
         $scope.incomes = [];
         $scope.showAdvBalanceLoader = true;
-        var dateFrom = "";
-        var dateTo = "";
-        if ($scope.selectedInterval !== 'custom') {
-            if ($scope.selectedInterval === 'allTime'){
-                var yearFrom = new Date().getFullYear();
-                var yearTo = new Date().getFullYear() + 1;
+        var dateFrom = formatDate($scope.dpFromDate);
+        var dateTo = formatDate($scope.dpToDate);
 
-                var f = new Date(yearFrom, 0, 1);
-                var t = new Date(yearTo, 0, 1);
-
-                dateFrom = formatDate(f);
-                dateTo = formatDate(t);
-            }
-            else {
-                dateFrom = formatDate(dateFactory.pickDateFrom($scope.selectedInterval));
-                dateTo = formatDate(dateFactory.pickDateTo($scope.selectedInterval));
-            }
-        }
-        else {
-            dateFrom = formatDate($scope.dpFromDate);
-            dateTo = formatDate($scope.dpToDate);
-        }
         var url = '/advertiser/report?advertiserIds=' + ($scope.selectedAdv.join()) + '&from=' + dateFrom + '&to=' + dateTo;
+        $http.get(url).then(function successCallback(response) {
+            $scope.totalRevenue = response.data.totalRevenue;
+            $scope.totalIncome = response.data.totalIncome;
+            $scope.totalLiability = $scope.totalRevenue - $scope.totalIncome;
+            $scope.incomes = response.data.incomes;
+            $scope.showAdvBalanceLoader = false;
+        });
+    };
+
+    $scope.formatFromToDate = function () {
+        $scope.dpFromDate = formatDate($scope.dt.startDate._d);
+        $scope.dpToDate = formatDate($scope.dt.endDate._d);
+    };
+
+    $scope.onApplyBtnClick = function () {
+        $scope.incomes = [];
+        $scope.showAdvBalanceLoader = true;
+        $scope.formatFromToDate();
+        var url = '/advertiser/report?advertiserIds=' + ($scope.selectedAdv.join()) + '&from=' + $scope.dpFromDate + '&to=' + $scope.dpToDate;
         $http.get(url).then(function successCallback(response) {
             $scope.totalRevenue = response.data.totalRevenue;
             $scope.totalIncome = response.data.totalIncome;
@@ -109,8 +98,8 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
         });
     };
 
-    $scope.go = function ( path ) {
-        $location.path( path );
+    $scope.go = function (path) {
+        $location.path(path);
     };
 
 
@@ -161,10 +150,9 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
 
 
     $scope.calculateSumBank = function (index) {
-        for(var i = 0; i < $scope.addedBalance.length; i++){
-            if($scope.addedBalance[index].total !== null
-                && $scope.addedBalance[index].commission !== null)
-            {
+        for (var i = 0; i < $scope.addedBalance.length; i++) {
+            if ($scope.addedBalance[index].total !== null
+                && $scope.addedBalance[index].commission !== null) {
                 $scope.addedBalance[index].bank =
                     $scope.addedBalance[index].total - $scope.addedBalance[index].commission;
             }
@@ -182,4 +170,16 @@ function formatDate(date) {
     if (day.length < 2) day = '0' + day;
 
     return [year, month, day].join('-');
+}
+
+function formatViewDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [day, month, year].join('-');
 }

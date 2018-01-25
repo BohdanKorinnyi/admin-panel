@@ -21,28 +21,13 @@
         <div class="row margin-backdown">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header" style="padding-top: 0px !important;">
                         <div class="pull-right">
-                            <button class="btn btn-success btn-md btn-fill btn-sm" ng-click="onApplyClick();"
-                                    ng-disabled="disableCreateCost"
-                                    style="z-index: 10000; position: relative">
-                                Apply
-                            </button>
-                            <button class="btn btn-primary btn-md btn-fill btn-sm" style="z-index: 10000; position: relative"
-                                    ng-click="loadCosts();">
-                                Cancel
-                            </button>
-                        </div>
-                        <h4 class="card-title">Cost management filter</h4>
-                    </div>
-                    <div class="card-content">
-                        <div class="row">
                             <form class="form-inline" style="margin-left: 10px;margin-top: 10px;">
-                                <div class="form-group"
-                                     style="margin-right:-3px;margin-bottom: 3px; margin-left: 5px;">
+                                <div class="form-group">
                                     <select ng-hide="hideBuyerSelect"
                                             class="selectpicker" multiple
-                                            data-style="btn-info btn-fill btn-block"
+                                            data-style="btn-info btn-fill btn-sm btn-block"
                                             data-size="5"
                                             title="Buyer"
                                             data-header="Buyers"
@@ -54,10 +39,9 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group"
-                                     style="margin-bottom: 3px; margin-left: 5px; margin-right: 5px;">
+                                <div class="form-group">
                                     <select class="selectpicker" multiple
-                                            data-style="btn-info btn-fill btn-block"
+                                            data-style="btn-info btn-fill btn-sm btn-block"
                                             data-size="5"
                                             data-header="Types"
                                             selected-header="options selected"
@@ -82,48 +66,37 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <select class="form-control white-input-no-border" data-ng-model="selectedInterval"
-                                            data-ng-options="v as k for (k, v) in dateInterval"
-                                            style="margin-bottom: 14px;">
-                                    </select>
+                                    <input date-range-picker
+                                           class="form-control date-picker white-input-no-border"
+                                           type="text" ng-model="dt"
+                                           options="dpOptions"
+                                           placeholder="Click to choose date..."
+                                           style="width: 110%;"/>
                                 </div>
-
                                 <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-6" style="width: 225px; margin-bottom: 15px;">
-                                            <md-datepicker ng-model="dpFromDate" date-format="dd-MM-yyyy"
-                                                           ng-disabled="selectedInterval !== 'custom'"
-                                                           md-placeholder="From"></md-datepicker>
-                                        </div>
-                                        <div class="col-md-6"
-                                             style="width: 225px; margin-left: -25px;margin-bottom: 15px;">
-                                            <md-datepicker ng-model="dpToDate" date-format="dd-MM-yyyy"
-                                                           ng-disabled="selectedInterval !== 'custom'"
-                                                           md-placeholder="To"></md-datepicker>
-                                        </div>
-                                    </div>
+                                    <button class="btn btn-success btn-sm btn-fill"
+                                            ng-click="addCost();"
+                                            ng-disabled="disableCreateCost"
+                                            style="z-index: 10000; position: relative">
+                                        Create
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-success btn-md btn-fill btn-sm" ng-click="onApplyClick();"
+                                            ng-disabled="disableCreateCost"
+                                            style="z-index: 10000; position: relative">
+                                        Apply
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-md btn-fill btn-sm"
+                                            style="z-index: 10000; position: relative"
+                                            ng-click="loadCosts();">
+                                        Cancel
+                                    </button>
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="content">
-        <div class="row margin-backdown">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="pull-right">
-                            <button class="btn btn-success btn-sm btn-fill"
-                                    ng-click="addCost();"
-                                    ng-disabled="disableCreateCost"
-                                    style="z-index: 10000; position: relative">
-                                Create
-                            </button>
-                        </div>
-                        <h4 class="card-title">All Costs</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-content table-responsive table-full-width" style="margin-top: -15px">
@@ -165,10 +138,12 @@
                                     </td>
                                     <td class="cost-management-table">
                                         <div style="width:100%; margin-left: -10px;">
-                                            <md-datepicker ng-model="c.date" date-format="dd-MM-yyyy"
-                                                           ng-change="updateDate(c.id);" ng-disabled="disableCreateCost"
-                                                           md-hide-icons="calendar" md-placeholder="Enter date">
-                                            </md-datepicker>
+                                            <input date-range-picker
+                                                   class="form-control date-picker white-input-no-border"
+                                                   type="text" ng-model="c.date"
+                                                   ng-click="updateDate(c.id);"
+                                                   ng-disabled="disableCreateCost"
+                                                   options="{singleDatePicker: true}"/>
                                         </div>
                                     </td>
                                     <td class="cost-management-table">
