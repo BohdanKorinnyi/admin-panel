@@ -175,37 +175,68 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="pull-right">
-                            <h4 class="card-title">Total Paid ${{totalPaid}}</h4>
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <input type="number" class="form-control white-input-no-border"
+                                           ng-model="selectedYear"
+                                           ng-change="fillTable();"
+                                           style="width: 60%; margin-left: 50%;position: relative; z-index: 10000"/>
+                                </div>
+                            </form>
                         </div>
                         <h4 class="card-title">Settlement Slip</h4>
                         <p class="category">{{buyerName}}</p>
                     </div>
                     <div class="card-content">
-                        <div class="card-content table-responsive table-full-width">
-                            <table class="table">
+                        <div class="card-content table-responsive table-full-width" style="padding-top: 5px">
+                            <table class="table" style="padding-top: 5px">
                                 <thead>
                                 <tr style="text-align: center; vertical-align: middle">
                                     <th>
-                                        <a href="">Date</a>
+                                        <a href="">Month</a>
                                     </th>
 
                                     <th>
-                                        <a href="">Amount</a>
+                                        <a href="">Revenue</a>
                                     </th>
-
                                     <th>
-                                        <a href="">Description</a>
+                                        <a href="">Spent</a>
+                                    </th>
+                                    <th>
+                                        <a href="">Profit</a>
+                                    </th>
+                                    <th>
+                                        <a href="">Bonus</a>
+                                    </th>
+                                    <th>
+                                        <a href="">Paid</a>
+                                    </th>
+                                    <th>
+                                        <a href="">Liability</a>
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr style="text-align: center; vertical-align: middle" ng-show="payroll.length == 0">
-                                    <td colspan="3">No data</td>
+                                <tr style="text-align: center; vertical-align: middle" ng-show="result.length == 0">
+                                    <td colspan="7">No data</td>
                                 </tr>
-                                <tr style="text-align: center; vertical-align: middle" ng-repeat="p in payroll" ng-show="payroll.length != 0">
-                                    <td>{{p.date}}</td>
-                                    <td>{{p.sum}}</td>
-                                    <td>{{p.description}}</td>
+                                <tr style="text-align: center; vertical-align: middle" ng-repeat="r in result" ng-show="result.length != 0">
+                                    <td>{{r.month}}</td>
+                                    <td>{{r.revenue}}</td>
+                                    <td>{{r.spent}}</td>
+                                    <td>{{r.profit}}</td>
+                                    <td>{{r.bonus}}</td>
+                                    <td>{{r.paidTotal}}</td>
+                                    <td>{{r.liability}}</td>
+                                </tr>
+                                <tr style="text-align: center; vertical-align: middle">
+                                    <td>Total</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{total.bonus}}</td>
+                                    <td>{{total.paidTotal}}</td>
+                                    <td>{{total.liability}}</td>
                                 </tr>
                                 </tbody>
                             </table>

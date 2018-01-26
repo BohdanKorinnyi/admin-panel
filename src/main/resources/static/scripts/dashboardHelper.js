@@ -3,21 +3,23 @@ function tableRow(month, values) {
     var spent = getDataByMonth(month, values[1].data);
     var paid = getDataArrayByMonth(month, values[2].data);
     var bonus = getDataByMonth(month, values[3].data);
+    var paidTotal = calculatePaid(paid);
     return {
         month: month,
         revenue: revenue,
         spent: spent,
         bonus: bonus,
         paid: paid,
-        paidTotal: calculatePaid(paid),
-        profit: (revenue - spent).toFixed(2)
+        paidTotal: paidTotal,
+        profit: (revenue - spent).toFixed(2),
+        liability: (bonus - paidTotal).toFixed(2)
     };
 }
 
 function calculatePaid(payments) {
     var result = 0;
     payments.map(function (value) {
-
+        result += value;
     });
     return result;
 }
@@ -36,8 +38,8 @@ function getDataArrayByMonth(month, data) {
     var monthValue = [];
     if (Array.isArray(data)) {
         data.map(function (value) {
-            if (value.date === month) {
-                monthValue.push(value.value);
+            if (value.month === month) {
+                monthValue.push(value.sum);
             }
         });
     }

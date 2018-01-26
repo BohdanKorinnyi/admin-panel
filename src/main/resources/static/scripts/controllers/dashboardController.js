@@ -1,4 +1,5 @@
 Application.controller('dashboardController', function ($scope, $http, $q) {
+    $scope.selectedYear = new Date().getFullYear();
     $scope.chartData = [];
     $scope.chartDateData = [];
     $scope.chartRevData = [];
@@ -18,17 +19,26 @@ Application.controller('dashboardController', function ($scope, $http, $q) {
     $scope.profitCompleted = '';
 
     $scope.fillTable = function () {
-        var revenue = $http.get('/postback/year/2017');
-        var spent = $http.get('/spent/year/2017');
-        var payment = $http.get('/payment/year/2017');
-        var bonus = $http.get('/payroll/bonus/year/2017');
+        var revenue = $http.get('/postback/year/' + $scope.selectedYear);
+        var spent = $http.get('/spent/year/' + $scope.selectedYear);
+        var payment = $http.get('/payment/year/' + $scope.selectedYear);
+        var bonus = $http.get('/payroll/bonus/year/' + $scope.selectedYear);
 
         $scope.result = [];
         $q.all([revenue, spent, payment, bonus]).then(function (values) {
             getMonths().map(function (month) {
                 $scope.result.push(tableRow(month, values));
             });
-            console.log($scope.result);
+            $scope.total = {
+                liability: 0,
+                bonus: 0,
+                paidTotal: 0
+            };
+            $scope.result.map(function (value) {
+                $scope.total.liability += parseFloat(value.liability);
+                $scope.total.bonus += parseFloat(value.bonus);
+                $scope.total.paidTotal += parseFloat(value.paidTotal);
+            });
         });
     };
 
