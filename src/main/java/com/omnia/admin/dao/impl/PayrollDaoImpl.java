@@ -38,7 +38,7 @@ public class PayrollDaoImpl implements PayrollDao {
     @Override
     public List<Payroll> getPayrollsByBuyerAndYear(int buyerId, int year) {
         return jdbcTemplate.query("SELECT " +
-                "  payroll.sum             AS 'sum', " +
+                "  payroll.sum             AS 'value', " +
                 "  currency.code           AS 'currency', " +
                 "  monthname(payroll.date) AS 'month' " +
                 "FROM payroll " +

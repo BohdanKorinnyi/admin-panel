@@ -14,6 +14,7 @@ public class Payroll {
     private String description;
     private Integer type;
     private Float sum;
+    private Float value;
     private Integer currencyId;
     private String currency;
     private String month;

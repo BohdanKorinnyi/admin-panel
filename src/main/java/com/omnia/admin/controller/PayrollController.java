@@ -21,7 +21,7 @@ public class PayrollController {
 
     private final PayrollService payrollService;
 
-    @GetMapping("year/{year}")
+    @GetMapping("bonus/year/{year}")
     public ResponseEntity getPayrollByBuyerAndYear(HttpServletRequest request, @PathVariable int year) {
         return ResponseEntity.ok(payrollService.getPayrollsByBuyerAndYear(UserPrincipalUtils.getBuyerId(request), year));
     }

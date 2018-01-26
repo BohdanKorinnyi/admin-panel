@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping("dashboard")
 @AllArgsConstructor
+@RequestMapping("dashboard")
 public class DashboardController {
     private final DashboardService dashboardService;
 

@@ -1,5 +1,4 @@
-Application.controller('dashboardController', function ($scope, $http) {
-    $scope.monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+Application.controller('dashboardController', function ($scope, $http, $q) {
     $scope.chartData = [];
     $scope.chartDateData = [];
     $scope.chartRevData = [];
@@ -17,6 +16,68 @@ Application.controller('dashboardController', function ($scope, $http) {
     $scope.profit = '';
     $scope.revenueCompleted = '';
     $scope.profitCompleted = '';
+
+    $scope.fillTable = function () {
+        var revenue = $http.get('/postback/year/2017');
+        var spent = $http.get('/spent/year/2017');
+        var payment = $http.get('/payment/year/2017');
+        var bonus = $http.get('/payroll/bonus/year/2017');
+
+        $scope.result = [];
+        $q.all([revenue, spent, payment, bonus]).then(function (values) {
+            getMonths().map(function (month) {
+                $scope.result.push(tableRow(month, values));
+            });
+            console.log($scope.result);
+        });
+    };
+
+    function tableRow(month, values) {
+        var revenue = getDataByMonth(month, values[0].data);
+        var spent = getDataByMonth(month, values[1].data);
+        var paid = getDataArrayByMonth(month, values[2].data);
+        var bonus = getDataByMonth(month, values[3].data);
+        return {
+            month: month,
+            revenue: revenue,
+            spent: spent,
+            bonus: bonus,
+            paid: paid,
+            paidTotal: calculatePaid(paid),
+            profit: (revenue - spent).toFixed(2)
+        };
+    }
+
+    function calculatePaid(payments) {
+        var result = 0;
+        payments.map(function (value) {
+
+        });
+        return result;
+    }
+
+    function getDataByMonth(month, data) {
+        var monthValue = 0;
+        data.map(function (value) {
+            if (value.date === month) {
+                monthValue = value.value;
+            }
+        });
+        return monthValue;
+    }
+
+    function getDataArrayByMonth(month, data) {
+        var monthValue = [];
+        if (Array.isArray(data)) {
+            data.map(function (value) {
+                if (value.date === month) {
+                    monthValue.push(value.value);
+                }
+            });
+        }
+        return monthValue;
+    }
+
     $scope.initData = function () {
         $http.get('/dashboard').then(function success(response) {
             $scope.payroll = response.data.payroll;
