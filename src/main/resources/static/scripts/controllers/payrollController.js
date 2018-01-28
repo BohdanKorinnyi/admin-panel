@@ -47,14 +47,14 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.addPayroll = function () {
         $scope.addedPayrolls.push({
-            buyerId: null, date: formatDate(new Date()), type: null,
+            buyerId: null, date: formatViewDate(new Date()), type: null,
             sum: null, currencyId: null, description: null
         });
     };
 
     $scope.formatAddedPayrollsDate = function () {
         for(var i = 0; i < $scope.addedPayrolls.length; i++){
-            $scope.addedPayrolls[i].date = formatDate($scope.addedPayrolls[i].date._d);
+            $scope.addedPayrolls[i].date = formatViewDate($scope.addedPayrolls[i].date._d);
         }
     };
 
@@ -119,7 +119,7 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.clickRow = function (payroll) {
         $scope.selectedPayrollItem = payroll;
-        $scope.selectedDate = formatDate(payroll.date);
+        $scope.selectedDate = formatViewDate(payroll.date);
         $scope.selectedSum = payroll.sum;
         if (payroll.type === 0) {
             $scope.selectedTypeValue = 'Accrual';
@@ -153,7 +153,7 @@ Application.controller('payrollController', function ($scope, $http) {
         params.id = $scope.selectedPayrollItem.id;
         params.description = $scope.selectedDescriptionValue;
 
-        params.date = formatDate($scope.selectedDate);
+        params.date = formatViewDate($scope.selectedDate);
         params.sum = $scope.selectedSum;
 
         if ($scope.selectedTypeValue === 'Accrual') {
@@ -219,15 +219,7 @@ Application.controller('payrollController', function ($scope, $http) {
     };
 
     $scope.formatViewDate = function (date) {
-        var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
-
-        return [day, month, year].join('-');
+        return formatViewDate(date);
     };
 });
 
@@ -259,16 +251,4 @@ function notify(icon, message, type) {
             align: 'right'
         }
     });
-}
-
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
 }
