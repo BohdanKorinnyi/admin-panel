@@ -218,7 +218,11 @@
                                 </thead>
                                 <tbody ng-show="result.length === 0">
                                     <tr style="text-align: center; vertical-align: middle">
-                                        <td colspan="7">No data</td>
+                                        <td colspan="7">
+                                            <div class="loader" style="text-align: center;"
+                                                 ng-show="showLoader"></div>
+                                        </td>
+                                        <td colspan="7" ng-show="!showLoader">No data</td>
                                     </tr>
                                 </tbody>
                                 <tbody ng-show="result.length !== 0">

@@ -17,6 +17,7 @@ Application.controller('dashboardController', function ($scope, $http, $q) {
     $scope.profit = '';
     $scope.revenueCompleted = '';
     $scope.profitCompleted = '';
+    $scope.showLoader = false;
 
     $scope.fillTable = function () {
         var revenue = $http.get('/postback/year/' + $scope.selectedYear);
@@ -40,6 +41,8 @@ Application.controller('dashboardController', function ($scope, $http, $q) {
                 $scope.total.paidTotal += parseFloat(value.paidTotal);
             });
         });
+
+        $scope.showLoader = true;
     };
 
     $scope.initData = function () {
