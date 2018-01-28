@@ -17,6 +17,7 @@ Application.controller('dashboardController', function ($scope, $http, $q) {
     $scope.profit = '';
     $scope.revenueCompleted = '';
     $scope.profitCompleted = '';
+    $scope.showLoader = false;
 
     $scope.fillTable = function () {
         var revenue = $http.get('/postback/year/' + $scope.selectedYear);
@@ -40,6 +41,8 @@ Application.controller('dashboardController', function ($scope, $http, $q) {
                 $scope.total.paidTotal += parseFloat(value.paidTotal);
             });
         });
+
+        $scope.showLoader = true;
     };
 
     $scope.initData = function () {
@@ -116,6 +119,10 @@ Application.controller('dashboardController', function ($scope, $http, $q) {
         }, function fail() {
             notify('ti-alert', 'Error occurred during loading dashboard chart info', 'danger');
         });
+    };
+
+    $scope.formatViewDate = function (date) {
+        return formatViewDate(date);
     };
 });
 
