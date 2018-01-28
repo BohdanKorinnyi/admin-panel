@@ -26,11 +26,11 @@ public class PayrollDaoImpl implements PayrollDao {
 
     private static final Set<String> SORTED_PAYROLL_COLUMNS = ImmutableSet.of("date", "buyer_id");
     private static final String ORDER_BY = " ORDER BY %s %s";
-    private static final String SELECT_PAYROLLS = "SELECT * FROM payroll ";
-    private static final String SELECT_COUNT_PAYROLLS = "SELECT COUNT(*) FROM payroll";
-    private static final String UPDATE_PAYROLL = "UPDATE payroll SET buyer_id = ?, date = ?, description = ?, type = ?, sum = ?, currency_id = ? WHERE id = ?;";
-    private static final String INSERT_PAYROLL = "INSERT INTO payroll (buyer_id, date, description, type, sum, currency_id) VALUES (?, ?, ?, ?, ?, ?);";
-    private static final String DELETE_PAYROLL = "DELETE FROM payroll WHERE id = ?";
+    private static final String SELECT_PAYROLLS = "SELECT * FROM payroll_new ";
+    private static final String SELECT_COUNT_PAYROLLS = "SELECT COUNT(*) FROM payroll_new";
+    private static final String UPDATE_PAYROLL = "UPDATE payroll_new SET buyer_id = ?, date = ?, description = ?, type_id = ?, sum = ?, currency_id = ? WHERE id = ?;";
+    private static final String INSERT_PAYROLL = "INSERT INTO payroll_new (buyer_id, date, description, type_id, sum, currency_id) VALUES (?, ?, ?, ?, ?, ?);";
+    private static final String DELETE_PAYROLL = "DELETE FROM payroll_new WHERE id = ?";
     private static final String SELECT_PAYROLL_DESCRIPTION = "SELECT name FROM payroll_description";
 
     private final JdbcTemplate jdbcTemplate;
@@ -38,15 +38,15 @@ public class PayrollDaoImpl implements PayrollDao {
     @Override
     public List<Payroll> getPayrollsByBuyerAndYear(int buyerId, int year) {
         return jdbcTemplate.query("SELECT " +
-                "  payroll.sum             AS 'value', " +
+                "  payroll_new.sum             AS 'value', " +
                 "  currency.code           AS 'currency', " +
-                "  monthname(payroll.date) AS 'month' " +
-                "FROM payroll " +
-                "  INNER JOIN payroll_type ON payroll_type.id = payroll.type " +
-                "  LEFT JOIN currency ON payroll.currency_id = currency.id " +
-                "WHERE payroll_type.type = 'bonus' AND payroll.buyer_id = ? AND year(payroll.date) = ? " +
-                "GROUP BY month(payroll.date) " +
-                "ORDER BY month(payroll.date)", BeanPropertyRowMapper.newInstance(Payroll.class), buyerId, year);
+                "  monthname(payroll_new.date) AS 'month' " +
+                "FROM payroll_new " +
+                "  INNER JOIN payroll_type ON payroll_type.id = payroll_new.type_id " +
+                "  LEFT JOIN currency ON payroll_new.currency_id = currency.id " +
+                "WHERE payroll_type.type = 'bonus' AND payroll_new.buyer_id = ? AND year(payroll_new.date) = ? " +
+                "GROUP BY month(payroll_new.date) " +
+                "ORDER BY month(payroll_new.date)", BeanPropertyRowMapper.newInstance(Payroll.class), buyerId, year);
     }
 
     @Override
