@@ -19,7 +19,7 @@ function tableRow(month, values) {
 function calculatePaid(payments) {
     var result = 0;
     payments.map(function (value) {
-        result += value;
+        result += value.sum;
     });
     return result;
 }
@@ -39,7 +39,7 @@ function getDataArrayByMonth(month, data) {
     if (Array.isArray(data)) {
         data.map(function (value) {
             if (value.month === month) {
-                monthValue.push(value.sum);
+                monthValue.push(value);
             }
         });
     }

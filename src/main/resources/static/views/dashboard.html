@@ -180,7 +180,7 @@
                                     <input type="number" class="form-control white-input-no-border"
                                            ng-model="selectedYear"
                                            ng-change="fillTable();"
-                                           style="width: 60%; margin-left: 50%;position: relative; z-index: 10000"/>
+                                           style="width: 55%; margin-left: 50%;position: relative; z-index: 10000"/>
                                 </div>
                             </form>
                         </div>
@@ -216,18 +216,23 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr style="text-align: center; vertical-align: middle" ng-show="result.length == 0">
-                                    <td colspan="7">No data</td>
-                                </tr>
+                                <tbody ng-show="result.length === 0">
+                                    <tr style="text-align: center; vertical-align: middle">
+                                        <td colspan="7">No data</td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-show="result.length !== 0">
                                 <tr style="text-align: center; vertical-align: middle" ng-repeat="r in result" ng-show="result.length != 0">
                                     <td>{{r.month}}</td>
                                     <td>{{r.revenue}}</td>
                                     <td>{{r.spent}}</td>
                                     <td>{{r.profit}}</td>
                                     <td>{{r.bonus}}</td>
-                                    <td>{{r.paidTotal}}</td>
-                                    <td>{{r.liability}}</td>
+                                    <td >
+                                        <p>350 USD 10.01.2018</p>
+                                        <p>150 USD 10.01.2018</p>
+                                    </td>
+                                    <td ng-repeat-end="">{{r.liability}}</td>
                                 </tr>
                                 <tr style="text-align: center; vertical-align: middle">
                                     <td>Total</td>
