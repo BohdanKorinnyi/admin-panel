@@ -234,7 +234,7 @@
                                     <td>{{r.bonus}}</td>
                                     <td>
                                         <p ng-repeat="p in r.paid" style="font-size: 12px; margin-bottom: 0">
-                                            {{p.sum}} {{p.code}} {{p.date}}
+                                            {{p.sum}} {{p.code}} {{formatViewDate(p.date)}}
                                         </p>
                                     </td>
                                     <td>{{r.liability}}</td>
