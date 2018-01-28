@@ -228,11 +228,12 @@
                                     <td>{{r.spent}}</td>
                                     <td>{{r.profit}}</td>
                                     <td>{{r.bonus}}</td>
-                                    <td >
-                                        <p>350 USD 10.01.2018</p>
-                                        <p>150 USD 10.01.2018</p>
+                                    <td>
+                                        <p ng-repeat="p in r.paid">
+                                            {{p.sum}} {{p.code}} {{p.date}}
+                                        </p>
                                     </td>
-                                    <td ng-repeat-end="">{{r.liability}}</td>
+                                    <td>{{r.liability}}</td>
                                 </tr>
                                 <tr style="text-align: center; vertical-align: middle">
                                     <td>Total</td>
