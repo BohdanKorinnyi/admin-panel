@@ -1,6 +1,6 @@
 'use strict';
 
-Application.controller('postbackController', function ($scope, $http, dateFactory) {
+Application.controller('postbackController', function ($scope, $http, transferService) {
     $scope.postbacks = [];
     $scope.sortingDetails = {};
     $scope.selectedPage = 1;
@@ -76,15 +76,17 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
         }
     };
 
-    $scope.utcValues = {"UTC": "utc",
-        "UTC+1":"utc+1","UTC+2":"utc+2","UTC+3":"utc+3",
-        "UTC+4":"utc+4","UTC+5":"utc+5","UTC+6":"utc+6","UTC+7":"utc+7",
-        "UTC+8":"utc+8","UTC+9":"utc+9",
-        "UTC+10":"utc+10","UTC+11":"utc+11","UTC+12":"utc+12",
-        "UTC-1":"utc-1","UTC-2":"utc-2",
-        "UTC-3":"utc-3","UTC-4":"utc-4","UTC-5":"utc-5",
-        "UTC-6":"utc-6","UTC-7":"utc-7","UTC-8":"utc-8","UTC-9":"utc-9",
-        "UTC-10":"utc-10","UTC-11":"utc-11","UTC-12":"utc-12",};
+    $scope.utcValues = {
+        "UTC": "utc",
+        "UTC+1": "utc+1", "UTC+2": "utc+2", "UTC+3": "utc+3",
+        "UTC+4": "utc+4", "UTC+5": "utc+5", "UTC+6": "utc+6", "UTC+7": "utc+7",
+        "UTC+8": "utc+8", "UTC+9": "utc+9",
+        "UTC+10": "utc+10", "UTC+11": "utc+11", "UTC+12": "utc+12",
+        "UTC-1": "utc-1", "UTC-2": "utc-2",
+        "UTC-3": "utc-3", "UTC-4": "utc-4", "UTC-5": "utc-5",
+        "UTC-6": "utc-6", "UTC-7": "utc-7", "UTC-8": "utc-8", "UTC-9": "utc-9",
+        "UTC-10": "utc-10", "UTC-11": "utc-11", "UTC-12": "utc-12",
+    };
 
     $scope.selectedUtc = "utc";
 
@@ -92,6 +94,16 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
 
     $scope.export = function () {
         notify('ti-alert', 'Postback export in development', 'info');
+    };
+
+    $scope.updateFilterByCurrentMonth = function () {
+        var currentDate = new Date();
+        $scope.dpFromDate = formatDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+        $scope.dpToDate = formatDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 29));
+        $scope.dt = {
+            startDate: $scope.dpFromDate,
+            endDate: $scope.dpToDate
+        };
     };
 
     $scope.getPostbackId = function (postbackId) {
@@ -203,8 +215,16 @@ Application.controller('postbackController', function ($scope, $http, dateFactor
         parameters.size = $scope.selectedSize;
         parameters['filter'] = {};
 
-        parameters.filter['from'] = formatDate($scope.dpFromDate);
-        parameters.filter['to'] = formatDate($scope.dpToDate);
+        if(transferService.getParam() === null){
+            parameters.filter['from'] = formatDate($scope.dpFromDate);
+            parameters.filter['to'] = formatDate($scope.dpToDate);
+        }
+        else{
+            $scope.updateFilterByCurrentMonth();
+            parameters.filter['from'] = formatDate($scope.dpFromDate);
+            parameters.filter['to'] = formatDate($scope.dpToDate);
+            transferService.setParam(null);
+        }
 
         $scope.selectedAdvertiserValue = getSelectedValues($scope.selectedAdvertiserNames, $scope.advertiserNames);
         $scope.selectedBuyerValue = getSelectedValues($scope.selectedBuyerNames, $scope.buyerNames);

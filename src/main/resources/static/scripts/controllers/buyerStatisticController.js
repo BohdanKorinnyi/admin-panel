@@ -1,6 +1,6 @@
 'use strict';
 
-Application.controller('buyerStatisticController', function ($scope, $http, dateFactory) {
+Application.controller('buyerStatisticController', function ($scope, $http, transferService) {
     $scope.buyerNames = [];
     $scope.selectedBuyerNames = [];
     $scope.types = [];
@@ -53,6 +53,17 @@ Application.controller('buyerStatisticController', function ($scope, $http, date
         return [year, month, day].join('-');
     }
 
+    $scope.updateDateFilterByCurrentMonth = function () {
+        var currentDate = new Date();
+        var from = formatDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+        var to = formatDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 29));
+
+        $scope.dt = {
+            startDate: from,
+            endDate: to
+        };
+    };
+
     $scope.checkRole = function () {
         var request = new XMLHttpRequest();
         request.open('GET', '/user/me', false);
@@ -68,9 +79,15 @@ Application.controller('buyerStatisticController', function ($scope, $http, date
         $scope.buyerCosts = [];
         $scope.showBuyerCostsLoader = true;
 
-        var validDate = $scope.validateDate();
-        var from = validDate.from;
-        var to = validDate.to;
+        if(transferService.getParam() === null){
+            var validDate = $scope.validateDate();
+            var from = validDate.from;
+            var to = validDate.to;
+        }
+        else{
+            $scope.updateDateFilterByCurrentMonth();
+            transferService.setParam(null);
+        }
 
         var url = '/buyer/spent/report?from=' + from + '&to=' + to
             + "&sources=" + $scope.selectedTypes + "&buyerIds=" + $scope.selectedBuyerNames;

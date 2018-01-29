@@ -1,4 +1,4 @@
-Application.controller("buyerHomeController", function ($scope, $http) {
+Application.controller("buyerHomeController", function ($scope, $http, $location, transferService) {
 
     $scope.typeValues = [
         {'name': 'Accrual', 'value': 0},
@@ -20,6 +20,19 @@ Application.controller("buyerHomeController", function ($scope, $http) {
     $scope.buyerOptions = [];
     $scope.currencyOptions = [];
 
+    $scope.toSpentByBuyer = function () {
+        transferService.setParam(1);
+        $location.path("/buyerStatistic");
+    };
+
+    $scope.toPostbackReport = function () {
+        transferService.setParam(1);
+        $location.path("/postback");
+    };
+
+    $scope.toRevSpent = function () {
+        $location.path("/sources");
+    };
 
     $scope.changeOrder = function () {
         if ($scope.sortReverse === '') {

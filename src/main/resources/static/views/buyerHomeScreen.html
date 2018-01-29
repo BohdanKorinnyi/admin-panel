@@ -37,8 +37,10 @@
                     </div>
                     <div class="card-footer">
                         <hr class="card-footer-hr"/>
-                        <div class="stats">
-                            <i class="ti-calendar"></i> Current month
+                        <div class="stats form-inline">
+                            <i class="ti-calendar form-group"></i>
+                            <p class="text-red form-group">Current month</p>
+                            <div class="pull-right" ng-click="toPostbackReport();">more</div>
                         </div>
                     </div>
                 </div>
@@ -62,8 +64,9 @@
                     </div>
                     <div class="card-footer">
                         <hr class="card-footer-hr"/>
-                        <div class="stats">
-                            <i class="ti-calendar"></i> Current month
+                        <div class="stats form-inline">
+                            <i class="ti-calendar form-group"></i>
+                            <p class="text-red form-group">Current month</p>
                         </div>
                     </div>
                 </div>
@@ -87,8 +90,9 @@
                     </div>
                     <div class="card-footer">
                         <hr class="card-footer-hr"/>
-                        <div class="stats">
-                            <i class="ti-calendar"></i> Current month
+                        <div class="stats form-inline">
+                            <i class="ti-calendar form-group"></i>
+                            <p class="text-red form-group">Current month</p>
                         </div>
                     </div>
                 </div>
@@ -112,6 +116,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <hr class="card-footer-hr"/>
+                        <div class="stats text-right">
+                            <div ng-click="toSpentByBuyer();">more</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
@@ -129,6 +139,12 @@
                                     $ {{profit}}
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <hr class="card-footer-hr"/>
+                        <div class="stats text-right">
+                            <div ng-click="toRevSpent();">more</div>
                         </div>
                     </div>
                 </div>
