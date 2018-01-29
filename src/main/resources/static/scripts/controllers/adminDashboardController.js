@@ -45,7 +45,7 @@ Application.controller('adminDashboardController', function ($scope, $http, date
     };
     $scope.bigChartSelectedYear = "thisYear";
 
-    $scope.selectedDate = 'allTime';
+    $scope.selectedDate = 'thisMonth';
     $scope.from = '';
     $scope.to = '';
 
