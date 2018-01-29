@@ -56,10 +56,10 @@ Application.controller('adminDashboardController', function ($scope, $http, date
     };
 
     $scope.setCurrentMonth = function (){
-        var someDays = 10;
+        var someDays = 1;
         var currentDate = new Date();
         currentDate.setDate(currentDate.getDate()+ someDays);
-        var mm = currentDate.getMonth() + 1;
+        var mm = currentDate.getMonth()+1;
         if(mm < 10){
             mm = "0" + mm;
         }
