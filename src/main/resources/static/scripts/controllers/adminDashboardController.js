@@ -68,6 +68,9 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         $scope.bigChartSelectedMonth = mm;
     };
 
+    $scope.toFixedView = function (value) {
+        return value.toFixed(2);
+    };
 
     $scope.initAdminDashboardData = function () {
         $scope.revTotal = 0;
