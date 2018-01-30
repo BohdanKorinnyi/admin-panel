@@ -117,12 +117,11 @@
                                     <div class="form-group"
                                          style="margin-right:-3px;margin-bottom: 3px; margin-left: 5px;">
                                         <select class="selectpicker" multiple
-                                                data-style="btn-info btn-fill btn-block"
+                                                data-style="btn-info btn-fill btn-block btn-sm"
                                                 data-size="5"
                                                 title="Advertisers"
                                                 data-header="Advertisers"
-                                                ng-model="selectedAdv"
-                                                style="width: 130%;margin-left: 5px;">
+                                                ng-model="selectedAdv">
                                             <option class="small-font" ng-repeat="a in advNames" data-select-watcher
                                                     data-last="{{$last}}" value="{{a.id}}">{{a.name}}
                                             </option>

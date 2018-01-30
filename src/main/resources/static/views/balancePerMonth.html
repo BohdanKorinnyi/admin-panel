@@ -102,17 +102,17 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="pull-right">
-                                <button class="btn btn-success btn-md btn-fill btn-sm btn-in-header"
+                                <button class="btn btn-facebook btn-md btn-fill btn-sm btn-in-header"
                                     ng-click="go('/advertiserBalance')">
                                     Total
                                 </button>
-                                <button class="btn btn-facebook btn-md btn-fill btn-sm btn-in-header"
+                                <button class="btn btn-info btn-md btn-fill btn-sm btn-in-header"
                                         data-toggle="modal"
                                         data-target="#addIncomeModal"
                                         ng-click="getAccounts();">
                                     Add
                                 </button>
-                                <button class="btn btn-facebook btn-md btn-fill btn-sm btn-in-header"
+                                <button class="btn btn-google btn-md btn-fill btn-sm btn-in-header"
                                         data-toggle="modal"
                                         data-target="#moreInfoModal">
                                     More
@@ -121,12 +121,11 @@
                             <form class="form-inline">
                                 <div class="form-group">
                                     <select class="selectpicker" multiple
-                                            data-style="btn-info btn-fill btn-block"
+                                            data-style="btn-info btn-fill btn-block btn-sm"
                                             data-size="5"
                                             title="Advertisers"
                                             data-header="Advertisers"
-                                            ng-model="selectedAdv"
-                                            style="width: 130%;">
+                                            ng-model="selectedAdv">
                                         <option class="small-font" ng-repeat="a in advNames" data-select-watcher
                                                 data-last="{{$last}}" value="{{a.id}}">{{a.name}}
                                         </option>
