@@ -24,11 +24,11 @@
                                 <form class="form-inline">
 
                                     <div class="form-group" ng-init="getBuyers();"
-                                         style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
+                                         style="margin-right:5px;margin-left: 10px;">
                                         <select ng-hide="hideBuyerSelect" class="selectpicker" multiple
                                                 data-style="btn-info btn-fill btn-block btn-sm"
                                                 data-size="5" title="Buyer" data-header="Buyers"
-                                                ng-model="selectedBuyerNames" style="margin-bottom: 10px;margin-left: 5px;">
+                                                ng-model="selectedBuyerNames" style="margin-left: 5px;">
                                             <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
                                                     data-last="{{$last}}" value="{{b.id}}">{{b.name}}
                                             </option>
@@ -40,7 +40,7 @@
                                                type="text" ng-model="dt"
                                                options="dpOptions"
                                                placeholder="Click to filter by date..."
-                                               style="width: 110%; margin-bottom: 8%;"/>
+                                               style="width: 110%;"/>
                                     </div>
                                 </form>
                             </div>
