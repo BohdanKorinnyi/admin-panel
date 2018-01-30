@@ -26,6 +26,7 @@ Application.controller('totalController', function ($scope, $http) {
         $scope.showLoader = true;
         $scope.headers = generateTableHeaders($scope.selectedMonth);
         $scope.result = [];
+        $scope.result2 = [];
         $scope.buyerAndTotalData = [];
         var month = getMonthNumber($scope.selectedMonth);
         $scope.revenue = 0;
@@ -33,8 +34,8 @@ Application.controller('totalController', function ($scope, $http) {
         $scope.profit = 0;
         $http.get("/finance/total?from=" + $scope.selectedYear + "-" + month + "-01&to=" + $scope.selectedYear + "-" + month + "-31")
             .then(function success(response) {
-                $scope.showLoader = false;
                 var data = response.data;
+                $scope.showLoader = false;
 
                 Object.keys(data).map(function (value) {
                     for (var i = 0; i < data[value].length; i++) {

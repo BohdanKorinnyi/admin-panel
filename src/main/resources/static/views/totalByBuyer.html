@@ -120,8 +120,7 @@
                     </div>
                     <h4 class="card-title">Summary</h4>
                 </div>
-                <div class="loader" ng-show="showLoader"></div>
-                <div class="card-content" ng-show="!showLoader && result.length !==0">
+                <div class="card-content">
                     <div style="overflow-y: auto;width: 100%;">
                         <table class="table fixed-cols" id="totalTable">
                             <thead>
@@ -139,6 +138,14 @@
                                 >{{column}}</td>
                             </tr>
                             </tbody>
+                            <tfoot>
+                            <tr ng-show="showLoader">
+                                <td colspan="10">
+                                    <div class="loader" style="text-align: center;" ng-show="showLoader"></div>
+                                    <div style="text-align: center;" ng-show="result2.length === 0 && !showLoader">No data</div>
+                                </td>
+                            </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
