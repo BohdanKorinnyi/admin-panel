@@ -19,10 +19,10 @@
             <div class="card">
                 <div class="card-header">
                         <div class="pull-right">
-                            <button class="btn btn-success btn-md btn-fill" ng-click="loadCosts();" style="z-index: 10000; position: relative">
+                            <button class="btn btn-success btn-sm btn-fill" ng-click="loadCosts();" style="z-index: 10000; position: relative">
                                 Apply
                             </button>
-                            <button class="btn btn-primary btn-md btn-fill" ng-click="export();" style="z-index: 10000; position: relative">
+                            <button class="btn btn-primary btn-sm btn-fill" ng-click="export();" style="z-index: 10000; position: relative">
                                 Export
                             </button>
                         </div>
@@ -37,12 +37,12 @@
                                          style="margin-right:-3px;margin-bottom: 3px; margin-left: 5px;">
                                         <select ng-hide="hideBuyerSelect"
                                                 class="selectpicker" multiple
-                                                data-style="btn-info btn-fill btn-block"
+                                                data-style="btn-info btn-fill btn-block btn-sm"
                                                 data-size="5"
                                                 title="Buyer"
                                                 data-header="Buyers"
                                                 ng-model="selectedBuyerNames"
-                                                style="width: 130%;margin-left: 5px;">
+                                                style="margin-bottom: 5px;margin-left: 5px;">
                                             <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
                                                     data-last="{{$last}}" value="{{b.id}}">{{b.name}}
                                             </option>
@@ -52,13 +52,13 @@
                                     <div class="form-group" ng-init="getTypes();"
                                          style="margin-bottom: 3px; margin-left: 5px; margin-right: 5px;">
                                         <select class="selectpicker" multiple
-                                                data-style="btn-info btn-fill btn-block"
+                                                data-style="btn-info btn-fill btn-block btn-sm"
                                                 data-size="5"
                                                 data-header="Types"
                                                 selected-header="options selected"
                                                 title="Types"
                                                 ng-model="selectedTypes"
-                                                style="width: 120%;">
+                                                style="margin-bottom: 5px;">
                                             <option class="small-font" ng-repeat="t in types"
                                                     data-select-watcher
                                                     data-last="{{$last}}" value="{{t.name}}">{{t.name}}

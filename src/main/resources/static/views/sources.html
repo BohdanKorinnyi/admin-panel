@@ -26,9 +26,9 @@
                                     <div class="form-group" ng-init="getBuyers();"
                                          style="margin-right:5px;margin-bottom: 3px; margin-left: 10px;">
                                         <select ng-hide="hideBuyerSelect" class="selectpicker" multiple
-                                                data-style="btn-info btn-fill btn-block"
+                                                data-style="btn-info btn-fill btn-block btn-sm"
                                                 data-size="5" title="Buyer" data-header="Buyers"
-                                                ng-model="selectedBuyerNames" style="width: 130%;margin-left: 5px;">
+                                                ng-model="selectedBuyerNames" style="margin-bottom: 10px;margin-left: 5px;">
                                             <option class="small-font" ng-repeat="b in buyerNames" data-select-watcher
                                                     data-last="{{$last}}" value="{{b.id}}">{{b.name}}
                                             </option>
@@ -48,7 +48,7 @@
                         <div class="col-md-3">
                             <div class="row">
                                 <div class="col-md-12" style="text-align: right">
-                                    <button class="btn btn-success btn-md btn-fill" ng-click="applySources();">
+                                    <button class="btn btn-success btn-sm btn-fill" ng-click="applySources();">
                                         Apply
                                     </button>
                                 </div>
