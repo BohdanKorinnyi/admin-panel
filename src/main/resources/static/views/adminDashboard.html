@@ -30,7 +30,7 @@
                                 <div class="col-xs-10">
                                     <div class="numbers">
                                         <p>Rev. Today</p>
-                                        $ {{revenueToday}}
+                                        {{revenueToday}}
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                                 <div class="col-xs-10">
                                     <div class="numbers">
                                         <p>Profit today</p>
-                                        $ {{profitToday}}
+                                        {{profitToday}}
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                 <div class="col-xs-10">
                                     <div class="numbers">
                                         <p>Rev. Yesterday</p>
-                                        $ {{revenueYesterday}}
+                                        {{revenueYesterday}}
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                 <div class="col-xs-10">
                                     <div class="numbers">
                                         <p>Profit yesterday</p>
-                                        $ {{profitYesterday}}
+                                        {{profitYesterday}}
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@
                                 <div class="col-xs-10">
                                     <div class="numbers">
                                         <p>ROI Today</p>
-                                        {{roiToday}}%
+                                        {{roiToday}}
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
                                 <div class="col-xs-10">
                                     <div class="numbers">
                                         <p>ROI Yesterday</p>
-                                        {{roiYesterday}}%
+                                        {{roiYesterday}}
                                     </div>
                                 </div>
                             </div>
@@ -264,7 +264,7 @@
                                     <td>{{item.buyer}}</td>
                                     <td>{{item.revenue}}</td>
                                     <td>{{item.spent}}</td>
-                                    <td>{{item.profit}}</td>
+                                    <td>{{toFixedView(item.profit)}}</td>
                                 </tr>
                                 </tbody>
                             </table>

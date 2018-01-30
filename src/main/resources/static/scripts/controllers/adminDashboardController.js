@@ -7,9 +7,9 @@ Application.controller('adminDashboardController', function ($scope, $http, date
     $scope.revenueYesterday = '';
     $scope.spentToday = '';
     $scope.spentYesterday = '';
-    $scope.revTotal = 0;
-    $scope.spentTotal = 0;
-    $scope.profitTotal = 0;
+    $scope.revTotal = '';
+    $scope.spentTotal = '';
+    $scope.profitTotal = '';
 
 
     $scope.monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -45,7 +45,7 @@ Application.controller('adminDashboardController', function ($scope, $http, date
     };
     $scope.bigChartSelectedYear = "thisYear";
 
-    $scope.selectedDate = 'allTime';
+    $scope.selectedDate = 'thisMonth';
     $scope.from = '';
     $scope.to = '';
 
@@ -56,10 +56,10 @@ Application.controller('adminDashboardController', function ($scope, $http, date
     };
 
     $scope.setCurrentMonth = function (){
-        var someDays = 10;
+        var someDays = 1;
         var currentDate = new Date();
         currentDate.setDate(currentDate.getDate()+ someDays);
-        var mm = currentDate.getMonth() + 1;
+        var mm = currentDate.getMonth()+1;
         if(mm < 10){
             mm = "0" + mm;
         }
@@ -68,6 +68,9 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         $scope.bigChartSelectedMonth = mm;
     };
 
+    $scope.toFixedView = function (value) {
+        return value.toFixed(2);
+    };
 
     $scope.initAdminDashboardData = function () {
         $scope.revTotal = 0;
@@ -75,10 +78,14 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         $scope.profitTotal = 0;
 
         $scope.spentToday = 0;
-        $scope.revenueToday = 0;
         $scope.spentYesterday = 0;
-        $scope.revenueYesterday = 0;
 
+        $scope.revenueToday = "";
+        $scope.revenueYesterday = "";
+        $scope.profitToday = "";
+        $scope.profitYesterday = "";
+        $scope.roiToday = "";
+        $scope.roiYesterday = "";
 
         if ($scope.selectedDate === 'allTime') {
             var yearFrom = new Date().getFullYear();
@@ -112,9 +119,20 @@ Application.controller('adminDashboardController', function ($scope, $http, date
             $scope.profitYesterday = (parseFloat($scope.revenueYesterday) - parseFloat($scope.spentYesterday)).toFixed(2);
             $scope.roiToday = ((parseFloat($scope.spentToday) === 0 ? 0 : parseFloat($scope.profitToday) / parseFloat($scope.spentToday)) * 100).toFixed(2);
             $scope.roiYesterday = ((parseFloat($scope.spentYesterday) === 0 ? 0 : parseFloat($scope.profitYesterday) / parseFloat($scope.spentYesterday)) * 100).toFixed(2);
+
+            $scope.addDollarSign();
         }, function fail() {
             notify('ti-alert', 'Error occurred during loading admin dashboard info', 'danger');
         });
+    };
+
+    $scope.addDollarSign = function () {
+        $scope.revenueToday = "$" + $scope.revenueToday;
+        $scope.revenueYesterday = "$" + $scope.revenueYesterday;
+        $scope.profitToday = "$" + $scope.profitToday;
+        $scope.profitYesterday = "$" + $scope.profitYesterday;
+        $scope.roiToday = $scope.roiToday + "%";
+        $scope.roiYesterday = $scope.roiYesterday + "%";
     };
 
     $scope.getAdminDashboardChartData = function () {
