@@ -223,7 +223,7 @@
                             <table class="table">
                                 <thead>
                                 <tr style="text-align: center; vertical-align: middle">
-                                    <th>
+                                    <th class="to-left-side">
                                         <a href="">Buyer</a>
                                     </th>
 
@@ -242,8 +242,15 @@
                                 </thead>
 
                                 <tbody>
+                                <tr style="text-align: center; vertical-align: middle"
+                                    ng-repeat="item in adminDashboardData">
+                                    <td class="to-left-side">{{item.buyer}}</td>
+                                    <td>{{item.revenue}}</td>
+                                    <td>{{item.spent}}</td>
+                                    <td>{{toFixedView(item.profit)}}</td>
+                                </tr>
                                 <tr style="text-align: center; vertical-align: middle">
-                                    <td>
+                                    <td class="to-left-side">
                                         <a href="">Total:</a>
                                     </td>
 
@@ -258,13 +265,6 @@
                                     <td>
                                         <a href="">{{profitTotal}}</a>
                                     </td>
-                                </tr>
-                                <tr style="text-align: center; vertical-align: middle"
-                                    ng-repeat="item in adminDashboardData">
-                                    <td>{{item.buyer}}</td>
-                                    <td>{{item.revenue}}</td>
-                                    <td>{{item.spent}}</td>
-                                    <td>{{toFixedView(item.profit)}}</td>
                                 </tr>
                                 </tbody>
                             </table>
