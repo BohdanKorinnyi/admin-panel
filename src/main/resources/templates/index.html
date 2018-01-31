@@ -5,7 +5,7 @@
     <meta charset="utf-8"/>
     <title>Omnia Digital</title>
     <link href="css/nya-bs-select.css" rel="stylesheet"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="css/font-awesome.min.css"/>
     <link href="css/angular-material.min.css" rel="stylesheet"/>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
@@ -84,13 +84,13 @@
             </div>
         </div>
         <ul class="nav">
-            <li class="selected-option">
+            <li id="el1" ng-click="setActive(1)">
                 <a href="#!home">
                     <i class="ti-home"></i>
                     <p>Home</p>
                 </a>
             </li>
-            <li class="selected-option">
+            <li id="el2">
                 <a data-toggle="collapse" data-target="#finance">
                     <i class="ti-money"></i>
                     <p>Finance
@@ -99,43 +99,43 @@
                 </a>
                 <div class="collapse" id="finance">
                     <ul class="nav">
-                        <li class="selected-option">
+                        <li id="el3" ng-click="setActive(2,3)">
                             <a href="#!payroll">
                                 <span class="sidebar-mini">P</span>
                                 <span class="sidebar-normal">Payrolls</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el4" ng-click="setActive(2,4)">
                             <a>
                                 <span class="sidebar-mini">TLF</span>
                                 <span class="sidebar-normal">Team Leader Finance</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el5" ng-click="setActive(2,5)">
                             <a>
                                 <span class="sidebar-mini">IM</span>
                                 <span class="sidebar-normal">Income management</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el6" ng-click="setActive(2,6)">
                             <a>
                                 <span class="sidebar-mini">R</span>
                                 <span class="sidebar-normal">Receivables</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el7" ng-click="setActive(2,7)">
                             <a href="#!finance/total">
                                 <span class="sidebar-mini">T</span>
                                 <span class="sidebar-normal">Total by buyer</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el8" ng-click="setActive(2,8)">
                             <a>
                                 <span class="sidebar-mini">S</span>
                                 <span class="sidebar-normal">Salary</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el9" ng-click="setActive(2,9)">
                             <a href="#!/cost/management">
                                 <span class="sidebar-mini">CM</span>
                                 <span class="sidebar-normal">Cost management</span>
@@ -144,7 +144,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="selected-option">
+            <li id="el10">
                 <a data-toggle="collapse" data-target="#buyer">
                     <i class="ti-wallet"></i>
                     <p>
@@ -154,25 +154,25 @@
                 </a>
                 <div class="collapse" id="buyer">
                     <ul class="nav">
-                        <li class="selected-option">
+                        <li id="el11" ng-click="setActive(10,11)">
                             <a href="#!buyer/payments">
                                 <span class="sidebar-mini">P</span>
                                 <span class="sidebar-normal">Payments</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el12" ng-click="setActive(10,12)">
                             <a href="#!buyer/plan">
                                 <span class="sidebar-mini">PB</span>
                                 <span class="sidebar-normal">Plan by buyer</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el13" ng-click="setActive(10,13)">
                             <a href="#!buyer/afid">
                                 <span class="sidebar-mini">AfID</span>
                                 <span class="sidebar-normal">Get AfID</span>
                             </a>
                         </li>
-                        <li>
+                        <li id="el14" ng-click="setActive(10,14)">
                             <a>
                                 <span class="sidebar-mini">PF</span>
                                 <span class="sidebar-normal">Personal finance</span>
@@ -181,7 +181,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="selected-option">
+            <li id="el15">
                 <a data-toggle="collapse" data-target="#adverts">
                     <i class="ti-id-badge"></i>
                     <p>
@@ -191,13 +191,13 @@
                 </a>
                 <div class="collapse" id="adverts">
                     <ul class="nav">
-                        <li class="selected-option">
-                            <a href="#!advertiserBalance">
+                        <li id="el16" ng-click="setActive(15,16)">
+                            <a href="#!balance/advertiser">
                                 <span class="sidebar-mini">BA</span>
                                 <span class="sidebar-normal">Balance by advertiser</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el17" ng-click="setActive(15,17)">
                             <a href="#!balance/month">
                                 <span class="sidebar-mini">BM</span>
                                 <span class="sidebar-normal">Balance per month</span>
@@ -206,7 +206,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="selected-option">
+            <li id="el18">
                 <a data-toggle="collapse" data-target="#reports">
                     <i class="ti-files"></i>
                     <p>
@@ -216,31 +216,31 @@
                 </a>
                 <div class="collapse" id="reports">
                     <ul class="nav">
-                        <li class="selected-option">
+                        <li id="el19" ng-click="setActive(18,19)">
                             <a href="#!postback">
                                 <span class="sidebar-mini">P</span>
                                 <span class="sidebar-normal">Postbacks</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el20" ng-click="setActive(18,20)">
                             <a href="#!sources">
                                 <span class="sidebar-mini">RS</span>
                                 <span class="sidebar-normal">Revenue|Spent</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el21" ng-click="setActive(18,21)">
                             <a href="#!statistic">
                                 <span class="sidebar-mini">SS</span>
                                 <span class="sidebar-normal">Spent by sources</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el22" ng-click="setActive(18,22)">
                             <a href="#!buyerStatistic">
                                 <span class="sidebar-mini">SB</span>
                                 <span class="sidebar-normal">Spent by buyer</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el23" ng-click="setActive(18,23)">
                             <a>
                                 <span class="sidebar-mini">A</span>
                                 <span class="sidebar-normal">Advertisers</span>
@@ -249,13 +249,13 @@
                     </ul>
                 </div>
             </li>
-            <li class="selected-option">
+            <li id="el24" ng-click="setActive(24)" class="active">
                 <a href="#!dashboard">
                     <i class="ti-layout"></i>
                     <p>Dashboard</p>
                 </a>
             </li>
-            <li class="selected-option">
+            <li id="el25">
                 <a data-toggle="collapse" data-target="#catalogs">
                     <i class="ti-folder"></i>
                     <p>
@@ -265,31 +265,31 @@
                 </a>
                 <div class="collapse" id="catalogs">
                     <ul class="nav">
-                        <li class="selected-option">
+                        <li id="el26" ng-click="setActive(25,26)">
                             <a>
                                 <span class="sidebar-mini">PE</span>
                                 <span class="sidebar-normal">Postbacks Edit</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el27" ng-click="setActive(25,27)">
                             <a href="#!advertiser">
                                 <span class="sidebar-mini">AS</span>
                                 <span class="sidebar-normal">Advertisers and Status</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el28" ng-click="setActive(25,28)">
                             <a href="#!buyers">
                                 <span class="sidebar-mini">BA</span>
                                 <span class="sidebar-normal">Buyers and AfID</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el29" ng-click="setActive(25,29)">
                             <a>
                                 <span class="sidebar-mini">TP</span>
                                 <span class="sidebar-normal">Trackers and prefix</span>
                             </a>
                         </li>
-                        <li class="selected-option">
+                        <li id="el30" ng-click="setActive(25,30)">
                             <a>
                                 <span class="sidebar-mini">CR</span>
                                 <span class="sidebar-normal">Currency and rate</span>
@@ -300,7 +300,7 @@
             </li>
             <br/>
             <hr/>
-            <li class="selected-option">
+            <li>
                 <a href="/logout">
                     <i class="ti-share-alt"></i>
                     <p>Logout</p>

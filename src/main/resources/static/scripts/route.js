@@ -67,7 +67,7 @@ Application.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'views/adminDashboard.html',
             controller: 'adminDashboardController'
         })
-        .when('/advertiserBalance', {
+        .when('/balance/advertiser', {
             templateUrl: 'views/advertiserBalance.html',
             controller: 'advertiserBalanceController'
         })
