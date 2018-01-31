@@ -69,3 +69,15 @@ body .modal-open {
 .to-left-side{
     text-align: left!important;
 }
+
+.nav >li.selected-option > a:active{
+    font-weight: bold!important;
+    color: #122b40!important;
+    font-size: 18px!important;
+}
+
+.nav >li.selected-option > a:visited{
+    font-weight: bold!important;
+    color: #122b40!important;
+    font-size: 18px!important;
+}
