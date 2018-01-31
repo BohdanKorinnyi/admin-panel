@@ -50,7 +50,7 @@ Application.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'views/sources.html',
             controller: 'sourcesController'
         })
-        .when('/plan', {
+        .when('/buyer/plan', {
             templateUrl: 'views/planByBuyer.html',
             controller: 'planByBuyerController'
         })
@@ -71,11 +71,11 @@ Application.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'views/advertiserBalance.html',
             controller: 'advertiserBalanceController'
         })
-        .when('/getAfid', {
+        .when('/buyer/afid', {
             templateUrl: 'views/getAfid.html',
             controller: 'getAfidController'
         })
-        .when('/balancePerMonth', {
+        .when('/balance/month', {
             templateUrl: 'views/balancePerMonth.html',
             controller: 'balancePerMonthController'
         })
