@@ -75,7 +75,7 @@ Application.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'views/getAfid.html',
             controller: 'getAfidController'
         })
-        .when('/balancePerMonth', {
+        .when('/balance/month', {
             templateUrl: 'views/balancePerMonth.html',
             controller: 'balancePerMonthController'
         })

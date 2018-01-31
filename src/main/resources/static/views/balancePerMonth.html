@@ -1,4 +1,4 @@
-<div ng-controller="balancePerMonthController" class="main-panel" ng-init="initAdverts();">
+<div ng-controller="balancePerMonthController" class="main-panel" ng-init="initAdverts();getBalance();">
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -102,10 +102,6 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="pull-right">
-                                <button class="btn btn-facebook btn-md btn-fill btn-sm btn-in-header"
-                                    ng-click="go('/advertiserBalance')">
-                                    Total
-                                </button>
                                 <button class="btn btn-info btn-md btn-fill btn-sm btn-in-header"
                                         data-toggle="modal"
                                         data-target="#addIncomeModal"
@@ -116,6 +112,10 @@
                                         data-toggle="modal"
                                         data-target="#moreInfoModal">
                                     More
+                                </button>
+                                <button class="btn btn-facebook btn-md btn-fill btn-sm btn-in-header"
+                                        ng-click="go('/advertiserBalance')">
+                                    Total
                                 </button>
                             </div>
                             <form class="form-inline">
@@ -146,7 +146,7 @@
                             </form>
                         </div>
                         <div class="card-content">
-                            <div class="card-content table-responsive table-full-width">
+                            <div class="table-responsive table-full-width">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -158,14 +158,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                    <tr ng-repeat="item in balance">
+                                        <td>{{item.month}}</td>
+                                        <td>{{item.advname}}</td>
+                                        <td>{{item.revenue}} USD</td>
+                                        <td>{{item.income}}</td>
                                         <td></td>
                                     </tr>
-                                    <tr>
+                                    <tr ng-show="balance.length === 0">
                                         <td colspan="5">
                                             <div class="loader text-center" ng-show="showBalancePerMonthLoader"></div>
                                             <div class="text-center" ng-show="!showBalancePerMonthLoader">No data</div>
