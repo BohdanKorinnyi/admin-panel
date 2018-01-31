@@ -5826,7 +5826,7 @@ strong {
   opacity: 1;
 }
 .sidebar[data-active-color="warning"] .nav li.active > a {
-  color: #dd0330;
+  color: #DD0330;
   opacity: 1;
 }
 .sidebar[data-active-color="danger"] .nav li.active > a {
