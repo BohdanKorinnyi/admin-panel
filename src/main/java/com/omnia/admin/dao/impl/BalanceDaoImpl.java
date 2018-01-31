@@ -31,7 +31,7 @@ public class BalanceDaoImpl implements BalanceDao {
             "  INNER JOIN buyers ON affiliates.buyer_id = buyers.id " +
             "  INNER JOIN adverts ON adverts.advshortname = postback.advname " +
             "  INNER JOIN adv_status ON adv_status.adv_id = adverts.id " +
-            "  LEFT JOIN adverts_income ON adverts.id = adverts_income.adv_id " +
+            "  INNER JOIN adverts_income ON adverts.id = adverts_income.adv_id " +
             "WHERE (postback.duplicate != 'FULL' OR postback.duplicate IS NULL) AND " +
             "      adv_status.real_status = 'approved' AND postback.status = adv_status.name AND postback.sum != 0 " +
             "      AND month(postback.date) = :month AND year(postback.date) = :year AND " +
