@@ -55,12 +55,12 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         $scope.bigChartSelectedYear = "thisYear";
     };
 
-    $scope.setCurrentMonth = function (){
+    $scope.setCurrentMonth = function () {
         var someDays = 1;
         var currentDate = new Date();
-        currentDate.setDate(currentDate.getDate()+ someDays);
-        var mm = currentDate.getMonth()+1;
-        if(mm < 10){
+        currentDate.setDate(currentDate.getDate() + someDays);
+        var mm = currentDate.getMonth() + 1;
+        if (mm < 10) {
             mm = "0" + mm;
         }
 
@@ -76,6 +76,7 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         $scope.revTotal = 0;
         $scope.spentTotal = 0;
         $scope.profitTotal = 0;
+        $scope.roiTotal = 0;
 
         $scope.spentToday = 0;
         $scope.spentYesterday = 0;
@@ -320,6 +321,7 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         $scope.revTotal = $scope.revTotal.toFixed(2);
         $scope.spentTotal = $scope.spentTotal.toFixed(2);
         $scope.profitTotal = $scope.profitTotal.toFixed(2);
+        $scope.roiTotal = parseFloat($scope.spentTotal) === 0 ? 0.00 : ((parseFloat($scope.profitTotal) / parseFloat($scope.spentTotal)) * 100).toFixed(2);
     };
 
 
