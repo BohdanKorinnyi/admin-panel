@@ -47,13 +47,13 @@ Application.controller('payrollController', function ($scope, $http) {
 
     $scope.addPayroll = function () {
         $scope.addedPayrolls.push({
-            buyerId: null, date: formatViewDate(new Date()), type: null,
+            buyerId: null, date: moment(), periond: moment(), type: null,
             sum: null, currencyId: null, description: null
         });
     };
 
     $scope.formatAddedPayrollsDate = function () {
-        for(var i = 0; i < $scope.addedPayrolls.length; i++){
+        for (var i = 0; i < $scope.addedPayrolls.length; i++) {
             $scope.addedPayrolls[i].date = formatViewDate($scope.addedPayrolls[i].date._d);
         }
     };

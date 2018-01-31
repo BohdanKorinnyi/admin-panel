@@ -31,7 +31,8 @@
                                     ng-disabled="disableButtons" style="z-index: 10000; position: relative">
                                 Apply
                             </button>
-                            <button class="btn btn-primary btn-md btn-fill btn-sm" style="z-index: 10000; position: relative"
+                            <button class="btn btn-primary btn-md btn-fill btn-sm"
+                                    style="z-index: 10000; position: relative"
                                     ng-click="cancelClick()">
                                 Cancel
                             </button>
@@ -46,44 +47,29 @@
                                     <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
                                         <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                     </button>
-                                    <select class="form-control white-input-no-border" ng-model="p.buyerId"
-                                            style="width: 17%!important;">
+                                    <select class="form-control white-input-no-border" ng-model="p.buyerId">
                                         <option value="" disabled selected>Buyer</option>
-                                        <option ng-repeat="b in buyerOptions"
-                                                value="{{b.id}}">
-                                            {{b.name}}
-                                        </option>
+                                        <option ng-repeat="b in buyerOptions" value="{{b.id}}"> {{b.name}}</option>
                                     </select>
-                                    <input date-range-picker
-                                           class="form-control date-picker white-input-no-border"
-                                           type="text" ng-model="p.date"
-                                           options="{singleDatePicker: true}" />
-                                    <select class="form-control white-input-no-border" ng-model="p.type"
-                                            style="width: 11%!important;">
+                                    <input date-range-picker class="form-control date-picker white-input-no-border"
+                                           type="text" ng-model="p.date" options="{singleDatePicker: true}"
+                                           style="width: 12% !important;"/>
+                                    <input date-range-picker class="form-control date-picker white-input-no-border"
+                                           type="text" ng-model="p.periond" options="{singleDatePicker: true}"
+                                           style="width: 12% !important;"/>
+                                    <select class="form-control white-input-no-border" ng-model="p.type">
                                         <option value="" disabled selected>Type</option>
-                                        <option ng-repeat="t in typeValues"
-                                                value="{{t.value}}">
-                                            {{t.name}}
-                                        </option>
+                                        <option ng-repeat="t in typeValues" value="{{t.value}}">{{t.name}}</option>
                                     </select>
                                     <input type="text" class="form-control white-input-no-border" id="payrollSum"
-                                           ng-model="p.sum" placeholder="Sum"
-                                           style="width: 10%!important;"/>
-                                    <select class="form-control white-input-no-border" ng-model="p.currencyId"
-                                            style="width: 11%!important;">
+                                           ng-model="p.sum" placeholder="Sum" style="width: 100px !important;"/>
+                                    <select class="form-control white-input-no-border" ng-model="p.currencyId" style="width: 120px !important;">
                                         <option value="" disabled selected>Currency</option>
-                                        <option ng-repeat="c in currencyOptions"
-                                                value="{{c.id}}">
-                                            {{c.code}}
-                                        </option>
+                                        <option ng-repeat="c in currencyOptions" value="{{c.id}}">{{c.code}}</option>
                                     </select>
-                                    <select class="form-control white-input-no-border" ng-model="p.description"
-                                            style="width: 26%!important;">
+                                    <select class="form-control white-input-no-border" ng-model="p.description" style="width: 18% !important;">
                                         <option value="" disabled selected>Description</option>
-                                        <option ng-repeat="d in descriptionOptions"
-                                                value="{{d}}">
-                                            {{d}}
-                                        </option>
+                                        <option ng-repeat="d in descriptionOptions" value="{{d}}">{{d}}</option>
                                     </select>
                                 </div>
                             </form>

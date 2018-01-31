@@ -29,7 +29,7 @@ public class PayrollDaoImpl implements PayrollDao {
     private static final String SELECT_PAYROLLS = "SELECT * FROM payroll_new ";
     private static final String SELECT_COUNT_PAYROLLS = "SELECT COUNT(*) FROM payroll_new";
     private static final String UPDATE_PAYROLL = "UPDATE payroll_new SET buyer_id = ?, date = ?, description = ?, type_id = ?, sum = ?, currency_id = ? WHERE id = ?;";
-    private static final String INSERT_PAYROLL = "INSERT INTO payroll_new (buyer_id, date, description, type_id, sum, currency_id) VALUES (?, ?, ?, ?, ?, ?);";
+    private static final String INSERT_PAYROLL = "INSERT INTO payroll_new (buyer_id, date, description, type_id, sum, currency_id, periond) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String DELETE_PAYROLL = "DELETE FROM payroll_new WHERE id = ?";
     private static final String SELECT_PAYROLL_DESCRIPTION = "SELECT name FROM payroll_description";
 
@@ -88,6 +88,7 @@ public class PayrollDaoImpl implements PayrollDao {
                 ps.setInt(4, payrolls.get(i).getType());
                 ps.setFloat(5, payrolls.get(i).getSum());
                 ps.setInt(6, payrolls.get(i).getCurrencyId());
+                ps.setDate(7, payrolls.get(i).getPeriond());
             }
 
             @Override
