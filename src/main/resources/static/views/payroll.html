@@ -108,7 +108,7 @@
                         <h4 class="card-title">All Payrolls</h4>
                     </div>
                     <div class="card-content">
-                        <div class="card-content table-responsive table-full-width">
+                        <div class="table-responsive table-full-width">
                             <table class="table">
                                 <thead>
                                 <tr>
@@ -134,6 +134,16 @@
                                             Date
                                         </a>
                                     </th>
+                                    <th>
+                                        <a href="" ng-click="sortColumn = 'period';changeOrder();loadPayrolls();">
+                                <span ng-show="sortColumn == 'period' && sortReverse == 'ASC'"
+                                      class="fa fa-caret-up"></span>
+                                            <span ng-show="sortColumn == 'period' && sortReverse == 'DESC'"
+                                                  class="fa fa-caret-down"></span>
+                                            <span ng-show="sortColumn == 'period' && sortReverse == ''"></span>
+                                            Period
+                                        </a>
+                                    </th>
                                     <th><a>Type</a></th>
                                     <th><a>Sum</a></th>
                                     <th><a>Currency</a></th>
@@ -143,17 +153,17 @@
                                 <tbody>
                                 <tr ng-show="payrolls.length != 0" ng-repeat="item in payrolls"
                                     ng-click="clickRow(item)" data-toggle="modal" data-target="#payroll-modal">
-
                                     <td>{{$index+1}}</td>
                                     <td>{{item.bayerName}}</td>
                                     <td>{{formatViewDate(item.date)}}</td>
+                                    <td>{{formatViewDate(item.periond)}}</td>
                                     <td>{{item.typeName}}</td>
                                     <td>{{item.sum}}</td>
                                     <td>{{item.code}}</td>
                                     <td>{{item.description}}</td>
                                 </tr>
                                 <tr ng-show="payrolls.length == 0">
-                                    <td colspan="7">
+                                    <td colspan="8">
                                         <div class="loader text-center" ng-show="showPayrollsLoader"></div>
                                         <div class="text-center" ng-show="!showPayrollsLoader">No data</div>
                                     </td>
@@ -164,7 +174,7 @@
                     </div>
                     <div class="fixed-table-pagination text-center" ng-show="payrolls.length != 0">
                         <div class="pagination">
-                            <uib-pagination total-items="totalPagination" max-size="5"
+                            <uib-pagination total-items="totalPagination" max-size="3"
                                             ng-model="selectedPage" items-per-page="selectedSize">
                             </uib-pagination>
                         </div>

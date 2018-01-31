@@ -11,6 +11,7 @@ public class Payroll {
     private Long id;
     private Long buyerId;
     private Date date;
+    private Date periond;
     private String description;
     private Integer type;
     private Float sum;
