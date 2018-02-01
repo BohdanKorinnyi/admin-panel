@@ -16,228 +16,41 @@
         </div>
     </nav>
 
-    <!--<div class="content" style="margin-top: 20px">-->
-        <!--<div class="row" style="margin-left: 15px; margin-right: 15px">-->
-            <!--<div class="col-md-12">-->
-                <!--<div class="card">-->
-                    <!--<div class="card-header">-->
-                        <!--<div class="pull-right">-->
-                            <!--<button class="btn btn-info btn-md btn-fill btn-sm" ng-click="addPayroll();"-->
-                                    <!--ng-disabled="disableButtons" style="z-index: 10000; position: relative">-->
-                                <!--<i class="fa fa-plus" aria-hidden="true"></i> Create-->
-                            <!--</button>-->
-                            <!--<button class="btn btn-success btn-md btn-fill btn-sm" ng-click="applyPayroll();"-->
-                                    <!--ng-disabled="disableButtons" style="z-index: 10000; position: relative">-->
-                                <!--Apply-->
-                            <!--</button>-->
-                            <!--<button class="btn btn-primary btn-md btn-fill btn-sm"-->
-                                    <!--style="z-index: 10000; position: relative"-->
-                                    <!--ng-click="cancelClick()">-->
-                                <!--Cancel-->
-                            <!--</button>-->
-                        <!--</div>-->
-                        <!--<h4 class="card-title">Add Payrolls</h4>-->
-                        <!--<p class="category">New Payroll</p>-->
-                    <!--</div>-->
-                    <!--<div class="card-content">-->
-                        <!--<div class="row" ng-repeat="p in addedPayrolls track by $index">-->
-                            <!--<form class="form-inline">-->
-                                <!--<div class="form-group" style="width: 100%">-->
-                                    <!--<button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">-->
-                                        <!--<i class="fa fa-trash fa-2x" aria-hidden="true"></i>-->
-                                    <!--</button>-->
-                                    <!--<select class="form-control white-input-no-border" ng-model="p.buyerId">-->
-                                        <!--<option value="" disabled selected>Buyer</option>-->
-                                        <!--<option ng-repeat="b in buyerOptions" value="{{b.id}}"> {{b.name}}</option>-->
-                                    <!--</select>-->
-                                    <!--<input date-range-picker class="form-control date-picker white-input-no-border"-->
-                                           <!--type="text" ng-model="p.date" options="{singleDatePicker: true}"-->
-                                           <!--style="width: 12% !important;"/>-->
-                                    <!--<input date-range-picker class="form-control date-picker white-input-no-border"-->
-                                           <!--type="text" ng-model="p.periond" options="{singleDatePicker: true}"-->
-                                           <!--style="width: 12% !important;"/>-->
-                                    <!--<select class="form-control white-input-no-border" ng-model="p.type">-->
-                                        <!--<option value="" disabled selected>Type</option>-->
-                                        <!--<option ng-repeat="t in typeValues" value="{{t.value}}">{{t.name}}</option>-->
-                                    <!--</select>-->
-                                    <!--<input type="text" class="form-control white-input-no-border" id="payrollSum"-->
-                                           <!--ng-model="p.sum" placeholder="Sum" style="width: 100px !important;"/>-->
-                                    <!--<select class="form-control white-input-no-border" ng-model="p.currencyId" style="width: 120px !important;">-->
-                                        <!--<option value="" disabled selected>Currency</option>-->
-                                        <!--<option ng-repeat="c in currencyOptions" value="{{c.id}}">{{c.code}}</option>-->
-                                    <!--</select>-->
-                                    <!--<select class="form-control white-input-no-border" ng-model="p.description" style="width: 18% !important;">-->
-                                        <!--<option value="" disabled selected>Description</option>-->
-                                        <!--<option ng-repeat="d in descriptionOptions" value="{{d}}">{{d}}</option>-->
-                                    <!--</select>-->
-                                <!--</div>-->
-                            <!--</form>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="content">-->
-        <!--<div class="row margin-backdown" style="margin-left: 15px; margin-right: 15px">-->
-            <!--<div class="col-md-12">-->
-                <!--<div class="card">-->
-                    <!--<div class="card-header">-->
-                        <!--<div class="pull-right">-->
-                            <!--<select class="form-control pagination-size" data-ng-model="selectedSize"-->
-                                    <!--data-ng-options="v as k for (k, v) in sizeOptions"-->
-                                    <!--style="z-index: 10000; position: relative">-->
-                            <!--</select>-->
-                        <!--</div>-->
-                        <!--<h4 class="card-title">All Payrolls</h4>-->
-                    <!--</div>-->
-                    <!--<div class="card-content">-->
-                        <!--<div class="table-responsive table-full-width">-->
-                            <!--<table class="table">-->
-                                <!--<thead>-->
-                                <!--<tr>-->
-                                    <!--<th><a href="">#</a></th>-->
-                                    <!--<th>-->
-                                        <!--<a href=""-->
-                                           <!--ng-click="sortColumn = 'buyer_id';changeOrder();loadPayrolls();">-->
-                                    <!--<span ng-show="sortColumn == 'buyer_id' && sortReverse == 'ASC'"-->
-                                          <!--class="fa fa-caret-up"></span>-->
-                                            <!--<span ng-show="sortColumn == 'buyer_id' && sortReverse == 'DESC'"-->
-                                                  <!--class="fa fa-caret-down"></span>-->
-                                            <!--<span ng-show="sortColumn == 'buyer_id' && sortReverse == ''"></span>-->
-                                            <!--Buyer-->
-                                        <!--</a>-->
-                                    <!--</th>-->
-                                    <!--<th>-->
-                                        <!--<a href="" ng-click="sortColumn = 'date';changeOrder();loadPayrolls();">-->
-                                <!--<span ng-show="sortColumn == 'date' && sortReverse == 'ASC'"-->
-                                      <!--class="fa fa-caret-up"></span>-->
-                                            <!--<span ng-show="sortColumn == 'date' && sortReverse == 'DESC'"-->
-                                                  <!--class="fa fa-caret-down"></span>-->
-                                            <!--<span ng-show="sortColumn == 'date' && sortReverse == ''"></span>-->
-                                            <!--Date-->
-                                        <!--</a>-->
-                                    <!--</th>-->
-                                    <!--<th>-->
-                                        <!--<a href="" ng-click="sortColumn = 'period';changeOrder();loadPayrolls();">-->
-                                <!--<span ng-show="sortColumn == 'period' && sortReverse == 'ASC'"-->
-                                      <!--class="fa fa-caret-up"></span>-->
-                                            <!--<span ng-show="sortColumn == 'period' && sortReverse == 'DESC'"-->
-                                                  <!--class="fa fa-caret-down"></span>-->
-                                            <!--<span ng-show="sortColumn == 'period' && sortReverse == ''"></span>-->
-                                            <!--Period-->
-                                        <!--</a>-->
-                                    <!--</th>-->
-                                    <!--<th><a>Type</a></th>-->
-                                    <!--<th><a>Sum</a></th>-->
-                                    <!--<th><a>Currency</a></th>-->
-                                    <!--<th><a>Description</a></th>-->
-                                <!--</tr>-->
-                                <!--</thead>-->
-                                <!--<tbody>-->
-                                <!--<tr ng-show="payrolls.length != 0" ng-repeat="item in payrolls"-->
-                                    <!--ng-click="clickRow(item)" data-toggle="modal" data-target="#payroll-modal">-->
-                                    <!--<td>{{$index+1}}</td>-->
-                                    <!--<td>{{item.bayerName}}</td>-->
-                                    <!--<td>{{formatViewDate(item.date)}}</td>-->
-                                    <!--<td>{{formatViewDate(item.periond)}}</td>-->
-                                    <!--<td>{{item.typeName}}</td>-->
-                                    <!--<td>{{item.sum}}</td>-->
-                                    <!--<td>{{item.code}}</td>-->
-                                    <!--<td>{{item.description}}</td>-->
-                                <!--</tr>-->
-                                <!--<tr ng-show="payrolls.length == 0">-->
-                                    <!--<td colspan="8">-->
-                                        <!--<div class="loader text-center" ng-show="showPayrollsLoader"></div>-->
-                                        <!--<div class="text-center" ng-show="!showPayrollsLoader">No data</div>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--</tbody>-->
-                            <!--</table>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="fixed-table-pagination text-center" ng-show="payrolls.length != 0">-->
-                        <!--<div class="pagination">-->
-                            <!--<uib-pagination total-items="totalPagination" max-size="3"-->
-                                            <!--ng-model="selectedPage" items-per-page="selectedSize">-->
-                            <!--</uib-pagination>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div id="payroll-modal" class="modal" role="dialog" style="background: rgba(0, 0, 0, 0.6);">-->
-        <!--<div class="modal-dialog" style="width:70%;">-->
-            <!--<div class="modal-content">-->
-                <!--<div class="modal-header">-->
-                    <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                    <!--<h4 class="modal-title">Edit payroll</h4>-->
-                <!--</div>-->
-                <!--<div class="modal-body">-->
-                    <!--<form class="form-inline">-->
-                        <!--<div class="form-group">-->
-                            <!--<label>-->
-                                <!--<select class="form-control"-->
-                                        <!--ng-model="selectedBuyerName"-->
-                                        <!--ng-disabled="disableButtons"-->
-                                        <!--style="width: 16%!important;">-->
-                                    <!--<option ng-repeat="b in buyerOptions"-->
-                                            <!--value="{{b.name}}">-->
-                                        <!--{{b.name}}-->
-                                    <!--</option>-->
-                                <!--</select>-->
-                                <!--<input type="text" class="form-control"-->
-                                       <!--ng-model="selectedDate"-->
-                                       <!--ng-disabled="disableButtons"-->
-                                       <!--placeholder="Date"-->
-                                       <!--style="width: 16%!important;"/>-->
-                                <!--<select class="form-control"-->
-                                        <!--ng-model="selectedTypeValue"-->
-                                        <!--ng-disabled="disableButtons"-->
-                                        <!--style="width: 16%!important;">-->
-                                    <!--<option ng-repeat="t in typeValues"-->
-                                            <!--value="{{t.name}}">-->
-                                        <!--{{t.name}}-->
-                                    <!--</option>-->
-                                <!--</select>-->
-                                <!--<input type="text" class="form-control"-->
-                                       <!--ng-model="selectedSum"-->
-                                       <!--ng-disabled="disableButtons"-->
-                                       <!--placeholder="Sum"-->
-                                       <!--style="width: 16%!important;"/>-->
-                                <!--<select class="form-control"-->
-                                        <!--ng-model="selectedCurrencyCode"-->
-                                        <!--ng-disabled="disableButtons"-->
-                                        <!--style="width: 16%!important;">-->
-                                    <!--<option ng-repeat="c in currencyOptions"-->
-                                            <!--value="{{c.code}}">-->
-                                        <!--{{c.code}}-->
-                                    <!--</option>-->
-                                <!--</select>-->
-                                <!--<select class="form-control"-->
-                                        <!--ng-model="selectedDescriptionValue"-->
-                                        <!--ng-disabled="disableButtons"-->
-                                        <!--style="width: 16%!important;">-->
-                                    <!--<option ng-repeat="d in descriptionOptions"-->
-                                            <!--value="{{d}}">-->
-                                        <!--{{d}}-->
-                                    <!--</option>-->
-                                <!--</select>-->
-                            <!--</label>-->
-                        <!--</div>-->
-                    <!--</form>-->
-                <!--</div>-->
-                <!--<div class="modal-footer">-->
-                    <!--<button type="button" class="btn btn-success" data-dismiss="modal"-->
-                            <!--ng-click="saveExistingPayroll();"-->
-                            <!--ng-disabled="disableButtons">Save changes-->
-                    <!--</button>-->
-                    <!--<button type="button" class="btn btn-secondary" data-dismiss="modal"-->
-                            <!--ng-click="close();">Close-->
-                    <!--</button>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="content" style="margin-top: 15px">
+        <div class="row" style="margin-left: 15px; margin-right: 15px">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Payments</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="table-responsive table-full-width">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th><a>Buyer</a></th>
+                                    <th><a>Staff</a></th>
+                                    <th><a>Date</a></th>
+                                    <th><a>Payroll</a></th>
+                                    <th><a>Sum</a></th>
+                                    <th><a>Type</a></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="payment in payments">
+                                    <td>{{payment.buyer}}</td>
+                                    <td>{{payment.staff}}</td>
+                                    <td>{{formatDate(payment.date)}}</td>
+                                    <td>{{formatDate(payment.payroll)}}</td>
+                                    <td>{{payment.sum}} {{payment.code}}</td>
+                                    <td>{{toUpperCase(payment.type)}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

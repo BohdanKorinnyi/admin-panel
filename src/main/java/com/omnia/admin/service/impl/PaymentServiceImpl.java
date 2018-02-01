@@ -2,6 +2,7 @@ package com.omnia.admin.service.impl;
 
 import com.omnia.admin.dao.PaymentDao;
 import com.omnia.admin.model.Payment;
+import com.omnia.admin.model.PaymentDto;
 import com.omnia.admin.service.PaymentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> getByBuyer(List<Integer> buyerIds) {
+    public List<PaymentDto> getByBuyer(List<Integer> buyerIds) {
         return paymentDao.getByBuyerIds(buyerIds);
     }
 

@@ -2,6 +2,7 @@ package com.omnia.admin.dao.impl;
 
 import com.omnia.admin.dao.PaymentDao;
 import com.omnia.admin.model.Payment;
+import com.omnia.admin.model.PaymentDto;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.collections4.CollectionUtils;
@@ -31,10 +32,20 @@ public class PaymentDaoImpl implements PaymentDao {
             "  WHERE buyer_payments.buyer_id = :buyerId AND year(buyer_payments.date) = :year " +
             "GROUP BY buyer_payments.date, monthname(buyer_payments.date);";
 
-    private static final String SELECT_PAYMENT_BY_BUYER = "SELECT buyer_payments.*, currency.code " +
+    private static final String SELECT_PAYMENT_BY_BUYER = "SELECT " +
+            "  buyers.name as 'buyer', " +
+            "  CONCAT(staff.first_name, ' ', staff.secod_name) AS 'staff', " +
+            "  buyer_payments.date, " +
+            "  buyer_payments.date_payroll as 'payroll', " +
+            "  buyer_payments.sum, " +
+            "  payroll_type.type, " +
+            "  currency.code " +
             "FROM buyer_payments " +
             "  LEFT JOIN currency ON buyer_payments.currency_id = currency.id " +
-            "WHERE IF(ISNULL(:buyerIds), TRUE, buyer_payments.buyer_id IN (:buyerId));";
+            "  LEFT JOIN buyers ON buyer_payments.buyer_id = buyers.id " +
+            "  LEFT JOIN staff ON buyer_payments.staff_id = staff.id " +
+            "  LEFT JOIN payroll_type ON buyer_payments.type_id = payroll_type.id " +
+            "WHERE IF(ISNULL(:buyerId), TRUE, buyer_payments.buyer_id IN (:buyerId));";
 
     private static final String INSERT_PAYMENT = "INSERT INTO buyer_payments (buyer_id, staff_id, date, date_payroll, sum, currency_id, type_id, wallet_id) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -51,10 +62,10 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public List<Payment> getByBuyerIds(List<Integer> buyerIds) {
+    public List<PaymentDto> getByBuyerIds(List<Integer> buyerIds) {
         MapSqlParameterSource source = new MapSqlParameterSource();
         source.addValue(SQL_PARAMETER_BUYER_ID, CollectionUtils.isEmpty(buyerIds) ? null : buyerIds);
-        return namedParameterJdbcTemplate.query(SELECT_PAYMENT_BY_BUYER, source, newInstance(Payment.class));
+        return namedParameterJdbcTemplate.query(SELECT_PAYMENT_BY_BUYER, source, newInstance(PaymentDto.class));
     }
 
     @Override
