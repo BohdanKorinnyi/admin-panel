@@ -19,7 +19,6 @@ Application.controller("buyerHomeController", function ($scope, $http, $location
     $scope.showPayrollsLoader = true;
     $scope.buyerOptions = [];
     $scope.currencyOptions = [];
-    $scope.hideCardsValues = true;
 
     $scope.toSpentByBuyer = function () {
         transferService.setParam(1);
@@ -55,22 +54,42 @@ Application.controller("buyerHomeController", function ($scope, $http, $location
         $scope.spent = "";
         $scope.bonus = "";
         $scope.verified = "";
+        var confirmed = "";
+        var spent = "";
+        var profit = "";
 
         $http.get('postback/buyers/revenue').then(function (value) {
-            $scope.confirmed = value.data;
+            confirmed = value.data;
             $http.get('/buyer/home/spent').then(function (value) {
-                $scope.spent = value.data;
-                $scope.profit = ($scope.confirmed - $scope.spent).toFixed(2);
-                if ($scope.profit > 0) {
-                    $scope.bonus = ($scope.profit * 0.2).toFixed(2);
-                    $scope.hideCardsValues = false;
+                if(value.data === ""){
+                    spent = 0;
+                }
+                else{
+                    spent = value.data;
+                }
+                profit = (confirmed - spent).toFixed(2);
+
+                $scope.confirmed = "$" + confirmed;
+                $scope.spent = "$" + spent;
+                $scope.profit = "$" + profit;
+                if (profit > 0) {
+                    $scope.bonus = "$" + (profit * 0.2).toFixed(2);
                 }
             });
         });
         $http.get('buyer/plan/revenue').then(function (value) {
-            $scope.plan = value.data;
+            $scope.plan = "$" + value.data;
         });
     };
+
+    $scope.addDollarSign = function () {
+        $scope.plan = "$" + $scope.plan;
+        $scope.confirmed = "$" + $scope.confirmed;
+        $scope.spent = "$" + $scope.spent;
+        $scope.profit = "$" + $scope.profit;
+        $scope.bonus = "$" + $scope.bonus;
+    };
+
 
     $scope.selectedPayrollItem = {};
     $scope.selectedBuyerName = '';
