@@ -15,7 +15,17 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentDao paymentDao;
 
     @Override
-    public List<Payment> getPaymentByBuyerAndYear(int buyerId, int year) {
-        return paymentDao.getPayrollsByBuyerAndYear(buyerId, year);
+    public List<Payment> getByBuyerAndYear(int buyerId, int year) {
+        return paymentDao.getByBuyerAndYear(buyerId, year);
+    }
+
+    @Override
+    public List<Payment> getByBuyer(List<Integer> buyerIds) {
+        return paymentDao.getByBuyerIds(buyerIds);
+    }
+
+    @Override
+    public void save(List<Payment> payments) {
+        paymentDao.save(payments);
     }
 }

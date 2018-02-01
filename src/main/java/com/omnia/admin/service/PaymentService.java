@@ -4,7 +4,10 @@ import com.omnia.admin.model.Payment;
 
 import java.util.List;
 
-@FunctionalInterface
 public interface PaymentService {
-    List<Payment> getPaymentByBuyerAndYear(int buyerId, int year);
+    List<Payment> getByBuyerAndYear(int buyerId, int year);
+
+    List<Payment> getByBuyer(List<Integer> buyerIds);
+
+    void save(List<Payment> payments);
 }
