@@ -251,7 +251,7 @@
                                     <td>{{item.revenue}}</td>
                                     <td>{{item.spent}}</td>
                                     <td>{{toFixedView(item.profit)}}</td>
-                                    <td>{{toFixedView((item.profit/item.spent)*100)}}</td>
+                                    <td>{{toFixedView(calculateRoi(item.profit,item.spent))}}</td>
                                 </tr>
                                 <tr style="text-align: center; vertical-align: middle">
                                     <td class="to-left-side">

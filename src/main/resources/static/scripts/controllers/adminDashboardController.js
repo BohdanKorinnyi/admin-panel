@@ -311,6 +311,13 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         });
     };
 
+    $scope.calculateRoi = function (profit, spent) {
+        spent = parseFloat(spent);
+        if (spent === 0) {
+            return 0.00;
+        }
+        return (parseFloat(profit) / spent) * 100;
+    };
 
     $scope.findTotals = function (data) {
         for (var i = 0; i < data.length; i++) {
