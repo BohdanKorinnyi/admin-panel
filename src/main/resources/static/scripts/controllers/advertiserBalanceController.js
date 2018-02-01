@@ -55,7 +55,14 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
             $scope.totalLiability = $scope.totalRevenue - $scope.totalIncome;
             $scope.incomes = response.data.incomes;
             $scope.showAdvBalanceLoader = false;
+            $scope.addDollarSign();
         });
+    };
+
+    $scope.addDollarSign = function () {
+        $scope.totalRevenue = "$" + $scope.totalRevenue;
+        $scope.totalIncome = "$" + $scope.totalIncome;
+        $scope.totalLiability = "$" + $scope.totalLiability;
     };
 
     $scope.formatFromToDate = function () {
@@ -74,6 +81,7 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
             $scope.totalLiability = $scope.totalRevenue - $scope.totalIncome;
             $scope.incomes = response.data.incomes;
             $scope.showAdvBalanceLoader = false;
+            $scope.addDollarSign();
         });
     };
 

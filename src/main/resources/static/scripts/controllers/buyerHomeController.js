@@ -19,6 +19,7 @@ Application.controller("buyerHomeController", function ($scope, $http, $location
     $scope.showPayrollsLoader = true;
     $scope.buyerOptions = [];
     $scope.currencyOptions = [];
+    $scope.hideCardsValues = true;
 
     $scope.toSpentByBuyer = function () {
         transferService.setParam(1);
@@ -48,6 +49,13 @@ Application.controller("buyerHomeController", function ($scope, $http, $location
 
 
     $scope.init = function () {
+        $scope.confirmed = "";
+        $scope.spent = "";
+        $scope.profit = "";
+        $scope.spent = "";
+        $scope.bonus = "";
+        $scope.verified = "";
+
         $http.get('postback/buyers/revenue').then(function (value) {
             $scope.confirmed = value.data;
             $http.get('/buyer/home/spent').then(function (value) {
@@ -55,6 +63,7 @@ Application.controller("buyerHomeController", function ($scope, $http, $location
                 $scope.profit = ($scope.confirmed - $scope.spent).toFixed(2);
                 if ($scope.profit > 0) {
                     $scope.bonus = ($scope.profit * 0.2).toFixed(2);
+                    $scope.hideCardsValues = false;
                 }
             });
         });

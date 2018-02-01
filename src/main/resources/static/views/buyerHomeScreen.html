@@ -29,8 +29,8 @@
                             </div>
                             <div class="col-xs-9">
                                 <div class="numbers">
-                                    <p>Confirmed</p>
-                                    $ {{confirmed}}
+                                    <p ng-hide="hideCardsValues">Confirmed</p>
+                                    {{confirmed}}
                                 </div>
                             </div>
                         </div>
@@ -56,8 +56,8 @@
                             </div>
                             <div class="col-xs-9">
                                 <div class="numbers">
-                                    <p>Plan</p>
-                                    $ {{plan}}
+                                    <p ng-hide="hideCardsValues">Plan</p>
+                                    {{plan}}
                                 </div>
                             </div>
                         </div>
@@ -82,8 +82,8 @@
                             </div>
                             <div class="col-xs-9">
                                 <div class="numbers">
-                                    <p>Verified</p>
-                                    $ 0
+                                    <p ng-hide="hideCardsValues">Verified</p>
+                                    {{verified}}
                                 </div>
                             </div>
                         </div>
@@ -110,8 +110,9 @@
                             </div>
                             <div class="col-xs-9">
                                 <div class="numbers">
-                                    <p style="color:darkgreen;">Spent</p>
-                                    $ {{ spent }}
+                                    <p style="color:darkgreen;"
+                                       ng-hide="hideCardsValues">Spent</p>
+                                    {{ spent }}
                                 </div>
                             </div>
                         </div>
@@ -135,8 +136,9 @@
                             </div>
                             <div class="col-xs-9">
                                 <div class="numbers">
-                                    <p style="color:darkred">Profit</p>
-                                    $ {{profit}}
+                                    <p style="color:darkred"
+                                       ng-hide="hideCardsValues">Profit</p>
+                                    {{profit}}
                                 </div>
                             </div>
                         </div>
@@ -160,8 +162,9 @@
                             </div>
                             <div class="col-xs-9">
                                 <div class="numbers">
-                                    <p style="color:darkred">Bonus</p>
-                                    $ {{ bonus }}
+                                    <p style="color:darkred"
+                                        ng-hide="hideCardsValues">Bonus</p>
+                                    {{ bonus }}
                                 </div>
                             </div>
                         </div>

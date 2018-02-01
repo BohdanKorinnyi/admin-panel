@@ -62,9 +62,20 @@ Application.controller('dashboardController', function ($scope, $http, $q) {
             $scope.profitYesterday = (response.data.revenueYesterday - response.data.spentYesterday).toFixed(2);
             $scope.roiToday = response.data.spentToday === null ? 0.00 : (($scope.profitToday / response.data.spentToday) * 100).toFixed(2);
             $scope.roiYesterday = response.data.spentYesterday === null ? 0.00 : (($scope.profitYesterday / response.data.spentYesterday) * 100).toFixed(2);
+
+            $scope.addDollarSign();
         }, function fail() {
             notify('ti-alert', 'Error occurred during loading buyer\'s statistic', 'danger');
         });
+    };
+
+    $scope.addDollarSign = function () {
+        $scope.revenue = "$" + $scope.revenue;
+        $scope.revenuePlan = "$" + $scope.revenuePlan;
+        $scope.bonus = "$" + $scope.bonus;
+        $scope.revenueCompleted = $scope.revenueCompleted + "%";
+        $scope.roiToday = $scope.roiToday + "%";
+        $scope.roiYesterday = $scope.roiYesterday + "%";
     };
 
     $scope.getDashboardChartData = function () {
