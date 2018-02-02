@@ -39,12 +39,14 @@ public class PaymentDaoImpl implements PaymentDao {
             "  buyer_payments.date_payroll as 'payroll', " +
             "  buyer_payments.sum, " +
             "  payroll_type.type, " +
+            "  buyer_wallet.type as 'wallet', " +
             "  currency.code " +
             "FROM buyer_payments " +
             "  LEFT JOIN currency ON buyer_payments.currency_id = currency.id " +
             "  LEFT JOIN buyers ON buyer_payments.buyer_id = buyers.id " +
             "  LEFT JOIN staff ON buyer_payments.staff_id = staff.id " +
             "  LEFT JOIN payroll_type ON buyer_payments.type_id = payroll_type.id " +
+            "  LEFT JOIN buyer_wallet ON buyer_payments.wallet_id = buyer_wallet.id " +
             "WHERE IF(ISNULL(:buyerId), TRUE, buyer_payments.buyer_id IN (:buyerId));";
 
     private static final String INSERT_PAYMENT = "INSERT INTO buyer_payments (buyer_id, staff_id, date, date_payroll, sum, currency_id, type_id, wallet_id) " +

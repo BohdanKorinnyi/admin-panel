@@ -13,4 +13,5 @@ public class PaymentDto {
     private String sum;
     private String code;
     private String type;
+    private String wallet;
 }
