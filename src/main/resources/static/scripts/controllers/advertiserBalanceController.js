@@ -34,6 +34,20 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
         }
     };
 
+    $scope.utcValues = {
+        "UTC": "utc",
+        "UTC+1": "utc+1", "UTC+2": "utc+2", "UTC+3": "utc+3",
+        "UTC+4": "utc+4", "UTC+5": "utc+5", "UTC+6": "utc+6", "UTC+7": "utc+7",
+        "UTC+8": "utc+8", "UTC+9": "utc+9",
+        "UTC+10": "utc+10", "UTC+11": "utc+11", "UTC+12": "utc+12",
+        "UTC-1": "utc-1", "UTC-2": "utc-2",
+        "UTC-3": "utc-3", "UTC-4": "utc-4", "UTC-5": "utc-5",
+        "UTC-6": "utc-6", "UTC-7": "utc-7", "UTC-8": "utc-8", "UTC-9": "utc-9",
+        "UTC-10": "utc-10", "UTC-11": "utc-11", "UTC-12": "utc-12",
+    };
+
+    $scope.selectedUtc = "utc";
+
     $scope.incomes = [];
 
     $scope.showAdvBalanceLoader = false;
@@ -101,7 +115,7 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
         $scope.addedBalance.push({
             advertiser: null, date: formatDate(new Date()),
             total: null, commission: null,
-            bank: null, account: null, cur: null,
+            bank: null, account: null, cur:  $scope.selectedUtc,
             currId: null
         });
     };
@@ -138,7 +152,10 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
 
     $scope.saveAddedBalance = function () {
         var url = "/income";
-
+        for (var p = 0; p < $scope.addedBalance.length; p++) {
+            console.log(formatDate($scope.addedBalance[p].date));
+        }
+            console.log($scope.addedBalance);
         for (var i = 0; i < $scope.addedBalance.length; i++) {
             $scope.balanceToSave.push({
                 date: formatDate($scope.addedBalance[i].date),
