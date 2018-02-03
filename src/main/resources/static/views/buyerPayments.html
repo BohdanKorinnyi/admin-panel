@@ -21,6 +21,58 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
+                        <form class="form-inline">
+                            <div class="pull-right form-group">
+                                <div class="form-group">
+                                    <button class="btn btn-info btn-sm btn-fill header-menu" ng-click="addPayment();"
+                                            ng-disabled="disableCreateCost">
+                                        Add
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-success btn-sm btn-fill header-menu" ng-click="apply();"
+                                            ng-disabled="disableCreateCost">
+                                        Apply
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <h4 class="card-title">Add Payments</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="table-responsive table-full-width">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th><a>Buyer</a></th>
+                                    <th><a>Staff</a></th>
+                                    <th><a>Date</a></th>
+                                    <th><a>Payroll</a></th>
+                                    <th><a>Sum</a></th>
+                                    <th><a>Type</a></th>
+                                    <th><a>Wallet</a></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-show="payments.length === 0">
+                                    <td colspan="7"><div class="loader text-center"></div></td>
+                                </tr>
+                                <tr ng-repeat="payment in npayments" ng-show="payments.length !== 0">
+                                    <td>{{payment.buyer}}</td>
+                                    <td>{{payment.staff}}</td>
+                                    <td>{{formatDate(payment.date)}}</td>
+                                    <td>{{formatDate(payment.payroll)}}</td>
+                                    <td>{{payment.sum}} {{payment.code}}</td>
+                                    <td>{{toUpperCase(payment.type)}}</td>
+                                    <td>{{toUpperCase(payment.wallet)}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
                         <h4 class="card-title">Payments</h4>
                     </div>
                     <div class="card-content">
@@ -38,7 +90,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="payment in payments">
+                                <tr ng-show="payments.length === 0">
+                                    <td colspan="7"><div class="loader text-center"></div></td>
+                                </tr>
+                                <tr ng-repeat="payment in payments" ng-show="payments.length !== 0">
                                     <td>{{payment.buyer}}</td>
                                     <td>{{payment.staff}}</td>
                                     <td>{{formatDate(payment.date)}}</td>

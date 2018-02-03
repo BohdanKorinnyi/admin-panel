@@ -1,4 +1,5 @@
 Application.controller('buyerPaymentsController', function ($scope, $http) {
+    $scope.payments = [];
     $http.get('/payment').then(function (value) {
         $scope.payments = value.data;
     });
@@ -9,5 +10,17 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
 
     $scope.formatDate = function (date) {
         return formatViewDate(date);
-    }
+    };
+
+    $scope.addPayment = function () {
+        $scope.payments.unshift({
+            buyer: null,
+            staff: null,
+            date: null,
+            payroll: null,
+            code: null,
+            type: null,
+            wallet: null
+        });
+    };
 });
