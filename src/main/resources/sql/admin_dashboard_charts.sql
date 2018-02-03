@@ -23,7 +23,7 @@ FROM (SELECT
           0                                               AS 'revenue',
           date                                            AS 'date'
         FROM source_statistics_today
-        WHERE source_statistics_today.spent != 0 AND date = date(now())
+        WHERE source_statistics_today.spent != 0 AND date = date(now()) AND date(now()) BETWEEN :from AND :to
         GROUP BY month(date))
       UNION (
         SELECT
