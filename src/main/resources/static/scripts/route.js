@@ -20,6 +20,10 @@ Application.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'views/payroll.html',
             controller: 'payrollController'
         })
+        .when('/user/password', {
+            templateUrl: 'views/password.html',
+            controller: 'passwordController'
+        })
         .when('/buyers', {
             templateUrl: 'views/buyers.html',
             controller: 'buyerController',

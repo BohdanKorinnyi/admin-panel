@@ -51,7 +51,7 @@
                     <img src="img/default_user.png"/>
                 </div>
 
-                <a data-toggle="collapse" data-target="#username" class="collapsed">
+                <a data-toggle="collapse" data-target="#username" class="collapsed" id="el31">
 	                        <span>
                                 {{username}}
 		                        <b class="caret"></b>
@@ -67,8 +67,8 @@
                                 <span class="sidebar-normal">Profile</span>
                             </a>
                         </li>
-                        <li>
-                            <a>
+                        <li id="el32" ng-click="setActive(31,32)">
+                            <a href="#!user/password">
                                 <span class="sidebar-mini">CP</span>
                                 <span class="sidebar-normal">Change Password</span>
                             </a>
@@ -353,6 +353,7 @@
 <script src="scripts/controllers/buyerStatisticController.js"></script>
 <script src="scripts/controllers/buyerPaymentsController.js"></script>
 <script src="scripts/controllers/advertiserBalanceController.js"></script>
+<script src="scripts/controllers/passwordController.js"></script>
 <script src="scripts/controllers/getAfidController.js"></script>
 <script src="scripts/controllers/balancePerMonthController.js"></script>
 <script src="scripts/service/authorizationService.js"></script>
