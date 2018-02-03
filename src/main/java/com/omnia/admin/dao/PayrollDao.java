@@ -2,6 +2,7 @@ package com.omnia.admin.dao;
 
 import com.omnia.admin.grid.Page;
 import com.omnia.admin.model.Payroll;
+import com.omnia.admin.model.PayrollType;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface PayrollDao {
     void delete(List<Long> ids);
 
     List<String> getPayrollDescription();
+
+    List<PayrollType> getTypes();
 }

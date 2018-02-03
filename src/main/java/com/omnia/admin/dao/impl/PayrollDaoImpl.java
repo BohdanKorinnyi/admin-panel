@@ -5,6 +5,7 @@ import com.omnia.admin.dao.PayrollDao;
 import com.omnia.admin.grid.Page;
 import com.omnia.admin.model.ColumnOrder;
 import com.omnia.admin.model.Payroll;
+import com.omnia.admin.model.PayrollType;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -32,6 +33,7 @@ public class PayrollDaoImpl implements PayrollDao {
     private static final String INSERT_PAYROLL = "INSERT INTO payroll_new (buyer_id, date, description, type_id, sum, currency_id, periond) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String DELETE_PAYROLL = "DELETE FROM payroll_new WHERE id = ?";
     private static final String SELECT_PAYROLL_DESCRIPTION = "SELECT name FROM payroll_description";
+    private static final String SELECT_PAYROLL_TYPES = "SELECT * FROM payroll_type";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -117,6 +119,11 @@ public class PayrollDaoImpl implements PayrollDao {
     @Override
     public List<String> getPayrollDescription() {
         return jdbcTemplate.queryForList(SELECT_PAYROLL_DESCRIPTION, String.class);
+    }
+
+    @Override
+    public List<PayrollType> getTypes() {
+        return jdbcTemplate.query(SELECT_PAYROLL_TYPES, BeanPropertyRowMapper.newInstance(PayrollType.class));
     }
 
     private boolean isValidSortDetails(ColumnOrder columnOrder) {

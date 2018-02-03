@@ -3,6 +3,7 @@ package com.omnia.admin.service.impl;
 import com.omnia.admin.dao.PayrollDao;
 import com.omnia.admin.grid.Page;
 import com.omnia.admin.model.Payroll;
+import com.omnia.admin.model.PayrollType;
 import com.omnia.admin.service.PayrollService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,10 @@ public class PayrollServiceImpl implements PayrollService {
     @Override
     public List<String> getPayrollDescription() {
         return payrollDao.getPayrollDescription();
+    }
+
+    @Override
+    public List<PayrollType> getTypes() {
+        return payrollDao.getTypes();
     }
 }

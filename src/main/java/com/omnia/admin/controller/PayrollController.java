@@ -3,6 +3,7 @@ package com.omnia.admin.controller;
 import com.omnia.admin.dto.PageResponse;
 import com.omnia.admin.grid.Page;
 import com.omnia.admin.model.Payroll;
+import com.omnia.admin.model.PayrollType;
 import com.omnia.admin.model.Role;
 import com.omnia.admin.service.PayrollService;
 import com.omnia.admin.util.UserPrincipalUtils;
@@ -62,5 +63,10 @@ public class PayrollController {
     @GetMapping("description")
     public List<String> getPayrollDescription() {
         return payrollService.getPayrollDescription();
+    }
+
+    @GetMapping("types")
+    public List<PayrollType> getTypes() {
+        return payrollService.getTypes();
     }
 }
