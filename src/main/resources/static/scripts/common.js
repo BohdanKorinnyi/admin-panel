@@ -8,6 +8,10 @@ function getMonths() {
     return months;
 }
 
+function getCurrentMonth() {
+    return new Date().getMonth() + 1;
+}
+
 function getShortMonths() {
     return moment().getShortMonths();
 }

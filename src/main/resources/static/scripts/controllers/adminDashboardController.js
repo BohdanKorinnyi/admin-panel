@@ -36,7 +36,9 @@ Application.controller('adminDashboardController', function ($scope, $http, date
         "November": "11",
         "December": "12"
     };
-    $scope.bigChartSelectedMonth = "01";
+    var currentMonth = getCurrentMonth();
+
+    $scope.bigChartSelectedMonth = currentMonth >= 10 ? currentMonth : '0' + currentMonth;
 
     $scope.bigChartYearOptions = {
         "Current Year": "thisYear",
@@ -51,7 +53,7 @@ Application.controller('adminDashboardController', function ($scope, $http, date
 
 
     $scope.clearSelects = function () {
-        $scope.bigChartSelectedMonth = "01";
+        $scope.bigChartSelectedMonth = currentMonth >= 10 ? currentMonth : '0' + currentMonth;;
         $scope.bigChartSelectedYear = "thisYear";
     };
 
