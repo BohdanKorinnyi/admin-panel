@@ -11,6 +11,8 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
     $scope.dpFromDate = new Date(new Date().getFullYear(), 0, 1);
     $scope.dpToDate = new Date(new Date().getFullYear() + 1, 0, 1);
 
+    $scope.showCardDate = formatViewDate($scope.dpFromDate) + " - " + formatViewDate($scope.dpToDate);
+
     $scope.dt = {
         startDate: $scope.dpFromDate,
         endDate: $scope.dpToDate
@@ -52,8 +54,8 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
 
     $scope.showAdvBalanceLoader = false;
 
-    $scope.showCardDate = function (date) {
-        return formatViewDate(date.startDate) + " - " + formatViewDate(date.endDate);
+    $scope.updateCardDate = function () {
+        $scope.showCardDate = formatViewDate($scope.dt.startDate) + " - " + formatViewDate($scope.dt.endDate);
     };
 
     $scope.loadData = function () {
@@ -85,6 +87,7 @@ Application.controller("advertiserBalanceController", function ($scope, $http, d
     };
 
     $scope.onApplyBtnClick = function () {
+        $scope.updateCardDate();
         $scope.incomes = [];
         $scope.showAdvBalanceLoader = true;
         $scope.formatFromToDate();
