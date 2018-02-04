@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class Staff {
     private Long id;
+    private Long buyerId;
     private Long type;
     private String firstName;
     private String secodName;
