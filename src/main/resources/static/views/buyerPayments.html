@@ -1,4 +1,5 @@
-<div ng-controller="buyerPaymentsController" class="main-panel" ng-style="style();" resize>
+<div ng-controller="buyerPaymentsController" class="main-panel"
+     ng-style="style();" resize ng-init="initPayments();">
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -15,6 +16,85 @@
             </div>
         </div>
     </nav>
+
+    <div class="content" style="margin-top: 20px">
+        <div class="row" style="margin-left: 15px; margin-right: 15px">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="pull-right">
+                            <button class="btn btn-info btn-md btn-fill btn-sm" ng-click="addPayment();"
+                                    style="z-index: 10000; position: relative">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Create
+                            </button>
+                            <button class="btn btn-success btn-md btn-fill btn-sm" ng-click="applyPayment();"
+                                    style="z-index: 10000; position: relative">
+                                Apply
+                            </button>
+                            <button class="btn btn-primary btn-md btn-fill btn-sm"
+                                    style="z-index: 10000; position: relative"
+                                    ng-click="cancelClick()">
+                                Cancel
+                            </button>
+                        </div>
+                        <h4 class="card-title">Add Payments</h4>
+                        <p class="category">New Payment</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="row" ng-repeat="p in addedPayments track by $index">
+                            <form class="form-inline">
+                                <div class="form-group" style="width: 100%">
+                                    <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
+                                        <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                                    </button>
+                                    <select class="form-control white-input-no-border"
+                                            ng-model="p.buyer" style="width: 14%;">
+                                        <option value="" disabled selected>Buyer</option>
+                                        <option ng-repeat="b in buyers" value="{{b.id}}"> {{b.name}}</option>
+                                    </select>
+                                    <select class="form-control white-input-no-border"
+                                            ng-model="p.staff" style="width:12%;">
+                                        <option value="" disabled selected>Staff</option>
+                                        <option ng-repeat="s in staffs" value="{{s.id}}">
+                                            {{displayStaffFullName(s.firstName, s.secodName);}}
+                                        </option>
+                                    </select>
+
+                                    <input date-range-picker class="form-control date-picker white-input-no-border"
+                                           type="text" ng-model="p.date"
+                                           options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
+                                           style="width: 12% !important;"/>
+                                    <input date-range-picker class="form-control date-picker white-input-no-border"
+                                           type="text" ng-model="p.payroll"
+                                           options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
+                                           style="width: 12% !important;"/>
+                                    <input type="number" class="form-control white-input-no-border"
+                                           ng-model="p.sum" placeholder="Sum" style="width: 10% !important;"/>
+
+                                    <select class="form-control white-input-no-border" ng-model="p.type"
+                                        style="width: 10%;">
+                                        <option value="" disabled selected>Type</option>
+                                        <option ng-repeat="t in types" value="{{t.id}}">{{t.type}}</option>
+                                    </select>
+                                    <select class="form-control white-input-no-border" ng-model="p.code"
+                                            style="width: 9% !important;">
+                                        <option value="" disabled selected>Currency</option>
+                                        <option ng-repeat="c in currencyOptions" value="{{c.id}}">{{c.code}}</option>
+                                    </select>
+                                    <select class="form-control white-input-no-border" ng-model="p.wallet"
+                                            style="width: 13% !important;">
+                                        <option value="" disabled selected>Wallet</option>
+                                        <option ng-repeat="w in wallets" value="{{w.currencyId}}">{{w.type}}</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="content" style="margin-top: 15px">
         <div class="row" style="margin-left: 15px; margin-right: 15px">

@@ -52,10 +52,12 @@
                                         <option ng-repeat="b in buyerOptions" value="{{b.id}}"> {{b.name}}</option>
                                     </select>
                                     <input date-range-picker class="form-control date-picker white-input-no-border"
-                                           type="text" ng-model="p.date" options="{singleDatePicker: true}"
+                                           type="text" ng-model="p.date"
+                                           options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
                                            style="width: 12% !important;"/>
                                     <input date-range-picker class="form-control date-picker white-input-no-border"
-                                           type="text" ng-model="p.periond" options="{singleDatePicker: true}"
+                                           type="text" ng-model="p.periond"
+                                           options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
                                            style="width: 12% !important;"/>
                                     <select class="form-control white-input-no-border" ng-model="p.type">
                                         <option value="" disabled selected>Type</option>
