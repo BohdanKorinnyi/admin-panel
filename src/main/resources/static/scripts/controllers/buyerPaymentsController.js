@@ -3,9 +3,13 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     $scope.addedPayments = [];
     $scope.buyers = [];
     $scope.staffs = [];
+    $scope.staffOptions = [];
     $scope.types = [];
     $scope.wallets = [];
+    $scope.walletOptions = [];
     $scope.currencyOptions = [];
+    $scope.disableStaffWallet = true;
+    $scope.addedPaymentsToSave = [];
 
     $http.get('/payment').then(function (value) {
         $scope.payments = value.data;
@@ -28,6 +32,9 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     };
 
     $scope.addPayment = function () {
+        $scope.disableStaffWallet = true;
+        $scope.staffOptions = [];
+        $scope.walletOptions = [];
         $scope.addedPayments.push({
             buyer: null,
             staff: null,
@@ -40,6 +47,20 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
         });
     };
 
+    $scope.selectBuyer = function (id) {
+        $scope.disableStaffWallet = false;
+        for(var i = 0; i< $scope.staffs.length; i++){
+            if(id === $scope.staffs[i].buyerId.toString()){
+                $scope.staffOptions.push($scope.staffs[i]);
+            }
+        }
+        for(var j = 0; j< $scope.wallets.length; j++){
+            if(id === $scope.wallets[j].buyerId.toString()){
+                $scope.walletOptions.push($scope.wallets[j]);
+            }
+        }
+    };
+
     $scope.applyPayment = function () {
         $scope.formatAddedPaymentsDate();
         console.log($scope.addedPayments);
@@ -49,26 +70,26 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
         console.log($scope.currencyOptions);
         console.log($scope.wallets);
 
-        // var url = "/payment";
-        // var paymentsForSave = [];
-        // for(var i = 0; i<$scope.addedPayments.length; i++){
-        //     paymentsForSave.push({
-        //         "buyerId": $scope.addedPayments.buyer,
-        //         "staffId": $scope.addedPayments.staff,
-        //         "date": $scope.addedPayments.date,
-        //         "datePayroll": $scope.addedPayments.payroll,
-        //         "sum": $scope.addedPayments.sum,
-        //         "currencyId": $scope.addedPayments.code,
-        //         "typeId": $scope.addedPayments.type,
-        //         "walletId": $scope.addedPayments.wallet
-        //     });
-        // }
-        //
-        // $http.post(url, paymentsForSave).then(function success(response) {
-        //     $scope.initPayments();
-        // }, function fail(response) {
-        //     notify('ti-alert', 'Error occurred during saving added payments', 'danger');
-        // });
+        var url = "/payment";
+        var paymentsForSave = [];
+        for(var i = 0; i<$scope.addedPayments.length; i++){
+            paymentsForSave.push({
+                "buyerId": $scope.addedPayments[i].buyer,
+                "staffId": $scope.addedPayments[i].staff,
+                "date": $scope.addedPayments[i].date,
+                "datePayroll": $scope.addedPayments[i].payroll,
+                "sum": $scope.addedPayments[i].sum,
+                "currencyId": $scope.addedPayments[i].code,
+                "typeId": $scope.addedPayments[i].type,
+                "walletId": $scope.addedPayments[i].wallet
+            });
+        }
+
+        $http.post(url, paymentsForSave).then(function success(response) {
+            $scope.initPayments();
+        }, function fail(response) {
+            notify('ti-alert', 'Error occurred during saving added payments', 'danger');
+        });
     };
 
     $scope.cancelClick = function () {
