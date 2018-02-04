@@ -48,25 +48,25 @@
                                         <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                     </button>
                                     <select class="form-control white-input-no-border"
-                                            ng-model="p.buyer" style="width: 14%;"
-                                            ng-change="selectBuyer(p.buyer);">
+                                            ng-model="p.buyer" style="width: 14%;">
                                         <option value="" disabled selected>Buyer</option>
                                         <option ng-repeat="b in buyers" value="{{b.id}}"> {{b.name}}</option>
                                     </select>
                                     <select class="form-control white-input-no-border"
-                                            ng-model="p.staff" style="width:12%;"
-                                            ng-disabled="disableStaffWallet">
+                                            ng-model="p.staff" style="width:12%;">
                                         <option value="" disabled selected>Staff</option>
-                                        <option ng-repeat="s in staffOptions" value="{{s.id}}">
+                                        <option ng-repeat="s in staffs" value="{{s.id}}">
                                             {{displayStaffFullName(s.firstName, s.secodName);}}
                                         </option>
                                     </select>
 
                                     <input date-range-picker class="form-control date-picker white-input-no-border"
-                                           type="text" ng-model="p.date" options="{singleDatePicker: true}"
+                                           type="text" ng-model="p.date"
+                                           options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
                                            style="width: 12% !important;"/>
                                     <input date-range-picker class="form-control date-picker white-input-no-border"
-                                           type="text" ng-model="p.payroll" options="{singleDatePicker: true}"
+                                           type="text" ng-model="p.payroll"
+                                           options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
                                            style="width: 12% !important;"/>
                                     <input type="number" class="form-control white-input-no-border"
                                            ng-model="p.sum" placeholder="Sum" style="width: 10% !important;"/>
@@ -82,10 +82,9 @@
                                         <option ng-repeat="c in currencyOptions" value="{{c.id}}">{{c.code}}</option>
                                     </select>
                                     <select class="form-control white-input-no-border" ng-model="p.wallet"
-                                            style="width: 13% !important;"
-                                            ng-disabled="disableStaffWallet">
+                                            style="width: 13% !important;">
                                         <option value="" disabled selected>Wallet</option>
-                                        <option ng-repeat="w in walletOptions" value="{{w.currencyId}}">{{w.type}}</option>
+                                        <option ng-repeat="w in wallets" value="{{w.currencyId}}">{{w.type}}</option>
                                     </select>
                                 </div>
                             </form>

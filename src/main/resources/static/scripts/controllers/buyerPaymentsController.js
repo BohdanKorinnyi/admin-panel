@@ -9,7 +9,8 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     $scope.walletOptions = [];
     $scope.currencyOptions = [];
     $scope.disableStaffWallet = true;
-    $scope.addedPaymentsToSave = [];
+    $scope.addedPaymentsToSave = []
+
 
     $http.get('/payment').then(function (value) {
         $scope.payments = value.data;
@@ -33,8 +34,6 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
 
     $scope.addPayment = function () {
         $scope.disableStaffWallet = true;
-        $scope.staffOptions = [];
-        $scope.walletOptions = [];
         $scope.addedPayments.push({
             buyer: null,
             staff: null,
@@ -47,29 +46,26 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
         });
     };
 
-    $scope.selectBuyer = function (id) {
-        $scope.disableStaffWallet = false;
-        for(var i = 0; i< $scope.staffs.length; i++){
-            if(id === $scope.staffs[i].buyerId.toString()){
-                $scope.staffOptions.push($scope.staffs[i]);
-            }
-        }
-        for(var j = 0; j< $scope.wallets.length; j++){
-            if(id === $scope.wallets[j].buyerId.toString()){
-                $scope.walletOptions.push($scope.wallets[j]);
-            }
-        }
-    };
+    // $scope.selectBuyer = function (id) {
+    //     $scope.disableStaffWallet = false;
+    //     for(var i = 0; i< $scope.staffs.length; i++){
+    //         if(id === $scope.staffs[i].buyerId.toString()){
+    //             var obj = {};
+    //             obj[id] = $scope.staffs[i];
+    //             $scope.staffOptions.push(obj);
+    //             console.log($scope.staffOptions);
+    //         }
+    //     }
+    //
+    //     for(var j = 0; j< $scope.wallets.length; j++){
+    //         if(id === $scope.wallets[j].buyerId.toString()){
+    //             $scope.walletOptions.push($scope.wallets[j]);
+    //         }
+    //     }
+    // };
 
     $scope.applyPayment = function () {
         $scope.formatAddedPaymentsDate();
-        console.log($scope.addedPayments);
-        console.log($scope.buyers);
-        console.log($scope.staffs);
-        console.log($scope.types);
-        console.log($scope.currencyOptions);
-        console.log($scope.wallets);
-
         var url = "/payment";
         var paymentsForSave = [];
         for(var i = 0; i<$scope.addedPayments.length; i++){
@@ -148,6 +144,6 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     };
 
     $scope.displayStaffFullName = function (firstName, secondName) {
-         return firstName + " " + secondName;
+        return firstName + " " + secondName;
     };
 });
