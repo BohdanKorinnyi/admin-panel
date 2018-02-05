@@ -13,7 +13,7 @@ public class Payroll {
     private Date date;
     private Date periond;
     private String description;
-    private Integer type;
+    private Integer typeId;
     private Float sum;
     private Float value;
     private Integer currencyId;

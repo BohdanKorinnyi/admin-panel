@@ -75,7 +75,7 @@ public class PayrollDaoImpl implements PayrollDao {
     @Transactional
     public void update(Payroll payroll) {
         jdbcTemplate.update(UPDATE_PAYROLL, payroll.getBuyerId(), payroll.getDate(), payroll.getDescription(),
-                payroll.getType(), payroll.getSum(), payroll.getCurrencyId(), payroll.getId());
+                payroll.getTypeId(), payroll.getSum(), payroll.getCurrencyId(), payroll.getId());
     }
 
     @Override
@@ -87,7 +87,7 @@ public class PayrollDaoImpl implements PayrollDao {
                 ps.setLong(1, payrolls.get(i).getBuyerId());
                 ps.setDate(2, payrolls.get(i).getDate());
                 ps.setString(3, payrolls.get(i).getDescription());
-                ps.setInt(4, payrolls.get(i).getType());
+                ps.setInt(4, payrolls.get(i).getTypeId());
                 ps.setFloat(5, payrolls.get(i).getSum());
                 ps.setInt(6, payrolls.get(i).getCurrencyId());
                 ps.setDate(7, payrolls.get(i).getPeriond());
