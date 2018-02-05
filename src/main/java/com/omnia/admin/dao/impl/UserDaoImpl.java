@@ -21,4 +21,9 @@ public class UserDaoImpl implements UserDao {
     public User getUserByName(String username) {
         return jdbcTemplate.queryForObject(SELECT_USER_BY_USERNAME, new BeanPropertyRowMapper<>(User.class), username);
     }
+
+    @Override
+    public void changePassword(String username, String password) {
+        jdbcTemplate.update("UPDATE users SET password = ? WHERE username= ?", password, username);
+    }
 }

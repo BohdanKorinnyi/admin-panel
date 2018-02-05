@@ -5,8 +5,13 @@ Application.controller('passwordController', function ($scope, $http) {
             $scope.error = true;
             return;
         }
-        $http.post('/user/password').then(function (value) {
-
+        $http.get('/user/password' +
+            '?existing=' + $scope.currentPassword +
+            '&created=' + $scope.newPassword +
+            '&confirmed=' + $scope.confirmPassword).then(function (value) {
+            notify('ti-alert', 'The password was changed', 'success');
+        },function (reason) {
+            notify('ti-alert', 'Error occurred during changing password', 'danger');
         });
     }
 });
