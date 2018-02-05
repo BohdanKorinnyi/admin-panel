@@ -80,15 +80,6 @@ Application.controller('payrollController', function ($scope, $http, $q) {
         });
     };
 
-    $scope.getDescription = function () {
-        $http.get('payroll/description').then(function success(response) {
-            $scope.descriptionOptions = response.data;
-        }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading description', 'danger');
-        });
-    };
-
-
     $scope.changeOrder = function () {
         if ($scope.sortReverse === '') {
             $scope.sortReverse = 'ASC';
@@ -108,7 +99,7 @@ Application.controller('payrollController', function ($scope, $http, $q) {
     $scope.selectedTypeId = 0;
     $scope.selectedCurrencyCode = '';
     $scope.selectedCurrencyId = 0;
-    $scope.selectedDescriptionValue = '';
+    $scope.descriptionValue = '';
     $scope.selectedDate = '';
     $scope.selectedPeriod = '';
     $scope.selectedSum = '';
@@ -117,6 +108,7 @@ Application.controller('payrollController', function ($scope, $http, $q) {
         $scope.selectedPayrollItem = payroll;
         $scope.selectedDate = formatViewDate(payroll.date);
         $scope.selectedPeriod = formatViewDate(payroll.date);
+        $scope.description = payroll.description;
         $scope.selectedSum = payroll.sum;
         $scope.selectedTypeValue = getTypeName(payroll.typeId);
         $scope.selectedTypeId = payroll.typeId;
@@ -133,11 +125,6 @@ Application.controller('payrollController', function ($scope, $http, $q) {
                 $scope.selectedCurrencyId = $scope.currencyOptions[i].id;
             }
         }
-        for (var i = 0; i < $scope.descriptionOptions.length; i++) {
-            if (payroll.description === $scope.descriptionOptions[i]) {
-                $scope.selectedDescriptionValue = $scope.descriptionOptions[i];
-            }
-        }
     };
 
     $scope.saveExistingPayroll = function () {
@@ -145,7 +132,7 @@ Application.controller('payrollController', function ($scope, $http, $q) {
         $scope.showPayrollsLoader = true;
         var params = {};
         params.id = $scope.selectedPayrollItem.id;
-        params.description = $scope.selectedDescriptionValue;
+        params.description = $scope.descriptionValue;
         params.date = moment($scope.selectedDate).format('YYYY-MM-DD');
         params.periond = moment($scope.selectedPeriod).format('YYYY-MM-DD');
         params.sum = $scope.selectedSum;
@@ -181,6 +168,7 @@ Application.controller('payrollController', function ($scope, $http, $q) {
 
         $q.all([payrollTypes, payrolls]).then(function (value) {
             if (Array.isArray(value[0].data)) {
+                $scope.types = [];
                 value[0].data.map(function (value2) {
                     $scope.types.push({
                         name: value2.type,

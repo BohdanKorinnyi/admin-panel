@@ -47,7 +47,7 @@
                                     <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
                                         <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                     </button>
-                                    <select class="form-control white-input-no-border" ng-model="p.buyerId">
+                                    <select class="form-control white-input-no-border" ng-model="p.buyerId" style="width: 15%">
                                         <option value="" disabled selected>Buyer</option>
                                         <option ng-repeat="b in buyerOptions" value="{{b.id}}"> {{b.name}}</option>
                                     </select>
@@ -59,22 +59,19 @@
                                            type="text" ng-model="p.periond"
                                            options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
                                            style="width: 12% !important;"/>
-                                    <select class="form-control white-input-no-border" ng-model="p.typeId">
+                                    <select class="form-control white-input-no-border" ng-model="p.typeId" style="width: 15%;">
                                         <option value="" disabled selected>Type</option>
                                         <option ng-repeat="type in types" value="{{type.value}}">{{type.name}}</option>
                                     </select>
                                     <input type="text" class="form-control white-input-no-border" id="payrollSum"
-                                           ng-model="p.sum" placeholder="Sum" style="width: 100px !important;"/>
+                                           ng-model="p.sum" placeholder="Sum" style="width: 7% !important;"/>
                                     <select class="form-control white-input-no-border" ng-model="p.currencyId"
-                                            style="width: 120px !important;">
+                                            style="width: 10%;">
                                         <option value="" disabled selected>Currency</option>
                                         <option ng-repeat="c in currencyOptions" value="{{c.id}}">{{c.code}}</option>
                                     </select>
-                                    <select class="form-control white-input-no-border" ng-model="p.description"
-                                            style="width: 18% !important;">
-                                        <option value="" disabled selected>Description</option>
-                                        <option ng-repeat="d in descriptionOptions" value="{{d}}">{{d}}</option>
-                                    </select>
+                                    <input class="form-control white-input-no-border" type="text" placeholder="Description" ng-model="p.description"
+                                            style="width: 15% !important;"/>
                                 </div>
                             </form>
                         </div>
@@ -227,15 +224,10 @@
                                         {{c.code}}
                                     </option>
                                 </select>
-                                <select class="form-control"
-                                        ng-model="selectedDescriptionValue"
+                                <input class="form-control" type="text" placeholder="Description"
+                                        ng-model="description"
                                         ng-disabled="disableButtons"
-                                        style="width: 16%!important;">
-                                    <option ng-repeat="d in descriptionOptions"
-                                            value="{{d}}">
-                                        {{d}}
-                                    </option>
-                                </select>
+                                        style="width: 15%!important;"/>
                             </label>
                         </div>
                     </form>
