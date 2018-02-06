@@ -9,7 +9,7 @@ import java.sql.Date;
 @Setter
 public class Payroll {
     private Long id;
-    private Long buyerId;
+    private Long staffId;
     private Date date;
     private Date periond;
     private String description;

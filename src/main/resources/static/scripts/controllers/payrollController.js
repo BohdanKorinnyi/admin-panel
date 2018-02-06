@@ -10,24 +10,32 @@ Application.controller('payrollController', function ($scope, $http, $q) {
     $scope.noOfPages = 1;
     $scope.types = [];
 
+    $scope.selectedSize = 50;
+    $scope.staffOptions = [];
+    $scope.currencyOptions = [];
+    $scope.descriptionOptions = [];
+    $scope.datePicker = '';
+    $scope.selectedPayrollItem = {};
+    $scope.selectedStaffName = '';
+    $scope.selectedStaffId = 0;
+    $scope.selectedTypeValue = '';
+    $scope.selectedTypeId = 0;
+    $scope.selectedCurrencyCode = '';
+    $scope.selectedCurrencyId = 0;
+    $scope.descriptionValue = '';
+    $scope.selectedDate = '';
+    $scope.selectedPeriod = '';
+    $scope.selectedSum = '';
+    $scope.sortColumn = '';
+    $scope.sortReverse = '';
+    $scope.role = "";
+    $scope.disableButtons = false;
+
     $scope.sizeOptions = {
         50: 50,
         100: 100,
         500: 500
     };
-
-    $scope.selectedSize = 50;
-    $scope.buyerOptions = [];
-    $scope.currencyOptions = [];
-    $scope.descriptionOptions = [];
-    $scope.datePicker = '';
-
-
-    $scope.sortColumn = '';
-    $scope.sortReverse = '';
-
-    $scope.role = "";
-    $scope.disableButtons = false;
 
     $scope.getRole = function () {
         $http.get('/user/me').then(function (value) {
@@ -41,7 +49,7 @@ Application.controller('payrollController', function ($scope, $http, $q) {
 
     $scope.addPayroll = function () {
         $scope.addedPayrolls.push({
-            buyerId: null, date: moment(), periond: moment(), typeId: null,
+            staffId: null, date: moment(), periond: moment(), typeId: null,
             sum: null, currencyId: null, description: null
         });
     };
@@ -63,19 +71,19 @@ Application.controller('payrollController', function ($scope, $http, $q) {
         });
     };
 
-
-    $scope.getBuyers = function () {
-        $http.get('/buyer').then(function success(response) {
-            $scope.buyerOptions = response.data;
-        }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading buyers', 'danger');
+    $scope.getStaffs = function () {
+        $http.get('/staff').then(function success(response) {
+            $scope.staffOptions = response.data;
+            console.log($scope.staffOptions);
+        }, function fail() {
+            notify('ti-alert', 'Error occurred during loading staff', 'danger');
         });
     };
 
     $scope.getCurrency = function () {
         $http.get('/currency').then(function success(response) {
             $scope.currencyOptions = response.data;
-        }, function fail(response) {
+        }, function fail() {
             notify('ti-alert', 'Error occurred during loading currency', 'danger');
         });
     };
@@ -92,18 +100,6 @@ Application.controller('payrollController', function ($scope, $http, $q) {
         }
     };
 
-    $scope.selectedPayrollItem = {};
-    $scope.selectedBuyerName = '';
-    $scope.selectedBuyerId = 0;
-    $scope.selectedTypeValue = '';
-    $scope.selectedTypeId = 0;
-    $scope.selectedCurrencyCode = '';
-    $scope.selectedCurrencyId = 0;
-    $scope.descriptionValue = '';
-    $scope.selectedDate = '';
-    $scope.selectedPeriod = '';
-    $scope.selectedSum = '';
-
     $scope.clickRow = function (payroll) {
         $scope.selectedPayrollItem = payroll;
         $scope.selectedDate = formatViewDate(payroll.date);
@@ -113,10 +109,10 @@ Application.controller('payrollController', function ($scope, $http, $q) {
         $scope.selectedTypeValue = getTypeName(payroll.typeId);
         $scope.selectedTypeId = payroll.typeId;
 
-        for (var i = 0; i < $scope.buyerOptions.length; i++) {
-            if (payroll.buyerId === $scope.buyerOptions[i].id) {
-                $scope.selectedBuyerName = $scope.buyerOptions[i].name;
-                $scope.selectedBuyerId = $scope.buyerOptions[i].id;
+        for (var i = 0; i < $scope.staffOptions.length; i++) {
+            if (payroll.staffId === $scope.staffOptions[i].id) {
+                $scope.selectedStaffName = $scope.staffOptions[i].name;
+                $scope.selectedStaffId = $scope.staffOptions[i].id;
             }
         }
         for (var i = 0; i < $scope.currencyOptions.length; i++) {
@@ -143,12 +139,12 @@ Application.controller('payrollController', function ($scope, $http, $q) {
                 $scope.selectedCurrencyId = $scope.currencyOptions[i].id;
             }
         }
-        for (var i = 0; i < $scope.buyerOptions.length; i++) {
-            if ($scope.selectedBuyerName === $scope.buyerOptions[i].name) {
-                $scope.selectedBuyerId = $scope.buyerOptions[i].id;
+        for (var i = 0; i < $scope.staffOptions.length; i++) {
+            if ($scope.selectedStaffName === $scope.staffOptions[i].name) {
+                $scope.selectedStaffId = $scope.staffOptions[i].id;
             }
         }
-        params.buyerId = $scope.selectedBuyerId;
+        params.staffId = $scope.selectedStaffId;
         params.currencyId = $scope.selectedCurrencyId;
 
         $http.put('payroll', params).then(function success() {
@@ -171,7 +167,7 @@ Application.controller('payrollController', function ($scope, $http, $q) {
                 $scope.types = [];
                 value[0].data.map(function (value2) {
                     $scope.types.push({
-                        name: value2.type,
+                        name: value2.name,
                         value: value2.id
                     });
                 });
@@ -194,7 +190,7 @@ Application.controller('payrollController', function ($scope, $http, $q) {
 
     $scope.updatePayrolls = function (payrolls) {
         for (var i = 0; i < payrolls.length; i++) {
-            payrolls[i]['bayerName'] = findBuyerName(payrolls[i].buyerId, $scope.buyerOptions);
+            payrolls[i]['staffName'] = findStaffName(payrolls[i].staffId, $scope.staffOptions);
             payrolls[i]['code'] = findCurrencyCode(payrolls[i].currencyId, $scope.currencyOptions);
             payrolls[i]['typeName'] = getTypeName(payrolls[i].typeId);
         }
@@ -238,10 +234,10 @@ function findCurrencyCode(id, currency) {
     }
 }
 
-function findBuyerName(id, buyers) {
-    for (var i = 0; i < buyers.length; i++) {
-        if (buyers[i].id === id) {
-            return buyers[i].name;
+function findStaffName(id, staffs) {
+    for (var i = 0; i < staffs.length; i++) {
+        if (staffs[i].id === id) {
+            return staffs[i].firstName + ' ' + staffs[i].secodName;
         }
     }
 }

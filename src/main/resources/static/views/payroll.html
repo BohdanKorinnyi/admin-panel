@@ -1,4 +1,4 @@
-<div ng-controller="payrollController" ng-init="getBuyers(); getCurrency(); getDescription();loadPayrolls();getRole();"
+<div ng-controller="payrollController" ng-init="getStaffs(); getCurrency(); getDescription();loadPayrolls();getRole();"
      class="main-panel" ng-style="style();" resize>
 
     <nav class="navbar navbar-default">
@@ -23,17 +23,14 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="pull-right">
-                            <button class="btn btn-info btn-md btn-fill btn-sm" ng-click="addPayroll();"
-                                    ng-disabled="disableButtons" style="z-index: 10000; position: relative">
-                                <i class="fa fa-plus" aria-hidden="true"></i> Create
+                            <button class="btn btn-info btn-md btn-fill btn-sm header-menu" ng-click="addPayroll();"
+                                    ng-disabled="disableButtons"><i class="fa fa-plus" aria-hidden="true"></i> Create
                             </button>
-                            <button class="btn btn-success btn-md btn-fill btn-sm" ng-click="applyPayroll();"
-                                    ng-disabled="disableButtons" style="z-index: 10000; position: relative">
+                            <button class="btn btn-success btn-md btn-fill btn-sm header-menu"
+                                    ng-click="applyPayroll();" ng-disabled="disableButtons">
                                 Apply
                             </button>
-                            <button class="btn btn-primary btn-md btn-fill btn-sm"
-                                    style="z-index: 10000; position: relative"
-                                    ng-click="cancelClick()">
+                            <button class="btn btn-primary btn-md btn-fill btn-sm header-menu" ng-click="cancelClick()">
                                 Cancel
                             </button>
                         </div>
@@ -47,9 +44,12 @@
                                     <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
                                         <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                     </button>
-                                    <select class="form-control white-input-no-border" ng-model="p.buyerId" style="width: 15%">
-                                        <option value="" disabled selected>Buyer</option>
-                                        <option ng-repeat="b in buyerOptions" value="{{b.id}}"> {{b.name}}</option>
+                                    <select class="form-control white-input-no-border" ng-model="p.buyerId"
+                                            style="width: 15%">
+                                        <option value="" disabled selected>Staff</option>
+                                        <option ng-repeat="staff in staffOptions" value="{{staff.id}}">
+                                            {{staff.firstName}} {{staff.secodName}}
+                                        </option>
                                     </select>
                                     <input date-range-picker class="form-control date-picker white-input-no-border"
                                            type="text" ng-model="p.date"
@@ -59,7 +59,8 @@
                                            type="text" ng-model="p.periond"
                                            options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
                                            style="width: 12% !important;"/>
-                                    <select class="form-control white-input-no-border" ng-model="p.typeId" style="width: 15%;">
+                                    <select class="form-control white-input-no-border" ng-model="p.typeId"
+                                            style="width: 15%;">
                                         <option value="" disabled selected>Type</option>
                                         <option ng-repeat="type in types" value="{{type.value}}">{{type.name}}</option>
                                     </select>
@@ -70,8 +71,9 @@
                                         <option value="" disabled selected>Currency</option>
                                         <option ng-repeat="c in currencyOptions" value="{{c.id}}">{{c.code}}</option>
                                     </select>
-                                    <input class="form-control white-input-no-border" type="text" placeholder="Description" ng-model="p.description"
-                                            style="width: 15% !important;"/>
+                                    <input class="form-control white-input-no-border" type="text"
+                                           placeholder="Description" ng-model="p.description"
+                                           style="width: 15% !important;"/>
                                 </div>
                             </form>
                         </div>
@@ -100,37 +102,9 @@
                                 <thead>
                                 <tr>
                                     <th><a href="">#</a></th>
-                                    <th>
-                                        <a href=""
-                                           ng-click="sortColumn = 'buyer_id';changeOrder();loadPayrolls();">
-                                    <span ng-show="sortColumn == 'buyer_id' && sortReverse == 'ASC'"
-                                          class="fa fa-caret-up"></span>
-                                            <span ng-show="sortColumn == 'buyer_id' && sortReverse == 'DESC'"
-                                                  class="fa fa-caret-down"></span>
-                                            <span ng-show="sortColumn == 'buyer_id' && sortReverse == ''"></span>
-                                            Buyer
-                                        </a>
-                                    </th>
-                                    <th>
-                                        <a href="" ng-click="sortColumn = 'date';changeOrder();loadPayrolls();">
-                                <span ng-show="sortColumn == 'date' && sortReverse == 'ASC'"
-                                      class="fa fa-caret-up"></span>
-                                            <span ng-show="sortColumn == 'date' && sortReverse == 'DESC'"
-                                                  class="fa fa-caret-down"></span>
-                                            <span ng-show="sortColumn == 'date' && sortReverse == ''"></span>
-                                            Date
-                                        </a>
-                                    </th>
-                                    <th>
-                                        <a href="" ng-click="sortColumn = 'period';changeOrder();loadPayrolls();">
-                                <span ng-show="sortColumn == 'period' && sortReverse == 'ASC'"
-                                      class="fa fa-caret-up"></span>
-                                            <span ng-show="sortColumn == 'period' && sortReverse == 'DESC'"
-                                                  class="fa fa-caret-down"></span>
-                                            <span ng-show="sortColumn == 'period' && sortReverse == ''"></span>
-                                            Period
-                                        </a>
-                                    </th>
+                                    <th><a>Staff</a></th>
+                                    <th><a>Date</a></th>
+                                    <th><a>Period</a></th>
                                     <th><a>Type</a></th>
                                     <th><a>Sum</a></th>
                                     <th><a>Currency</a></th>
@@ -141,7 +115,7 @@
                                 <tr ng-show="payrolls.length != 0" ng-repeat="item in payrolls"
                                     ng-click="clickRow(item)" data-toggle="modal" data-target="#payroll-modal">
                                     <td>{{$index+1}}</td>
-                                    <td>{{item.bayerName}}</td>
+                                    <td>{{item.staffName}}</td>
                                     <td>{{formatViewDate(item.date)}}</td>
                                     <td>{{formatViewDate(item.periond)}}</td>
                                     <td>{{item.typeName}}</td>
@@ -161,8 +135,8 @@
                     </div>
                     <div class="fixed-table-pagination text-center" ng-show="payrolls.length != 0">
                         <div class="pagination">
-                            <uib-pagination total-items="totalPagination" max-size="3"
-                                            ng-model="selectedPage" items-per-page="selectedSize">
+                            <uib-pagination total-items="totalPagination" max-size="3" ng-model="selectedPage"
+                                            items-per-page="selectedSize">
                             </uib-pagination>
                         </div>
                     </div>
@@ -186,13 +160,12 @@
                                         ng-model="selectedBuyerName"
                                         ng-disabled="disableButtons"
                                         style="width: 15%!important;">
-                                    <option ng-repeat="b in buyerOptions"
+                                    <option ng-repeat="b in staffOptions"
                                             value="{{b.name}}">
                                         {{b.name}}
                                     </option>
                                 </select>
-                                <input type="text" class="form-control"
-                                       ng-model="selectedDate"
+                                <input type="text" class="form-control" ng-model="selectedDate"
                                        ng-disabled="disableButtons"
                                        placeholder="Date"
                                        style="width: 13%!important;"/>
@@ -225,9 +198,9 @@
                                     </option>
                                 </select>
                                 <input class="form-control" type="text" placeholder="Description"
-                                        ng-model="description"
-                                        ng-disabled="disableButtons"
-                                        style="width: 15%!important;"/>
+                                       ng-model="description"
+                                       ng-disabled="disableButtons"
+                                       style="width: 15%!important;"/>
                             </label>
                         </div>
                     </form>

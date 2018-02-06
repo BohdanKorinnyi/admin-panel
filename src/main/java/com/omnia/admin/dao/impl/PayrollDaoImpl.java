@@ -29,8 +29,8 @@ public class PayrollDaoImpl implements PayrollDao {
     private static final String ORDER_BY = " ORDER BY %s %s";
     private static final String SELECT_PAYROLLS = "SELECT * FROM payroll_new ";
     private static final String SELECT_COUNT_PAYROLLS = "SELECT COUNT(*) FROM payroll_new";
-    private static final String UPDATE_PAYROLL = "UPDATE payroll_new SET buyer_id = ?, date = ?, description = ?, type_id = ?, sum = ?, currency_id = ? WHERE id = ?;";
-    private static final String INSERT_PAYROLL = "INSERT INTO payroll_new (buyer_id, date, description, type_id, sum, currency_id, periond) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private static final String UPDATE_PAYROLL = "UPDATE payroll_new SET staff_id = ?, date = ?, description = ?, type_id = ?, sum = ?, currency_id = ? WHERE id = ?;";
+    private static final String INSERT_PAYROLL = "INSERT INTO payroll_new (staff_id, date, description, type_id, sum, currency_id, periond) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String DELETE_PAYROLL = "DELETE FROM payroll_new WHERE id = ?";
     private static final String SELECT_PAYROLL_DESCRIPTION = "SELECT name FROM payroll_description";
     private static final String SELECT_PAYROLL_TYPES = "SELECT * FROM payroll_type";
@@ -74,7 +74,7 @@ public class PayrollDaoImpl implements PayrollDao {
     @Override
     @Transactional
     public void update(Payroll payroll) {
-        jdbcTemplate.update(UPDATE_PAYROLL, payroll.getBuyerId(), payroll.getDate(), payroll.getDescription(),
+        jdbcTemplate.update(UPDATE_PAYROLL, payroll.getStaffId(), payroll.getDate(), payroll.getDescription(),
                 payroll.getTypeId(), payroll.getSum(), payroll.getCurrencyId(), payroll.getId());
     }
 
@@ -84,7 +84,7 @@ public class PayrollDaoImpl implements PayrollDao {
         jdbcTemplate.batchUpdate(INSERT_PAYROLL, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setLong(1, payrolls.get(i).getBuyerId());
+                ps.setLong(1, payrolls.get(i).getStaffId());
                 ps.setDate(2, payrolls.get(i).getDate());
                 ps.setString(3, payrolls.get(i).getDescription());
                 ps.setInt(4, payrolls.get(i).getTypeId());

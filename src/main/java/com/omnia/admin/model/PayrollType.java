@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PayrollType {
-    private Long id;
-    private String type;
+    private int id;
+    private int type;
+    private String name;
 }
