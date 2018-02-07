@@ -18,7 +18,7 @@ public class WalletController {
     }
 
     @GetMapping("wallet/staff/{id}")
-    public ResponseEntity getWalletsByStaff(@PathVariable int staffId) {
-        return ResponseEntity.ok(walletDao.findByStaffId(staffId));
+    public ResponseEntity getWalletsByStaff(@PathVariable int id) {
+        return ResponseEntity.ok(walletDao.findByStaffId(id));
     }
 }
