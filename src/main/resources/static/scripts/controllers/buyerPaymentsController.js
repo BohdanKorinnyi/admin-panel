@@ -5,7 +5,21 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     $scope.currencyOptions = [];
     $scope.currentStaffWallets = [];
     $scope.currentStaffPayrolls = [];
+    $scope.isBuyer = false;
 
+    $scope.checkRole = function () {
+        var request = new XMLHttpRequest();
+        request.open('GET', '/user/me', false);
+        request.send(null);
+        var principle = JSON.parse(request.response);
+        $scope.role = principle.authorities[0].authority;
+        if ($scope.role === 'BUYER') {
+            $scope.isBuyer = true;
+        }
+        else{
+            $scope.isBuyer = false;
+        }
+    };
 
     $http.get('/payment').then(function (value) {
         $scope.payments = value.data;
@@ -38,18 +52,17 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
 
     $scope.applyPayment = function () {
         var url = "/payment";
-        var paymentForSave = {
-            "payrollId": $scope.selectedPayroll,
-            "staffId": $scope.selectedStaff,
-            "date": formatDate($scope.selectedDate),
-            "datePayroll": formatDate($scope.selectedPayrollDate),
-            "sum": $scope.selectedSum,
-            "currencyId": $scope.selectedCode,
-            "typeId": $scope.selectedType,
-            "walletId": $scope.selectedWallet
-        };
+        var params = {};
+        params.payrollId = $scope.selectedPayroll;
+        params.staffId = $scope.selectedStaff;
+        params.date = formatDate($scope.selectedDate);
+        params.datePayroll = formatDate($scope.selectedPayrollDate);
+        params.sum = $scope.selectedSum;
+        params.currencyId = $scope.selectedCode;
+        params.typeId = $scope.selectedType;
+        params.walletId = $scope.selectedWallet;
 
-        $http.post(url, paymentForSave).then(function success(response) {
+        $http.post(url, params).then(function success(response) {
             $scope.initPayments();
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during saving added payments', 'danger');

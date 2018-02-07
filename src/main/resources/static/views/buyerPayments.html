@@ -1,5 +1,5 @@
 <div ng-controller="buyerPaymentsController" class="main-panel"
-     ng-style="style();" resize ng-init="initPayments();">
+     ng-style="style();" resize ng-init="initPayments();checkRole();">
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -25,7 +25,8 @@
                         <div class="pull-right">
                             <button class="btn btn-info btn-md btn-fill btn-sm"
                                     ng-click="addPayment();" data-toggle="modal" data-target="#add-payment-modal"
-                                    style="z-index: 10000; position: relative">
+                                    style="z-index: 10000; position: relative"
+                                    ng-disabled="isBuyer">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Create
                             </button>
                         </div>
