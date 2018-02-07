@@ -103,10 +103,10 @@ Application.controller('payrollController', function ($scope, $http, $q) {
     $scope.clickRow = function (payroll) {
         $scope.staffOptionsModified = [];
 
-        for(var o = 0; o< $scope.staffOptions.length; o++){
+        for(var i = 0; i< $scope.staffOptions.length; i++){
             $scope.staffOptionsModified.push({
-                staffName: $scope.staffOptions[o].firstName + " " + $scope.staffOptions[o].secodName,
-                staffId: $scope.staffOptions[o].id
+                name: $scope.staffOptions[i].firstName + " " + $scope.staffOptions[i].secodName,
+                id: $scope.staffOptions[i].id
             });
         }
 

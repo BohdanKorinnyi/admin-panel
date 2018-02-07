@@ -160,9 +160,9 @@
                                         ng-model="selectedStaffName"
                                         ng-disabled="disableButtons"
                                         style="width: 15%!important;">
-                                    <option ng-repeat="s in staffOptionsModified"
-                                            value="{{s.staffName}}">
-                                        {{s.staffName}}
+                                    <option ng-repeat="staff in staffOptionsModified"
+                                            value="{{staff.name}}">
+                                        {{staff.name}}
                                     </option>
                                 </select>
                                 <input type="text" class="form-control" ng-model="selectedDate"
