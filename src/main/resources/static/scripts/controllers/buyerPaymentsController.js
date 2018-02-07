@@ -6,6 +6,7 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     $scope.currentStaffWallets = [];
     $scope.currentStaffPayrolls = [];
     $scope.isBuyer = false;
+    $scope.showLoader = true;
 
     $scope.checkRole = function () {
         var request = new XMLHttpRequest();
@@ -23,6 +24,7 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
 
     $http.get('/payment').then(function (value) {
         $scope.payments = value.data;
+        $scope.showLoader = false;
     });
 
     $scope.toUpperCase = function (value) {
@@ -72,7 +74,6 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     $scope.getCurrency = function () {
         $http.get('/currency').then(function success(response) {
             $scope.currencyOptions = response.data;
-            console.log("curr");
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading currency', 'danger');
         });
@@ -84,7 +85,6 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
             var url = "payroll/staff/" + staffId;
             $http.get(url).then(function success(response) {
                 $scope.currentStaffPayrolls = response.data;
-                console.log(response.data);
             }, function fail(response) {
                 notify('ti-alert', 'Error occurred during loading payrolls', 'danger');
             });
@@ -94,7 +94,6 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     $scope.getStaffs = function () {
         $http.get('/staff').then(function success(response) {
             $scope.staffs = response.data;
-            console.log("staffs");
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading staffs', 'danger');
         });
@@ -103,7 +102,6 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     $scope.getTypes = function () {
         $http.get('/payroll/types').then(function success(response) {
             $scope.types = response.data;
-            console.log("types");
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during loading types', 'danger');
         });
@@ -115,7 +113,6 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
             var url = "wallet/staff/" + staffId;
             $http.get(url).then(function success(response) {
                 $scope.currentStaffWallets = response.data;
-                console.log(response.data);
             }, function fail(response) {
                 notify('ti-alert', 'Error occurred during loading wallets', 'danger');
             });

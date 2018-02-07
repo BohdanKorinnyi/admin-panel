@@ -37,22 +37,19 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th><a>Buyer</a></th>
                                     <th><a>Staff</a></th>
-                                    <th><a>Date</a></th>
                                     <th><a>Payroll</a></th>
+                                    <th><a>Date</a></th>
+                                    <th><a>Payroll Date</a></th>
                                     <th><a>Sum</a></th>
                                     <th><a>Type</a></th>
                                     <th><a>Wallet</a></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-show="payments.length === 0">
-                                    <td colspan="7"><div class="loader text-center"></div></td>
-                                </tr>
                                 <tr ng-repeat="payment in payments" ng-show="payments.length !== 0">
-                                    <td>{{payment.buyer}}</td>
                                     <td>{{payment.staff}}</td>
+                                    <td>{{payment.payroll}}</td>
                                     <td>{{formatDate(payment.date)}}</td>
                                     <td>{{formatDate(payment.payroll)}}</td>
                                     <td>{{payment.sum}} {{payment.code}}</td>
@@ -60,6 +57,16 @@
                                     <td>{{toUpperCase(payment.wallet)}}</td>
                                 </tr>
                                 </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="loader" style="text-align: center;" ng-show="showLoader"></div>
+                                        <div style="text-align: center;" ng-show="payments.length === 0 && !showLoader">
+                                            No data
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -92,7 +99,8 @@
                                         ng-model="selectedPayroll" style="width: 14%;">
                                     <option value="" disabled selected>Payroll</option>
                                     <option ng-repeat="payroll in currentStaffPayrolls"
-                                            value="{{payroll.id}}"> {{payroll.name}}</option>
+                                            value="{{payroll.id}}"> {{payroll.name}}
+                                    </option>
                                 </select>
 
                                 <input date-range-picker class="form-control date-picker white-input-no-border"
@@ -110,19 +118,22 @@
                                         style="width: 10%;">
                                     <option value="" disabled selected>Type</option>
                                     <option ng-repeat="type in types"
-                                            value="{{type.id}}">{{type.name}}</option>
+                                            value="{{type.id}}">{{type.name}}
+                                    </option>
                                 </select>
                                 <select class="form-control white-input-no-border" ng-model="selectedCode"
                                         style="width: 10% !important;">
                                     <option value="" disabled selected>Currency</option>
                                     <option ng-repeat="currency in currencyOptions"
-                                            value="{{currency.id}}">{{currency.code}}</option>
+                                            value="{{currency.id}}">{{currency.code}}
+                                    </option>
                                 </select>
                                 <select class="form-control white-input-no-border" ng-model="selectedWallet"
                                         style="width: 13% !important;">
                                     <option value="" disabled selected>Wallet</option>
                                     <option ng-repeat="wallet in currentStaffWallets"
-                                            value="{{wallet.currencyId}}">{{wallet.type}}</option>
+                                            value="{{wallet.currencyId}}">{{wallet.type}}
+                                    </option>
                                 </select>
                             </div>
                         </form>
