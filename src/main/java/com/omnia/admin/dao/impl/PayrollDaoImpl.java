@@ -35,6 +35,11 @@ public class PayrollDaoImpl implements PayrollDao {
     private static final String SELECT_PAYROLL_DESCRIPTION = "SELECT name FROM payroll_description";
     private static final String SELECT_PAYROLL_TYPES = "SELECT * FROM payroll_type";
 
+    private static final String SELECT_PAYROLL_BY_STAFF = "SELECT payroll_new.* " +
+            "FROM payroll_new " +
+            "LEFT JOIN buyer_payments ON payroll_new.id = buyer_payments.payroll_id " +
+            "WHERE payroll_new.staff_id =? AND buyer_payments.id IS NULL ;";
+
     private final JdbcTemplate jdbcTemplate;
 
     @Override
@@ -124,6 +129,11 @@ public class PayrollDaoImpl implements PayrollDao {
     @Override
     public List<PayrollType> getTypes() {
         return jdbcTemplate.query(SELECT_PAYROLL_TYPES, BeanPropertyRowMapper.newInstance(PayrollType.class));
+    }
+
+    @Override
+    public List<Payroll> getPayrollsByStaffId(int staffId) {
+        return jdbcTemplate.query(SELECT_PAYROLL_BY_STAFF, BeanPropertyRowMapper.newInstance(Payroll.class), staffId);
     }
 
     private boolean isValidSortDetails(ColumnOrder columnOrder) {

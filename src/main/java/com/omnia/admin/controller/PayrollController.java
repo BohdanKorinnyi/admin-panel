@@ -42,6 +42,11 @@ public class PayrollController {
         return ResponseEntity.ok(new PageResponse(total, page.getNumber(), payrolls));
     }
 
+    @GetMapping("staff/{id}")
+    public ResponseEntity getPayrollByStaff(@PathVariable int staffId) {
+        return ResponseEntity.ok(payrollService.getPayrollsByStaffId(staffId));
+    }
+
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void update(@RequestBody Payroll payrolls) {

@@ -25,4 +25,6 @@ public interface PayrollDao {
     List<String> getPayrollDescription();
 
     List<PayrollType> getTypes();
+
+    List<Payroll> getPayrollsByStaffId(int staffId);
 }

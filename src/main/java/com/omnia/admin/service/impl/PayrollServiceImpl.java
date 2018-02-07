@@ -59,4 +59,9 @@ public class PayrollServiceImpl implements PayrollService {
     public List<PayrollType> getTypes() {
         return payrollDao.getTypes();
     }
+
+    @Override
+    public List<Payroll> getPayrollsByStaffId(int staffId) {
+        return payrollDao.getPayrollsByStaffId(staffId);
+    }
 }

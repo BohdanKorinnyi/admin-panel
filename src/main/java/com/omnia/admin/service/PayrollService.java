@@ -24,4 +24,6 @@ public interface PayrollService {
     List<String> getPayrollDescription();
 
     List<PayrollType> getTypes();
+
+    List<Payroll> getPayrollsByStaffId(int staffId);
 }
