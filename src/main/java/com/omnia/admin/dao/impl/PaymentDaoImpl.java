@@ -29,11 +29,11 @@ public class PaymentDaoImpl implements PaymentDao {
             "  currency.code " +
             "FROM buyer_payments " +
             "  LEFT JOIN currency ON buyer_payments.currency_id = currency.id " +
-            "  WHERE buyer_payments.buyer_id = :buyerId AND year(buyer_payments.date) = :year " +
+            "  LEFT JOIN staff ON buyer_payments.staff_id = staff.id " +
+            "  WHERE staff.buyer_id = :buyerId AND year(buyer_payments.date) = :year " +
             "GROUP BY buyer_payments.date, monthname(buyer_payments.date);";
 
     private static final String SELECT_PAYMENT_BY_BUYER = "SELECT " +
-            "  buyers.name as 'buyer', " +
             "  CONCAT(staff.first_name, ' ', staff.secod_name) AS 'staff', " +
             "  buyer_payments.date, " +
             "  buyer_payments.date_payroll as 'payroll', " +
@@ -43,14 +43,13 @@ public class PaymentDaoImpl implements PaymentDao {
             "  currency.code " +
             "FROM buyer_payments " +
             "  LEFT JOIN currency ON buyer_payments.currency_id = currency.id " +
-            "  LEFT JOIN buyers ON buyer_payments.buyer_id = buyers.id " +
             "  LEFT JOIN staff ON buyer_payments.staff_id = staff.id " +
             "  LEFT JOIN payroll_type ON buyer_payments.type_id = payroll_type.id " +
             "  LEFT JOIN buyer_wallet ON buyer_payments.wallet_id = buyer_wallet.id " +
-            "WHERE IF(ISNULL(:buyerId), TRUE, buyer_payments.buyer_id IN (:buyerId));";
+            "WHERE IF(ISNULL(:buyerId), TRUE, staff.buyer_id IN (:buyerId));";
 
-    private static final String INSERT_PAYMENT = "INSERT INTO buyer_payments (buyer_id, staff_id, date, date_payroll, sum, currency_id, type_id, wallet_id) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    private static final String INSERT_PAYMENT = "INSERT INTO buyer_payments (staff_id, date, date_payroll, sum, currency_id, type_id, wallet_id) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
