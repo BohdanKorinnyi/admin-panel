@@ -44,7 +44,7 @@
                                     <button type="button" class="btn btn-sm btn-trash" ng-click="removeRow($index)">
                                         <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                     </button>
-                                    <select class="form-control white-input-no-border" ng-model="p.buyerId"
+                                    <select class="form-control white-input-no-border" ng-model="p.staffId"
                                             style="width: 15%">
                                         <option value="" disabled selected>Staff</option>
                                         <option ng-repeat="staff in staffOptions" value="{{staff.id}}">
@@ -157,7 +157,7 @@
                         <div class="form-group">
                             <label>
                                 <select class="form-control"
-                                        ng-model="selectedBuyerName"
+                                        ng-model="selectedStaffName"
                                         ng-disabled="disableButtons"
                                         style="width: 15%!important;">
                                     <option ng-repeat="b in staffOptions"
