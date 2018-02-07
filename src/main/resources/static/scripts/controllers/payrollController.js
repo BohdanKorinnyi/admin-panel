@@ -101,20 +101,25 @@ Application.controller('payrollController', function ($scope, $http, $q) {
     };
 
     $scope.clickRow = function (payroll) {
+        $scope.staffOptionsModified = [];
+
+        for(var o = 0; o< $scope.staffOptions.length; o++){
+            $scope.staffOptionsModified.push({
+                staffName: $scope.staffOptions[o].firstName + " " + $scope.staffOptions[o].secodName,
+                staffId: $scope.staffOptions[o].id
+            });
+        }
+
         $scope.selectedPayrollItem = payroll;
         $scope.selectedDate = formatViewDate(payroll.date);
         $scope.selectedPeriod = formatViewDate(payroll.date);
-        $scope.description = payroll.description;
+        $scope.selectedDescription = payroll.description;
         $scope.selectedSum = payroll.sum;
         $scope.selectedTypeValue = getTypeName(payroll.typeId);
         $scope.selectedTypeId = payroll.typeId;
+        $scope.selectedStaffName = payroll.staffName;
+        $scope.selectedStaffId = payroll.staffId;
 
-        for (var i = 0; i < $scope.staffOptions.length; i++) {
-            if (payroll.staffId === $scope.staffOptions[i].id) {
-                $scope.selectedStaffName = $scope.staffOptions[i].name;
-                $scope.selectedStaffId = $scope.staffOptions[i].id;
-            }
-        }
         for (var i = 0; i < $scope.currencyOptions.length; i++) {
             if (payroll.currencyId === $scope.currencyOptions[i].id) {
                 $scope.selectedCurrencyCode = $scope.currencyOptions[i].code;
@@ -128,7 +133,7 @@ Application.controller('payrollController', function ($scope, $http, $q) {
         $scope.showPayrollsLoader = true;
         var params = {};
         params.id = $scope.selectedPayrollItem.id;
-        params.description = $scope.descriptionValue;
+        params.description = $scope.selectedDescription;
         params.date = moment($scope.selectedDate).format('YYYY-MM-DD');
         params.periond = moment($scope.selectedPeriod).format('YYYY-MM-DD');
         params.sum = $scope.selectedSum;
@@ -140,7 +145,8 @@ Application.controller('payrollController', function ($scope, $http, $q) {
             }
         }
         for (var i = 0; i < $scope.staffOptions.length; i++) {
-            if ($scope.selectedStaffName === $scope.staffOptions[i].name) {
+            if ($scope.selectedStaffName === ($scope.staffOptions[i].firstName +
+                " " + $scope.staffOptions[i].secodName)) {
                 $scope.selectedStaffId = $scope.staffOptions[i].id;
             }
         }
