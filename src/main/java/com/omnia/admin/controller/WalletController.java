@@ -4,6 +4,7 @@ import com.omnia.admin.dao.WalletDao;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,5 +15,10 @@ public class WalletController {
     @GetMapping("wallet")
     public ResponseEntity getWallets() {
         return ResponseEntity.ok(walletDao.findAll());
+    }
+
+    @GetMapping("wallet/staff/{id}")
+    public ResponseEntity getWalletsByStaff(@PathVariable int staffId) {
+        return ResponseEntity.ok(walletDao.findByStaffId(staffId));
     }
 }

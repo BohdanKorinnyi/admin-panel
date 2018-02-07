@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface WalletDao {
     List<Wallet> findAll();
+
+    List<Wallet> findByStaffId(int staffId);
 }

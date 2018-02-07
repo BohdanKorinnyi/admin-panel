@@ -13,10 +13,15 @@ import java.util.List;
 @AllArgsConstructor
 public class WalletDaoImpl implements WalletDao {
     private static final String SELECT_WALLET = "SELECT * FROM buyer_wallet";
+    private static final String SELECT_WALLET_BY_STAFF = "SELECT * FROM buyer_wallet WHERE staff_id = ?";
     private final JdbcTemplate jdbcTemplate;
 
     @Override
     public List<Wallet> findAll() {
         return jdbcTemplate.query(SELECT_WALLET, BeanPropertyRowMapper.newInstance(Wallet.class));
+    }
+
+    public List<Wallet> findByStaffId(int staffId) {
+        return jdbcTemplate.query(SELECT_WALLET_BY_STAFF, BeanPropertyRowMapper.newInstance(Wallet.class), staffId);
     }
 }
