@@ -43,8 +43,8 @@ public class PayrollController {
     }
 
     @GetMapping("staff/{id}")
-    public ResponseEntity getPayrollByStaff(@PathVariable int staffId) {
-        return ResponseEntity.ok(payrollService.getPayrollsByStaffId(staffId));
+    public ResponseEntity getPayrollByStaff(@PathVariable int id) {
+        return ResponseEntity.ok(payrollService.getPayrollsByStaffId(id));
     }
 
     @PutMapping

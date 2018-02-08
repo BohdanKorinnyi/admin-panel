@@ -1,19 +1,30 @@
 Application.controller('buyerPaymentsController', function ($scope, $http) {
     $scope.payments = [];
-    $scope.addedPayments = [];
-    $scope.buyers = [];
     $scope.staffs = [];
-    $scope.staffOptions = [];
     $scope.types = [];
-    $scope.wallets = [];
-    $scope.walletOptions = [];
     $scope.currencyOptions = [];
-    $scope.disableStaffWallet = true;
-    $scope.addedPaymentsToSave = []
+    $scope.currentStaffWallets = [];
+    $scope.currentStaffPayrolls = [];
+    $scope.isBuyer = false;
+    $scope.showLoader = true;
 
+    $scope.checkRole = function () {
+        var request = new XMLHttpRequest();
+        request.open('GET', '/user/me', false);
+        request.send(null);
+        var principle = JSON.parse(request.response);
+        $scope.role = principle.authorities[0].authority;
+        if ($scope.role === 'BUYER') {
+            $scope.isBuyer = true;
+        }
+        else{
+            $scope.isBuyer = false;
+        }
+    };
 
     $http.get('/payment').then(function (value) {
         $scope.payments = value.data;
+        $scope.showLoader = false;
     });
 
     $scope.toUpperCase = function (value) {
@@ -25,82 +36,39 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     };
 
     $scope.initPayments = function () {
-        $scope.getBuyers();
         $scope.getStaffs();
         $scope.getTypes();
         $scope.getCurrency();
-        $scope.getWallets();
     };
 
     $scope.addPayment = function () {
-        $scope.disableStaffWallet = true;
-        $scope.addedPayments.push({
-            buyer: null,
-            staff: null,
-            date: formatDate(new Date()),
-            payroll: formatDate(new Date()),
-            sum: null,
-            code: null,
-            type: null,
-            wallet: null
-        });
+        $scope.selectedPayroll = null;
+        $scope.selectedStaff = null;
+        $scope.selectedDate = formatDate(new Date());
+        $scope.selectedPayrollDate = formatDate(new Date());
+        $scope.selectedSum = null;
+        $scope.selectedCode = null;
+        $scope.selectedType = null;
+        $scope.selectedWallet = null;
     };
 
-    // $scope.selectBuyer = function (id) {
-    //     $scope.disableStaffWallet = false;
-    //     for(var i = 0; i< $scope.staffs.length; i++){
-    //         if(id === $scope.staffs[i].buyerId.toString()){
-    //             var obj = {};
-    //             obj[id] = $scope.staffs[i];
-    //             $scope.staffOptions.push(obj);
-    //             console.log($scope.staffOptions);
-    //         }
-    //     }
-    //
-    //     for(var j = 0; j< $scope.wallets.length; j++){
-    //         if(id === $scope.wallets[j].buyerId.toString()){
-    //             $scope.walletOptions.push($scope.wallets[j]);
-    //         }
-    //     }
-    // };
-
     $scope.applyPayment = function () {
-        $scope.formatAddedPaymentsDate();
         var url = "/payment";
-        var paymentsForSave = [];
-        for(var i = 0; i<$scope.addedPayments.length; i++){
-            paymentsForSave.push({
-                "buyerId": $scope.addedPayments[i].buyer,
-                "staffId": $scope.addedPayments[i].staff,
-                "date": $scope.addedPayments[i].date,
-                "datePayroll": $scope.addedPayments[i].payroll,
-                "sum": $scope.addedPayments[i].sum,
-                "currencyId": $scope.addedPayments[i].code,
-                "typeId": $scope.addedPayments[i].type,
-                "walletId": $scope.addedPayments[i].wallet
-            });
-        }
+        var params = {};
+        params.payrollId = $scope.selectedPayroll;
+        params.staffId = $scope.selectedStaff;
+        params.date = formatDate($scope.selectedDate);
+        params.datePayroll = formatDate($scope.selectedPayrollDate);
+        params.sum = $scope.selectedSum;
+        params.currencyId = $scope.selectedCode;
+        params.typeId = $scope.selectedType;
+        params.walletId = $scope.selectedWallet;
 
-        $http.post(url, paymentsForSave).then(function success(response) {
+        $http.post(url, params).then(function success(response) {
             $scope.initPayments();
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during saving added payments', 'danger');
         });
-    };
-
-    $scope.cancelClick = function () {
-        $scope.addedPayments = [];
-    };
-
-    $scope.formatAddedPaymentsDate = function () {
-        for (var i = 0; i < $scope.addedPayments.length; i++) {
-            $scope.addedPayments[i].date = formatDate($scope.addedPayments[i].date);
-            $scope.addedPayments[i].payroll = formatDate($scope.addedPayments[i].payroll);
-        }
-    };
-
-    $scope.removeRow = function (index) {
-        $scope.addedPayments.splice(index, 1);
     };
 
     $scope.getCurrency = function () {
@@ -111,12 +79,16 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
         });
     };
 
-    $scope.getBuyers = function () {
-        $http.get('/buyer').then(function success(response) {
-            $scope.buyers = response.data;
-        }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading buyers', 'danger');
-        });
+    $scope.getPayrollsByStaffId = function () {
+        if ($scope.selectedStaff !== null) {
+            var staffId = parseInt($scope.selectedStaff);
+            var url = "payroll/staff/" + staffId;
+            $http.get(url).then(function success(response) {
+                $scope.currentStaffPayrolls = response.data;
+            }, function fail(response) {
+                notify('ti-alert', 'Error occurred during loading payrolls', 'danger');
+            });
+        }
     };
 
     $scope.getStaffs = function () {
@@ -135,15 +107,25 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
         });
     };
 
-    $scope.getWallets = function () {
-        $http.get('/wallet').then(function success(response) {
-            $scope.wallets = response.data;
-        }, function fail(response) {
-            notify('ti-alert', 'Error occurred during loading wallets', 'danger');
-        });
+    $scope.getWalletsByStaffId = function () {
+        if ($scope.selectedStaff !== null) {
+            var staffId = parseInt($scope.selectedStaff);
+            var url = "wallet/staff/" + staffId;
+            $http.get(url).then(function success(response) {
+                $scope.currentStaffWallets = response.data;
+            }, function fail(response) {
+                notify('ti-alert', 'Error occurred during loading wallets', 'danger');
+            });
+        }
+    };
+
+    $scope.getByStaffId = function () {
+        $scope.getPayrollsByStaffId();
+        $scope.getWalletsByStaffId();
     };
 
     $scope.displayStaffFullName = function (firstName, secondName) {
         return firstName + " " + secondName;
     };
-});
+})
+;
