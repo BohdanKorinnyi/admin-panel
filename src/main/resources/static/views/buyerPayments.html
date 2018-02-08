@@ -77,7 +77,7 @@
 
 
     <div id="add-payment-modal" class="modal" role="dialog" style="background: rgba(0, 0, 0, 0.6);">
-        <div class="modal-dialog" style="width:90%;">
+        <div class="modal-dialog" style="width:50%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -85,58 +85,77 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form class="form-inline">
-                            <div class="form-group" style="width: 100%">
-                                <select class="form-control white-input-no-border"
-                                        ng-model="selectedStaff" style="width:15%;"
-                                        ng-change="getByStaffId();">
-                                    <option value="" disabled selected>Staff</option>
-                                    <option ng-repeat="staff in staffs" value="{{staff.id}}">
-                                        {{displayStaffFullName(staff.firstName, staff.secodName);}}
-                                    </option>
-                                </select>
-                                <select class="form-control white-input-no-border"
-                                        ng-model="selectedPayroll" style="width: 14%;">
-                                    <option value="" disabled selected>Payroll</option>
-                                    <option ng-repeat="payroll in currentStaffPayrolls"
-                                            value="{{payroll.id}}"> {{payroll.name}}
-                                    </option>
-                                </select>
+                        <div class="form-inline to-center" style="width: 100%">
+                            <label class="form-group control-label">Select Staff</label>
+                            <select class="form-group form-control white-input-no-border"
+                                    ng-model="selectedStaff" style="width:23%;"
+                                    ng-change="getByStaffId();">
+                                <option value="" disabled selected>Staff</option>
+                                <option ng-repeat="staff in staffs" value="{{staff.id}}">
+                                    {{displayStaffFullName(staff.firstName, staff.secodName);}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-inline to-center">
+                            <label class="form-group control-label">Select Payroll</label>
+                            <select class="form-group form-control white-input-no-border"
+                                    ng-model="selectedPayroll" style="width: 24%;">
+                                <option value="" disabled selected>Payroll</option>
+                                <option ng-repeat="payroll in currentStaffPayrolls"
+                                        value="{{payroll.id}}"> {{payroll.description}}
+                                </option>
+                            </select>
+                        </div>
 
-                                <input date-range-picker class="form-control date-picker white-input-no-border"
-                                       type="text" ng-model="selectedDate"
-                                       options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
-                                       style="width: 12% !important;"/>
-                                <input date-range-picker class="form-control date-picker white-input-no-border"
-                                       type="text" ng-model="selectedPayrollDate"
-                                       options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
-                                       style="width: 12% !important;"/>
-                                <input type="number" class="form-control white-input-no-border"
-                                       ng-model="selectedSum" placeholder="Sum" style="width: 10% !important;"/>
-
-                                <select class="form-control white-input-no-border" ng-model="selectedType"
-                                        style="width: 10%;">
-                                    <option value="" disabled selected>Type</option>
-                                    <option ng-repeat="type in types"
-                                            value="{{type.id}}">{{type.name}}
-                                    </option>
-                                </select>
-                                <select class="form-control white-input-no-border" ng-model="selectedCode"
-                                        style="width: 10% !important;">
-                                    <option value="" disabled selected>Currency</option>
-                                    <option ng-repeat="currency in currencyOptions"
-                                            value="{{currency.id}}">{{currency.code}}
-                                    </option>
-                                </select>
-                                <select class="form-control white-input-no-border" ng-model="selectedWallet"
-                                        style="width: 13% !important;">
-                                    <option value="" disabled selected>Wallet</option>
-                                    <option ng-repeat="wallet in currentStaffWallets"
-                                            value="{{wallet.currencyId}}">{{wallet.type}}
-                                    </option>
-                                </select>
-                            </div>
-                        </form>
+                        <div class="form-inline to-center">
+                            <label class="form-group control-label">Select Date</label>
+                            <input date-range-picker class="form-group form-control date-picker white-input-no-border"
+                                   type="text" ng-model="selectedDate"
+                                   options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
+                                   style="width: 22%;"/>
+                        </div>
+                        <div class="form-inline to-center">
+                            <label class="form-group control-label">Select Payroll Date</label>
+                            <input date-range-picker class="form-group form-control date-picker white-input-no-border"
+                                   type="text" ng-model="selectedPayrollDate"
+                                   options="{singleDatePicker: true, locale: {format: 'DD-MM-YYYY'}}"
+                                   style="width: 29%;"/>
+                        </div>
+                        <div class="form-inline to-center">
+                            <label class="form-group control-label">Sum</label>
+                            <input type="number" class="form-group form-control white-input-no-border"
+                                   ng-model="selectedSum" placeholder="Sum" style="width: 15%;"/>
+                        </div>
+                        <div class="form-inline to-center">
+                            <label class="form-group control-label">Select Type</label>
+                            <select class="form-group form-control white-input-no-border" ng-model="selectedType"
+                                    style="width: 23%;">
+                                <option value="" disabled selected>Type</option>
+                                <option ng-repeat="type in types"
+                                        value="{{type.id}}">{{type.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-inline to-center">
+                            <label class="form-group control-label">Select Currency</label>
+                            <select class="form-group form-control white-input-no-border" ng-model="selectedCode"
+                                    style="width: 27%;">
+                                <option value="" disabled selected>Currency</option>
+                                <option ng-repeat="currency in currencyOptions"
+                                        value="{{currency.id}}">{{currency.code}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-inline to-center">
+                            <label class="form-group control-label">Select Wallet</label>
+                            <select class="form-group form-control white-input-no-border" ng-model="selectedWallet"
+                                    style="width: 25%;">
+                                <option value="" disabled selected>Wallet</option>
+                                <option ng-repeat="wallet in currentStaffWallets"
+                                        value="{{wallet.id}}">{{wallet.type}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -7,6 +7,7 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     $scope.currentStaffPayrolls = [];
     $scope.isBuyer = false;
     $scope.showLoader = true;
+    $scope.addedPayments = [];
 
     $scope.checkRole = function () {
         var request = new XMLHttpRequest();
@@ -64,8 +65,13 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
         params.typeId = $scope.selectedType;
         params.walletId = $scope.selectedWallet;
 
-        $http.post(url, params).then(function success(response) {
+        $scope.addedPayments.push(params);
+
+        $http.post(url, $scope.addedPayments).then(function success(response) {
             $scope.initPayments();
+            $scope.currentStaffWallets = [];
+            $scope.currentStaffPayrolls = [];
+            $scope.addedPayments = [];
         }, function fail(response) {
             notify('ti-alert', 'Error occurred during saving added payments', 'danger');
         });
