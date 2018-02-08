@@ -16,5 +16,6 @@ public class Payment {
     private int currencyId;
     private int typeId;
     private int walletId;
+    private int payrollId;
     private String wallet;
 }

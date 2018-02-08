@@ -48,8 +48,8 @@ public class PaymentDaoImpl implements PaymentDao {
             "  LEFT JOIN buyer_wallet ON buyer_payments.wallet_id = buyer_wallet.id " +
             "WHERE IF(ISNULL(:buyerId), TRUE, staff.buyer_id IN (:buyerId));";
 
-    private static final String INSERT_PAYMENT = "INSERT INTO buyer_payments (staff_id, date, date_payroll, sum, currency_id, type_id, wallet_id) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private static final String INSERT_PAYMENT = "INSERT INTO buyer_payments (staff_id, date, date_payroll, sum, currency_id, type_id, wallet_id, payroll_id) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -75,14 +75,14 @@ public class PaymentDaoImpl implements PaymentDao {
             @Override
             @SneakyThrows
             public void setValues(PreparedStatement preparedStatement, int i) {
-                preparedStatement.setInt(1, payments.get(i).getBuyerId());
-                preparedStatement.setInt(2, payments.get(i).getStaffId());
-                preparedStatement.setString(3, payments.get(i).getDate());
-                preparedStatement.setString(4, payments.get(i).getDatePayroll());
-                preparedStatement.setFloat(5, payments.get(i).getSum());
-                preparedStatement.setInt(6, payments.get(i).getCurrencyId());
-                preparedStatement.setInt(7, payments.get(i).getTypeId());
-                preparedStatement.setInt(8, payments.get(i).getWalletId());
+                preparedStatement.setInt(1, payments.get(i).getStaffId());
+                preparedStatement.setString(2, payments.get(i).getDate());
+                preparedStatement.setString(3, payments.get(i).getDatePayroll());
+                preparedStatement.setFloat(4, payments.get(i).getSum());
+                preparedStatement.setInt(5, payments.get(i).getCurrencyId());
+                preparedStatement.setInt(6, payments.get(i).getTypeId());
+                preparedStatement.setInt(7, payments.get(i).getWalletId());
+                preparedStatement.setInt(8, payments.get(i).getPayrollId());
             }
 
             @Override
