@@ -8,6 +8,7 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
     $scope.isBuyer = false;
     $scope.showLoader = true;
     $scope.addedPayments = [];
+    $scope.disableWalletPayrolSelects = true;
 
     $scope.checkRole = function () {
         var request = new XMLHttpRequest();
@@ -91,6 +92,7 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
             var url = "payroll/staff/" + staffId;
             $http.get(url).then(function success(response) {
                 $scope.currentStaffPayrolls = response.data;
+                $scope.disableWalletPayrolSelects = false;
             }, function fail(response) {
                 notify('ti-alert', 'Error occurred during loading payrolls', 'danger');
             });
@@ -119,6 +121,7 @@ Application.controller('buyerPaymentsController', function ($scope, $http) {
             var url = "wallet/staff/" + staffId;
             $http.get(url).then(function success(response) {
                 $scope.currentStaffWallets = response.data;
+                $scope.disableWalletPayrolSelects = false;
             }, function fail(response) {
                 notify('ti-alert', 'Error occurred during loading wallets', 'danger');
             });
