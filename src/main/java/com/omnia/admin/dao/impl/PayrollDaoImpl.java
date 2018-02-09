@@ -51,7 +51,9 @@ public class PayrollDaoImpl implements PayrollDao {
                 "FROM payroll_new " +
                 "  INNER JOIN payroll_type ON payroll_type.id = payroll_new.type_id " +
                 "  LEFT JOIN currency ON payroll_new.currency_id = currency.id " +
-                "WHERE payroll_type.type = 'bonus' AND payroll_new.buyer_id = ? AND year(payroll_new.date) = ? " +
+                "  LEFT JOIN staff ON staff.id = payroll_new.staff_id " +
+                "  LEFT JOIN buyers ON staff.buyer_id = buyers.id " +
+                "WHERE payroll_type.type = 'bonus' AND buyers.id = ? AND year(payroll_new.date) = ? " +
                 "GROUP BY month(payroll_new.date) " +
                 "ORDER BY month(payroll_new.date)", BeanPropertyRowMapper.newInstance(Payroll.class), buyerId, year);
     }
@@ -73,7 +75,7 @@ public class PayrollDaoImpl implements PayrollDao {
 
     @Override
     public List<Payroll> findPayrollsByBuyerId(Integer buyerId) {
-        return jdbcTemplate.query(SELECT_PAYROLLS + " WHERE buyer_id = ?", new BeanPropertyRowMapper<>(Payroll.class), buyerId);
+        return jdbcTemplate.query(SELECT_PAYROLLS + " LEFT JOIN staff ON staff.id = payroll_new.staff_id LEFT JOIN buyers ON staff.buyer_id = buyers.id WHERE buyers.id = ?", new BeanPropertyRowMapper<>(Payroll.class), buyerId);
     }
 
     @Override
@@ -142,7 +144,7 @@ public class PayrollDaoImpl implements PayrollDao {
 
     private String addBuyerFilter(Integer buyerId) {
         if (nonNull(buyerId)) {
-            return " WHERE buyer_id = " + buyerId + " ";
+            return " LEFT JOIN staff ON staff.id = payroll_new.staff_id LEFT JOIN buyers ON staff.buyer_id = buyers.id WHERE buyers.id = " + buyerId + " ";
         }
         return EMPTY;
     }
