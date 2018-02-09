@@ -101,7 +101,8 @@
                             <label class="col-md-4 control-label">Select Payroll</label>
                             <div class="col-md-8">
                                 <select class="form-group form-control white-input-no-border"
-                                        ng-model="selectedPayroll">
+                                        ng-model="selectedPayroll"
+                                        ng-disabled="disableWalletPayrolSelects">
                                     <option value="" disabled selected>Payroll</option>
                                     <option ng-repeat="payroll in currentStaffPayrolls"
                                             value="{{payroll.id}}"> {{payroll.description}}
@@ -158,7 +159,9 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Select Wallet</label>
                             <div class="col-md-8">
-                                <select class="form-group form-control white-input-no-border" ng-model="selectedWallet">
+                                <select class="form-group form-control white-input-no-border"
+                                        ng-model="selectedWallet"
+                                        ng-disabled="disableWalletPayrolSelects">
                                     <option value="" disabled selected>Wallet</option>
                                     <option ng-repeat="wallet in currentStaffWallets"
                                             value="{{wallet.id}}">{{wallet.type}}
